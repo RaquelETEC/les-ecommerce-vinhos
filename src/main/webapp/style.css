@@ -12,11 +12,17 @@ body {
     justify-content: center;
     height: 50vh;
 }
+.custom-border {
+   border: 10px solid black;
+}
+
 
 h1 {
 	color: #66bbff;
 }
-
+.custom-bg {
+    background-color: black;
+}
 img {
      max-width: 100%;
      height: 100px;
