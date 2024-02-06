@@ -10,15 +10,17 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 50vh;
 }
 .custom-border {
    border: 10px solid black;
+   width: 100%;
+}
+.filter{
+	background-color: #F2F2F2;
 }
 
-
 h1 {
-	color: #66bbff;
+	color: #000000;
 }
 .custom-bg {
     background-color: black;
