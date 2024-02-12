@@ -4,7 +4,7 @@
 
 .filter{
 	background-color: #F2F2F2;
-	height: 800px;
+	height: 900px;
 	margin-left: 4rem !important;
     margin-top: 1px!important;
     padding-top: 1rem!important;
@@ -15,4 +15,59 @@ body .row .filter.col-2.m-5 {
     margin-left: 4rem !important;
     margin-top: 1px !important;
     padding-top: 1rem !important;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    width: 300px;
+}
+
+.card-img-top {
+    width: 300px;
+    height: 200px;
+    background-color: #F2F2F2;
+}
+
+.card-body {
+    padding: 20px;
+}
+.card-img, .card-img-top{
+    width: 300px;
+    height: 200px;
+}
+.price {
+    font-weight: bold;
+     text-align: center;
+}
+.quant-carrinho .d-flex {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+.add_carrinho{
+	width: 100%;
+    background-color: #EE603D ;
+}
+.list-group-item-no-border {
+    border-bottom: none;
+}
+
+.list-group-item {
+    border: none !important;
+    padding: 0.1rem 1rem !important;
+
+}
+.h3 {
+    margin: revert !important;
+}
+.form-check-input[type=checkbox]{
+	border-radius: 0.5em !important;
+    width: 23px !important;
+}
+.form-check-input:checked {
+    background-color: #EE603D !important;
+    border-color: #F2F2F2 !important;
 }
