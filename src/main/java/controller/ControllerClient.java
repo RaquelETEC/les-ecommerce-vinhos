@@ -18,7 +18,7 @@ import model.DaoCliente;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente" })
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente" })
 public class ControllerClient extends HttpServlet {
 	
 	/** The Constant serialVersionUID. */
@@ -79,27 +79,18 @@ public class ControllerClient extends HttpServlet {
 
 		    // Outras operações, se necessário
 			// Envia as informações para a página HTML
-			// response.setContentType("text/html");
-			// response.setCharacterEncoding("UTF-8");
-			// response.getWriter().write("<p>Nome: " + nome + "</p>");
-			// response.getWriter().write("<p>Email: " + email + "</p>");
-			// response.getWriter().write("<p>Senha: " + senha + "</p>");
-			// response.getWriter().write("<p>Senha Repetida: " + senhaRepetida + "</p>");
-			// response.getWriter().write("<p>CPF: " + cpf + "</p>");
-			// response.getWriter().write("<p>Tipo de Telefone: " + tipoTelefone + "</p>");
-			// response.getWriter().write("<p>Telefone: " + telefone + "</p>");
-			// response.getWriter().write("<p>Data de Nascimento: " + nascimento + "</p>");
-			// response.getWriter().write("<p>Gênero: " + genero + "</p>");
-			// response.getWriter().write("<p>Tipo de Residência: " + tipoResidencia + "</p>");
-			// response.getWriter().write("<p>Tipo de Logradouro: " + tipoLogradouro + "</p>");
-			// response.getWriter().write("<p>Logradouro: " + logradouro + "</p>");
-			// response.getWriter().write("<p>Número: " + numero + "</p>");
-			// response.getWriter().write("<p>Bairro: " + bairro + "</p>");
-			// response.getWriter().write("<p>Cidade: " + cidade + "</p>");
-			// response.getWriter().write("<p>CEP: " + cep + "</p>");
-			// response.getWriter().write("<p>País: " + pais + "</p>");
-			// response.getWriter().write("<p>Observações: " + observacoes + "</p>");
-			
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write("<p>Nome: " + nome + "</p>");
+			response.getWriter().write("<p>Email: " + email + "</p>");
+			response.getWriter().write("<p>Senha: " + senha + "</p>");
+			response.getWriter().write("<p>Senha Repetida: " + senhaRepetida + "</p>");
+			response.getWriter().write("<p>CPF: " + cpf + "</p>");
+			response.getWriter().write("<p>Tipo de Telefone: " + tipoTelefone + "</p>");
+			response.getWriter().write("<p>Telefone: " + telefone + "</p>");
+			response.getWriter().write("<p>Data de Nascimento: " + nascimento + "</p>");
+			response.getWriter().write("<p>Gênero: " + genero + "</p>");
+		
 			// response.sendRedirect("areaCliente");
 
 			cliente.setNome(nome);
@@ -140,6 +131,38 @@ public class ControllerClient extends HttpServlet {
 			throws ServletException, IOException {
 		//ArrayList<JavaBeans> lista = dao.listarclientes();
 		//request.setAttribute("clientes", lista);
+		String nome = request.getParameter("typeNome");
+		String email = request.getParameter("typeEmail");
+		String senha = request.getParameter("typeSenha");
+		String senhaRepetida = request.getParameter("typeRepitaSenha");
+		String cpf = request.getParameter("typeCPF");
+		String tipoTelefone = request.getParameter("TypeTipoTelefone");
+		String telefone = request.getParameter("typeNumeroTelefone");
+		String nascimento = request.getParameter("typeNascimento");
+		String genero = request.getParameter("typeGenero");
+		
+		System.out.println("o nome que chegou na area do cliente: "+nome);
+		System.out.println("o genero que chegou na area do cliente: "+genero);
+
+		request.setAttribute("nome", nome);
+		request.setAttribute("email", email);
+		request.setAttribute("senha", senha);
+		request.setAttribute("senhaRepetida", senhaRepetida);
+		request.setAttribute("cpf", cpf);
+		request.setAttribute("tipoTelefone", tipoTelefone);
+		request.setAttribute("telefone", telefone);
+		
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Adapte o formato conforme necessário
+			Date nascimentoDate = dateFormat.parse(nascimento);
+			request.setAttribute("nascimento", nascimentoDate);
+		} catch (ParseException e) {
+			e.printStackTrace(); 
+		}
+		request.setAttribute("genero", genero);
+		
+		System.out.println("o nascimento que chegou na area do cliente: "+ nascimento);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("areaCliente.jsp");
 		rd.forward(request, response);	
 	

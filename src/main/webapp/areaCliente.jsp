@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tela 1</title>
-    <link rel="stylesheet" href="StyleAreaCliente.css">
+    <link rel="stylesheet" href="Styles/StyleAreaCliente.css">
     <script src="./scripts/exibirMenus.js" defer></script>
 </head>
 
@@ -70,7 +70,7 @@
 
                 <div class="box-top-register">
                     <!-- titulo do cabecalho -->
-                    <h1 class="text-perfil">Perfil</h1>
+                    <h1 class="text-perfil">Editar Perfil</h1>
 
                     <div class="box-input-pesquisa-e-carrinho">
 
@@ -95,50 +95,52 @@
                             <div class="box-label">
                                 <label for="">Nome</label>
                             </div>
-                            <input type="text" class="input-form input-width-1" 
-                            value="<%out.print(request.getAttribute("typeNome"));%>" >
+                             <input type="text" class="input-form input-width-1" value="<%= request.getAttribute("nome") %>">
                             
                         </div>
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">E-Mail</label>
                             </div>
-                            <input type="text" class="input-form input-width-1 ">
+                            <input type="text" class="input-form input-width-1 " value="<%= request.getAttribute("email") %>">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">CPF</label>
                             </div>
-                            <input type="text" class="input-form input-width-2 ">
+                            <input type="text" class="input-form input-width-2 " value="<%= request.getAttribute("cpf") %>">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">Data de nascimento</label>
                             </div>
-                            <input type="date" class="input-form input-width-3 ">
+                            <input type="date" class="input-form input-width-3 " value="<%= request.getAttribute("nascimento") %>">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">Telefone</label>
                             </div>
-                            <input type="tel" class="input-form input-width-2 ">
+                            <input type="tel" class="input-form input-width-2 " value="<%= request.getAttribute("telefone") %>">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">Genero</label>
                             </div>
-                            <input type="radio" name="genero" id="Feminino" class="input-radio">
-                            <label for="Feminino" style="font-weight: 100;">Feminino</label>
-
-                            <input type="radio" name="genero" id="Masculino" class="input-radio">
-                            <label for="Masculino" style="font-weight: 100;">Masculino</label>
-
-                            <input type="radio" name="genero" id="Outro" class="input-radio">
-                            <label for="Outro" style="font-weight: 100;">Outro</label>
+                             <input type="radio" name="genero" id="Feminino" class="input-radio" <%= "feminino".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+						     <label for="Feminino" style="font-weight: 100;">Feminino</label>
+						
+						     <input type="radio" name="genero" id="Masculino" class="input-radio" <%= "masculino".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+						     <label for="Masculino" style="font-weight: 100;">Masculino</label>
+						     
+						 	 <input type="radio" name="genero" id="nao_binario" class="input-radio" <%= "nao_binario".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+						     <label for="nao_binario" style="font-weight: 100;">N�o Bin�rio</label>
+						     
+						     <input type="radio" name="genero" id="Outros" class="input-radio" <%= "outros".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+						     <label for="Outro" style="font-weight: 100;">Outro</label>
                         </div>
 
                         <button class="button-salvar">Salvar</button>

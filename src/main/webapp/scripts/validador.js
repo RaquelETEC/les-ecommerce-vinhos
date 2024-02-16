@@ -1,7 +1,6 @@
 /**
  * Validar campos obrigatorios
  * 
- * @author Professor Jose de Assis
  */
 
 function validar() {

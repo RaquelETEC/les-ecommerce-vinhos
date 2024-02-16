@@ -55,7 +55,7 @@ public class DaoCliente {
 
     public String selectIdCliente(Cliente cliente) {
         String id_cliente = null;
-        String read = "SELECT cli_id FROM cliente WHERE cli_email = ? AND cli_senha = ? AND cli_cpf = ?";
+        String read = "SELECT cli_id FROM cliente where  cli_email = ? AND cli_senha = ? AND cli_cpf = ? order by cli_id desc LIMIT 1;";
     
         try (Connection con = conectar();
              PreparedStatement pst = con.prepareStatement(read)) {

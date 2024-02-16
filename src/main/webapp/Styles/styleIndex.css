@@ -40,7 +40,8 @@ body .row .filter.col-2.m-5 {
 }
 .price {
     font-weight: bold;
-     text-align: center;
+    text-align: center;
+    font-size: x-large;
 }
 .quant-carrinho .d-flex {
   border: 1px solid black;

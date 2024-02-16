@@ -87,8 +87,34 @@ public class ControllerEndereco extends HttpServlet {
 			daoEndereco.inserirEndereco(cliente, endereco);
 			
 			System.out.println("Passou pelo Dao endereço na servlet: "+ endereco);
-			//response.sendRedirect("main");
+			//response.sendRedirect("main");    
 
+             
+			
+		    response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("<p>ID cliente: " + cliente.getId() + "</p>");
+            response.getWriter().write("<p>Nome: " + cliente.getNome() + "</p>");
+			response.getWriter().write("<p>Email: " + cliente.getEmail() + "</p>");
+			response.getWriter().write("<p>Senha: " + cliente.getSenha() + "</p>");
+			response.getWriter().write("<p>Senha Repetida: " + cliente.getSenha() + "</p>");
+			response.getWriter().write("<p>CPF: " + cliente.getCpf() + "</p>");
+			response.getWriter().write("<p>Tipo de Telefone: " + cliente.getTipoTelefone() + "</p>");
+			response.getWriter().write("<p>Telefone: " + cliente.getTelefone() + "</p>");
+			response.getWriter().write("<p>Data de Nascimento: " + cliente.getDataNasc() + "</p>");
+			response.getWriter().write("<p>Gênero: " + cliente.getGenero() + "</p>");
+            response.getWriter().write("<hr> Endereço ");
+			response.getWriter().write("<p>Tipo de Residência: " + endereco.getTipoResidencia() + "</p>");
+			response.getWriter().write("<p>Tipo de Logradouro: " + endereco.getTipoLogradouro() + "</p>");
+			response.getWriter().write("<p>Logradouro: " + endereco.getLogradouro() + "</p>");
+			response.getWriter().write("<p>Número: " + endereco.getNumero() + "</p>");
+			response.getWriter().write("<p>Bairro: " + endereco.getBairro() + "</p>");
+			response.getWriter().write("<p>Cidade: " + endereco.getCidade() + "</p>");
+			response.getWriter().write("<p>País: " + endereco.getPais() + "</p>");
+			response.getWriter().write("<p>Observações: " + endereco.getObservacao() + "</p>");
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/areaCliente");
+			dispatcher.forward(request, response);
 		
 	}
 }

@@ -28,7 +28,7 @@ public class DaoEndereco {
 	}
 
 
-    public void inserirEndereco(Cliente cliente, Endereco endereco) {
+    public boolean inserirEndereco(Cliente cliente, Endereco endereco) {
         System.out.println("DAO : id do cliente para o endereço:"+ cliente.getId());
 
 		String create =   "INSERT INTO endereco" + //
@@ -55,8 +55,11 @@ public class DaoEndereco {
 			pst.executeUpdate(); 
 			System.err.println("inserido endereço no dao!!");
 			con.close();
+			return true;
+
 		} catch (Exception e) {
 			System.out.println("erro ao inserir Endereço: "+e);
+			return false;
 		}
 	}
 

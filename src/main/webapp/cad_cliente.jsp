@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <title>Agenda de contatos</title>
 <link rel="icon" href="imagens/favicon.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="Styles/style.css">
 </head> 
 <body>
 	<h1>Agenda de Contatos-less</h1>
