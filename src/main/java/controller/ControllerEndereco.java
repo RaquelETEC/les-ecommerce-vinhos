@@ -11,11 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.Date;
 
-import model.Cliente;
-import model.Endereco;
-import model.DaoEndereco;
+import model.dao.DaoEndereco;
+import model.entity.Cliente;
+import model.entity.Endereco;
 
 // TODO: Auto-generated Javadoc
 
@@ -70,7 +71,7 @@ public class ControllerEndereco extends HttpServlet {
             System.out.println("tipoLogradouro "+tipoLogradouro);
             System.out.println("numero: "+numero);
         
-            endereco.setId_cliente(cliente);
+            endereco.setCliente(cliente);
             endereco.setTipoResidencia(tipoResidencia);
             endereco.setTipoLogradouro(tipoLogradouro);
             endereco.setLogradouro(logradouro);

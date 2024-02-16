@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ page import="model.JavaBeans"%>
+<%@ page import="model.entity.JavaBeans"%>
 <%@ page import="java.util.ArrayList"%>
 <%
 	@ SuppressWarnings ("unchecked")

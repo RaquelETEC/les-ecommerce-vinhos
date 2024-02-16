@@ -1,4 +1,4 @@
-package model;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,26 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import model.entity.Cliente;
+
 public class DaoCliente {
 
-	private String driver = "com.mysql.cj.jdbc.Driver";
-
-	//definindo ip, user e senha e horario  do servidor universal 
-	private String url = "jdbc:mysql://localhost:3306/ecommerce?useTimezone=true&serverTimezone=UTC";
-	private String user = "root";
-	private String password = "12345";
-
-    private Connection conectar() {
-		Connection con = null;
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
-			return con;
-		} catch (Exception e) {
-			System.out.println("ERRO: Connection conectar()"+ e);
-			return null;
-		}
-	}
 
     public void inserirCliente(Cliente cliente) {
 		String create =   "INSERT INTO cliente" + //
@@ -33,7 +17,7 @@ public class DaoCliente {
                         "VALUES (?,?,?,?,?,?,?,?)";
                       
 		try {
-			Connection con = conectar();
+			Connection con = Conexao.conectar();
             System.out.println("chegou no try no inserir cliente");
 			PreparedStatement pst = con.prepareStatement(create);
 			pst.setString(1, cliente.getNome());
@@ -57,7 +41,8 @@ public class DaoCliente {
         String id_cliente = null;
         String read = "SELECT cli_id FROM cliente where  cli_email = ? AND cli_senha = ? AND cli_cpf = ? order by cli_id desc LIMIT 1;";
     
-        try (Connection con = conectar();
+        try (Connection con = Conexao.conectar();
+
              PreparedStatement pst = con.prepareStatement(read)) {
     
             pst.setString(1, cliente.getEmail());

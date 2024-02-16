@@ -1,10 +1,12 @@
-package model;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import model.entity.JavaBeans;
 
 /**
  * Recebe e envia dados para banco de dados

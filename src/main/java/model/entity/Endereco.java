@@ -1,9 +1,9 @@
-package model;
+package model.entity;
 
 public class Endereco {
 
 	private Integer id;
-	private Cliente id_cliente;
+	private Cliente cliente;
 	private String tipoResidencia;
 	private String tipoLogradouro;
 	private String logradouro;
@@ -21,12 +21,12 @@ public class Endereco {
 	}
 
 	
-	public Endereco(Integer id, Cliente id_cliente, String tipoResidencia, String tipoLogradouro, String logradouro,
+	public Endereco(Integer id, Cliente cliente, String tipoResidencia, String tipoLogradouro, String logradouro,
 			String numero, String bairro, String cep, String cidade, String estado, String pais, String padrao,
 			String observacao) {
 		super();
 		this.id = id;
-		this.id_cliente = id_cliente;
+		this.cliente = cliente;
 		this.tipoResidencia = tipoResidencia;
 		this.tipoLogradouro = tipoLogradouro;
 		this.logradouro = logradouro;
@@ -49,12 +49,12 @@ public class Endereco {
 		this.id = id;
 	}
 
-	public Cliente getId_cliente() {
-		return id_cliente;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setId_cliente(Cliente id_cliente) {
-		this.id_cliente = id_cliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public String getTipoResidencia() {

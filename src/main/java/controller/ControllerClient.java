@@ -11,10 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.Date;
 
-import model.Cliente;
-import model.DaoCliente;
+import model.dao.DaoCliente;
+import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
 
@@ -152,18 +153,15 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("tipoTelefone", tipoTelefone);
 		request.setAttribute("telefone", telefone);
 		
-		try {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Adapte o formato conforme necessário
-			Date nascimentoDate = dateFormat.parse(nascimento);
-			request.setAttribute("nascimento", nascimentoDate);
-		} catch (ParseException e) {
-			e.printStackTrace(); 
-		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Adapte o formato conforme necessário
+		String  nascimentoDate = (nascimento);
+		request.setAttribute("nascimento", nascimentoDate);
+		
 		request.setAttribute("genero", genero);
 		
 		System.out.println("o nascimento que chegou na area do cliente: "+ nascimento);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("areaCliente.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/areaCliente/Perfil.jsp");
 		rd.forward(request, response);	
 	
 	}

@@ -137,7 +137,7 @@
 						     <label for="Masculino" style="font-weight: 100;">Masculino</label>
 						     
 						 	 <input type="radio" name="genero" id="nao_binario" class="input-radio" <%= "nao_binario".equals(request.getAttribute("genero")) ? "checked" : "" %>>
-						     <label for="nao_binario" style="font-weight: 100;">N�o Bin�rio</label>
+						     <label for="nao_binario" style="font-weight: 100;">Não Binário</label>
 						     
 						     <input type="radio" name="genero" id="Outros" class="input-radio" <%= "outros".equals(request.getAttribute("genero")) ? "checked" : "" %>>
 						     <label for="Outro" style="font-weight: 100;">Outro</label>

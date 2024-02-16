@@ -1,4 +1,4 @@
-package model;
+package model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,27 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import model.entity.Cliente;
+import model.entity.Endereco;
+
 public class DaoEndereco {
-
-	private String driver = "com.mysql.cj.jdbc.Driver";
-
-	//definindo ip, user e senha e horario  do servidor universal 
-	private String url = "jdbc:mysql://localhost:3306/ecommerce?useTimezone=true&serverTimezone=UTC";
-	private String user = "root";
-	private String password = "12345";
-
-    private Connection conectar() {
-		Connection con = null;
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, password);
-			return con;
-		} catch (Exception e) {
-			System.out.println("ERRO: Connection conectar()"+ e);
-			return null;
-		}
-	}
-
 
     public boolean inserirEndereco(Cliente cliente, Endereco endereco) {
         System.out.println("DAO : id do cliente para o endereço:"+ cliente.getId());
@@ -36,7 +19,7 @@ public class DaoEndereco {
                         "end_bairro,end_cep,end_cidade, end_estado, end_pais,end_padrao,end_observacoes )" + //
                         "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			Connection con = conectar();
+			Connection con = Conexao.conectar();
             System.out.println("chegou no try no inserirEndereco" +cliente.getId() );
 			PreparedStatement pst = con.prepareStatement(create);
 			pst.setInt(1, cliente.getId());
