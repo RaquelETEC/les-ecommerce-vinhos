@@ -75,8 +75,8 @@ header {
     flex-direction: column;
     padding: 1rem;
 
-    border-radius: 5px;
-
+    border-radius: 10px;
+	margin: 10px;
     gap: 1rem;
 }
 
@@ -163,6 +163,10 @@ header {
     justify-content: flex-start;
 
     color: #969696;
+}
+
+.box-exibir-opcoes button.ativo {
+    color: #ff8000;
 }
 
 .MinhaConta {

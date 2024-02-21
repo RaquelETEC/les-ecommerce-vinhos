@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Dao.DaoCliente;
+
 import java.util.Date;
 
-import model.dao.DaoCliente;
 import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
@@ -132,6 +133,7 @@ public class ControllerClient extends HttpServlet {
 			throws ServletException, IOException {
 		//ArrayList<JavaBeans> lista = dao.listarclientes();
 		//request.setAttribute("clientes", lista);
+		Cliente cliente = (Cliente) request.getAttribute("cliente");
 		String nome = request.getParameter("typeNome");
 		String email = request.getParameter("typeEmail");
 		String senha = request.getParameter("typeSenha");
@@ -145,6 +147,7 @@ public class ControllerClient extends HttpServlet {
 		System.out.println("o nome que chegou na area do cliente: "+nome);
 		System.out.println("o genero que chegou na area do cliente: "+genero);
 
+		request.setAttribute("id", cliente.getId());
 		request.setAttribute("nome", nome);
 		request.setAttribute("email", email);
 		request.setAttribute("senha", senha);
@@ -152,16 +155,13 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("cpf", cpf);
 		request.setAttribute("tipoTelefone", tipoTelefone);
 		request.setAttribute("telefone", telefone);
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); // Adapte o formato conforme necessário
-		String  nascimentoDate = (nascimento);
-		request.setAttribute("nascimento", nascimentoDate);
-		
+		request.setAttribute("nascimento", nascimento);
 		request.setAttribute("genero", genero);
+		
 		
 		System.out.println("o nascimento que chegou na area do cliente: "+ nascimento);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/areaCliente/Perfil.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
 		rd.forward(request, response);	
 	
 	}

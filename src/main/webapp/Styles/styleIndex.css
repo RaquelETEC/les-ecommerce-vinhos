@@ -49,8 +49,9 @@ body .row .filter.col-2.m-5 {
   padding: 5px;
 }
 .add_carrinho{
-	width: 100%;
-    background-color: #EE603D ;
+	width: 100% !important;
+    background-color: #EE603D !important;
+    color: white !important;
 }
 .list-group-item-no-border {
     border-bottom: none;

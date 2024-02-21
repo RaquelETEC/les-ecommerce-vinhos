@@ -1,26 +1,19 @@
 package controller;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.Date;
-
-import model.dao.DaoEndereco;
+import Dao.DaoEndereco;
 import model.entity.Cliente;
 import model.entity.Endereco;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/inserirEndereco" })
+@WebServlet(urlPatterns = { "/inserirEndereco", "/exibirEndereco" })
 public class ControllerEndereco extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -40,6 +33,9 @@ public class ControllerEndereco extends HttpServlet {
 		System.out.println("chegou aqui: "+action);
 		if (action.equals("/inserirEndereco")) {
 			AdicionarEndereco(request, response);
+		}
+		else if(action.equals("/exibirEndereco")){
+			ExibirEndereco(request, response);
 		}
 		else {
 			response.sendRedirect("index.html");
@@ -88,34 +84,18 @@ public class ControllerEndereco extends HttpServlet {
 			daoEndereco.inserirEndereco(cliente, endereco);
 			
 			System.out.println("Passou pelo Dao endereço na servlet: "+ endereco);
-			//response.sendRedirect("main");    
-
-             
-			
-		    response.setContentType("text/html");
-			response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("<p>ID cliente: " + cliente.getId() + "</p>");
-            response.getWriter().write("<p>Nome: " + cliente.getNome() + "</p>");
-			response.getWriter().write("<p>Email: " + cliente.getEmail() + "</p>");
-			response.getWriter().write("<p>Senha: " + cliente.getSenha() + "</p>");
-			response.getWriter().write("<p>Senha Repetida: " + cliente.getSenha() + "</p>");
-			response.getWriter().write("<p>CPF: " + cliente.getCpf() + "</p>");
-			response.getWriter().write("<p>Tipo de Telefone: " + cliente.getTipoTelefone() + "</p>");
-			response.getWriter().write("<p>Telefone: " + cliente.getTelefone() + "</p>");
-			response.getWriter().write("<p>Data de Nascimento: " + cliente.getDataNasc() + "</p>");
-			response.getWriter().write("<p>Gênero: " + cliente.getGenero() + "</p>");
-            response.getWriter().write("<hr> Endereço ");
-			response.getWriter().write("<p>Tipo de Residência: " + endereco.getTipoResidencia() + "</p>");
-			response.getWriter().write("<p>Tipo de Logradouro: " + endereco.getTipoLogradouro() + "</p>");
-			response.getWriter().write("<p>Logradouro: " + endereco.getLogradouro() + "</p>");
-			response.getWriter().write("<p>Número: " + endereco.getNumero() + "</p>");
-			response.getWriter().write("<p>Bairro: " + endereco.getBairro() + "</p>");
-			response.getWriter().write("<p>Cidade: " + endereco.getCidade() + "</p>");
-			response.getWriter().write("<p>País: " + endereco.getPais() + "</p>");
-			response.getWriter().write("<p>Observações: " + endereco.getObservacao() + "</p>");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/areaCliente");
 			dispatcher.forward(request, response);
 		
 	}
+	protected void ExibirEndereco(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+			System.out.println("voce conseguiu chegar aqui no ExibirEndereco :)");
+			RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/PerfilEndereco.jsp");
+			rd.forward(request, response);	
+
+		}
+	
 }

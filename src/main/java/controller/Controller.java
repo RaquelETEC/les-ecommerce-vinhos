@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.dao.DAO;
+import Dao.DAO;
 import model.entity.JavaBeans;
 
 // TODO: Auto-generated Javadoc

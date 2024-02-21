@@ -7,18 +7,22 @@
     <title>tela 1</title>
     <link rel="stylesheet" href="Styles/StyleAreaCliente.css">
     <script src="./scripts/exibirMenus.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+    
 </head>
 
 <body>
+ 
+	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
+		<div class="container-fluid">
+            <a href="index.html"><img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+			<div class="navbar-nav ms-auto">
+				<a href="login.html" class="btn btn-light ms-2">LOGIN</a>
+				<a href="gerenciamento.html" class="btn btn-light ms-2">GERENCIAMENTO</a>
+			</div>
+		</div>
+	</nav>
     <main>
-        <header>
-            <h1 class="title-crnines">
-                <span style="color:#fff;"> CR </span> WINES
-            </h1>
-            <button class="button-header-minha-conta"> MINHA CONTA <img src="./imagens/assets/icon-button-header.png"
-                    alt="icon-button-header" class="icon-button-header"></button>
-        </header>
-
         <div class="container-main">
 
             <!-- conteudo do perfil da direita -->
@@ -37,10 +41,11 @@
                         <span>Minha Conta</span>
                     </button>
                     <div class="box-exibir-opcoes MinhaConta">
-                        <button>Perfil</button>
-                        <button>Cartoes</button>
-                        <button>Enderecos</button>
-                        <button>Trocar Senha</button>
+                        <button class="ativo">Perfil</button>
+                        <button action="exibirCartoes" >Cartoes</button>
+                        <button action="exibirEndereco">Enderecos</button>
+                        <button action="exibirTrocarSenha">Trocar Senha</button>
+                        <button action="exibirApagarConta">apagar conta</button>
                     </div>
 
                     <button class="button-dados-perfil">
