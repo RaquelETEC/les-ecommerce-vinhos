@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ page import="model.JavaBeans"%>
+<%@ page import="model.entity.JavaBeans"%>
 <%@ page import="java.util.ArrayList"%>
 <%
 	@ SuppressWarnings ("unchecked")
@@ -12,7 +12,7 @@
 <meta charset="utf-8">
 <title>Agenda de contatos</title>
 <link rel="icon" href="imagens/favicon.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="Styles/style.css">
 </head> 
 <body>
 	<h1>Agenda de Contatos-less</h1>
