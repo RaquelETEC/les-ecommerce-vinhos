@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import model.entity.Cliente;
 
 public class DaoCliente {
-
+	
+	Connection con = Conexao.conectar();
+	
 
     public void inserirCliente(Cliente cliente) {
 		String create =   "INSERT INTO cliente" + //
@@ -17,9 +19,10 @@ public class DaoCliente {
                         "VALUES (?,?,?,?,?,?,?,?)";
                       
 		try {
-			Connection con = Conexao.conectar();
-            System.out.println("chegou no try no inserir cliente");
+			
+		
 			PreparedStatement pst = con.prepareStatement(create);
+			
 			pst.setString(1, cliente.getNome());
 			pst.setString(2, cliente.getEmail());
 			pst.setString(3, cliente.getSenha());
@@ -32,6 +35,8 @@ public class DaoCliente {
 			pst.executeUpdate(); 
 			System.err.println("inserido no dao!!");
 			con.close();
+			
+			
 		} catch (Exception e) {
 			System.out.println("erro ao inserir cliente: "+e);
 		}
