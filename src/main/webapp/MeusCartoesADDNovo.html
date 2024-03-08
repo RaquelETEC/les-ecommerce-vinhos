@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Endereco</title>
+    <link rel="stylesheet" href="Styles/StyleMeusCartoesADDNovo.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1 class="title-crnines">
+                <span style="color:#fff;"> CR </span> WINES
+            </h1>
+            <button class="button-header-minha-conta"> MINHA CONTA <img src="imagens/assets/icon-button-header.png"
+                    alt="icon-button-header" class="icon-button-header"></button>
+        </header>
+
+        <div class="container-main">
+
+            <div class="container-register">
+
+                <div class="box-top-register">
+                    <!-- titulo do cabecalho -->
+                    <h1 class="text-perfil">Adicionar Cartão</h1>
+                </div>
+
+                <div class="content">
+                    <!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
+                    <form action="" class="form-register">
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="N° Cartão">
+                        </div>
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="Nome Impresso no Cartão*">
+                        </div>
+
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="Código de Segurança*">
+                        </div>
+                        <div class="box-input-form">
+                            <div class="box-label">
+                                <label for="">Bandeira</label>
+                            </div>
+                            <select id="cars" class="input-form input-width-2 ">
+                                <option label="Mastercard">Mastercard</option>
+                                <option label="Visa">Visa</option>
+                                <option label="Elo">Elo</option>
+                            </select>
+                        </div>
+                    </form>
+
+                </div>
+                <button class="button-Cancelar" onclick="window.location.href='MeusCartoes.html';">Cancelar</button>
+                <button class="button-salvar"   onclick="window.location.href='MeusCartoes.html';">Salvar</button>
+
+            </div>
+
+
+        </div>
+    </main>
+</body>
+
+</html>

@@ -2,8 +2,8 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Minhas Compras</title>
-    <link rel="stylesheet" href="Styles/StyleMinhasComprasEmTransito.css">
+    <title>Meus Cartoes</title>
+    <link rel="stylesheet" href="Styles/StyleMeusCartoes.css">
     <script src="tela1/script.js" defer></script>
 
 </head>
@@ -36,7 +36,7 @@
                 </button>
                 <div class="box-exibir-opcoes MinhaConta">
                     <button>Perfil</button>
-                    <button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
+                    <button>Cartoes</button>
                     <button onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
                     <button>Trocar Senha</button>
                 </div>
@@ -66,27 +66,30 @@
             <div class="container-register">
                 <div class="box-top-register">
                 <!-- titulo do cabecalho -->
-                <h1 class="text-perfil">Minhas Compras</h1>
-
-                 </div>
-                <nav class="header-process">
-                    <span onclick="window.location.href='MinhasCompras.html';"  class="span-nav">Em Processamento(2) </span>
-                    <span style="text-decoration: underline;" class="span-nav" >Em Trânsito (2)</span>
-                    <span onclick="window.location.href='MinhasComprasEntregue.html';" class="span-nav">Entregue (0)</span>
-                    <span onclick="window.location.href='MinhasComprasEmTroca.html';" class="span-nav">Em troca (0)</span>
-                    <span onclick="window.location.href='MinhasComprasTrocaAutorizada.html';" class="span-nav">Troca Autorizada (0)</span>
-                </nav>
-
-                <div class="vinhos-container">
-                     <a class="pedido">PEDIDO #0001</a>
-                    <img src="imagens/produtos/001.jpg" class="vinho_imagem">
-                    <a class="desc">ESPUMANTE PEDRUCII 2 (x1)</a>
+                <h1 class="text-perfil">Cartão de Crédito</h1>
+                <button class="botaoADDNovoCartao" onclick="window.location.href='MeusCartoesADDNovo.html';">+ Adicionar Novo Cartão</button>
                 </div>
 
-                <div class="vinhos-container">
-                <a class="pedido">PEDIDO #0002</a>
-                    <img src="imagens/produtos/002.PNG" class="vinho_imagem">
-                    <a class="desc">TEXTURA PURA TINTO (x1)</a>
+
+                <div class="cartao-container">
+                    <img src="imagens/assets/CartaoMaster.png" class="cartao_imagem">
+                    <a class="desc">Nome</a>
+                    <a class="BandNome">Mastercard</a>
+                    <a class="CartaoNumero">**** **** **** 0000</a>
+                    <a class="Excluir">Excluir</a>
+                    <a class="Salvar">Editar</a>
+                    <button class="Preferencial">Definir como Preferencial</button>
+                </div>
+
+                <div class="cartao-container">
+                    <img src="imagens/assets/CartaoVisa.PNG" class="cartao_imagem">
+                    <a class="desc">Nome</a>
+                    <a class="BandNome">VISA</a>
+                    <a class="Status">Padrão</a>
+                    <a class="CartaoNumero">**** **** **** 0001</a>
+                    <a class="Excluir2">Excluir</a>
+                    <a class="Salvar2">Editar</a>
+                    <button class="Preferencial">Definir como Preferencial</button>
                 </div>
 
             </div>
