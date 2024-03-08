@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Venda</title>
-    <link rel="stylesheet" href="Styles/StyleVendaTrocaEndereco.css">
+    <link rel="stylesheet" href="../Styles/StyleVendaCupomTroca.css">
     <script src="script.js" defer></script>
 </head>
 
@@ -15,7 +15,7 @@
             <h1 class="title-crnines">
                 <span style="color:#fff;"> CR </span> WINES
             </h1>
-            <button class="button-header-minha-conta"> MINHA CONTA <img src="imagens/assets/icon-button-header.png"
+            <button class="button-header-minha-conta"> MINHA CONTA <img src="../imagens/assets/icon-button-header.png"
                     alt="icon-button-header" class="icon-button-header"></button>
         </header>
 
@@ -23,22 +23,19 @@
 
             <div class="container-register">
                 <div class="box-top-register">
-                    <h1 class="text-perfil">Meu endereço</h1>
+                    <h1 class="text-perfil">CUPOM DE TROCA</h1>
                 </div>
                     <div class="Endereco-Container">
                         <input type="radio" name="radio" id="radio" class="input-radio">
-                        <a class="EndCompleto">NOME COMPLETO</a>
-                        <a class="StatusEnd">PADRÃO</a>
-                        <a class="EnderecoCompleto">Rua maragogipe, 2020,  CASA 2 , centro, itaquaquecetubba, são Paulo</a>
+                        <a class="EndCompleto">CUPOM</a>
+                        <a class="EnderecoCompleto">DESCONTO: 100%</a>
                     </div>
 
-                    <div class="Endereco-Container">
-                        <input type="radio" name="radio" id="radio" class="input-radio">
-                            <a class="EndCompleto">NOME COMPLETO</a>
-                        <a class="EnderecoCompleto">Rua value da rua, 1234, complemento 2, bairro novo mundo Mogi das Cruzes, São Paulo</a>
-                    </div>
-
-                <button class="botaoAddEnd">+ Adicionar um novo endereço</button>
+                <div class="Endereco-Container">
+                    <input type="radio" name="radio" id="radio" class="input-radio">
+                    <a class="EndCompleto">CUPOM</a>
+                    <a class="EnderecoCompleto">DESCONTO: 100%</a>
+                </div>
                 <button class="botaoCancelar" onclick="window.location.href='Venda.html';">Cancelar</button>
                 <button class="botaoConfirmar" onclick="window.location.href='Venda.html';">Confirmar</button>
 

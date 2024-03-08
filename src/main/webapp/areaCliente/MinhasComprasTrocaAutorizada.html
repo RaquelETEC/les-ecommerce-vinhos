@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Minhas Compras</title>
-    <link rel="stylesheet" href="Styles/StyleMinhasComprasEntregue.css">
-    <script src="tela1/script.js" defer></script>
+    <link rel="stylesheet" href="../Styles/StyleMinhasComprasTrocaAutorizada.css">
+    <script src="../tela1/script.js" defer></script>
 
 </head>
 <body>
@@ -13,7 +13,7 @@
         <h1 class="title-crnines">
             <span style="color:#fff;"> CR </span> WINES
         </h1>
-        <button class="button-header-minha-conta"> MINHA CONTA <img src="imagens/assets/icon-button-header.png"
+        <button class="button-header-minha-conta"> MINHA CONTA <img src="../imagens/assets/icon-button-header.png"
                                                                     alt="icon-button-header" class="icon-button-header"></button>
     </header>
 
@@ -22,7 +22,7 @@
         <!-- conteudo do perfil da direita -->
         <div class="container-perfil">
             <div class="box-name-perfil">
-                <img src="imagens/assets/icon-box-image-name.png" alt="" class="img-name-perfil">
+                <img src="../imagens/assets/icon-box-image-name.png" alt="" class="img-name-perfil">
                 <div class="box-name-e-nivel">
                     <p class="text-name">Raquel Silva</p>
                     <p class="text-nivel">NIVEL: 1</p>
@@ -71,30 +71,20 @@
                  </div>
                 <nav class="header-process">
                     <span onclick="window.location.href='MinhasCompras.html';" class="span-nav">Em Processamento  (2)</span>
-                    <span onclick="window.location.href='MinhasComprasEmTransito.html';" class="span-nav">Em Trânsito (2)</span>
-                    <span style="text-decoration: underline;" class="span-nav">Entregue (2)</span>
+                    <span onclick="window.location.href='MinhasComprasEmTransito.html';" class="span-nav">Em Trânsito (0)</span>
+                    <span onclick="window.location.href='MinhasComprasEntregue.html';"class="span-nav">Entregue (0)</span>
                     <span onclick="window.location.href='MinhasComprasEmTroca.html';" class="span-nav">Em troca (0)</span>
-                    <span onclick="window.location.href='MinhasComprasTrocaAutorizada.html';" class="span-nav">Troca Autorizada (0)</span>
+                    <span style="text-decoration: underline;"  class="span-nav">Troca Autorizada (1)</span>
                 </nav>
 
                 <div class="vinhos-container">
+                    <a class="trocaTexto">CUPOM DE TROCA GERADO</a>
                      <a class="pedido">PEDIDO #0001</a>
-                    <img src="imagens/produtos/001.jpg" class="vinho_imagem">
+                    <img src="../imagens/produtos/001.jpg" class="vinho_imagem">
                     <a class="desc">ESPUMANTE PEDRUCII 2 (x1)</a>
                     <a class="valor">R$ 500,00</a>
-                    <button onclick="window.location.href='MinhasComprasEmTroca.html';" class="botaoTroca">Trocar Produto</button>
-                    <a class="valorFinal">Total do pedido : 500,00</a>
+                    <button class="botaoTroca">Acessar Meus cupoms</button>
                 </div>
-
-                <div class="vinhos-container">
-                <a class="pedido">PEDIDO #0002</a>
-                    <img src="imagens/produtos/002.PNG" class="vinho_imagem">
-                    <a class="desc">TEXTURA PURA TINTO (x1)</a>
-                    <a class="valor">R$ 500,00</a>
-                    <button class="botaoTroca">Trocar Produto</button>
-                    <a class="valorFinal">Total do pedido : 500,00</a>
-                </div>
-
             </div>
 
 
