@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Endereco</title>
+    <link rel="stylesheet" href="Styles/StyleVendaADDEnd.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1 class="title-crnines">
+                <span style="color:#fff;"> CR </span> WINES
+            </h1>
+            <button class="button-header-minha-conta"> MINHA CONTA <img src="imagens/assets/icon-button-header.png"
+                    alt="icon-button-header" class="icon-button-header"></button>
+        </header>
+
+        <div class="container-main">
+
+            <div class="container-register">
+
+                <div class="box-top-register">
+                    <!-- titulo do cabecalho -->
+                    <h1 class="text-perfil">Adicionar Endereço</h1>
+                </div>
+
+                <div class="content">
+                    <!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
+                    <form action="" class="form-register">
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="Nome Completo">
+                        </div>
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="CEP*">
+                        </div>
+
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="Logradouro*">
+                        </div>
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="N°*">
+                        </div>
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="Cidade">
+                        </div>
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="Bairro">
+                        </div>
+                        <div class="box-input-form">
+                            <input type="text" class="input-form input-width-1 " placeholder="Pais">
+                        </div>
+
+                        <div class="box-input-form">
+                            <div class="box-label">
+                                <label for="">Tipo de Residencia</label>
+                            </div>
+                            <select id="cars" class="input-form input-width-2 ">
+                                <option label="Casa">Casa</option>
+                                <option label="Apartamento">Apartamento</option>
+                                <option label="Condominio">Condominio</option>
+                            </select>
+                        </div>
+
+                        <div class="TiposEnd">Tipo de Endereço*</div>
+                        <div class="box-input-form">
+                            <input type="radio" name="genero" id="Feminino" class="input-radio">
+                            <label for="Feminino" style="font-weight: 100;">Entrega</label>
+
+                            <input type="radio" name="genero" id="Masculino" class="input-radio">
+                            <label for="Masculino" style="font-weight: 100;">Cobrança</label>
+
+                            <input type="radio" name="genero" id="Outro" class="input-radio">
+                            <label for="Outro" style="font-weight: 100;">Residencial</label>
+                        </div>
+
+                    </form>
+
+                </div>
+                <button class="button-Cancelar" onclick="window.location.href='Venda.html';">Cancelar</button>
+                <button class="button-salvar"   onclick="window.location.href='Venda.html';">Salvar</button>
+
+            </div>
+
+
+        </div>
+    </main>
+</body>
+
+</html>
