@@ -9,4 +9,3 @@ const exibirMinhaConta = () => {
         minhaConta.classList.add("exibir");
     }
 }
-

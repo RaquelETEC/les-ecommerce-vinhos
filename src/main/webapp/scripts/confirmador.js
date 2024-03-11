@@ -11,3 +11,10 @@ function confirmar(idcon) {
 		window.location.href = "delete?idcon=" + idcon
 	}
 }
+
+
+function excluirConta(){
+	confirm("Tem certeza que deseja excluir?");
+	
+	
+}

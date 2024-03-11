@@ -76,7 +76,7 @@
 									<br>
 									R$ 1499
 									<br>
-									<button>Fazer Pedido</button>
+									<a href="/les-ecommerce-vinhos/areaVenda/Venda.html"> <button>Fazer Pedido</button> </a>
 								</div>
 							</div>
 									

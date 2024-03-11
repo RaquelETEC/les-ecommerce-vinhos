@@ -1,16 +1,7 @@
 function validarLogin2(){
-	let email = document.getElementById("typeEmailX-2").value;
-	let senha = document.getElementById("typePasswordX-2").value;
 
-	if(email === ""){
-		alert('preencha o campo email');
-	}
-	else if(senha === ""){
-		alert('preencha o campo de senha');
-	}
-	else{
 		alert('tudo certo');
-	}
+		window.location.href='PagInicial.html'
 }
 
 function rolarAteCampo(idCampo) {

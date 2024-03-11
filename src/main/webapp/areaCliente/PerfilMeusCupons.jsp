@@ -50,19 +50,20 @@
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-2.png" alt="" class="img-icons-perfil">
-                        <span onclick="window.location.href='MinhasCompra.html';">Minhas Compras</span>
+                        <span>Minhas Compras</span>
                     </button>
                    
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='NotificaÁıes.jsp';">Notificacoes</span>
+
+                         <span onclick="window.location.href='NotificaÁıes.jsp';">Notificacoes</span>
                     </button>
                     
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-4.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='PerfilMeusCupons.jsp';">Meus Cupons</span>
+                        <span onclick="window.location.href='PerfilMeusCupons.jsp';">Meus Cupons</span>
                     </button>
                     
                 </div>
@@ -74,82 +75,61 @@
 
                 <div class="box-top-register">
                     <!-- titulo do cabecalho -->
-                    <h1 class="text-perfil">Editar Perfil</h1>
+                    <h1 class="text-perfil">Meus Cupons</h1>
 
                     <div class="box-input-pesquisa-e-carrinho">
 
                         <div class="box-input-top-pesquisar">
                             <input type="text" class="input-top-pesquisar" placeholder="Busca">
-                            <button class="button-top-register"><img src="./imagens/assets/icons-lupa-input.png" alt=""
+                            <button class="button-top-register"><img src="../imagens/assets/icons-lupa-input.png" alt=""
                                     class="img-top-register"></button>
                         </div>
 
-                        <button class="button-top-register"><img src="./imagens/assets/icons-carrinho.png" alt=""
+                        <button class="button-top-register"><img src="../imagens/assets/icons-carrinho.png" alt=""
                                 class="img-top-register"></button>
 
                     </div>
 
                 </div>
 
-                <div class="content">
+                <div class="content-Cupons">
                     <!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
-                    <form action="" class="form-register">
+	                   
+				    <div class="card mt-3" style="background-color: #F0F0F0; width: 50rem;">
+				        <div class="card-body">
+				            <div class="row">
+				                <!-- Parte esquerda com a imagem do cupom -->
+				                <div class="col-md-3">
+				                    <img src="../imagens/assets/CupomFrete.png" alt="Imagem do Cupom" class="img-fluid">
+				                </div>
+				                <!-- Parte direita com o nome do cupom e a data de vencimento -->
+				                <div class="col-md-9">
+				                    <h5 class="card-title">Nome do Cupom 1</h5>
+				                    <p class="card-text">Data de vencimento: 20/03/2024</p>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				
+				    <div class="card mt-3" style="background-color: #F0F0F0; width: 50rem;">
+				        <div class="card-body">
+				            <div class="row">
+				                <!-- Parte esquerda com a imagem do cupom -->
+				                <div class="col-md-3">
+				                    <img src="../imagens/assets/descontoCupom.png" alt="Imagem do Cupom" class="img-fluid">
+				                </div>
+				                <!-- Parte direita com o nome do cupom e a data de vencimento -->
+				                <div class="col-md-9">
+				                    <h5 class="card-title">Nome do Cupom 2</h5>
+				                    <p class="card-text">Data de vencimento: 25/03/2024</p>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
 
-                        <div class="box-input-form">
-                            <div class="box-label">
-                                <label for="">Nome</label>
-                            </div>
-                             <input type="text" class="input-form input-width-1" value="<%= request.getAttribute("nome") %>">
-                            
-                        </div>
-                        <div class="box-input-form">
-                            <div class="box-label">
-                                <label for="">E-Mail</label>
-                            </div>
-                            <input type="text" class="input-form input-width-1 " value="<%= request.getAttribute("email") %>">
-                        </div>
-
-                        <div class="box-input-form">
-                            <div class="box-label">
-                                <label for="">CPF</label>
-                            </div>
-                            <input type="text" class="input-form input-width-2 " value="<%= request.getAttribute("cpf") %>">
-                        </div>
-
-                        <div class="box-input-form">
-                            <div class="box-label">
-                                <label for="">Data de nascimento</label>
-                            </div>
-                            <input type="date" class="input-form input-width-3 " value="<%= request.getAttribute("nascimento") %>">
-                        </div>
-
-                        <div class="box-input-form">
-                            <div class="box-label">
-                                <label for="">Telefone</label>
-                            </div>
-                            <input type="tel" class="input-form input-width-2 " value="<%= request.getAttribute("telefone") %>">
-                        </div>
-
-                        <div class="box-input-form">
-                            <div class="box-label">
-                                <label for="">Genero</label>
-                            </div>
-                             <input type="radio" name="genero" id="Feminino" class="input-radio" <%= "feminino".equals(request.getAttribute("genero")) ? "checked" : "" %>>
-						     <label for="Feminino" style="font-weight: 100;">Feminino</label>
-						
-						     <input type="radio" name="genero" id="Masculino" class="input-radio" <%= "masculino".equals(request.getAttribute("genero")) ? "checked" : "" %>>
-						     <label for="Masculino" style="font-weight: 100;">Masculino</label>
-						     
-						 	 <input type="radio" name="genero" id="nao_binario" class="input-radio" <%= "nao_binario".equals(request.getAttribute("genero")) ? "checked" : "" %>>
-						     <label for="nao_binario" style="font-weight: 100;">N√£o Bin√°rio</label>
-						     
-						     <input type="radio" name="genero" id="Outros" class="input-radio" <%= "outros".equals(request.getAttribute("genero")) ? "checked" : "" %>>
-						     <label for="Outro" style="font-weight: 100;">Outro</label>
-                        </div>
-
-                        <button class="button-salvar">Salvar</button>
-
-                    </form>
+    <!-- Adicione mais cards conforme necess·rio -->
+                   
+                   
                     <!-- acaba aqui -->
 
                 </div>
