@@ -5,6 +5,8 @@
     <title>Área da Administração</title>
         <link rel="stylesheet" href="../Styles/styleAdm.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+    <script src="../scripts/statusPedidos.js"></script>
+    
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
@@ -21,7 +23,7 @@
         <div class="row">
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
                 <div class="position-sticky">
-                     <ul class="nav flex-column">
+                    <ul class="nav flex-column">
                      <li class="nav-Title">
                             Menu
                         </li>
@@ -41,7 +43,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/les-ecommerce-vinhos/areaAdministrador/AndamentooPedidos.html">
+							<a class="nav-link bg-white text-dark" href="/les-ecommerce-vinhos/areaAdministrador/AndamentoPedidos.html">
                                 Pedidos em Andamento
                             </a>
                         </li>
@@ -51,12 +53,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/les-ecommerce-vinhos/areaAdministrador/Produtos.html">
+                            <a class="nav-link" href="#">
                                 Produtos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  bg-white text-dark" href="/les-ecommerce-vinhos/areaAdministrador/Estoque.html">
+                            <a class="nav-link" href="#">
                                 Estoque
                             </a>
                         </li>
@@ -67,75 +69,42 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <!-- Conteudo principal aqui -->
 				    <div class="container mt-4">
-				        <h2 class="text-center mb-4">Estoque de Produtos</h2>
-        <!-- Formulário de filtro -->
-        <form class="mb-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="codigoBarras" class="form-label">Código de Barras:</label>
-                    <input type="text" class="form-control" id="codigoBarras" name="codigoBarras">
-                </div>
-                
-                <div class="col-md-3">
-                    <label for="descricao" class="form-label">Descrição:</label>
-                    <input type="text" class="form-control" id="descricao" name="descricao">
-                </div>
-                 <div class="col-md-3">
-                    <label for="Status" class="form-label">Status</label>
-                    <input type="text" class="form-control" id="Status" name="Status">
-                </div>
-                
-              </div>
-          <div class="text-center">
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </div>
-            </div>
-           </div>
-        </form>
-         <div class="text-center">
-             <div class="row mt-3">
-                <div class="col-md-12">
-            		<a href="/les-ecommerce-vinhos/areaAdministrador/EstoqueInserir.html">
-              			<button class="btn btn-primary">Incluir</button>
-            		</a>
-        </div>
-            </div>
-           </div>
-                <!-- Tabela de resultados -->
-         <div class="text-center">
-				 <table id="tabela" class="mx-auto">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Código de Barras</th>
-                        <th>Descrição</th>
-                        <th>Status</th>
-                        <th>Estoque</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>7890123456789</td>
-                        <td>Vinho Tinto Reserva</td>
-                        <td>Ativado</td>
-                        <td>110</td>
-                        
-                    </tr>
-                   
-                    <tr>
-                        <td>1</td>
-                        <td>7890123456789</td>
-                        <td>Vinho Tinto Reserva</td>
-                        <td>Ativado</td>
-                        <td>220</td>
-                    </tr>
-                    <!-- Adicione mais linhas conforme necessário -->
-                </tbody>
-            </table>
-					</div>
+				        
+				          <!-- Tela para alterar pedido -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 border p-4">
+                            <h3 class="text-center mb-4">Pedido Aguardando Confirmação de Pagamento</h3>
+
+                            <div class="mb-3">
+                                <label for="numeroPedido" class="form-label">Número do Pedido:</label>
+                                <input type="text" class="form-control" id="numeroPedido" readonly value="123456">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nomeCliente" class="form-label">Nome do Cliente:</label>
+                                <input type="text" class="form-control" id="nomeCliente" readonly value="Nome do Cliente">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="valorPedido" class="form-label">Valor do Pedido:</label>
+                                <input type="text" class="form-control" id="valorPedido" readonly value="R$ 500,00">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="statusPedido" class="form-label">Status:</label>
+                                <select class="form-select" id="statusPedido">
+                                    <option  disabled selected>status atual</option>
+                                </select>
+                            </div>
+
+                            <div class="text-center mb-4">
+                             <a href="/les-ecommerce-vinhos/areaAdministrador/AndamentoPedidos.html">  <button class="btn btn-primary">Salvar</button></a> 
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fim da tela para alterar pedido -->
+       
+				      
 				    </div>
 				</main>
          
@@ -147,5 +116,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AndamentoPedidosEditar.html -->
+
 </body>
 </html>

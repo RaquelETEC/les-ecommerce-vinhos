@@ -21,7 +21,7 @@
         <div class="row">
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
                 <div class="position-sticky">
-                     <ul class="nav flex-column">
+                    <ul class="nav flex-column">
                      <li class="nav-Title">
                             Menu
                         </li>
@@ -56,7 +56,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  bg-white text-dark" href="/les-ecommerce-vinhos/areaAdministrador/Estoque.html">
+                            <a class="nav-link bg-white text-dark" href="/les-ecommerce-vinhos/areaAdministrador/Estoque.html">
                                 Estoque
                             </a>
                         </li>
@@ -67,77 +67,54 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <!-- Conteudo principal aqui -->
 				    <div class="container mt-4">
-				        <h2 class="text-center mb-4">Estoque de Produtos</h2>
-        <!-- Formulário de filtro -->
-        <form class="mb-4">
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="codigoBarras" class="form-label">Código de Barras:</label>
-                    <input type="text" class="form-control" id="codigoBarras" name="codigoBarras">
-                </div>
-                
-                <div class="col-md-3">
-                    <label for="descricao" class="form-label">Descrição:</label>
-                    <input type="text" class="form-control" id="descricao" name="descricao">
-                </div>
-                 <div class="col-md-3">
-                    <label for="Status" class="form-label">Status</label>
-                    <input type="text" class="form-control" id="Status" name="Status">
-                </div>
-                
-              </div>
-          <div class="text-center">
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Buscar</button>
-                </div>
-            </div>
-           </div>
-        </form>
-         <div class="text-center">
-             <div class="row mt-3">
-                <div class="col-md-12">
-            		<a href="/les-ecommerce-vinhos/areaAdministrador/EstoqueInserir.html">
-              			<button class="btn btn-primary">Incluir</button>
-            		</a>
-        </div>
-            </div>
-           </div>
-                <!-- Tabela de resultados -->
-         <div class="text-center">
-				 <table id="tabela" class="mx-auto">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Código de Barras</th>
-                        <th>Descrição</th>
-                        <th>Status</th>
-                        <th>Estoque</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>7890123456789</td>
-                        <td>Vinho Tinto Reserva</td>
-                        <td>Ativado</td>
-                        <td>110</td>
-                        
-                    </tr>
-                   
-                    <tr>
-                        <td>1</td>
-                        <td>7890123456789</td>
-                        <td>Vinho Tinto Reserva</td>
-                        <td>Ativado</td>
-                        <td>220</td>
-                    </tr>
-                    <!-- Adicione mais linhas conforme necessário -->
-                </tbody>
-            </table>
-					</div>
-				    </div>
-				</main>
+				        <h2 class="text-center mb-4">Incluir movimentação de estoque</h2>
+		        <!-- Formulário de filtro -->
+		        <form class="mb-4">
+		            <div class="row">
+		                <div class="col-md-3">
+		                    <label for="codigoBarras" class="form-label">Código de Barras:</label>
+		                    <input type="text" class="form-control" id="codigoBarras" name="codigoBarras">
+		                </div>
+		                 <div class="col-md-3">
+		                    <label for="quantidade" class="form-label">Quantidade:</label>
+		                    <input type="text" class="form-control" id="quantidade" name="quantidade">
+		                </div>
+		                <div class="col-md-3">
+		                    <label for="movimentacao" class="form-label">Movimentação:</label>
+		                     <select class="form-select" id="status" name="status">
+						        <option value="entrada">ENTRADA</option>
+						        <option value="saida">SAIDA</option>
+						    </select>
+		                </div>
+			        <div class="col-md-3">
+			            <label for="valorCusto" class="form-label">Valor do Custo:</label>
+			            <input type="text" class="form-control" id="valorCusto" name="valorCusto">
+			        </div>
+			        <div class="col-md-3">
+			            <label for="fornecedor" class="form-label">Fornecedor:</label>
+			            <input type="text" class="form-control" id="fornecedor" name="fornecedor">
+			        </div>
+			        <div class="col-md-3">
+			            <label for="dataEntrada" class="form-label">Data de Entrada:</label>
+			            <input type="date" class="form-control" id="dataEntrada" name="dataEntrada">
+			        </div>
+			        <div class="col-md-3">
+			            <label for="observacoes" class="form-label">Observações:</label>
+			            <textarea class="form-control" id="observacoes" name="observacoes" rows="1"></textarea>
+			        </div>
+			    </div>
+			  </form>
+			   
+		          <div class="text-center">
+		            <div class="row mt-3">
+		                <div class="col-md-12">
+                             <a href="/les-ecommerce-vinhos/areaAdministrador/Estoque.html">  <button class="btn btn-primary">Salvar</button></a> 
+		                </div>
+		            </div>
+		           </div>
+		     </div>
+		       
+		</main>
          
         </div>
     </div>
