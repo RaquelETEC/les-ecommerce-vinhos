@@ -12,7 +12,7 @@
             <a href="index.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 				<a href="login.html" class="btn btn-light ms-2">LOGIN</a>
-				<a onclick="window.location.href='PagInicial.html';"class="btn btn-light ms-2">GERENCIAMENTO</a>
+				<a onclick="window.location.href='PagInicial.html';" class="btn btn-light ms-2">GERENCIAMENTO</a>
 			</div>
 		</div>
 	</nav>
@@ -40,11 +40,11 @@
                                 Pedidos Aguardando Aprovação
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="window.location.href='AndamentoPedidos.html';">
-                                Pedidos em Andamento
-                            </a>
-                        </li>
+                       <li class="nav-item">
+						    <a class="nav-link bg-white text-dark" onclick="window.location.href='AndamentoPedidos.html';">
+						        Pedidos em Andamento
+						    </a>
+						</li>
                         <li class="nav-item">
                             <a class="nav-link" onclick="window.location.href='TrocaPedidos.html';">
                                 Pedidos Aguardando Troca
@@ -67,35 +67,97 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <!-- Conteudo principal aqui -->
 				    <div class="container mt-4">
-				        <h2 class="text-center mb-4">Alterar cadastro de cliente</h2>
-				        <!-- Formulário de filtro -->
+				        <h2 class="text-center mb-4">Pedidos em Andamento</h2>
+				        
+				          <!-- Formulário de filtro -->
         <form class="mb-4">
             <div class="row">
-               
-                <div class="col-md-4">
-                    <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome">
+                <div class="col-md-2">
+                    <label for="cliente" class="form-label">Cliente</label>
+                    <input type="text" class="form-control" id="cliente" name="cliente">
                 </div>
-               <div class="col-md-3">
-				    <label for="status" class="form-label">Status</label>
-				    <select class="form-select" id="status" name="status">
-				        <option value="ativado">Ativado</option>
-				        <option value="desativado">Desativado</option>
-				    </select>
-				</div>
+                 <div class="col-md-2">
+                	<label for="ID" class="form-label">ID Pedido</label>
+                    <input type="text" class="form-control" id="ID" name="ID">
+                </div>
+                <div class="col-md-3">
+                    <label for="dataPedido" class="form-label">Data Pedido</label>
+                    <input type="date" class="form-control" id="dataPedido" name="dataPedido">
+                </div>
+                <div class="col-md-2">
+                    <label for="valor" class="form-label">Valor Pedido</label>
+                    <input type="text" class="form-control" id="valor" name="valor">
+                </div>
+                <div class="col-md-2">
+                    <label for="status" class="form-label">Status</label>
+	                   <select class="form-select" id="status" name="status">
+					        <option value="ativado">APROVADA</option>
+					        <option value="desativado">EM TRANSPORTE</option>
+					        <option value="desativado">ENTREGUE</option>
+					        
+					    </select>
+                </div>
             </div>
-            
           <div class="text-center">
          
             <div class="row mt-3">
-
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
             </div>
            </div>
         </form>
-                        <div class="col-md-12">
-                            <button onclick="window.location.href='Clientes.html';" class="btn btn-primary">Salvar</button>
-                        </div>
-			</div>
+				        
+				<table id="tabela" class="mx-auto">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Cliente</th>
+								<th>Data Pedido</th>
+								<th>Valor Pedido</th>
+								<th>Status</th>
+								
+								<th>Opções</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>Raquel</td>
+								<td>10/01/2024</td>
+								<td>R$ 1000,00</td>
+								<td>APROVADA</td>
+								
+								<td>
+                					<a onclick="window.location.href='AndamentoPedidosEditar.html';"?status=aprovada" class="Botao1">Editar</a>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Caynan</td>
+								<td>10/03/2022</td>
+								<td>R$ 56,00</td>
+								<td>EM TRANSPORTE</td>
+								
+								<td>
+                					<a onclick="window.location.href='AndamentoPedidosEditar.html';"?status=em-transporte" class="Botao1">Editar</a>
+								</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Caynan</td>
+								<td>10/03/2022</td>
+								<td>R$ 56,00</td>
+								<td>ENTREGUE</td>
+								
+								<td>
+                					<a onclick="window.location.href='AndamentoPedidosEditar.html';"?status=entregue" class="Botao1">Editar</a>
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+				      
+				    </div>
 				</main>
          
         </div>
