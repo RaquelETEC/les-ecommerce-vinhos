@@ -58,3 +58,31 @@ function adicionarAoCarrinho(produto, preco, quantidade) {
                 }
             });
         });
+        
+        
+ const responses = {
+						"Olá": "Olá! Como posso ajudar?",
+						"Como você está?": "Estou bem, obrigado por perguntar!",
+						"Qual é o seu nome?": "Meu nome é ChatBot.",
+						"Obrigado": "De nada! Estou aqui para ajudar.",
+						"Tchau": "Até logo! Se precisar de mais alguma coisa, estarei por aqui."
+					};
+
+function sendMessage() {
+	const userInput = document.getElementById("user-input").value;
+	const chatBox = document.getElementById("chat-box");
+
+	// Mostra a mensagem do usuário no chat
+	chatBox.innerHTML += `<div><strong>Você:</strong> ${userInput}</div>`;
+
+	// Verifica se há uma resposta no objeto de respostas
+	if (responses[userInput]) {
+		const botResponse = responses[userInput];
+		chatBox.innerHTML += `<div><strong>ChatBot:</strong> ${botResponse}</div>`;
+	} else {
+		chatBox.innerHTML += `<div><strong>ChatBot:</strong> Desculpe, não entendi. Pode repetir, por favor?</div>`;
+	}
+
+	// Limpa a entrada do usuário
+	document.getElementById("user-input").value = "";
+}
