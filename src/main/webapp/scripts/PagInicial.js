@@ -42,3 +42,19 @@ function adicionarAoCarrinho(produto, preco, quantidade) {
         console.error('Erro:', error);
     });
 }
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+            const chatbotContainer = document.getElementById("chatbot-container");
+            const toggleChatbotButton = document.getElementById("toggle-chatbot");
+            const chatbotContent = document.getElementById("chatbot-content");
+
+            toggleChatbotButton.addEventListener("click", function() {
+                chatbotContainer.classList.toggle("expanded");
+                if (chatbotContainer.classList.contains("expanded")) {
+                    chatbotContent.style.display = "block";
+                } else {
+                    chatbotContent.style.display = "none";
+                }
+            });
+        });

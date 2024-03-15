@@ -20,10 +20,11 @@
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar">
-                <div class="position-sticky">
+                 <div class="position-sticky">
                     <ul class="nav flex-column">
                      <li class="nav-Title">
                             Menu
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="/les-ecommerce-vinhos/areaAdministrador/PagInicial.html">
                                 Dashboard
@@ -34,28 +35,23 @@
                                 Clientes
                             </a>
                         </li>
-                        <li class="nav-item">
+                          <li class="nav-item">
                             <a class="nav-link" href="/les-ecommerce-vinhos/areaAdministrador/AprovacaoPedidos.html">
-                                Pedidos Aguardando Aprovação
+                                Alterar Status de Pedido
                             </a>
                         </li>
-                       <li class="nav-item">
-						    <a class="nav-link" href="/les-ecommerce-vinhos/areaAdministrador/AndamentoPedidos.html">
-						        Pedidos em Andamento
-						    </a>
-						</li>
                         <li class="nav-item">
                             <a class="nav-link bg-white text-dark" href="/les-ecommerce-vinhos/areaAdministrador/TrocaPedidos.html">
                                 Pedidos Aguardando Troca
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/les-ecommerce-vinhos/areaAdministrador/Produtos.html">
                                 Produtos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/les-ecommerce-vinhos/areaAdministrador/Estoque.html">
                                 Estoque
                             </a>
                         </li>
@@ -76,27 +72,16 @@
                                 <label for="numeroPedido" class="form-label">Número do Pedido:</label>
                                 <input type="text" class="form-control" id="numeroPedido" readonly value="123456">
                             </div>
-
                             <div class="mb-3">
-                                <label for="nomeCliente" class="form-label">Nome do Cliente:</label>
-                                <input type="text" class="form-control" id="nomeCliente" readonly value="Nome do Cliente">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="valorPedido" class="form-label">Valor do Pedido:</label>
-                                <input type="text" class="form-control" id="valorPedido" readonly value="R$ 500,00">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="statusPedido" class="form-label">Status:</label>
+                                <label for="statusPedido" class="form-label">Produto volta para o estoque?</label>
                                 <select class="form-select" id="statusPedido">
-                                    <option value="emtroca" disabled selected>Em troca</option>
-                                    <option value="Trocado">Trocado</option>
+                                    <option value="trocado">Sim</option>
+                                    <option value="nao-trocado">Não</option>
                                 </select>
                             </div>
 
                             <div class="text-center mb-4">
-                             <a href="/les-ecommerce-vinhos/areaAdministrador/AprovacaoPedidos.html">  <button class="btn btn-primary">Salvar</button></a> 
+                             <a href="/les-ecommerce-vinhos/areaAdministrador/TrocaPedidos.html">  <button class="btn btn-primary">Salvar</button></a> 
                             </div>
                         </div>
                     </div>

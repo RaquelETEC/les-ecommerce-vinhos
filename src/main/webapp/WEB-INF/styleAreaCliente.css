@@ -55,14 +55,11 @@ header {
 .container-main {
     width: 100%;
     height: auto;
-
     margin-top: 5rem;
-
     display: flex;
     justify-content: center;
     align-items: flex-start;
     gap: 1rem;
-
     padding: 1.5rem;
 }
 
