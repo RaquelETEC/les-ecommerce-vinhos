@@ -15,7 +15,8 @@
 		<div class="container-fluid">
 			<img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3">
 			<div class="navbar-nav ms-auto">
-				<a href="login.html" class="btn btn-light ms-2">LOGIN</a>
+				<a href="areaCliente/MinhasCompras.html" class="btn btn-light ms-2">MINHAS COMPRAS</a>
+				<a href="meuCarrinho.jsp" class="btn btn-light ms-2">MEU CARRINHO</a>
 				<a href="areaAdministrador/Login.html" class="btn btn-light ms-2">GERENCIAMENTO</a>
 			</div>
 		</div>
@@ -122,7 +123,7 @@
 									<button class="btn btn-sm btn-outline-secondary" onclick="incrementarQuantidade(1)">+</button>
 								</div>
 							</div>
-								<input class="btn btn-lg add-to-cart-btn text-center add_carrinho" type="submit" value="AdicionarAoCarrinho">
+								<input class="btn btn-lg add-to-cart-btn text-center add_carrinho" type="submit" value="Adicionar ao Carrinho">
 						</div>
 					 </div>
 				</form>
@@ -165,9 +166,94 @@
 							</button>
 						</div>
 				</div>
+
 			</div>
-				
+				<style>
+					#chat-container {
+						max-width: 400px;
+						margin-left: 650px;
+						padding: 20px;
+						margin-top: 100px;
+						border: 1px solid #ccc;
+						border-radius: 8px;
+						background-color: #f9f9f9;
+						box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+					}
+
+					#chat-box {
+						overflow-y: scroll;
+						max-height: 200px;
+						margin-bottom: 10px;
+						padding: 10px;
+						border: 1px solid #ddd;
+						border-radius: 8px;
+						background-color: #fff;
+					}
+
+					#chat-box div {
+						margin-bottom: 5px;
+					}
+
+					#user-input {
+						width: calc(100% - 80px);
+						padding: 10px;
+						margin-right: 10px;
+						border: 1px solid #ccc;
+						border-radius: 4px;
+					}
+
+					button {
+						padding: 10px 20px;
+						border: none;
+						border-radius: 4px;
+						background-color: #007bff;
+						color: #fff;
+						cursor: pointer;
+						margin-top: 10px;
+					}
+
+					button:hover {
+						background-color: #0056b3;
+					}
+				</style>
+
+				<div id="chat-container">
+					<div id="chat-box"></div>
+					<input type="text" id="user-input" placeholder="Precisa de ajuda?">
+					<button onclick="sendMessage()">Enviar</button>
+				</div>
+
+				<script>
+					const responses = {
+						"Olá": "Olá! Como posso ajudar?",
+						"Como você está?": "Estou bem, obrigado por perguntar!",
+						"Qual é o seu nome?": "Meu nome é ChatBot.",
+						"Obrigado": "De nada! Estou aqui para ajudar.",
+						"Tchau": "Até logo! Se precisar de mais alguma coisa, estarei por aqui."
+					};
+
+					function sendMessage() {
+						const userInput = document.getElementById("user-input").value;
+						const chatBox = document.getElementById("chat-box");
+
+						// Mostra a mensagem do usuário no chat
+						chatBox.innerHTML += `<div><strong>Você:</strong> ${userInput}</div>`;
+
+						// Verifica se há uma resposta no objeto de respostas
+						if (responses[userInput]) {
+							const botResponse = responses[userInput];
+							chatBox.innerHTML += `<div><strong>ChatBot:</strong> ${botResponse}</div>`;
+						} else {
+							chatBox.innerHTML += `<div><strong>ChatBot:</strong> Desculpe, não entendi. Pode repetir, por favor?</div>`;
+						}
+
+						// Limpa a entrada do usuário
+						document.getElementById("user-input").value = "";
+					}
+				</script>
 			</div>
+
 		</div>
 		 <!-- Chatbot container -->
 	  <div id="chatbot-container" class="collapsed">
@@ -195,6 +281,7 @@
 	</div>
 	</div>
 	
+
 
 	<footer class="p-4 text-light text-center " style="background: black;">
 		Desenvolvido por Caynan e Raquel
