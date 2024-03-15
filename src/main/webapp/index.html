@@ -168,62 +168,31 @@
 				</div>
 
 			</div>
-				<style>
-					#chat-container {
-						max-width: 400px;
-						margin-left: 650px;
-						padding: 20px;
-						margin-top: 100px;
-						border: 1px solid #ccc;
-						border-radius: 8px;
-						background-color: #f9f9f9;
-						box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-					}
+			</div>
 
-					#chat-box {
-						overflow-y: scroll;
-						max-height: 200px;
-						margin-bottom: 10px;
-						padding: 10px;
-						border: 1px solid #ddd;
-						border-radius: 8px;
-						background-color: #fff;
-					}
-
-					#chat-box div {
-						margin-bottom: 5px;
-					}
-
-					#user-input {
-						width: calc(100% - 80px);
-						padding: 10px;
-						margin-right: 10px;
-						border: 1px solid #ccc;
-						border-radius: 4px;
-					}
-
-					button {
-						padding: 10px 20px;
-						border: none;
-						border-radius: 4px;
-						background-color: #007bff;
-						color: #fff;
-						cursor: pointer;
-						margin-top: 10px;
-					}
-
-					button:hover {
-						background-color: #0056b3;
-					}
-				</style>
-
-				<div id="chat-container">
-					<div id="chat-box"></div>
-					<input type="text" id="user-input" placeholder="Precisa de ajuda?">
-					<button onclick="sendMessage()">Enviar</button>
-				</div>
-
+		</div>
+		 <!-- Chatbot container -->
+	  <div id="chatbot-container" class="collapsed">
+	    <div class="container-fluid">
+	        <div class="row">
+	            <div class="col">
+	                <button id="toggle-chatbot" class="btn btn-primary">Chatbot</button>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col">
+	                <!-- Chatbot content -->
+	                <div id="chatbot-content" style="display: none;">
+	                    <div id="chat-box" style="height: 200px; overflow-y: scroll;">
+	                        <!-- Chat messages will be displayed here -->
+	                    </div>
+	                    <div class="input-group mt-3">
+	                        <input type="text" class="form-control" id="user-input" placeholder="Digite sua mensagem...">
+	                        <button onclick="sendMessage()" class="btn btn-primary" id="send-button">Enviar</button>
+	                    </div>
+	                </div>
+	            </div>
 				<script>
 					const responses = {
 						"Olá": "Olá! Como posso ajudar?",
@@ -252,30 +221,6 @@
 						document.getElementById("user-input").value = "";
 					}
 				</script>
-			</div>
-
-		</div>
-		 <!-- Chatbot container -->
-	  <div id="chatbot-container" class="collapsed">
-	    <div class="container-fluid">
-	        <div class="row">
-	            <div class="col">
-	                <button id="toggle-chatbot" class="btn btn-primary">Chatbot</button>
-	            </div>
-	        </div>
-	        <div class="row">
-	            <div class="col">
-	                <!-- Chatbot content -->
-	                <div id="chatbot-content" style="display: none;">
-	                    <div id="chat-messages" style="height: 200px; overflow-y: scroll;">
-	                        <!-- Chat messages will be displayed here -->
-	                    </div>
-	                    <div class="input-group mt-3">
-	                        <input type="text" class="form-control" id="user-input" placeholder="Digite sua mensagem...">
-	                        <button class="btn btn-primary" id="send-button">Enviar</button>
-	                    </div>
-	                </div>
-	            </div>
 	        </div>
 	    </div>
 	</div>
