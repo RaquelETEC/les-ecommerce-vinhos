@@ -241,3 +241,6 @@ header {
 .Salvar3{position: absolute;left: 1650px;top: 700px;font-style: normal;font-weight: 400;line-height: 17px;color: #0048B1;}
 .Preferencial{box-sizing: border-box;position: absolute;width: 222px;height: 39px;left: 1500px;top: 300px;background: #FFFFFF;border: 1px solid #6B6B6B;border-radius: 5px;}
 
+.box-exibir-opcoes button.ativo {
+    color: #ff8000;
+}
