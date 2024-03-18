@@ -239,3 +239,6 @@ header {
 
 .Preferencial{/* Rectangle 27 */box-sizing: border-box;width: 216px;height: 41px;background: #FFFFFF;border: 1px solid #6B6B6B;border-radius: 6px;margin-left: 100px;}
 
+.box-exibir-opcoes button.ativo {
+    color: #ff8000;
+}

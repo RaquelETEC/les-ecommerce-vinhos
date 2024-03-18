@@ -40,10 +40,10 @@
                         <span>Minha Conta</span>
                     </button>
                     <div class="box-exibir-opcoes MinhaConta">
-                        <button class="ativo">Perfil</button>
+                        <button >Perfil</button>
                    	<button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
                         <button onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
-                        <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
+                        <button class="ativo" onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
                         <button onclick="window.location.href='PerfilExcluir.jsp';">apagar conta</button>
                     </div>
 
