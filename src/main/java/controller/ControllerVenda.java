@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.entity.CarrinhoItem;
-import model.entity.JavaBeans;
 
 @WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho" })
 public class ControllerVenda extends HttpServlet {

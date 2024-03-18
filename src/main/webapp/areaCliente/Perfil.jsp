@@ -45,7 +45,9 @@
                    		<button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
                         <button onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
                         <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
-                        <button onclick="window.location.href='PerfilExcluir.jsp';">apagar conta</button>
+                        <button onclick="window.location.href='PerfilExcluir.jsp';">Apagar conta</button>
+                        <button onclick="window.location.href='PerfilDesativar.jsp';">Desativar conta</button>
+                        
                     </div>
 
                     <button class="button-dados-perfil">
