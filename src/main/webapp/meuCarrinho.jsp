@@ -16,8 +16,6 @@
 					<div class="container-fluid">
 						<img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3">
 						<div class="navbar-nav ms-auto">
-							<a href="login.html" class="btn btn-light ms-2">LOGIN</a>
-							<a href="gerenciamento.html" class="btn btn-light ms-2">GERENCIAMENTO</a>
 						</div>
 					</div>
 				</nav>
