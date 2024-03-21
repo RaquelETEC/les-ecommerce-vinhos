@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tela 1</title>
+    <link rel="stylesheet" href="Styles/StyleAreaCliente.css">
     <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
     <script src="../scripts/exibirMenus.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
@@ -16,6 +17,8 @@
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
             <a href="'index.html'"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a href="'index.html'"><img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            
 			<div class="navbar-nav ms-auto">
 			</div>
 		</div>

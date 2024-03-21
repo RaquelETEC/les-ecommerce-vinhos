@@ -41,16 +41,15 @@ function validarCadastro() {
     if (nome === "" || email === "" || senha === "" || repitasenha === "" || 
         cpf === "" || telefone === "" || nascimento === "" || genero === '' ){
         rolarAteCampo("typeNome");
-    	alert("Preencha todos os campos com *");
         return false;
     }
     else if( tipoResidencia === "" || tipoLogradouro === "" ||  logradouro === "" ||  
     numero === "" ||  bairro === "" || cidade === "" ||cep === "" ||pais === "" ||  
      estado === "" ||  tipoTelefone === "" ){
-		  alert("Preencha todos os campos com *");
         rolarAteCampo("typeTipoResidencia");
         return false;
     }
+    
     if (senha.length < 8) {
         mensagens.push("Mínino 8 caracteres.");
     }
@@ -90,23 +89,23 @@ function validarCadastro() {
 // 		var avisoElement = document.getElementById("senhaAviso");
 // 		var avisoElementRep = document.getElementById("senharepAviso");
 // 		var mensagens =[];
-//         // Limpa o aviso anterior
+//         Limpa o aviso anterior
 //         avisoElement.innerHTML = "";
 		
-//         // Verifica se a senha tem pelo menos 8 caracteres
+//         Verifica se a senha tem pelo menos 8 caracteres
 //         if (senha.length < 8) {
 //             mensagens.push("Mímino 8 caracteres.");
      
 //         }
-//         // Verifica se a senha contém pelo menos uma letra maiúscula
+//         Verifica se a senha contém pelo menos uma letra maiúscula
 //     	if (!/[A-Z]/.test(senha)) {
 //             mensagens.push("Uma letra maiúscula.");
 // 		}
-//         // Verifica se a senha contém pelo menos uma letra minúscula
+//         Verifica se a senha contém pelo menos uma letra minúscula
 //         if (!/[a-z]/.test(senha)) {
 //             mensagens.push("Uma letra minúscula.");
 //         }
-//         // Verifica se a senha contém pelo menos um caractere especial
+//         Verifica se a senha contém pelo menos um caractere especial
 //         if (!/[\W_]/.test(senha)) {
 //             mensagens.push("Um caractere especial.");
 //         }
