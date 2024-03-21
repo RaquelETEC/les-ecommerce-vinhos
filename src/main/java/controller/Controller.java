@@ -120,7 +120,7 @@ public class Controller extends HttpServlet {
 		request.setAttribute("email", contato.getEmail());
 		RequestDispatcher rd = request.getRequestDispatcher("editar.jsp");
 		rd.forward(request, response);
-	}
+	}	
 
 	/**
 	 * Editar contato.
