@@ -26,6 +26,7 @@ public class ControllerVenda extends HttpServlet {
 		String action = request.getServletPath();
 
 	    System.out.println("chegou aqui: " + action);
+	    
 	    if (action.equals("/AdicionarAoCarrinho")) {
 	    	AdicionarAoCarriho(request, response);
 	    }

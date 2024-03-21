@@ -16,6 +16,8 @@
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
             <a href="'index.html'"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a href="'index.html'"><img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            
 			<div class="navbar-nav ms-auto">
 			</div>
 		</div>
@@ -56,7 +58,7 @@
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='Notificações.jsp';">Notificacoes</span>
+                       <span onclick="window.location.href='Notificaï¿½ï¿½es.jsp';">Notificacoes</span>
                     </button>
                     
 
