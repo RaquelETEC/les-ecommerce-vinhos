@@ -17,8 +17,6 @@
 		<div class="container-fluid">
             <a href="'index.html'"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
-				<a href="login.html" class="btn btn-light ms-2">LOGIN</a>
-				<a href="gerenciamento.html" class="btn btn-light ms-2">GERENCIAMENTO</a>
 			</div>
 		</div>
 	</nav>
@@ -45,7 +43,9 @@
                    		<button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
                         <button onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
                         <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
-                        <button onclick="window.location.href='PerfilExcluir.jsp';">apagar conta</button>
+                        <button onclick="window.location.href='PerfilExcluir.jsp';">Apagar conta</button>
+                        <button onclick="window.location.href='PerfilDesativar.jsp';">Desativar conta</button>
+                        
                     </div>
 
                     <button class="button-dados-perfil">

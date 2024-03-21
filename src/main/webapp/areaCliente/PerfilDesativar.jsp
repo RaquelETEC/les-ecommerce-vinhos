@@ -45,7 +45,7 @@
                    		<button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
                         <button onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
                         <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
-                        <button class="ativo" onclick="window.location.href='PerfilExcluir.jsp';">apagar conta</button>
+                        <button onclick="window.location.href='PerfilExcluir.jsp';">apagar conta</button>
                     </div>
 
                     <button class="button-dados-perfil">
@@ -75,7 +75,7 @@
 
                 <div class="box-top-register">
                     <!-- titulo do cabecalho -->
-                    <h1 class="text-perfil">Excluir Conta</h1>
+                    <h1 class="text-perfil">Desativar Conta</h1>
 
                     <div class="box-input-pesquisa-e-carrinho">
 
@@ -104,7 +104,7 @@
                             
                         </div>
 
-							<button onclick="excluirConta()" class="button-salvar">Excluir Conta</button>
+							<button onclick="excluirConta()" class="button-salvar">Desativar Conta</button>
 
                     </form>
                     <!-- acaba aqui -->

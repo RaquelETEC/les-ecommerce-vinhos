@@ -20,8 +20,6 @@
 		<div class="container-fluid">
             <a href="index.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
-				<a href="login.html" class="btn btn-light ms-2">LOGIN</a>
-				<a onclick="window.location.href='PagInicial.html';" class="btn btn-light ms-2">GERENCIAMENTO</a>
 			</div>
 		</div>
 	</nav>
