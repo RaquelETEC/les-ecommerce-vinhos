@@ -17,10 +17,11 @@ import Dao.DaoCliente;
 import java.util.Date;
 
 import model.entity.Cliente;
+import model.entity.JavaBeans;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente" })
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente" })
 public class ControllerClient extends HttpServlet {
 	
 	/** The Constant serialVersionUID. */
@@ -50,6 +51,10 @@ public class ControllerClient extends HttpServlet {
 		else if(action.equals("/areaCliente")) {
 			AreaCliente(request, response);
 		}
+		else if(action.equals("/telaCliente")) {
+			Clientes(request, response);
+		}
+		
 		
 		//} else if (action.equals("/report")) {
 		//	gerarRelatorio(request, response);
@@ -131,8 +136,6 @@ public class ControllerClient extends HttpServlet {
 	}
 	protected void AreaCliente(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//ArrayList<JavaBeans> lista = dao.listarclientes();
-		//request.setAttribute("clientes", lista);
 		Cliente cliente = (Cliente) request.getAttribute("cliente");
 		String nome = request.getParameter("typeNome");
 		String email = request.getParameter("typeEmail");
@@ -164,5 +167,16 @@ public class ControllerClient extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
 		rd.forward(request, response);	
 	
+	}
+	
+	protected void Clientes(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException{
+			System.out.println("ESTOU NO ARRAY DA LISTACLIENTE");
+
+			ArrayList<Cliente> lista = daoCliente.ListarCliente();
+			request.setAttribute("Requeclientes", lista);
+			RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/Clientes.jsp");
+			rd.forward(request, response);
+
 	}
 }

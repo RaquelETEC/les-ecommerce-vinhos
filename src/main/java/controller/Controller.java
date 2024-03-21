@@ -52,7 +52,8 @@ public class Controller extends HttpServlet {
 		if (action.equals("/main")) {
 			contatos(request, response);
 		} else if (action.equals("/insert")) {
-			adicionarContato(request, response);
+			adicionarContato(request, response);			
+			
 		} else if (action.equals("/select")) {
 			listarContato(request, response);
 		} else if (action.equals("/update")) {

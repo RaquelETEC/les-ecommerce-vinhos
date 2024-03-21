@@ -1,12 +1,14 @@
 package Dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.entity.Cliente;
+import model.entity.JavaBeans;
 
 public class DaoCliente {
 
@@ -61,6 +63,45 @@ public class DaoCliente {
     
         return id_cliente;
     }
+    
+    public ArrayList<Cliente> ListarCliente(){
+		System.out.println("ESTOU NO DAO CLIENTE ARRAY");
 
+    	ArrayList<Cliente> Arrayclientes = new ArrayList<>();
+		String read = "select cli_id, cli_nome,cli_telefone,cli_email,cli_cpf,cli_telefone_tipo,cli_dt_nascimento,cli_genero from cliente";
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String nome = rs.getString(2);
+				String telefone = rs.getString(3);
+				String email = rs.getString(4);
+				String cpf = rs.getString(5);
+				String tipoTelefone = rs.getString(6);
+				Date dataNasc = rs.getDate(7);
+				String genero = rs.getString(8);
+				
+				Cliente Instaclientes = new Cliente();
+				Instaclientes.setId(id);
+				Instaclientes.setNome(nome);
+				Instaclientes.setEmail(email);
+				Instaclientes.setCpf(cpf);
+				Instaclientes.setTipoTelefone(tipoTelefone);
+				Instaclientes.setDataNasc(dataNasc);
+				Instaclientes.setTelefone(telefone);
+				Instaclientes.setGenero(genero);
+
+				Arrayclientes.add(Instaclientes);
+			}
+			con.close();
+			return Arrayclientes;
+		} catch (Exception e) {
+			System.out.println("ERRO AO LISTAR" + e);
+			return null;
+		}
+    	
+    }
 
 }

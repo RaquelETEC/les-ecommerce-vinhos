@@ -28,14 +28,14 @@ public class JavaBeans {
 	/**
 	 * Instantiates a new java beans.
 	 *
-	 * @param idcon the idcon
+	 * @param id the idcon
 	 * @param nome the nome
 	 * @param fone the fone
 	 * @param email the email
 	 */
-	public JavaBeans(String idcon, String nome, String fone, String email) {
+	public JavaBeans(int id, String nome, String fone, String email) {
 		super();
-		this.idcon = idcon;
+		this.idcon = id;
 		this.nome = nome;
 		this.fone = fone;
 		this.email = email;

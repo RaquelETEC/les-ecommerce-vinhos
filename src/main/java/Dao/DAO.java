@@ -86,7 +86,7 @@ public class DAO {
 				String nome = rs.getString(2);
 				String fone = rs.getString(3);
 				String email = rs.getString(4);
-				contatos.add(new JavaBeans(idcon, nome, fone, email));
+				//contatos.add(new JavaBeans(idcon, nome, fone, email));
 			}
 			con.close();
 			return contatos;

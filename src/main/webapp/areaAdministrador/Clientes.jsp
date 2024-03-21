@@ -1,9 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ page import="model.entity.Cliente"%>
+<%@ page import="java.util.ArrayList"%>
+<%
+	@ SuppressWarnings ("unchecked")
+	ArrayList<Cliente> lista = (ArrayList<Cliente>) request.getAttribute("Requeclientes");
+%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Área da Administração</title>
-        <link rel="stylesheet" href="../Styles/styleAdm.css">
+    <title>Ãrea da AdministraÃ§Ã£o</title>
+        <link rel="stylesheet" href="Styles/styleAdm.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -63,11 +72,11 @@
             <!-- Conteudo principal aqui -->
 				    <div class="container mt-4">
 				        <h2 class="text-center mb-4">Clientes</h2>
-				        <!-- Formulário de filtro -->
+				        <!-- FormulÃ¡rio de filtro -->
         <form class="mb-4">
             <div class="row">
                 <div class="col-md-2">
-                    <label for="genero" class="form-label">Gênero</label>
+                    <label for="genero" class="form-label">GÃªnero</label>
                     <select class="form-select" id="genero" name="genero">
                         <option value="">Todos</option>
                         <option value="masculino">Masculino</option>
@@ -97,7 +106,7 @@
                     <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="col-md-5">
-                    <label for="endereco" class="form-label">Endereço Residencial</label>
+                    <label for="endereco" class="form-label">EndereÃ§o Residencial</label>
                     <input type="text" class="form-control" id="endereco" name="endereco">
                 </div>
             </div>
@@ -110,7 +119,7 @@
         </form>
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary">Buscar</button>
-                            <button onclick="window.location.href='../login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
+                            <button onclick="window.location.href='login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
                 <!-- Tabela de resultados -->
          <div class="text-center">
@@ -119,31 +128,37 @@
 							<tr>
 								<th>Id</th>
 								<th>Nome</th>
-								<th>Fone</th>
 								<th>E-mail</th>
+								<th>CPF</th>
+								<th>Tipo Telefone</th>
+								<th>Telefone</th>
+								<th>Data de Nascimento</th>
+								<th>Genero</th>
 								<th>Opções</th>
 							</tr>
 						</thead>
 						<tbody>
+								<%
+									for (int i = 0; i < lista.size(); i++) {
+								%>
 							<tr>
-								<td>1</td>
-								<td>Raquel</td>
-								<td>11924845</td>
-								<td>raquelzinha@gmail.com</td>
+								<td><%=lista.get(i).getId()%></td>
+								<td><%=lista.get(i).getNome()%></td>
+								<td><%=lista.get(i).getEmail()%></td>
+								<td><%=lista.get(i).getCpf()%></td>
+								<td><%=lista.get(i).getTipoTelefone()%></td>
+								<td><%=lista.get(i).getTelefone()%></td>
+								<td><%=lista.get(i).getDataNasc()%></td>
+								<td><%=lista.get(i).getGenero()%></td>
+								
+								
 								<td>
 								<a href="/les-ecommerce-vinhos/areaCliente/Perfil.jsp" class="Botao1">Editar</a>
 								</td>
 							</tr>
-							<tr>
-								<td>1</td>
-								<td>Raquel</td>
-								<td>11924845</td>
-								<td>raquelzinha@gmail.com</td>
-								<td>
-									<a href="/les-ecommerce-vinhos/areaCliente/Perfil.jsp" class="Botao1">Editar</a>
-								</td>
-							</tr>
-							
+							<%
+								}
+							%>
 						</tbody>
 					</table>
 			</div>

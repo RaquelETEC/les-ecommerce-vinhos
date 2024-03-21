@@ -13,6 +13,7 @@ function rolarAteCampo(idCampo) {
 }
 
 function validarCadastro() {
+	debugger
     let nome = document.getElementById("typeNome").value;
     let email = document.getElementById("typeEmail").value;
     let senha = document.getElementById("typeSenha").value;
