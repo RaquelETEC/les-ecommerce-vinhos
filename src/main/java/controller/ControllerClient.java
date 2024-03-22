@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Dao.DaoCliente;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import model.entity.Cliente;
@@ -20,7 +21,7 @@ import model.entity.JavaBeans;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente" })
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente" , "/areaAdministrador/Clientes.html"})
 public class ControllerClient extends HttpServlet {
 	
 	/** The Constant serialVersionUID. */
@@ -44,13 +45,14 @@ public class ControllerClient extends HttpServlet {
 		String action = request.getServletPath();
 		
 		System.out.println("chegou aqui: "+action);
+	
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
 		}
 		else if(action.equals("/areaCliente")) {
 			AreaCliente(request, response);
 		}
-		else if(action.equals("/telaCliente")) {
+		else if(action.equals("/telaCliente") || action.equals("/areaAdministrador/Clientes.html")) {
 			Clientes(request, response);
 		}
 		

@@ -82,11 +82,11 @@ public class DAO {
 			PreparedStatement pst = con.prepareStatement(read);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-				String idcon = rs.getString(1);
+				int idcon = rs.getInt(1);
 				String nome = rs.getString(2);
 				String fone = rs.getString(3);
 				String email = rs.getString(4);
-				//contatos.add(new JavaBeans(idcon, nome, fone, email));
+				contatos.add(new JavaBeans(idcon, nome, fone, email));
 			}
 			con.close();
 			return contatos;
@@ -106,10 +106,10 @@ public class DAO {
 		try {
 			Connection con = conectar();
 			PreparedStatement pst = con.prepareStatement(read2);
-			pst.setString(1, contato.getIdcon());
+			pst.setInt(1, contato.getIdcon());
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-				contato.setIdcon(rs.getString(1));
+				contato.setIdcon(rs.getInt(1));
 				contato.setNome(rs.getString(2));
 				contato.setFone(rs.getString(3));
 				contato.setEmail(rs.getString(4));
@@ -133,7 +133,7 @@ public class DAO {
 			pst.setString(1, contato.getNome());
 			pst.setString(2, contato.getFone());
 			pst.setString(3, contato.getEmail());
-			pst.setString(4, contato.getIdcon());
+			pst.setInt(4, contato.getIdcon());
 			pst.executeUpdate();
 			con.close();
 		} catch (Exception e) {
@@ -151,7 +151,7 @@ public class DAO {
 		try {
 			Connection con = conectar();
 			PreparedStatement pst = con.prepareStatement(delete);
-			pst.setString(1, contato.getIdcon());
+			pst.setInt(1, contato.getIdcon());
 			pst.executeUpdate();
 			con.close();
 		} catch (Exception e) {

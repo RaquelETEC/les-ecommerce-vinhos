@@ -7,7 +7,7 @@ package model.entity;
 public class JavaBeans {
 	
 	/** The idcon. */
-	private String idcon;
+	private int idcon;
 	
 	/** The nome. */
 	private String nome;
@@ -46,7 +46,7 @@ public class JavaBeans {
 	 *
 	 * @return the idcon
 	 */
-	public String getIdcon() {
+	public int getIdcon() {
 		return idcon;
 	}
 
@@ -55,7 +55,7 @@ public class JavaBeans {
 	 *
 	 * @param idcon the new idcon
 	 */
-	public void setIdcon(String idcon) {
+	public void setIdcon(int idcon) {
 		this.idcon = idcon;
 	}
 

@@ -11,14 +11,14 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Ãrea da AdministraÃ§Ã£o</title>
+    <title>Area da Administração</title>
         <link rel="stylesheet" href="Styles/styleAdm.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
-            <a href="index.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a href="index.html"><img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 			</div>
 		</div>
@@ -33,7 +33,7 @@
                             Menu
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" onclick="window.location.href='PagInicial.html';">
+                            <a class="nav-link active" href='areaAdministrador/PagInicial.html';">
                                 Dashboard
                             </a>
                         </li>
@@ -104,7 +104,7 @@
                     <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="col-md-5">
-                    <label for="endereco" class="form-label">EndereÃ§o Residencial</label>
+                    <label for="endereco" class="form-label">Endereço Residencial</label>
                     <input type="text" class="form-control" id="endereco" name="endereco">
                 </div>
             </div>
@@ -130,7 +130,7 @@
 								<th>CPF</th>
 								<th>Tipo Telefone</th>
 								<th>Telefone</th>
-								<th>Data de Nascimento</th>
+								<th>Nascimento</th>
 								<th>Genero</th>
 								<th>Opções</th>
 							</tr>
