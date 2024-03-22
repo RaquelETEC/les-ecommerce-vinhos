@@ -103,5 +103,48 @@ public class DaoCliente {
 		}
     	
     }
+    
+	public void selecionarCliente(Cliente cliente) {
+		String read2 = "select cli_id,cli_nome,cli_email,cli_cpf,cli_dt_nascimento,cli_telefone,cli_genero from cliente where cli_id = ?";
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read2);
+			pst.setInt(1, cliente.getId());
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				cliente.setId(rs.getInt(1));
+				cliente.setNome(rs.getString(2));
+				cliente.setEmail(rs.getString(3));
+				cliente.setCpf(rs.getString(4));
+				cliente.setDataNasc(rs.getDate(5));
+				cliente.setTelefone(rs.getString(6));
+				cliente.setGenero(rs.getString(7));
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERRO AO SELECIONAR" + e);
+		}
+		
+	}
+	
+	public void alterarCliente(Cliente cliente) {
+		String update = "update cliente set cli_nome=?,cli_email=?,cli_cpf=?,cli_dt_nascimento=?,cli_telefone=?,cli_genero=? where cli_id=?";
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(update);
 
+			pst.setString(1, cliente.getNome());
+			pst.setString(2, cliente.getEmail());
+			pst.setString(3, cliente.getCpf());
+			pst.setDate(4, (Date) cliente.getDataNasc());
+			pst.setString(5, cliente.getTelefone());
+			pst.setString(6, cliente.getGenero());
+			pst.setInt(7, cliente.getId());
+			pst.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERRO AO SELECIONAR" + e);
+		}
+	}
+	
 }

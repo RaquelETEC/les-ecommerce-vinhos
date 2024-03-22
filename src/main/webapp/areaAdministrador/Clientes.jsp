@@ -148,10 +148,8 @@
 								<td><%=lista.get(i).getTelefone()%></td>
 								<td><%=lista.get(i).getDataNasc()%></td>
 								<td><%=lista.get(i).getGenero()%></td>
-								
-								
 								<td>
-								<a href="/les-ecommerce-vinhos/areaCliente/Perfil.jsp" class="Botao1">Editar</a>
+								<a href="selectCliente?id=<%=lista.get(i).getId()%>" class="Botao1">Editar</a>
 								</td>
 							</tr>
 							<%
