@@ -34,8 +34,7 @@ public class JavaBeans {
 	 * @param email the email
 	 */
 	public JavaBeans(int id, String nome, String fone, String email) {
-		super();
-		this.idcon = id;
+		super();	
 		this.nome = nome;
 		this.fone = fone;
 		this.email = email;

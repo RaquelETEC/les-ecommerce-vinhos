@@ -11,7 +11,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Area da Administração</title>
+    <title>Area da administração</title>
         <link rel="stylesheet" href="Styles/styleAdm.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 </head>
@@ -148,10 +148,8 @@
 								<td><%=lista.get(i).getTelefone()%></td>
 								<td><%=lista.get(i).getDataNasc()%></td>
 								<td><%=lista.get(i).getGenero()%></td>
-								
-								
 								<td>
-								<a href="/les-ecommerce-vinhos/areaCliente/Perfil.jsp" class="Botao1">Editar</a>
+								<a href="selectCliente?id=<%=lista.get(i).getId()%>" class="Botao1">Editar</a>
 								</td>
 							</tr>
 							<%

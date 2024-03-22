@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tela 1</title>
     <link rel="stylesheet" href="Styles/StyleAreaCliente.css">
+    <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
+    
     <script src="../scripts/exibirMenus.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
     
@@ -58,7 +62,7 @@
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='Notifica��es.jsp';">Notificacoes</span>
+                       <span onclick="window.location.href='Notificaï¿½ï¿½es.jsp';">Notificacoes</span>
                     </button>
                     
 
@@ -95,8 +99,15 @@
 
                 <div class="content">
                     <!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
-                    <form action="" class="form-register">
-
+                    <form action="" class="form-register" action="updateCliente">
+						
+						<div class="box-input-form">
+                            <div class="box-label" >
+                                <label for="">Id</label>
+                            </div>
+                             <input type="text" class="input-form input-width-1" value="<%= request.getAttribute("id") %>">
+                            
+                        </div>
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">Nome</label>
@@ -143,7 +154,7 @@
 						     <label for="Masculino" style="font-weight: 100;">Masculino</label>
 						     
 						 	 <input type="radio" name="genero" id="nao_binario" class="input-radio" <%= "nao_binario".equals(request.getAttribute("genero")) ? "checked" : "" %>>
-						     <label for="nao_binario" style="font-weight: 100;">Não Binário</label>
+						     <label for="nao_binario" style="font-weight: 100;">Não Binario</label>
 						     
 						     <input type="radio" name="genero" id="Outros" class="input-radio" <%= "outros".equals(request.getAttribute("genero")) ? "checked" : "" %>>
 						     <label for="Outro" style="font-weight: 100;">Outro</label>

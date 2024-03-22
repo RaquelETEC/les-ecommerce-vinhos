@@ -21,15 +21,15 @@ import model.entity.JavaBeans;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente" , "/areaAdministrador/Clientes.html"})
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente", "/selectCliente", "/updateCliente" })
 public class ControllerClient extends HttpServlet {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The dao. */
 	DaoCliente daoCliente = new DaoCliente();
-	
+
 	/** The cliente. */
 	Cliente cliente = new Cliente();
 
@@ -43,27 +43,34 @@ public class ControllerClient extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getServletPath();
-		
-		System.out.println("chegou aqui: "+action);
-	
+
+		System.out.println("chegou aqui: " + action);
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
-		}
-		else if(action.equals("/areaCliente")) {
+		} else if (action.equals("/areaCliente")) {
 			AreaCliente(request, response);
-		}
-		else if(action.equals("/telaCliente") || action.equals("/areaAdministrador/Clientes.html")) {
+		} else if (action.equals("/telaCliente")) {
 			Clientes(request, response);
+		} else if (action.equals("/selectCliente")) {
+			ListarCliente(request, response);
 		}
-		
-		
-		//} else if (action.equals("/report")) {
-		//	gerarRelatorio(request, response);
-		//} 
+		else if (action.equals("/updateCliente")) {
+			try {
+				EditarCliente(request, response);
+			} catch (ServletException | IOException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// } else if (action.equals("/report")) {
+		// gerarRelatorio(request, response);
+		// }
 		else {
 			response.sendRedirect("index.html");
 		}
 	}
+
+
 
 	/**
 	 * @param request
@@ -73,68 +80,67 @@ public class ControllerClient extends HttpServlet {
 	 */
 	protected void AdicionarCliente(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			System.out.println("voce conseguiu chegar aqui no AdicionarCliente:)");
-			String nome = request.getParameter("typeNome");
-			String email = request.getParameter("typeEmail");
-			String senha = request.getParameter("typeSenha");
-			String senhaRepetida = request.getParameter("typeRepitaSenha");
-			String cpf = request.getParameter("typeCPF");
-			String tipoTelefone = request.getParameter("TypeTipoTelefone");
-			String telefone = request.getParameter("typeNumeroTelefone");
-			String nascimento = request.getParameter("typeNascimento");
-			String genero = request.getParameter("typeGenero");
-		
+		System.out.println("voce conseguiu chegar aqui no AdicionarCliente:)");
+		String nome = request.getParameter("typeNome");
+		String email = request.getParameter("typeEmail");
+		String senha = request.getParameter("typeSenha");
+		String senhaRepetida = request.getParameter("typeRepitaSenha");
+		String cpf = request.getParameter("typeCPF");
+		String tipoTelefone = request.getParameter("TypeTipoTelefone");
+		String telefone = request.getParameter("typeNumeroTelefone");
+		String nascimento = request.getParameter("typeNascimento");
+		String genero = request.getParameter("typeGenero");
 
-		    // Outras operações, se necessário
-			// Envia as informações para a página HTML
-			response.setContentType("text/html");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write("<p>Nome: " + nome + "</p>");
-			response.getWriter().write("<p>Email: " + email + "</p>");
-			response.getWriter().write("<p>Senha: " + senha + "</p>");
-			response.getWriter().write("<p>Senha Repetida: " + senhaRepetida + "</p>");
-			response.getWriter().write("<p>CPF: " + cpf + "</p>");
-			response.getWriter().write("<p>Tipo de Telefone: " + tipoTelefone + "</p>");
-			response.getWriter().write("<p>Telefone: " + telefone + "</p>");
-			response.getWriter().write("<p>Data de Nascimento: " + nascimento + "</p>");
-			response.getWriter().write("<p>Gênero: " + genero + "</p>");
-		
-			// response.sendRedirect("areaCliente");
+		// Outras operações, se necessário
+		// Envia as informações para a página HTML
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write("<p>Nome: " + nome + "</p>");
+		response.getWriter().write("<p>Email: " + email + "</p>");
+		response.getWriter().write("<p>Senha: " + senha + "</p>");
+		response.getWriter().write("<p>Senha Repetida: " + senhaRepetida + "</p>");
+		response.getWriter().write("<p>CPF: " + cpf + "</p>");
+		response.getWriter().write("<p>Tipo de Telefone: " + tipoTelefone + "</p>");
+		response.getWriter().write("<p>Telefone: " + telefone + "</p>");
+		response.getWriter().write("<p>Data de Nascimento: " + nascimento + "</p>");
+		response.getWriter().write("<p>Gênero: " + genero + "</p>");
 
-			cliente.setNome(nome);
-			cliente.setEmail(email);
-			cliente.setSenha(senhaRepetida);
-			cliente.setCpf(cpf);
-			cliente.setTipoTelefone(tipoTelefone);
-			cliente.setTelefone(telefone);
-			cliente.setGenero(genero);
-			try {
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adapte o formato conforme necessário
-				Date nascimentoDate = dateFormat.parse(nascimento);
-				cliente.setDataNasc(nascimentoDate);
-			} catch (ParseException e) {
-				e.printStackTrace(); 
-			}
+		// response.sendRedirect("areaCliente");
 
-			daoCliente.inserirCliente(cliente);
-			
-			System.out.println("cliente cadastrado com sucesso: "+ nome);
-			
-			//response.sendRedirect("main");
-			int id_cliente = Integer.parseInt(daoCliente.selectIdCliente(cliente));
+		cliente.setNome(nome);
+		cliente.setEmail(email);
+		cliente.setSenha(senhaRepetida);
+		cliente.setCpf(cpf);
+		cliente.setTipoTelefone(tipoTelefone);
+		cliente.setTelefone(telefone);
+		cliente.setGenero(genero);
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adapte o formato conforme necessário
+			Date nascimentoDate = dateFormat.parse(nascimento);
+			cliente.setDataNasc(nascimentoDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
-			cliente.setId(id_cliente);
-			
-			System.out.println("o id do CLIENTE Objeto:"+ cliente.getId());
-			
-			// Adicione o cliente ao request
-			request.setAttribute("cliente", cliente);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/inserirEndereco");
-			
-			dispatcher.forward(request, response);
-			
-			
+		daoCliente.inserirCliente(cliente);
+
+		System.out.println("cliente cadastrado com sucesso: " + nome);
+
+		// response.sendRedirect("main");
+		int id_cliente = Integer.parseInt(daoCliente.selectIdCliente(cliente));
+
+		cliente.setId(id_cliente);
+
+		System.out.println("o id do CLIENTE Objeto:" + cliente.getId());
+
+		// Adicione o cliente ao request
+		request.setAttribute("cliente", cliente);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/inserirEndereco");
+
+		dispatcher.forward(request, response);
+
 	}
+
 	protected void AreaCliente(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Cliente cliente = (Cliente) request.getAttribute("cliente");
@@ -147,9 +153,9 @@ public class ControllerClient extends HttpServlet {
 		String telefone = request.getParameter("typeNumeroTelefone");
 		String nascimento = request.getParameter("typeNascimento");
 		String genero = request.getParameter("typeGenero");
-		
-		System.out.println("o nome que chegou na area do cliente: "+nome);
-		System.out.println("o genero que chegou na area do cliente: "+genero);
+
+		System.out.println("o nome que chegou na area do cliente: " + nome);
+		System.out.println("o genero que chegou na area do cliente: " + genero);
 
 		request.setAttribute("id", cliente.getId());
 		request.setAttribute("nome", nome);
@@ -161,23 +167,72 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("telefone", telefone);
 		request.setAttribute("nascimento", nascimento);
 		request.setAttribute("genero", genero);
-		
-		
-		System.out.println("o nascimento que chegou na area do cliente: "+ nascimento);
-		
+
+		System.out.println("o nascimento que chegou na area do cliente: " + nascimento);
+
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
-		rd.forward(request, response);	
-	
+		rd.forward(request, response);
+
+	}
+
+	protected void Clientes(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("ESTOU NO ARRAY DA LISTACLIENTE");
+
+		ArrayList<Cliente> lista = daoCliente.ListarCliente();
+		request.setAttribute("Requeclientes", lista);
+		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/Clientes.jsp");
+		rd.forward(request, response);
+
 	}
 	
-	protected void Clientes(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException{
-			System.out.println("ESTOU NO ARRAY DA LISTACLIENTE");
+	private void ListarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("ESTOU NA LISTAGEM DO CLIENTE");
 
-			ArrayList<Cliente> lista = daoCliente.ListarCliente();
-			request.setAttribute("Requeclientes", lista);
-			RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/Clientes.jsp");
-			rd.forward(request, response);
+		int id = Integer.parseInt(request.getParameter("id"));
+		cliente.setId(id);
+		daoCliente.selecionarCliente(cliente);
+		
+		request.setAttribute("id", cliente.getId());
+		request.setAttribute("nome", cliente.getNome());
+		request.setAttribute("email", cliente.getEmail());
+		request.setAttribute("cpf", cliente.getCpf());
+		request.setAttribute("nascimento", cliente.getDataNasc());
+		request.setAttribute("telefone", cliente.getTelefone());
+		request.setAttribute("genero", cliente.getGenero());
 
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
+		rd.forward(request, response);
+		
+		System.out.println(id);
+
+
+
+	}	
+	
+
+	private void EditarCliente(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, ParseException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		cliente.setId(id);
+		
+		cliente.setNome(request.getParameter("nome"));
+		cliente.setEmail(request.getParameter("email"));
+		cliente.setCpf(request.getParameter("cpf"));
+
+		String nascimento = request.getParameter("nascimento");		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date nascimentoDate = dateFormat.parse(nascimento);
+		cliente.setDataNasc(nascimentoDate);
+		
+		cliente.setTelefone(request.getParameter("telefone"));
+		cliente.setGenero(request.getParameter("genero"));
+		
+		daoCliente.alterarCliente(cliente);
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
+		rd.forward(request, response);
+
+		
 	}
 }
