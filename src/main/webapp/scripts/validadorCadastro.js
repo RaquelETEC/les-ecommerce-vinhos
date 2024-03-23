@@ -1,3 +1,6 @@
+
+
+
 function validarLogin2(){
 
 		alert('tudo certo');
@@ -82,6 +85,8 @@ function validarCadastro() {
     }
    
 }
+
+
 
 //  function validarSenha() {
 // 	 debugger;

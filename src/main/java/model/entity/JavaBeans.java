@@ -52,10 +52,10 @@ public class JavaBeans {
 	/**
 	 * Sets the idcon.
 	 *
-	 * @param idcon the new idcon
+	 * @param i the new idcon
 	 */
-	public void setIdcon(int idcon) {
-		this.idcon = idcon;
+	public void setIdcon(int i) {
+		this.idcon = i;
 	}
 
 	/**
@@ -110,6 +110,11 @@ public class JavaBeans {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setIdcon(String parameter) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

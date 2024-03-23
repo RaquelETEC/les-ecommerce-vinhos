@@ -33,7 +33,7 @@
                             Menu
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href='areaAdministrador/PagInicial.html';">
+                            <a class="nav-link active href='areaAdministrador/PagInicial.html';">
                                 Dashboard
                             </a>
                         </li>
@@ -77,8 +77,8 @@
                     <label for="genero" class="form-label">GÃªnero</label>
                     <select class="form-select" id="genero" name="genero">
                         <option value="">Todos</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="feminino">Feminino</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -150,6 +150,7 @@
 								<td><%=lista.get(i).getGenero()%></td>
 								<td>
 								<a href="selectCliente?id=<%=lista.get(i).getId()%>" class="Botao1">Editar</a>
+								<a href="javascript: confirmarCliente(<%=lista.get(i).getId()%>)"class="Botao2">Excluir</a>
 								</td>
 							</tr>
 							<%
@@ -167,7 +168,7 @@
     <footer class="p-4 text-light text-center" style="background: black;">
         Desenvolvido por Caynan e Raquel
     </footer>
-
+	<script src="scripts/confirmador.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

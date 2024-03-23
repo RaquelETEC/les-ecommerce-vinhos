@@ -9,3 +9,9 @@ const exibirMinhaConta = () => {
         minhaConta.classList.add("exibir");
     }
 }
+
+function validarAtualizar(){
+	debugger;
+	document.forms["form-register"].submit();
+    return true;
+}

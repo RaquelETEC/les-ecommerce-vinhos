@@ -284,6 +284,11 @@ header {
     width: 13rem;
     justify-content: end;
 }
+.box-label-tipo{
+	 display: flex;
+    width: 13rem;
+    justify-content: start;
+}
 
 .input-form {
     border: 1px solid #606060;

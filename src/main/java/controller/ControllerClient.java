@@ -17,11 +17,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import model.entity.Cliente;
-import model.entity.JavaBeans;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente", "/selectCliente", "/updateCliente" })
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente", "/selectCliente", "/updateCliente" , "/deleteClient"})
 public class ControllerClient extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -47,20 +46,22 @@ public class ControllerClient extends HttpServlet {
 		System.out.println("chegou aqui: " + action);
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
+			
 		} else if (action.equals("/areaCliente")) {
 			AreaCliente(request, response);
+			
 		} else if (action.equals("/telaCliente")) {
 			Clientes(request, response);
+			
 		} else if (action.equals("/selectCliente")) {
 			ListarCliente(request, response);
 		}
 		else if (action.equals("/updateCliente")) {
-			try {
-				EditarCliente(request, response);
-			} catch (ServletException | IOException | ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			EditarCliente(request, response);
+		}	
+		else if (action.equals("/deleteClient")) {
+			System.out.println("if eu cheguei");
+			ExcluirCliente(request, response);
 		}
 		// } else if (action.equals("/report")) {
 		// gerarRelatorio(request, response);
@@ -114,6 +115,7 @@ public class ControllerClient extends HttpServlet {
 		cliente.setTipoTelefone(tipoTelefone);
 		cliente.setTelefone(telefone);
 		cliente.setGenero(genero);
+		cliente.setStatus("Ativo");
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adapte o formato conforme necessário
 			Date nascimentoDate = dateFormat.parse(nascimento);
@@ -126,14 +128,12 @@ public class ControllerClient extends HttpServlet {
 
 		System.out.println("cliente cadastrado com sucesso: " + nome);
 
-		// response.sendRedirect("main");
 		int id_cliente = Integer.parseInt(daoCliente.selectIdCliente(cliente));
 
 		cliente.setId(id_cliente);
 
 		System.out.println("o id do CLIENTE Objeto:" + cliente.getId());
 
-		// Adicione o cliente ao request
 		request.setAttribute("cliente", cliente);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/inserirEndereco");
 
@@ -199,9 +199,11 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("email", cliente.getEmail());
 		request.setAttribute("cpf", cliente.getCpf());
 		request.setAttribute("nascimento", cliente.getDataNasc());
+		request.setAttribute("telefoneTipo", cliente.getTipoTelefone());
 		request.setAttribute("telefone", cliente.getTelefone());
 		request.setAttribute("genero", cliente.getGenero());
-
+		request.setAttribute("status", cliente.getStatus());
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
 		rd.forward(request, response);
 		
@@ -211,28 +213,47 @@ public class ControllerClient extends HttpServlet {
 
 	}	
 	
-
-	private void EditarCliente(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, ParseException {
+	private void EditarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		
-		int id = Integer.parseInt(request.getParameter("id"));
+		System.out.println("cheguei no editar cliente em");
+		
+		
+		
+		int id = Integer.parseInt(request.getParameter("typeId"));
 		cliente.setId(id);
-		
-		cliente.setNome(request.getParameter("nome"));
-		cliente.setEmail(request.getParameter("email"));
-		cliente.setCpf(request.getParameter("cpf"));
-
-		String nascimento = request.getParameter("nascimento");		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
-		Date nascimentoDate = dateFormat.parse(nascimento);
-		cliente.setDataNasc(nascimentoDate);
-		
-		cliente.setTelefone(request.getParameter("telefone"));
+		cliente.setNome(request.getParameter("typeNome"));
+		cliente.setEmail(request.getParameter("typeEmail"));
+		cliente.setCpf(request.getParameter("typeCPF"));
+		String nascimento = request.getParameter("typeNascimento");
+	
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adapte o formato conforme necessário
+			Date nascimentoDate = dateFormat.parse(nascimento);
+			cliente.setDataNasc(nascimentoDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+				
+		cliente.setTelefone(request.getParameter("typeNumeroTelefone"));
+		cliente.setTipoTelefone(request.getParameter("tipoTelefone"));
 		cliente.setGenero(request.getParameter("genero"));
+		cliente.setStatus(request.getParameter("statusCliente"));
+		
+		
 		
 		daoCliente.alterarCliente(cliente);
-		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
-		rd.forward(request, response);
-
 		
+		response.sendRedirect(request.getContextPath() + "/telaCliente");
+
 	}
+	
+	protected void ExcluirCliente(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("EU CHEGUEI NO EXCLUIRS");
+		
+		cliente.setId(Integer.parseInt(request.getParameter("id")));
+		daoCliente.deletarCliente(cliente);
+		response.sendRedirect(request.getContextPath() + "/telaCliente");
+	}
+
 }

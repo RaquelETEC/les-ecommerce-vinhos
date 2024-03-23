@@ -13,8 +13,11 @@ function confirmar(idcon) {
 }
 
 
-function excluirConta(){
-	confirm("Tem certeza que deseja excluir?");
-	
-	
+function confirmarCliente(id) {
+	debugger;
+	let resposta = confirm("Confirma a exclusão deste contato? ID:" + id)
+	if (resposta === true) {
+		window.location.href = "deleteClient?id=" + id
+	}
 }
+

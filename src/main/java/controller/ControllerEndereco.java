@@ -86,7 +86,7 @@ public class ControllerEndereco extends HttpServlet {
 			System.out.println("Passou pelo Dao endereço na servlet: "+ endereco);
 
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/areaCliente");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/telaCliente");
 			dispatcher.forward(request, response);
 		
 	}
