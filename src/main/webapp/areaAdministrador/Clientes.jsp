@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="model.entity.Cliente"%>
 <%@ page import="java.util.ArrayList"%>
 <%
@@ -79,6 +80,8 @@
                         <option value="">Todos</option>
                         <option value="Masculino">Masculino</option>
                         <option value="Feminino">Feminino</option>
+                        <option value="Outros">Outros</option>
+                        <option value="Não Binário">Não Binário</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -104,8 +107,12 @@
                     <input type="email" class="form-control" id="email" name="email">
                 </div>
                 <div class="col-md-5">
-                    <label for="endereco" class="form-label">Endereço Residencial</label>
-                    <input type="text" class="form-control" id="endereco" name="endereco">
+                    <label for="status" class="form-label">Status</label>
+                     <select class="form-select" id="status" name="status">
+                        <option value="">Todos</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
                 </div>
             </div>
           <div class="text-center">
@@ -115,7 +122,7 @@
             </div>
            </div>
         </form>
-                        <div class="col-md-12">
+                        <div class="col-md-12 button-components">
     						<button id="btnBuscar" type="button" class="btn btn-primary">Buscar</button>
                             <button onclick="window.location.href='login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
@@ -138,7 +145,9 @@
 						</thead>
 						<tbody>
 								<%
-									for (int i = 0; i < lista.size(); i++) {
+								   SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+							    for (int i = 0; i < lista.size(); i++) {
+							        String dataNascimento = dateFormat.format(lista.get(i).getDataNasc());
 								%>
 							<tr>
 								<td><%=lista.get(i).getId()%></td>
@@ -147,7 +156,7 @@
 								<td><%=lista.get(i).getCpf()%></td>
 								<td><%=lista.get(i).getTipoTelefone()%></td>
 								<td><%=lista.get(i).getTelefone()%></td>
-								<td><%=lista.get(i).getDataNasc()%></td>
+								<td><%=dataNascimento %></td>
 								<td><%=lista.get(i).getGenero()%></td>
 								<td><%=lista.get(i).getStatus()%></td>
 								
@@ -173,7 +182,7 @@
     </footer>
 	<script src="scripts/confirmador.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/FiltroTabela.js"></script>
+    <script src="scripts/filtroTabela.js"></script>
     
 </body>
 </html>
