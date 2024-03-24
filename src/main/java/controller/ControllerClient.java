@@ -204,13 +204,8 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("status", cliente.getStatus());
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
-		rd.forward(request, response);
-		
-		System.out.println(id);
-
-
-
-	}	
+		rd.forward(request, response);	
+	}
 	
 	private void EditarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		

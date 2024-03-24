@@ -74,7 +74,7 @@
         <form class="mb-4">
             <div class="row">
                 <div class="col-md-2">
-                    <label for="genero" class="form-label">GÃªnero</label>
+                    <label for="genero" class="form-label">Genero</label>
                     <select class="form-select" id="genero" name="genero">
                         <option value="">Todos</option>
                         <option value="Masculino">Masculino</option>
@@ -132,6 +132,7 @@
 								<th>Telefone</th>
 								<th>Nascimento</th>
 								<th>Genero</th>
+								<th>Status</th>
 								<th>Opções</th>
 							</tr>
 						</thead>
@@ -148,6 +149,8 @@
 								<td><%=lista.get(i).getTelefone()%></td>
 								<td><%=lista.get(i).getDataNasc()%></td>
 								<td><%=lista.get(i).getGenero()%></td>
+								<td><%=lista.get(i).getStatus()%></td>
+								
 								<td>
 								<a href="selectCliente?id=<%=lista.get(i).getId()%>" class="Botao1">Editar</a>
 								<a href="javascript: confirmarCliente(<%=lista.get(i).getId()%>)"class="Botao2">Excluir</a>
