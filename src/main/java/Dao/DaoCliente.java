@@ -68,7 +68,7 @@ public class DaoCliente {
 		System.out.println("ESTOU NO DAO CLIENTE ARRAY");
 
     	ArrayList<Cliente> Arrayclientes = new ArrayList<>();
-		String read = "select cli_id, cli_nome,cli_telefone,cli_email,cli_cpf,cli_telefone_tipo,cli_dt_nascimento,cli_genero from cliente";
+		String read = "select cli_id, cli_nome,cli_telefone,cli_email,cli_cpf,cli_telefone_tipo,cli_dt_nascimento,cli_genero,cli_status from cliente";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
@@ -82,6 +82,7 @@ public class DaoCliente {
 				String tipoTelefone = rs.getString(6);
 				Date dataNasc = rs.getDate(7);
 				String genero = rs.getString(8);
+				String status = rs.getString(9);
 				
 				Cliente Instaclientes = new Cliente();
 				Instaclientes.setId(id);
@@ -92,7 +93,7 @@ public class DaoCliente {
 				Instaclientes.setDataNasc(dataNasc);
 				Instaclientes.setTelefone(telefone);
 				Instaclientes.setGenero(genero);
-
+				Instaclientes.setStatus(status);
 				Arrayclientes.add(Instaclientes);
 			}
 			con.close();
