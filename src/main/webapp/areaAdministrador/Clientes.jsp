@@ -116,7 +116,7 @@
            </div>
         </form>
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
+    						<button id="btnBuscar" type="button" class="btn btn-primary">Buscar</button>
                             <button onclick="window.location.href='login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
                 <!-- Tabela de resultados -->
@@ -170,5 +170,7 @@
     </footer>
 	<script src="scripts/confirmador.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/FiltroTabela.js"></script>
+    
 </body>
 </html>

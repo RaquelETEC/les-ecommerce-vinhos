@@ -60,7 +60,6 @@ public class ControllerClient extends HttpServlet {
 			EditarCliente(request, response);
 		}	
 		else if (action.equals("/deleteClient")) {
-			System.out.println("if eu cheguei");
 			ExcluirCliente(request, response);
 		}
 		// } else if (action.equals("/report")) {
