@@ -20,7 +20,7 @@ import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/areaAdministrador/Clientes.html", "/areaCliente/Perfil.html", "/updateCliente" , "/deleteClient"})
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/areaAdministrador/Clientes.html", "/areaCliente/Perfil.html", "/updateCliente" , "/areaAdministrador/deleteClient"})
 public class ControllerClient extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -59,7 +59,7 @@ public class ControllerClient extends HttpServlet {
 		else if (action.equals("/updateCliente")) {
 			EditarCliente(request, response);
 		}	
-		else if (action.equals("/deleteClient")) {
+		else if (action.equals("/areaAdministrador/deleteClient")) {
 			ExcluirCliente(request, response);
 		}
 		// } else if (action.equals("/report")) {
@@ -237,7 +237,7 @@ public class ControllerClient extends HttpServlet {
 		
 		daoCliente.alterarCliente(cliente);
 		
-		response.sendRedirect(request.getContextPath() + "/telaCliente");
+		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
 
 	}
 	
@@ -247,7 +247,7 @@ public class ControllerClient extends HttpServlet {
 		
 		cliente.setId(Integer.parseInt(request.getParameter("id")));
 		daoCliente.deletarCliente(cliente);
-		response.sendRedirect(request.getContextPath() + "/telaCliente");
+		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
 	}
 
 }

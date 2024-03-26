@@ -82,7 +82,7 @@
 
                 <div class="content">
                     <!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
-                    <form  class="form-register" action="updateCliente" onsubmit="return validarAtualizar()">
+                    <form  class="form-register" action="/les-ecommerce-vinhos/updateCliente" onsubmit="return validarAtualizar()">
 						
 						<div class="box-input-form" style="display: none;">
                             <div class="box-label" >

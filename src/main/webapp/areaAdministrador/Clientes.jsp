@@ -19,7 +19,7 @@
 <body>
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
-            <a href="index.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 			</div>
 		</div>
@@ -39,7 +39,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link bg-white text-dark" onclick="window.location.href='Clientes.html';">
+                            <a class="nav-link bg-white text-dark" href="/les-ecommerce-vinhos/areaAdministrador/Clientes.html">
                                 Clientes
                             </a>
                         </li>
@@ -124,7 +124,7 @@
         </form>
                         <div class="col-md-12 button-component">
     						<button id="btnBuscar" type="button" class="btn btn-primary">Buscar</button>
-                            <button onclick="window.location.href='login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
+                            <button onclick="window.location.href='/les-ecommerce-vinhos/login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
                 <!-- Tabela de resultados -->
          <div class="text-center">
@@ -182,9 +182,9 @@
     <footer class="p-4 text-light text-center" style="background: black;">
         Desenvolvido por Caynan e Raquel
     </footer>
-	<script src="scripts/confirmador.js"></script>
+	<script src="../scripts/confirmador.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/filtroTabela.js"></script>
+    <script src="../scripts/filtroTabela.js"></script>
     
 </body>
 </html>

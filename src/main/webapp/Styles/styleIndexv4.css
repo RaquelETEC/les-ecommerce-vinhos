@@ -4,7 +4,7 @@
 
 #chatbot-container {
           position: fixed;
-          bottom: 20px;
+          bottom: 72px;
           right: 20px;
           border: 1px solid #ccc;
           border-radius: 5px;
@@ -30,12 +30,23 @@
         
 }
 
+.list-group-item{
+	background: transparent !important;
+}
+
 body .row .filter.col-2.m-5 {
     margin-left: 4rem !important;
     margin-top: 1px !important;
     padding-top: 1rem !important;
 }
 
+.main{
+    display: flex;
+}
+
+.inputs{
+	margin: 20px;
+}
 .card {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -91,4 +102,11 @@ body .row .filter.col-2.m-5 {
 .form-check-input:checked {
     background-color: #EE603D !important;
     border-color: #F2F2F2 !important;
+}
+
+.footer{
+	background: black;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
 }
