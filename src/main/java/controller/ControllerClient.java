@@ -20,7 +20,7 @@ import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/telaCliente", "/selectCliente", "/updateCliente" , "/deleteClient"})
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/areaAdministrador/Clientes.html", "/areaCliente/Perfil.html", "/updateCliente" , "/deleteClient"})
 public class ControllerClient extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -50,10 +50,10 @@ public class ControllerClient extends HttpServlet {
 		} else if (action.equals("/areaCliente")) {
 			AreaCliente(request, response);
 			
-		} else if (action.equals("/telaCliente")) {
+		} else if (action.equals("/areaAdministrador/Clientes.html")) {
 			Clientes(request, response);
 			
-		} else if (action.equals("/selectCliente")) {
+		} else if (action.equals("/areaCliente/Perfil.html")) {
 			ListarCliente(request, response);
 		}
 		else if (action.equals("/updateCliente")) {

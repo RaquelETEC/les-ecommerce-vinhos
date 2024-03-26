@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tela 1</title>
-    <link rel="stylesheet" href="Styles/StyleAreaCliente.css">
+    <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
 
-    <script src="scripts/exibirMenus.js" defer></script>
+    <script src="../scripts/exibirMenus.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
     
 </head>
@@ -18,7 +18,7 @@
  
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
-            <a href="'index.html'"><img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a href="/les-ecommerce-vinhos/index.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
             
 			<div class="navbar-nav ms-auto">
 			</div>
@@ -30,7 +30,7 @@
             <!-- conteudo do perfil da direita -->
             <div class="container-perfil">
                 <div class="box-name-perfil">
-                    <img src="imagens/assets/icon-box-image-name.png" alt="" class="img-name-perfil">
+                    <img src="../imagens/assets/icon-box-image-name.png" alt="" class="img-name-perfil">
                     <div class="box-name-e-nivel">
                         <p class="text-name">Usuario</p>
                         <p class="text-nivel">NIVEL: 1</p>
@@ -39,7 +39,7 @@
 
                 <div class="box-dados-perfil">
                     <button class="button-dados-perfil" onclick="exibirMinhaConta()">
-                        <img src="imagens/assets/icons-left-perfil-1.png" alt="" class="img-icons-perfil">
+                        <img src="../imagens/assets/icons-left-perfil-1.png" alt="" class="img-icons-perfil">
                         <span>Minha Conta</span>
                     </button>
                     <div class="box-exibir-opcoes MinhaConta">
@@ -50,19 +50,19 @@
                     </div>
 
                     <button class="button-dados-perfil">
-                        <img src="imagens/assets/icons-left-perfil-2.png" alt="" class="img-icons-perfil">
+                        <img src="../imagens/assets/icons-left-perfil-2.png" alt="" class="img-icons-perfil">
                         <span onclick="window.location.href='MinhasCompra.html';">Minhas Compras</span>
                     </button>
                    
 
                     <button class="button-dados-perfil">
-                        <img src="imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
+                        <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
                        <span onclick="window.location.href='Notificaï¿½ï¿½es.jsp';">Notificacoes</span>
                     </button>
                     
 
                     <button class="button-dados-perfil">
-                        <img src="imagens/assets/icons-left-perfil-4.png" alt="" class="img-icons-perfil">
+                        <img src="../imagens/assets/icons-left-perfil-4.png" alt="" class="img-icons-perfil">
                        <span onclick="window.location.href='PerfilMeusCupons.jsp';">Meus Cupons</span>
                     </button>
                     
