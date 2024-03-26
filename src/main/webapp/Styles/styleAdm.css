@@ -34,6 +34,13 @@
     color: white !important /* Define a cor do texto para os itens da barra lateral */
 }
 
+.button-component{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 14px;
+}
+
 .nav-link{
 	color: white !important; /* Define a cor do texto para os itens da barra lateral */
     border: 1px solid white;
@@ -42,17 +49,12 @@
 }
 .nav-Title{
 		color: white !important; /* Define a cor do texto para os itens da barra lateral */
-	
-}
-.button-components{
-	width: 100%;
-    align-items: center;
-    display: flex;
-    margin-left: 50%;
-    gap: 14px;
 }
 
-
+.option-button{
+	display: flex;
+	gap: 2px;
+}
 
 .Botao1 {
 	text-decoration: none;
@@ -74,25 +76,7 @@
 	border-radius: 5px;
 }
 
-.Botao3 {
-	text-decoration: none;
-	background-color: rgb(255, 128, 192);
-	padding: 5px 10px 5px 10px;
-	color: #fff;
-	font-weight: 700;
-	border-radius: 5px;
-	border: 0;
-	cursor: pointer;
-}
 
-.Botao4 {
-	text-decoration: none;
-	background-color: #d51213;
-	padding: 5px 10px 5px 10px;
-	color: #fff;
-	font-weight: 700;
-	border-radius: 5px;
-}
 .Caixa1 {
 	width: 320px;
 	padding: 5px;

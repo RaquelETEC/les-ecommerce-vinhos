@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Area da administração</title>
-        <link rel="stylesheet" href="Styles/styleAdm.css">
+	<link rel="stylesheet" href="Styles/styleAdm.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 </head>
 <body>
@@ -122,7 +122,7 @@
             </div>
            </div>
         </form>
-                        <div class="col-md-12 button-components">
+                        <div class="col-md-12 button-component">
     						<button id="btnBuscar" type="button" class="btn btn-primary">Buscar</button>
                             <button onclick="window.location.href='login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
@@ -161,8 +161,10 @@
 								<td><%=lista.get(i).getStatus()%></td>
 								
 								<td>
-								<a href="selectCliente?id=<%=lista.get(i).getId()%>" class="Botao1">Editar</a>
-								<a href="javascript: confirmarCliente(<%=lista.get(i).getId()%>)"class="Botao2">Excluir</a>
+								<div class= "option-button">
+									<a href="selectCliente?id=<%=lista.get(i).getId()%>" class="Botao1">Editar</a>
+									<a href="javascript: confirmarCliente(<%=lista.get(i).getId()%>)"class="Botao2">Excluir</a>
+								</div>
 								</td>
 							</tr>
 							<%
