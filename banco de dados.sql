@@ -6,13 +6,13 @@ create table cliente(
 `cli_nome` varchar(100) NOT NULL ,
 `cli_email` varchar(100) NOT NULL ,
 `cli_senha` varchar(100) NOT NULL ,
-`cli_cpf` integer NOT NULL ,
+`cli_cpf` varchar(12) NOT NULL ,
 `cli_telefone_tipo` varchar(20) NOT NULL ,
 `cli_telefone` varchar(20) NOT NULL ,
 `cli_dt_nascimento` date NOT NULL ,
 `cli_genero` varchar(15) NOT NULL ,
-`cli_obervacoes` varchar(200),
- PRIMARY KEY (`cli_id`)
+`cli_status` varchar(15) NOT NULL ,
+PRIMARY KEY (`cli_id`)
   );
 
 create table endereco(
@@ -29,8 +29,4 @@ create table endereco(
 `end_pais` varchar(100) NOT NULL,
 `end_padrao` varchar(3) NOT NULL
 );
-
-
-
-
 
