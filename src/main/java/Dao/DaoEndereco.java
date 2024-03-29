@@ -11,7 +11,7 @@ import model.entity.Endereco;
 
 public class DaoEndereco {
 
-    public boolean inserirEndereco(Cliente cliente, Endereco endereco) {
+    public String inserirEndereco(Cliente cliente, Endereco endereco) {
         System.out.println("DAO : id do cliente para o endere√ßo:"+ cliente.getId());
 
 		String create =   "INSERT INTO endereco" + //
@@ -33,16 +33,16 @@ public class DaoEndereco {
 			pst.setString(9, endereco.getEstado());
 			pst.setString(10, endereco.getPais());
 			pst.setString(11, endereco.getPadrao());
-			pst.setString(12, endereco.getTipoResidencia());
+			pst.setString(12, endereco.getObservacao());
 
 			pst.executeUpdate(); 
-			System.err.println("inserido endere√ßo no dao!!");
+			System.err.println("inserido endereÁo no dao!!");
 			con.close();
-			return true;
+			return "Sucesso";
 
 		} catch (Exception e) {
-			System.out.println("erro ao inserir Endere√ßo: "+e);
-			return false;
+			System.out.println("erro ao inserir EndereÁo: "+e);
+			return "Erro";
 		}
 	}
 

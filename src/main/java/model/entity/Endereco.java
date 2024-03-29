@@ -15,6 +15,7 @@ public class Endereco {
 	private String pais;
 	private String padrao;
 	private String observacao;
+	private TiposEndereco tipos;
 	
 	public Endereco() {
 		super();
@@ -23,7 +24,7 @@ public class Endereco {
 	
 	public Endereco(Integer id, Cliente cliente, String tipoResidencia, String tipoLogradouro, String logradouro,
 			String numero, String bairro, String cep, String cidade, String estado, String pais, String padrao,
-			String observacao) {
+			String observacao, TiposEndereco tipos) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
@@ -38,6 +39,17 @@ public class Endereco {
 		this.pais = pais;
 		this.padrao = padrao;
 		this.observacao = observacao;
+		this.tipos = tipos;
+	}
+
+
+	public TiposEndereco getTipos() {
+		return tipos;
+	}
+
+
+	public void setTipos(TiposEndereco tipos) {
+		this.tipos = tipos;
 	}
 
 
@@ -144,7 +156,7 @@ public class Endereco {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-
+	
 	
 	
 }

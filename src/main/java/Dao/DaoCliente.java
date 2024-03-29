@@ -12,7 +12,7 @@ import model.entity.Cliente;
 public class DaoCliente {
 
 
-    public void inserirCliente(Cliente cliente) {
+    public int inserirCliente(Cliente cliente) {
 		String create =   "INSERT INTO cliente" + //
                         "(cli_nome,cli_email,cli_senha,cli_cpf,cli_telefone_tipo,cli_telefone,cli_dt_nascimento,cli_genero, cli_status)" + //
                         "VALUES (?,?,?,?,?,?,?,?,?)";
@@ -32,37 +32,21 @@ public class DaoCliente {
             pst.setString(9, cliente.getStatus());
 
 			pst.executeUpdate(); 
-			System.err.println("inserido no dao!!");
-			con.close();
-		} catch (Exception e) {
-			System.out.println("erro ao inserir cliente: "+e);
-		}
+			
+			 ResultSet rs = pst.getGeneratedKeys();
+		        int idCliente = -1; // Valor padrão se não houver chaves geradas
+		        if (rs.next()) {
+		            idCliente = rs.getInt(1); // Obtendo o ID gerado
+		        }
+
+		        con.close();
+		        return idCliente;
+		    } catch (Exception e) {
+		        System.out.println("Erro ao inserir cliente: " + e);
+		        return -1; // Retornar um valor de erro
+		    }
 	}
 
-    public String selectIdCliente(Cliente cliente) {
-        String id_cliente = null;
-        String read = "SELECT cli_id FROM cliente where  cli_email = ? AND cli_senha = ? AND cli_cpf = ? order by cli_id desc LIMIT 1;";
-    
-        try (Connection con = Conexao.conectar();
-
-             PreparedStatement pst = con.prepareStatement(read)) {
-    
-            pst.setString(1, cliente.getEmail());
-            pst.setString(2, cliente.getSenha());
-            pst.setString(3, cliente.getCpf());
-    
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    id_cliente = String.valueOf(rs.getInt("cli_id"));
-                }
-            }
-    
-        } catch (Exception e) {
-            System.out.println("Erro ao recuperar ID do cliente: " + e);
-        }
-    
-        return id_cliente;
-    }
     
     public ArrayList<Cliente> ListarCliente(){
 		System.out.println("ESTOU NO DAO CLIENTE ARRAY");

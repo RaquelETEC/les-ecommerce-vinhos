@@ -41,6 +41,7 @@ public class ControllerEndereco extends HttpServlet {
 			response.sendRedirect("index.html");
 		}
 	}
+	
 
 	protected void AdicionarEndereco(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -48,7 +49,7 @@ public class ControllerEndereco extends HttpServlet {
 			System.out.println("voce conseguiu chegar aqui no AdicionarEndereco:)");
 			
 			Cliente cliente = (Cliente) request.getAttribute("cliente");
-            System.out.println("o id do cliente no adicionar endereço servelet: "+cliente.getId());
+            System.out.println("o id do cliente no adicionar endere�o servelet: "+cliente.getId());
 
 			String tipoResidencia = request.getParameter("typeTipoResidencia");
 			String tipoLogradouro = request.getParameter("typeTipoLogradouro");
@@ -63,10 +64,6 @@ public class ControllerEndereco extends HttpServlet {
 			String tipoEndereco = "R";
             String enderecoPadrao = "N";
 
-            System.out.println("tipoResidencia "+tipoResidencia);
-            System.out.println("tipoLogradouro "+tipoLogradouro);
-            System.out.println("numero: "+numero);
-        
             endereco.setCliente(cliente);
             endereco.setTipoResidencia(tipoResidencia);
             endereco.setTipoLogradouro(tipoLogradouro);
@@ -83,10 +80,7 @@ public class ControllerEndereco extends HttpServlet {
 
 			daoEndereco.inserirEndereco(cliente, endereco);
 			
-			System.out.println("Passou pelo Dao endereço na servlet: "+ endereco);
-
-
-			response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
+			
 
 			
 		

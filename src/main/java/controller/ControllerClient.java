@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import model.entity.Cliente;
+import model.entity.Endereco;
+import model.entity.TiposEndereco;
+import Service.ClienteService;
 
 // TODO: Auto-generated Javadoc
 
@@ -32,9 +35,12 @@ public class ControllerClient extends HttpServlet {
 	/** The cliente. */
 	Cliente cliente = new Cliente();
 
-	/**
-	 * Instantiates a new controller.
-	 */
+	/* The endereco */
+	Endereco endereco = new Endereco();
+	
+	/* The ServiceCliente */
+	ClienteService clienteService = new ClienteService();
+	
 	public ControllerClient() {
 		super();
 	}
@@ -91,22 +97,6 @@ public class ControllerClient extends HttpServlet {
 		String nascimento = request.getParameter("typeNascimento");
 		String genero = request.getParameter("typeGenero");
 
-		// Outras operaÃ§Ãµes, se necessÃ¡rio
-		// Envia as informaÃ§Ãµes para a pÃ¡gina HTML
-		response.setContentType("text/html");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write("<p>Nome: " + nome + "</p>");
-		response.getWriter().write("<p>Email: " + email + "</p>");
-		response.getWriter().write("<p>Senha: " + senha + "</p>");
-		response.getWriter().write("<p>Senha Repetida: " + senhaRepetida + "</p>");
-		response.getWriter().write("<p>CPF: " + cpf + "</p>");
-		response.getWriter().write("<p>Tipo de Telefone: " + tipoTelefone + "</p>");
-		response.getWriter().write("<p>Telefone: " + telefone + "</p>");
-		response.getWriter().write("<p>Data de Nascimento: " + nascimento + "</p>");
-		response.getWriter().write("<p>GÃªnero: " + genero + "</p>");
-
-		// response.sendRedirect("areaCliente");
-
 		cliente.setNome(nome);
 		cliente.setEmail(email);
 		cliente.setSenha(senhaRepetida);
@@ -123,20 +113,73 @@ public class ControllerClient extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		daoCliente.inserirCliente(cliente);
+		//Endereço Residencial 
+		Endereco enderecoR = new Endereco();
+		
+        String tipoEnderecoParam = request.getParameter("TiposEnderecoR");
+        TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
 
-		System.out.println("cliente cadastrado com sucesso: " + nome);
+        enderecoR.setTipoResidencia( request.getParameter("typeTipoResidencia"));
+        enderecoR.setTipoLogradouro( request.getParameter("typeTipoLogradouro"));
+        enderecoR.setLogradouro( request.getParameter("typeLogradouro"));
+        enderecoR.setNumero(  request.getParameter("typeNumero"));
+        enderecoR.setBairro( request.getParameter("typeBairro"));
+        enderecoR.setCep( request.getParameter("typeCep"));
+        enderecoR.setCidade( request.getParameter("typeCidade"));
+        enderecoR.setEstado( request.getParameter("typeEstado"));
+        enderecoR.setPais( request.getParameter("typePais"));
+        enderecoR.setPadrao("SIM");
+        enderecoR.setObservacao( request.getParameter("observacoes"));		
+        enderecoR.setTipos(tiposEndereco);
+        
+        //Endereço Entrega 
+		Endereco enderecoE = new Endereco();
+		
+		String tipoEnderecoParamE = request.getParameter("TiposEnderecoE");
+		TiposEndereco tiposEnderecoE = TiposEndereco.valueOf(tipoEnderecoParamE);
+	
+		enderecoE.setTipoResidencia( request.getParameter("typeTipoResidenciaE"));
+		enderecoE.setTipoLogradouro( request.getParameter("typeTipoLogradouroE"));
+		enderecoE.setLogradouro( request.getParameter("typeLogradouroE"));
+		enderecoE.setNumero(  request.getParameter("typeNumeroE"));
+		enderecoE.setBairro( request.getParameter("typeBairroE"));
+		enderecoE.setCep( request.getParameter("typeCepE"));
+		enderecoE.setCidade( request.getParameter("typeCidadeE"));
+		enderecoE.setEstado( request.getParameter("typeEstadoE"));
+		enderecoE.setPais( request.getParameter("typePaisE"));
+		enderecoE.setPadrao("SIM");
+		enderecoE.setObservacao( request.getParameter("observacoesE"));		
+		enderecoE.setTipos(tiposEnderecoE);
+		
+		 //Endereço Cobrança 
+		Endereco enderecoC = new Endereco();
+		
+		String tipoEnderecoParamC = request.getParameter("TiposEnderecoC");
+		TiposEndereco tiposEnderecoC = TiposEndereco.valueOf(tipoEnderecoParamC);
+	
+		enderecoC.setTipoResidencia( request.getParameter("typeTipoResidenciaC"));
+		enderecoC.setTipoLogradouro( request.getParameter("typeTipoLogradouroC"));
+		enderecoC.setLogradouro( request.getParameter("typeLogradouroC"));
+		enderecoC.setNumero(  request.getParameter("typeNumeroC"));
+		enderecoC.setBairro( request.getParameter("typeBairroC"));
+		enderecoC.setCep( request.getParameter("typeCepC"));
+		enderecoC.setCidade( request.getParameter("typeCidadeC"));
+		enderecoC.setEstado( request.getParameter("typeEstadoC"));
+		enderecoC.setPais( request.getParameter("typePaisC"));
+		enderecoC.setPadrao("SIM");
+		enderecoC.setObservacao( request.getParameter("observacoesC"));		
+		enderecoC.setTipos(tiposEnderecoC);
 
-		int id_cliente = Integer.parseInt(daoCliente.selectIdCliente(cliente));
-
-		cliente.setId(id_cliente);
-
-		System.out.println("o id do CLIENTE Objeto:" + cliente.getId());
-
-		request.setAttribute("cliente", cliente);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/inserirEndereco");
-
-		dispatcher.forward(request, response);
+		
+	
+		clienteService.adicionarCliente(cliente,enderecoR,enderecoE,enderecoC);
+		
+		
+		System.out.println("Passou por tudo ta joia: ");
+		
+		
+		
+		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
 
 	}
 
