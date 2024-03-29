@@ -8,8 +8,8 @@ public class ClienteService {
 
 	private DaoCliente daoCliente;
 
-	private EnderecoService enderecoService;
-
+	
+	EnderecoService enderecoService = new EnderecoService();
 	public ClienteService() {
 		this.daoCliente = new DaoCliente();
 	}
@@ -21,15 +21,16 @@ public class ClienteService {
 		cliente.setId(id_cliente);
 		System.out.println("cliente cadastrado com sucesso: " + cliente.getNome() + "ID: " + cliente.getId());
 
+
 		enderecoR.setCliente(cliente);
 		enderecoE.setCliente(cliente);
 		enderecoC.setCliente(cliente);
-
-		String responseEndeR = enderecoService.adicionarEndereco(cliente, enderecoR);
-		String responseEndeE = enderecoService.adicionarEndereco(cliente, enderecoE);
-		String responseEndeC = enderecoService.adicionarEndereco(cliente, enderecoC);
-
-		return responseEndeR;
+		
+		 String responseEndeR = enderecoService.adicionarEndereco(cliente, enderecoR);
+		 String responseEndeE = enderecoService.adicionarEndereco(cliente, enderecoE);
+		 String responseEndeC = enderecoService.adicionarEndereco(cliente, enderecoC);
+		 
+		return "OK";
 	}
 
 }
