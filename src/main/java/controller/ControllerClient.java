@@ -116,7 +116,7 @@ public class ControllerClient extends HttpServlet {
 		//Endereço Residencial 
 		Endereco enderecoR = new Endereco();
 		
-        String tipoEnderecoParam = request.getParameter("TiposEnderecoR");
+        String tipoEnderecoParam = request.getParameter("RESIDENCIAL");
         TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
 
         enderecoR.setTipoResidencia( request.getParameter("typeTipoResidencia"));
@@ -135,7 +135,7 @@ public class ControllerClient extends HttpServlet {
         //Endereço Entrega 
 		Endereco enderecoE = new Endereco();
 		
-		String tipoEnderecoParamE = request.getParameter("TiposEnderecoE");
+		String tipoEnderecoParamE = request.getParameter("ENTREGA");
 		TiposEndereco tiposEnderecoE = TiposEndereco.valueOf(tipoEnderecoParamE);
 	
 		enderecoE.setTipoResidencia( request.getParameter("typeTipoResidenciaE"));
@@ -154,7 +154,7 @@ public class ControllerClient extends HttpServlet {
 		 //Endereço Cobrança 
 		Endereco enderecoC = new Endereco();
 		
-		String tipoEnderecoParamC = request.getParameter("TiposEnderecoC");
+		String tipoEnderecoParamC = request.getParameter("COBRANCA");
 		TiposEndereco tiposEnderecoC = TiposEndereco.valueOf(tipoEnderecoParamC);
 	
 		enderecoC.setTipoResidencia( request.getParameter("typeTipoResidenciaC"));

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -18,33 +19,32 @@ public class DaoCliente {
                         "VALUES (?,?,?,?,?,?,?,?,?)";
                       
 		try {
-			Connection con = Conexao.conectar();
-            System.out.println("chegou no try no inserir cliente");
-			PreparedStatement pst = con.prepareStatement(create);
-			pst.setString(1, cliente.getNome());
-			pst.setString(2, cliente.getEmail());
-			pst.setString(3, cliente.getSenha());
-            pst.setString(4, cliente.getCpf());
-            pst.setString(5, cliente.getTipoTelefone());
-            pst.setString(6, cliente.getTelefone());
-            pst.setDate(7, new java.sql.Date(cliente.getDataNasc().getTime()));
-            pst.setString(8, cliente.getGenero());
-            pst.setString(9, cliente.getStatus());
+		    Connection con = Conexao.conectar();
+		    PreparedStatement pst = con.prepareStatement(create, Statement.RETURN_GENERATED_KEYS); // Adicione Statement.RETURN_GENERATED_KEYS aqui
+		    pst.setString(1, cliente.getNome());
+		    pst.setString(2, cliente.getEmail());
+		    pst.setString(3, cliente.getSenha());
+		    pst.setString(4, cliente.getCpf());
+		    pst.setString(5, cliente.getTipoTelefone());
+		    pst.setString(6, cliente.getTelefone());
+		    pst.setDate(7, new java.sql.Date(cliente.getDataNasc().getTime()));
+		    pst.setString(8, cliente.getGenero());
+		    pst.setString(9, cliente.getStatus());
 
-			pst.executeUpdate(); 
-			
-			 ResultSet rs = pst.getGeneratedKeys();
-		        int idCliente = -1; // Valor padrão se não houver chaves geradas
-		        if (rs.next()) {
-		            idCliente = rs.getInt(1); // Obtendo o ID gerado
-		        }
+		    pst.executeUpdate();
 
-		        con.close();
-		        return idCliente;
-		    } catch (Exception e) {
-		        System.out.println("Erro ao inserir cliente: " + e);
-		        return -1; // Retornar um valor de erro
+		    ResultSet rs = pst.getGeneratedKeys();
+		    int idCliente = -1; // Valor padrão se não houver chaves geradas
+		    if (rs.next()) {
+		        idCliente = rs.getInt(1); // Obtendo o ID gerado
 		    }
+
+		    con.close();
+		    return idCliente;
+		} catch (Exception e) {
+		    System.out.println("Erro ao inserir cliente: " + e);
+		    return -1; // Retornar um valor de erro
+		}
 	}
 
     
