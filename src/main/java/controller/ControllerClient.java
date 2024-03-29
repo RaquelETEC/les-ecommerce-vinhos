@@ -50,6 +50,7 @@ public class ControllerClient extends HttpServlet {
 		String action = request.getServletPath();
 
 		System.out.println("chegou aqui: " + action);
+		
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
 			
@@ -99,6 +100,7 @@ public class ControllerClient extends HttpServlet {
 
 		cliente.setNome(nome);
 		cliente.setEmail(email);
+		cliente.setSenha(senha);
 		cliente.setSenha(senhaRepetida);
 		cliente.setCpf(cpf);
 		cliente.setTipoTelefone(tipoTelefone);
@@ -113,7 +115,7 @@ public class ControllerClient extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		//Endereço Residencial 
+		//Endereï¿½o Residencial 
 		Endereco enderecoR = new Endereco();
 		
         String tipoEnderecoParam = request.getParameter("RESIDENCIAL");
@@ -132,7 +134,7 @@ public class ControllerClient extends HttpServlet {
         enderecoR.setObservacao( request.getParameter("observacoes"));		
         enderecoR.setTipos(tiposEndereco);
         
-        //Endereço Entrega 
+        //Endereï¿½o Entrega 
 		Endereco enderecoE = new Endereco();
 		
 		String tipoEnderecoParamE = request.getParameter("ENTREGA");
@@ -151,7 +153,7 @@ public class ControllerClient extends HttpServlet {
 		enderecoE.setObservacao( request.getParameter("observacoesE"));		
 		enderecoE.setTipos(tiposEnderecoE);
 		
-		 //Endereço Cobrança 
+		 //Endereï¿½o Cobranï¿½a 
 		Endereco enderecoC = new Endereco();
 		
 		String tipoEnderecoParamC = request.getParameter("COBRANCA");
@@ -209,7 +211,9 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("telefone", telefone);
 		request.setAttribute("nascimento", nascimento);
 		request.setAttribute("genero", genero);
-
+		
+		request.setAttribute("cliente", cliente);
+		
 		System.out.println("o nascimento que chegou na area do cliente: " + nascimento);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
@@ -245,6 +249,8 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("telefone", cliente.getTelefone());
 		request.setAttribute("genero", cliente.getGenero());
 		request.setAttribute("status", cliente.getStatus());
+		
+		request.setAttribute("cliente", cliente);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
 		rd.forward(request, response);	

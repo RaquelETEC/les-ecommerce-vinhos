@@ -15,3 +15,4 @@ function validarAtualizar(){
 	document.forms["form-register"].submit();
     return true;
 }
+

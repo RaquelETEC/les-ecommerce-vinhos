@@ -17,6 +17,7 @@ public class Cliente {
 	private String status;
 	
 	private ArrayList<Endereco> listadeEnderecos = new ArrayList<>();
+	private ArrayList<CartaoDeCredito> listaDeCartoes = new ArrayList<>();
 
 	
 	public Cliente() {
@@ -26,7 +27,7 @@ public class Cliente {
 
 	
 	public Cliente(int id, String nome, String email, String senha, String cpf, String tipoTelefone, String telefone,
-			Date dataNasc, String genero, String status, ArrayList<Endereco> listadeEnderecos) {
+			Date dataNasc, String genero, String status, ArrayList<Endereco> listadeEnderecos,ArrayList<CartaoDeCredito> listaDeCartoes) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -37,8 +38,10 @@ public class Cliente {
 		this.dataNasc = dataNasc;
 		this.genero = genero;
 		this.listadeEnderecos = listadeEnderecos;
+		this.listaDeCartoes = listaDeCartoes;
 		this.status = status;
 	}
+
 
 
 	public int getId() {
@@ -148,6 +151,16 @@ public class Cliente {
 		this.listadeEnderecos = listadeEnderecos;
 	}
 	
+	public ArrayList<CartaoDeCredito> getListaDeCartoes() {
+		return listaDeCartoes;
+	}
+
+
+	public void setListaDeCartoes(ArrayList<CartaoDeCredito> listaDeCartoes) {
+		this.listaDeCartoes = listaDeCartoes;
+	}
+
+
 	
 	
 
