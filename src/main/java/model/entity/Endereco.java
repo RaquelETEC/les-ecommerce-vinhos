@@ -4,6 +4,7 @@ public class Endereco {
 
 	private Integer id;
 	private Cliente cliente;
+	private String nome;
 	private String tipoResidencia;
 	private String tipoLogradouro;
 	private String logradouro;
@@ -22,12 +23,13 @@ public class Endereco {
 	}
 
 	
-	public Endereco(Integer id, Cliente cliente, String tipoResidencia, String tipoLogradouro, String logradouro,
+	public Endereco(Integer id, Cliente cliente, String nome, String tipoResidencia, String tipoLogradouro, String logradouro,
 			String numero, String bairro, String cep, String cidade, String estado, String pais, String padrao,
 			String observacao, TiposEndereco tipos) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
+		this.nome = nome;
 		this.tipoResidencia = tipoResidencia;
 		this.tipoLogradouro = tipoLogradouro;
 		this.logradouro = logradouro;
@@ -69,6 +71,14 @@ public class Endereco {
 		this.cliente = cliente;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
 	public String getTipoResidencia() {
 		return tipoResidencia;
 	}

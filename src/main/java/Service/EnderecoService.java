@@ -14,14 +14,11 @@ public class EnderecoService {
     }	
 
     public String adicionarEndereco(Cliente cliente, Endereco endereco) {
-        // Validação dos dados se necessário
+        // Validaï¿½ï¿½o dos dados se necessï¿½rio
 		System.out.println("Cheguei no adicionarEndereco Service");
 		
-	
-		System.out.println("cliente cadastrado com sucesso: " + endereco.getTipos() + "ID: " + endereco.getId());
 
-
-        // Chamada ao DAO para inserir o endereço
+        // Chamada ao DAO para inserir o endereï¿½o
         return daoEndereco.inserirEndereco(cliente, endereco);
     }
 }

@@ -67,6 +67,8 @@ public class ControllerCartao extends HttpServlet {
 	    ArrayList<CartaoDeCredito> lista = cartaoService.listarCartoes(cliente);
 
 	    request.setAttribute("listaCartoes", lista);
+	    request.setAttribute("id", id);
+	    
 	    RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusCartoes.jsp");
 	    rd.forward(request, response);
 	}

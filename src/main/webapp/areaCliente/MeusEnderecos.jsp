@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartoes</title>
+    <title>Meus enderecos</title>
     <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
     <link rel="stylesheet" href="../Styles/StyleMeusCartoesV4.css">
 
@@ -51,9 +51,9 @@
                         <span>Minha Conta</span>
                     </button>
                     <div class="box-exibir-opcoes MinhaConta">
-                        <button onclick="window.location.href=>'Perfil.html?id=<%=request.getAttribute("id")%>';">Meu Perfil</button>
-                   		<button class="ativo" onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
-                        <button onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
+                        <button onclick="window.location.href=>'Perfil.html';">Meu Perfil</button>
+                   		<button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
+                        <button class="ativo" onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
                         <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
                     </div>
 
@@ -83,30 +83,25 @@
 
                 <div class="box-top-register">
                     <!-- titulo do cabecalho -->
-                    <h1 class="text-perfil">Cartões de Crédito</h1>
+                    <h1 class="text-perfil">Endereços</h1>
                 </div>
    				<div class="content-Cupons">
    					<div class="buttons-content">
    				        <button 
    				        class="botaoADDNovoCartao" 
-   				        onclick="window.location.href='MeusCartoesADDNovo.html';">
-   				        + Adicionar Novo Cartão
+   				        onclick="window.location.href='MeusEnderecosADDEnd.html';">
+   				        + Adicionar Novo Endereço
    				       </button>
    					</div>
-	                   <%
-							for (int i = 0; i < lista.size(); i++) {
-						%>
-				 <!-- Conteúdo do primeiro card -->
+	           
+				  <!--   Conteúdo do primeiro card -->
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-2">
-    								<img src="<%= lista.get(i).getBandeira().getImg() %>" alt="Imagem da Bandeira" class="img-fluid-cartao">
-					            </div>
-					            <div class="col-md-7">
-					                <h5 class="card-title"><%=lista.get(i).getNome()%></h5>
-					                <p class="card-text">Número: <%=lista.get(i).getNumero()%></p>
-					                <p class="card-text">Padrão: <span style="color: green;"><%=lista.get(i).getPadrao()%></span></p>
+					            <div class="col-md-9">
+					                <h5 class="card-title">Raquel da silva Gonçalves</h5>
+					                <p class="card-text">Estrada do jabuti, 1050, b1 ap8 , Jargin do itu , ITAQUAQUECETUBA- SP - BRASIL</p>
+					                <p class="card-text">Padrão: <span style="color: green;">aaa</span></p>
 					            </div>
 					            <div class="col-md-3 buttons-options">
 					                <button type="button" class="btn btn-primary">Editar</button>
@@ -115,9 +110,24 @@
 					        </div>
 					    </div>
 					</div>
-							<%
-								}
-							%>
+					
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
+					    <div class="card-body">
+					        <div class="row">
+					            <div class="col-md-9">
+					                <h5 class="card-title">Rafael Santos</h5>
+					                <p class="card-text">Estrada do jabuti, 1050, b1 ap8 , Jargin do itu , ITAQUAQUECETUBA- SP - BRASIL</p>
+					                <p class="card-text">Padrão: <span style="color: green;">aaa</span></p>
+					            </div>
+					            <div class="col-md-3 buttons-options">
+					                <button type="button" class="btn btn-primary">Editar</button>
+					                <button type="button" class="btn btn-danger">Excluir</button>
+					           </div>
+					        </div>
+					    </div>
+					</div>
+						<!-- 	
+							%>-->
 				    
 				    
                     <!-- acaba aqui -->
