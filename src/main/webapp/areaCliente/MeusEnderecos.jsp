@@ -129,7 +129,7 @@
 					%>
 				    
                     <!-- acaba aqui -->
-                    
+                    <hr>
                     <p class="text-name">Endereços de Cobrança</p>
    				 	<!--   Conteúdo do primeiro card -->
    					
@@ -138,7 +138,6 @@
 								Endereco endereco = listaCobranca.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<hr>
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
 					    <div class="card-body">
 					        <div class="row">
@@ -198,11 +197,12 @@
                     <!-- acaba aqui -->
                 </div>
                
-
+			
             </div>
 
-
         </div>
+        <br><br>
+        
     </main>
 </body>
 
