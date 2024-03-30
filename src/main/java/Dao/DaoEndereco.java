@@ -6,14 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import model.entity.BandeiraCartao;
 import model.entity.Cliente;
 import model.entity.Endereco;
 import model.entity.TiposEndereco;
 
 public class DaoEndereco {
 	
-	Endereco endereco = new Endereco();
 	
     public String inserirEndereco(Cliente cliente, Endereco endereco) {
         System.out.println("DAO : id do cliente para o endereço:"+ cliente.getId());
@@ -77,32 +75,35 @@ public class DaoEndereco {
             
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                 
+               Endereco endereco = new Endereco();
             	
+        	   endereco.setId(rs.getInt("end_id"));
+               endereco.setCliente(cliente);
+               endereco.setTipoResidencia(rs.getString("end_tipo_residencia"));
+               endereco.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
+               endereco.setLogradouro(rs.getString("end_logradouro"));
+               endereco.setNumero(rs.getString("end_numero"));
+               endereco.setBairro(rs.getString("end_bairro"));
+               endereco.setCep(rs.getString("end_cep"));
+               endereco.setCidade(rs.getString("end_cidade"));
+               endereco.setEstado(rs.getString("end_estado"));
+               endereco.setPais(rs.getString("end_pais"));
+               endereco.setPadrao(rs.getString("end_padrao"));
+               endereco.setObservacao(rs.getString("end_observacoes"));
+               endereco.setNome(rs.getString("end_nome"));
             	
-            	endereco.setId(rs.getInt("end_id"));
-            	endereco.setCliente(cliente);
-            	endereco.setTipoResidencia("end_tipo_residencia");
-            	endereco.setTipoLogradouro("end_tipo_logradouro");
-            	endereco.setLogradouro("end_logradouro");
-            	endereco.setNumero("end_numero");
-            	endereco.setBairro("end_bairro");
-            	endereco.setCep("end_cep");
-            	endereco.setCidade("end_cidade")
-            	endereco.setEstado("end_estado");
-            	endereco.setPais("end_pais");
-            	endereco.setPadrao("end_padrao");
-            	endereco.setObservacao("end_observacoes");
-            	endereco.setNome("end_nome");
-            	TiposEndereco tiposEndereco = TiposEndereco.valueOf("end_tipo");
+               
+               // Converter a string do tipo de endereço para o enum correspondente
+               String tipoEnderecoString = rs.getString("end_tipo");
+               TiposEndereco tipoEndereco = TiposEndereco.valueOf(tipoEnderecoString);
+               endereco.setTipos(tipoEndereco);
             	
-            	
-                listaDeCartoes.add(cartao);
+               listaDeEnderecos.add(endereco);
             }
             con.close();
         } catch (Exception e) {
-            System.out.println("Erro ao listar cartões: " + e);
+            System.out.println("Erro ao listar endereços: " + e);
         }
-        return listaDeCartoes;
+        return listaDeEnderecos;
     }
 }

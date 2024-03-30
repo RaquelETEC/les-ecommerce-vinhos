@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import Service.EnderecoService;
 import model.entity.Cliente;
 import model.entity.Endereco;
+import model.entity.TiposEndereco;
 
 // TODO: Auto-generated Javadoc
 
@@ -96,16 +97,35 @@ public class ControllerEndereco extends HttpServlet {
 		
 	    //Cliente cliente = (Cliente) request.getAttribute("cliente");
 	    
-	    System.out.println("o id que chegou aqui nos cartoes:"+cliente.getId());
+	    System.out.println("o id que chegou aqui no listar endereço:"+cliente.getId());
 	    
-	    ArrayList<CartaoDeCredito> lista = cartaoService.listarCartoes(cliente);
+	    ArrayList<Endereco> lista = enderecoService.listarEnderecos(cliente);
 
-	    request.setAttribute("listaCartoes", lista);
+	    
+	    // Listas para cada tipo de endereço
+	    ArrayList<Endereco> listaEntrega = new ArrayList<>();
+	    ArrayList<Endereco> listaCobranca = new ArrayList<>();
+	    ArrayList<Endereco> listaResidencial = new ArrayList<>();
+	    
+	    // Separar endereços por tipo
+	    for (Endereco endereco : lista) {
+	        if (endereco.getTipos().equals(TiposEndereco.ENTREGA)) {
+	            listaEntrega.add(endereco);
+	        } else if (endereco.getTipos().equals(TiposEndereco.COBRANCA)) {
+	            listaCobranca.add(endereco);
+	        } else if (endereco.getTipos().equals(TiposEndereco.RESIDENCIAL)) {
+	            listaResidencial.add(endereco);
+	        }
+	    }
+
+	    // Enviar as listas separadas para a página .jsp
+	    request.setAttribute("listaEnderecosEntrega", listaEntrega);
+	    request.setAttribute("listaEnderecosCobranca", listaCobranca);
+	    request.setAttribute("listaEnderecosResidencial", listaResidencial);
 	    request.setAttribute("id", id);
-		
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusEnderecos.jsp");
-			rd.forward(request, response);	
+	
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusEnderecos.jsp");
+		rd.forward(request, response);	
 
 		}
 	

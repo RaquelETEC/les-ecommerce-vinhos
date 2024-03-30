@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="model.entity.CartaoDeCredito"%>
+<%@ page import="model.entity.Endereco"%>
 <%@ page import="java.util.ArrayList"%>
 <%
 	@ SuppressWarnings ("unchecked")
-	ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttribute("listaCartoes");
+	ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("listaEnderecosEntrega");
+	ArrayList<Endereco> listaCobranca = (ArrayList<Endereco>) request.getAttribute("listaEnderecosCobranca");
+	ArrayList<Endereco> listaResidencial = (ArrayList<Endereco>) request.getAttribute("listaEnderecosResidencial");
+
+
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -93,15 +97,24 @@
    				        + Adicionar Novo Endereço
    				       </button>
    					</div>
-	           
-				  <!--   Conteúdo do primeiro card -->
+   					<p class="text-name">Endereços de Entrega</p>
+   				 	<!--   Conteúdo do primeiro card -->
+   					
+	             	<%
+							for (int i = 0; i < listaEntrega.size(); i++) {
+								Endereco endereco = listaEntrega.get(i); // Crie um novo objeto Endereco
+
+					%>
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
 					    <div class="card-body">
 					        <div class="row">
 					            <div class="col-md-9">
-					                <h5 class="card-title">Raquel da silva Gonçalves</h5>
-					                <p class="card-text">Estrada do jabuti, 1050, b1 ap8 , Jargin do itu , ITAQUAQUECETUBA- SP - BRASIL</p>
-					                <p class="card-text">Padrão: <span style="color: green;">aaa</span></p>
+					                <h5 class="card-title"><%=endereco.getNome()%></h5>
+									 <p class="card-text">
+										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
+										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
+									 </p>					                
+									 <p class="card-text">Padrão: <span style="color: green;"><%=endereco.getPadrao()%></span></p>
 					            </div>
 					            <div class="col-md-3 buttons-options">
 					                <button type="button" class="btn btn-primary">Editar</button>
@@ -110,28 +123,79 @@
 					        </div>
 					    </div>
 					</div>
-					
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
-					    <div class="card-body">
-					        <div class="row">
-					            <div class="col-md-9">
-					                <h5 class="card-title">Rafael Santos</h5>
-					                <p class="card-text">Estrada do jabuti, 1050, b1 ap8 , Jargin do itu , ITAQUAQUECETUBA- SP - BRASIL</p>
-					                <p class="card-text">Padrão: <span style="color: green;">aaa</span></p>
-					            </div>
-					            <div class="col-md-3 buttons-options">
-					                <button type="button" class="btn btn-primary">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
-					           </div>
-					        </div>
-					    </div>
-					</div>
-						<!-- 	
-							%>-->
-				    
+						
+					<%
+						}
+					%>
 				    
                     <!-- acaba aqui -->
+                    
+                    <p class="text-name">Endereços de Cobrança</p>
+   				 	<!--   Conteúdo do primeiro card -->
+   					
+	             	<%
+							for (int i = 0; i < listaCobranca.size(); i++) {
+								Endereco endereco = listaCobranca.get(i); // Crie um novo objeto Endereco
 
+					%>
+					<hr>
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
+					    <div class="card-body">
+					        <div class="row">
+					            <div class="col-md-9">
+					                <h5 class="card-title"><%=endereco.getNome()%></h5>
+									 <p class="card-text">
+										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
+										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
+									 </p>					                
+									 <p class="card-text">Padrão: <span style="color: green;"><%=endereco.getPadrao()%></span></p>
+					            </div>
+					            <div class="col-md-3 buttons-options">
+					                <button type="button" class="btn btn-primary">Editar</button>
+					                <button type="button" class="btn btn-danger">Excluir</button>
+					           </div>
+					        </div>
+					    </div>
+					</div>
+						
+					<%
+						}
+					%>
+				    
+                    <!-- acaba aqui -->
+  					<hr>
+  					<p class="text-name">Endereço Residêncial</p>
+   				 	<!--   Conteúdo do primeiro card -->
+   					
+	             	<%
+							for (int i = 0; i < listaResidencial.size(); i++) {
+								Endereco endereco = listaResidencial.get(i); // Crie um novo objeto Endereco
+
+					%>
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
+					    <div class="card-body">
+					        <div class="row">
+					            <div class="col-md-9">
+					                <h5 class="card-title"><%=endereco.getNome()%></h5>
+									 <p class="card-text">
+										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
+										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
+									 </p>					                
+									 <p class="card-text">Padrão: <span style="color: green;"><%=endereco.getPadrao()%></span></p>
+					            </div>
+					            <div class="col-md-3 buttons-options">
+					                <button type="button" class="btn btn-primary">Editar</button>
+					                <button type="button" class="btn btn-danger">Excluir</button>
+					           </div>
+					        </div>
+					    </div>
+					</div>
+						
+					<%
+						}
+					%>
+				    
+                    <!-- acaba aqui -->
                 </div>
                
 
