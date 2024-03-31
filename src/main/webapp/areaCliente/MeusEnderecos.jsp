@@ -111,7 +111,7 @@
 					            <div class="col-md-9">
 					                <h5 class="card-title "><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
-									        <span class="badge bg-success rounded-pill">Padrão</span>
+									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
 									    <% } %>
 					                </h5>
 									 <p class="card-text">
@@ -147,7 +147,7 @@
 					            <div class="col-md-9">
 									<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
-									        <span class="badge bg-success rounded-pill">Padrão</span>
+									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
 									    <% } %>
 					                </h5>									 <p class="card-text">
 										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
@@ -182,7 +182,7 @@
 					            <div class="col-md-9">
 								<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
-									        <span class="badge bg-success rounded-pill">Padrão</span>
+									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
 									    <% } %>
 					                </h5>									 <p class="card-text">
 										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
