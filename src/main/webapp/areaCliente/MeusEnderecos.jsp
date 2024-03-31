@@ -105,16 +105,19 @@
 								Endereco endereco = listaEntrega.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
 					            <div class="col-md-9">
-					                <h5 class="card-title"><%=endereco.getNome()%></h5>
+					                <h5 class="card-title "><%=endereco.getNome()%>
+					                 <% if ("S".equals(endereco.getPadrao())) { %>
+									        <span class="badge bg-success rounded-pill">Padrão</span>
+									    <% } %>
+					                </h5>
 									 <p class="card-text">
 										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
 										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
 									 </p>					                
-									 <p class="card-text">Padrão: <span style="color: green;"><%=endereco.getPadrao()%></span></p>
 					            </div>
 					            <div class="col-md-3 buttons-options">
 					                <button type="button" class="btn btn-primary">Editar</button>
@@ -138,16 +141,18 @@
 								Endereco endereco = listaCobranca.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
 					            <div class="col-md-9">
-					                <h5 class="card-title"><%=endereco.getNome()%></h5>
-									 <p class="card-text">
+									<h5 class="card-title"><%=endereco.getNome()%>
+					                 <% if ("S".equals(endereco.getPadrao())) { %>
+									        <span class="badge bg-success rounded-pill">Padrão</span>
+									    <% } %>
+					                </h5>									 <p class="card-text">
 										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
 										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
 									 </p>					                
-									 <p class="card-text">Padrão: <span style="color: green;"><%=endereco.getPadrao()%></span></p>
 					            </div>
 					            <div class="col-md-3 buttons-options">
 					                <button type="button" class="btn btn-primary">Editar</button>
@@ -171,16 +176,18 @@
 								Endereco endereco = listaResidencial.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 8rem">
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
 					            <div class="col-md-9">
-					                <h5 class="card-title"><%=endereco.getNome()%></h5>
-									 <p class="card-text">
+								<h5 class="card-title"><%=endereco.getNome()%>
+					                 <% if ("S".equals(endereco.getPadrao())) { %>
+									        <span class="badge bg-success rounded-pill">Padrão</span>
+									    <% } %>
+					                </h5>									 <p class="card-text">
 										  <%=endereco.getTipoLogradouro()%> <%=endereco.getLogradouro()%>, <%=endereco.getNumero()%>,
 										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
 									 </p>					                
-									 <p class="card-text">Padrão: <span style="color: green;"><%=endereco.getPadrao()%></span></p>
 					            </div>
 					            <div class="col-md-3 buttons-options">
 					                <button type="button" class="btn btn-primary">Editar</button>
