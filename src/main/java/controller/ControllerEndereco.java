@@ -68,7 +68,8 @@ public class ControllerEndereco extends HttpServlet {
 			String observacoes = request.getParameter("observacoes");
 			String tipoEndereco = "R";
             String enderecoPadrao = "N";
-
+            String nome = request.getParameter("TypeNomeEnd");
+            
             endereco.setCliente(cliente);
             endereco.setTipoResidencia(tipoResidencia);
             endereco.setTipoLogradouro(tipoLogradouro);
@@ -77,11 +78,11 @@ public class ControllerEndereco extends HttpServlet {
             endereco.setBairro(bairro);
             endereco.setCep(cep);
             endereco.setCidade(cidade);
-            endereco.setEstado(tipoEndereco);
             endereco.setEstado(estado);
             endereco.setPais(pais);
             endereco.setPadrao(enderecoPadrao);
             endereco.setObservacao(observacoes);		
+            endereco.setNome(nome);
 
 			//daoEndereco.inserirEndereco(cliente, endereco);
 			

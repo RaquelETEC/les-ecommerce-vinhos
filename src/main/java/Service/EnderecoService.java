@@ -17,7 +17,6 @@ public class EnderecoService {
         // Valida��o dos dados se necess�rio
 		System.out.println("Cheguei no adicionarEndereco Service");
 		
-
         // Chamada ao DAO para inserir o endere�o
         return daoEndereco.inserirEndereco(cliente, endereco);
     }

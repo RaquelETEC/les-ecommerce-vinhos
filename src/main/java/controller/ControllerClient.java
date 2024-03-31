@@ -16,6 +16,8 @@ import Dao.DaoCliente;
 import java.util.ArrayList;
 import java.util.Date;
 
+import model.entity.BandeiraCartao;
+import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Endereco;
 import model.entity.TiposEndereco;
@@ -37,6 +39,12 @@ public class ControllerClient extends HttpServlet {
 
 	/* The endereco */
 	Endereco endereco = new Endereco();
+	
+	/* The cartao */
+	CartaoDeCredito cartao = new CartaoDeCredito();
+	
+	/* The cartao */
+	BandeiraCartao bandeira = new BandeiraCartao();
 	
 	/* The ServiceCliente */
 	ClienteService clienteService = new ClienteService();
@@ -131,11 +139,17 @@ public class ControllerClient extends HttpServlet {
         enderecoR.setEstado( request.getParameter("typeEstado"));
         enderecoR.setPais( request.getParameter("typePais"));
         enderecoR.setPadrao("SIM");
+        enderecoR.setNome(request.getParameter("TypeNomeEnd"));
         enderecoR.setObservacao( request.getParameter("observacoes"));		
         enderecoR.setTipos(tiposEndereco);
         
+        
         //Endereï¿½o Entrega 
 		Endereco enderecoE = new Endereco();
+		
+		System.out.println("chegamos na entrega");
+		String tipo = request.getParameter("typeTipoResidenciaE");
+		String tipoloG = request.getParameter("typeTipoLogradouroE");
 		
 		String tipoEnderecoParamE = request.getParameter("ENTREGA");
 		TiposEndereco tiposEnderecoE = TiposEndereco.valueOf(tipoEnderecoParamE);
@@ -150,14 +164,16 @@ public class ControllerClient extends HttpServlet {
 		enderecoE.setEstado( request.getParameter("typeEstadoE"));
 		enderecoE.setPais( request.getParameter("typePaisE"));
 		enderecoE.setPadrao("SIM");
+        enderecoE.setNome(request.getParameter("TypeNomeEndE"));
 		enderecoE.setObservacao( request.getParameter("observacoesE"));		
 		enderecoE.setTipos(tiposEnderecoE);
 		
 		 //Endereï¿½o Cobranï¿½a 
 		Endereco enderecoC = new Endereco();
-		
+		System.out.println("chegamos na COBRANCA");
 		String tipoEnderecoParamC = request.getParameter("COBRANCA");
 		TiposEndereco tiposEnderecoC = TiposEndereco.valueOf(tipoEnderecoParamC);
+
 	
 		enderecoC.setTipoResidencia( request.getParameter("typeTipoResidenciaC"));
 		enderecoC.setTipoLogradouro( request.getParameter("typeTipoLogradouroC"));
@@ -169,12 +185,27 @@ public class ControllerClient extends HttpServlet {
 		enderecoC.setEstado( request.getParameter("typeEstadoC"));
 		enderecoC.setPais( request.getParameter("typePaisC"));
 		enderecoC.setPadrao("SIM");
+        enderecoC.setNome(request.getParameter("TypeNomeEndC"));
 		enderecoC.setObservacao( request.getParameter("observacoesC"));		
 		enderecoC.setTipos(tiposEnderecoC);
 
 		
-	
-		clienteService.adicionarCliente(cliente,enderecoR,enderecoE,enderecoC);
+		// Cartão
+		
+		String BandeiraId = request.getParameter("tipoBandeira");
+		int Codigobandeira =Integer.parseInt(BandeiraId);
+		bandeira.setId(Codigobandeira);
+		
+		cartao.setNumero(request.getParameter("CartaoNumero"));
+		cartao.setNome(request.getParameter("CartaoNome"));
+		cartao.setPadrao("SIM");
+		
+		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
+		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);
+		cartao.setCodigoSeguranca(codigoSeguranca);
+		
+		
+		clienteService.adicionarCliente(cliente,enderecoR,enderecoE,enderecoC,cartao, bandeira);
 		
 		
 		System.out.println("Passou por tudo ta joia: ");

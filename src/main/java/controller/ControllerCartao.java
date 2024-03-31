@@ -11,19 +11,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Service.CartoesService;
+import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/MeusCartoes.html"})
+@WebServlet(urlPatterns = {  "/inserirCartao","/areaCliente/MeusCartoes.html"})
 public class ControllerCartao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	Cliente cliente = new Cliente();
+	
+	CartaoDeCredito cartao = new CartaoDeCredito();
+	
+	BandeiraCartao tipoBandeira = new BandeiraCartao();
 	
 	CartoesService cartaoService = new CartoesService();
 	
@@ -37,6 +42,9 @@ public class ControllerCartao extends HttpServlet {
 
 		System.out.println("chegou aqui: " + action);
 		
+		if (action.equals("/inserirEndereco")) {
+			AdicionarCartao(request, response);
+		}
 		if (action.equals("/areaCliente/MeusCartoes.html")) {
 			areaMeusCartoes(request, response);
 		}
@@ -46,22 +54,41 @@ public class ControllerCartao extends HttpServlet {
 		}
 	}
 
+	protected void AdicionarCartao(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		System.out.println("voce conseguiu chegar aqui no AdicionarCartao:)");
+
+		Cliente cliente = (Cliente) request.getAttribute("cliente");
+        System.out.println("o id do cliente no adicionar cartao : "+cliente.getId());
+        
+
+		BandeiraCartao tipoBandeira = (BandeiraCartao) request.getAttribute("tipoBandeira");
+        System.out.println("o id do bandeira cartao no adicionar cartao : "+ tipoBandeira.getId());
+
+		String numero = request.getParameter("CartaoNumero");
+		String nome  = request.getParameter("CartaoNome");
+		String padrao = "SIM";
+		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
+		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);
+		
+        cartao.setCliente(cliente);
+        cartao.setBandeira(tipoBandeira);
+        cartao.setNumero(numero);
+        cartao.setNome(nome);
+        cartao.setPadrao(padrao);
+		cartao.setCodigoSeguranca(codigoSeguranca);		
 
 
-	/**
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
+	}
+	
+	
 	protected void areaMeusCartoes(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		cliente.setId(id);
-		
-	    //Cliente cliente = (Cliente) request.getAttribute("cliente");
-	    
+			    
 	    System.out.println("o id que chegou aqui nos cartoes:"+cliente.getId());
 	    
 	    ArrayList<CartaoDeCredito> lista = cartaoService.listarCartoes(cliente);

@@ -15,28 +15,37 @@ import model.entity.Cliente;
 public class DaoCartoes {
 
 
-    public int inserirCartao(CartaoDeCredito cartao) {
-		String create =   "INSERT INTO cliente" + //
-                        "(cli_nome,cli_email,cli_senha,cli_cpf,cli_telefone_tipo,cli_telefone,cli_dt_nascimento,cli_genero, cli_status)" + //
-                        "VALUES (?,?,?,?,?,?,?,?,?)";
+    public String inserirCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
+    	
+        System.out.println("DAO : id do cliente para o cartão:"+ cliente.getId());
+ 
+    	String create = "INSERT INTO cartao_de_credito (cart_id_cli, cart_numero, cart_nome, cart_padrao, cart_id_bandeira, cart_cod_seguranca) "
+                + "VALUES (?, ?, ?, ?, ?,?)";
                       
 		try {
 		    Connection con = Conexao.conectar();
-		    PreparedStatement pst = con.prepareStatement(create, Statement.RETURN_GENERATED_KEYS); // Adicione Statement.RETURN_GENERATED_KEYS aqui
-		   
-		    pst.executeUpdate();
+            System.out.println("chegou no try no inserirCartao" +cliente.getId() );
+		    PreparedStatement pst = con.prepareStatement(create, Statement.RETURN_GENERATED_KEYS); 
+		    
+		    int idBandeira = bandeira.getId();
+		 
+		    
+			pst.setInt(1, cliente.getId());
+			pst.setString(2, cartao.getNumero());
+			pst.setString(3, cartao.getNome());
+			pst.setString(4, cartao.getPadrao());
+			pst.setInt(5, idBandeira);
+			pst.setInt(6, cartao.getCodigoSeguranca());
 
-		    ResultSet rs = pst.getGeneratedKeys();
-		    int idCliente = -1; // Valor padrï¿½o se nï¿½o houver chaves geradas
-		    if (rs.next()) {
-		        idCliente = rs.getInt(1); // Obtendo o ID gerado
-		    }
 
-		    con.close();
-		    return idCliente;
+			pst.executeUpdate(); 
+			System.err.println("inserido cartao no dao!!");
+			con.close();
+			return "Sucesso";
+
 		} catch (Exception e) {
-		    System.out.println("Erro ao inserir cliente: " + e);
-		    return -1; // Retornar um valor de erro
+			System.out.println("erro ao inserir cartao: "+e);
+			return "Erro";
 		}
 	}
 
@@ -78,7 +87,7 @@ public class DaoCartoes {
             }
             con.close();
         } catch (Exception e) {
-            System.out.println("Erro ao listar cartÃµes: " + e);
+            System.out.println("Erro ao listar cartões: " + e);
         }
         return listaDeCartoes;
     }

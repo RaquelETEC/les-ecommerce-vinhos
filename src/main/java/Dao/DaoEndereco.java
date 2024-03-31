@@ -18,8 +18,8 @@ public class DaoEndereco {
 
 		String create =   "INSERT INTO endereco" + //
                         "(end_cli_id,end_tipo_residencia,end_tipo_logradouro,end_logradouro,end_numero,"+
-                        "end_bairro,end_cep,end_cidade, end_estado, end_pais,end_padrao,end_observacoes )" + //
-                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                        "end_bairro,end_cep,end_cidade, end_estado, end_pais,end_padrao,end_observacoes,end_nome,end_tipo )" + //
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
 			Connection con = Conexao.conectar();
             System.out.println("chegou no try no inserirEndereco" +cliente.getId() );
@@ -36,6 +36,8 @@ public class DaoEndereco {
 			pst.setString(10, endereco.getPais());
 			pst.setString(11, endereco.getPadrao());
 			pst.setString(12, endereco.getObservacao());
+			pst.setString(13, endereco.getNome());
+			pst.setString(14, endereco.getTipos().toString());
 
 			pst.executeUpdate(); 
 			System.err.println("inserido endere�o no dao!!");
@@ -91,7 +93,6 @@ public class DaoEndereco {
                endereco.setPadrao(rs.getString("end_padrao"));
                endereco.setObservacao(rs.getString("end_observacoes"));
                endereco.setNome(rs.getString("end_nome"));
-            	
                
                // Converter a string do tipo de endereço para o enum correspondente
                String tipoEnderecoString = rs.getString("end_tipo");
