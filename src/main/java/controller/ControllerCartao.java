@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Dao.DaoCartoes;
 import Service.CartoesService;
 import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
@@ -17,7 +18,7 @@ import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/areaCliente/MeusCartoes.html", "/areaCliente/LoginCartao.html" , "/listarCartao" })
+@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/areaCliente/MeusCartoes.html", "/areaCliente/LoginCartao.html" , "/listarCartao", "/areaCliente/deleteCartao" })
 public class ControllerCartao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -30,6 +31,8 @@ public class ControllerCartao extends HttpServlet {
 	BandeiraCartao tipoBandeira = new BandeiraCartao();
 
 	CartoesService cartaoService = new CartoesService();
+	
+	DaoCartoes daocartao = new DaoCartoes();
 
 	public ControllerCartao() {
 		super();
@@ -44,14 +47,17 @@ public class ControllerCartao extends HttpServlet {
 		if (action.equals("/areaCliente/inserirCartao")) {
 			AdicionarCartao(request, response);
 		}
-		if (action.equals("/areaCliente/MeusCartoes.html")) {
+		else if (action.equals("/areaCliente/MeusCartoes.html")) {
 			areaMeusCartoes(request, response);
 		}
-		if (action.equals("/areaCliente/LoginCartao.html")) {
+		else if (action.equals("/areaCliente/LoginCartao.html")) {
 			TelaCartaoNovo(request, response);
 		}
-		if (action.equals("/listarCartao")) {
+		else if (action.equals("/listarCartao")) {
 			ListarCartao(request, response);
+		}
+		else if (action.equals("/areaCliente/deleteCartao")) {
+			ExcluirCartao(request, response);
 		}
 
 	}
@@ -135,6 +141,17 @@ public class ControllerCartao extends HttpServlet {
 
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusCartoes.jsp");
 		rd.forward(request, response);
+	}
+	
+	protected void ExcluirCartao(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("EU CHEGUEI NO EXCLUIR CARTAO");
+		
+
+		cartao.setId(Integer.parseInt(request.getParameter("id")));
+
+		daocartao.deletarCartao(cartao);
+		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.jsp");
 	}
 
 }

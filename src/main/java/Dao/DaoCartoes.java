@@ -118,6 +118,21 @@ public class DaoCartoes {
 		}
 		
 	}
+    
+	public void deletarCartao(CartaoDeCredito cartao) {
+		String delete = "delete from cartao_de_credito where cart_id=?";
+		
+		System.out.println("eu cheguei aqui "+ cartao.getId());
+		try {
+	        Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(delete);
+			pst.setInt(1, cartao.getId());
+			pst.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	
 	
 }

@@ -107,11 +107,10 @@
 					                <h5 class="card-title"><%=lista.get(i).getNome()%></h5>
 					                <p class="card-text">Número: <%=lista.get(i).getNumero()%></p>
 					                <p class="card-text">Padrão: <span style="color: green;"><%=lista.get(i).getPadrao()%></span></p>
-					            </div>
+					            </div>					   
 					            <div class="col-md-3 buttons-options">
-					                <button type="button" class="btn btn-primary" onclick="window.location.href='EditarCartao.jsp?id=<%=lista.get(i).getId()%>';"
-					                 >Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <a type="button" class="btn btn-primary" onclick="window.location.href='EditarCartao.jsp?id=<%=lista.get(i).getId()%>';">Editar</a>
+					                <a href="javascript: confirmarCartao(<%=lista.get(i).getId()%>)" class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>
