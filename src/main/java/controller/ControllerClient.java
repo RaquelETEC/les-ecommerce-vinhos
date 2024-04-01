@@ -148,8 +148,6 @@ public class ControllerClient extends HttpServlet {
 		Endereco enderecoE = new Endereco();
 		
 		System.out.println("chegamos na entrega");
-		String tipo = request.getParameter("typeTipoResidenciaE");
-		String tipoloG = request.getParameter("typeTipoLogradouroE");
 		
 		String tipoEnderecoParamE = request.getParameter("ENTREGA");
 		TiposEndereco tiposEnderecoE = TiposEndereco.valueOf(tipoEnderecoParamE);
@@ -192,8 +190,7 @@ public class ControllerClient extends HttpServlet {
 		
 		// Cartão
 		
-		String BandeiraId = request.getParameter("tipoBandeira");
-		int Codigobandeira =Integer.parseInt(BandeiraId);
+		int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
 		bandeira.setId(Codigobandeira);
 		
 		cartao.setNumero(request.getParameter("CartaoNumero"));

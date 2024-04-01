@@ -65,7 +65,7 @@
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='Notificaï¿½ï¿½es.jsp';">Notificacoes</span>
+                       <span onclick="window.location.href='Notificações.jsp';">Notificacoes</span>
                     </button>
                     
 
@@ -88,9 +88,9 @@
    				<div class="content-Cupons">
    					<div class="buttons-content">
    				        <button 
-   				        class="botaoADDNovoCartao" 
-   				        onclick="window.location.href='MeusCartoesADDNovo.html';">
-   				        + Adicionar Novo Cartão
+   				       onclick="window.location.href='LoginCartao.html?id=<%=request.getAttribute("id")%>';"
+   				       class="botaoADDNovoCartao" 
+   				       >+ Adicionar Novo Cartão
    				       </button>
    					</div>
 	                   <%
@@ -109,7 +109,8 @@
 					                <p class="card-text">Padrão: <span style="color: green;"><%=lista.get(i).getPadrao()%></span></p>
 					            </div>
 					            <div class="col-md-3 buttons-options">
-					                <button type="button" class="btn btn-primary">Editar</button>
+					                <button type="button" class="btn btn-primary" onclick="window.location.href='EditarCartao.jsp?id=<%=lista.get(i).getId()%>';"
+					                 >Editar</button>
 					                <button type="button" class="btn btn-danger">Excluir</button>
 					           </div>
 					        </div>

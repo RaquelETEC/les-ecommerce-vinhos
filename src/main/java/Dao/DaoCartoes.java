@@ -93,7 +93,31 @@ public class DaoCartoes {
     }
     
 	
-	
+    public void selecionarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
+		String read2 = "select *  from cartao_de_credito where cart_id = ?";
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read2);
+			pst.setInt(1, cartao.getId());
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+			    int idBandeira = bandeira.getId();
+			    int idCliente = cliente.getId();
+			    
+				cartao.setId(rs.getInt(1));
+				cliente.setId(rs.getInt(idCliente));
+				cartao.setNumero(rs.getString(3));
+				cartao.setNome(rs.getString(4));
+				cartao.setPadrao(rs.getString(5));
+				bandeira.setId(rs.getInt(idBandeira));
+				cartao.setCodigoSeguranca(7);
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println("ERRO AO SELECIONAR" + e);
+		}
+		
+	}
 	
 	
 }

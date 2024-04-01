@@ -15,23 +15,22 @@ import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 
-
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = {  "/inserirCartao","/areaCliente/MeusCartoes.html"})
+@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/areaCliente/MeusCartoes.html", "/areaCliente/LoginCartao.html" , "/listarCartao" })
 public class ControllerCartao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	Cliente cliente = new Cliente();
-	
+
 	CartaoDeCredito cartao = new CartaoDeCredito();
-	
+
 	BandeiraCartao tipoBandeira = new BandeiraCartao();
-	
+
 	CartoesService cartaoService = new CartoesService();
-	
+
 	public ControllerCartao() {
 		super();
 	}
@@ -41,63 +40,101 @@ public class ControllerCartao extends HttpServlet {
 		String action = request.getServletPath();
 
 		System.out.println("chegou aqui: " + action);
-		
-		if (action.equals("/inserirEndereco")) {
+
+		if (action.equals("/areaCliente/inserirCartao")) {
 			AdicionarCartao(request, response);
 		}
 		if (action.equals("/areaCliente/MeusCartoes.html")) {
 			areaMeusCartoes(request, response);
 		}
-	
-		else {
-			response.sendRedirect("index.html");
+		if (action.equals("/areaCliente/LoginCartao.html")) {
+			TelaCartaoNovo(request, response);
 		}
+		if (action.equals("/listarCartao")) {
+			ListarCartao(request, response);
+		}
+
 	}
 
+	//função para cadastrar novo cartao, pegando todos os atributos do form 
 	protected void AdicionarCartao(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		System.out.println("voce conseguiu chegar aqui no AdicionarCartao:)");
 
-		Cliente cliente = (Cliente) request.getAttribute("cliente");
-        System.out.println("o id do cliente no adicionar cartao : "+cliente.getId());
-        
+		int id = Integer.parseInt(request.getParameter("typeId"));
+		cliente.setId(id);
+		System.out.println("o id que chegou aqui nos AddCartao:" + cliente.getId());
+		request.setAttribute("id", id);
 
-		BandeiraCartao tipoBandeira = (BandeiraCartao) request.getAttribute("tipoBandeira");
-        System.out.println("o id do bandeira cartao no adicionar cartao : "+ tipoBandeira.getId());
+		int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
+		System.out.println("o id do bandeira cartao no adicionar cartao : " + Codigobandeira);
 
 		String numero = request.getParameter("CartaoNumero");
-		String nome  = request.getParameter("CartaoNome");
+		String nome = request.getParameter("CartaoNome");
 		String padrao = "SIM";
 		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
 		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);
 		
-        cartao.setCliente(cliente);
-        cartao.setBandeira(tipoBandeira);
-        cartao.setNumero(numero);
-        cartao.setNome(nome);
-        cartao.setPadrao(padrao);
-		cartao.setCodigoSeguranca(codigoSeguranca);		
+		
+		tipoBandeira.setId(Codigobandeira);
+		
+		cartao.setCliente(cliente);
+		cartao.setBandeira(tipoBandeira);
+		cartao.setNumero(numero);
+		cartao.setNome(nome);
+		cartao.setPadrao(padrao);
+		cartao.setCodigoSeguranca(codigoSeguranca);
+		
+		
+		cartaoService.adicionarCartao(cliente, cartao, tipoBandeira);
+		
 
-
+		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id="+id);
 	}
-	
-	
-	protected void areaMeusCartoes(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
+
+	//função para exibir a tela de adicionar cartao, passando o id do cliente e exibindo na tela 
+	protected void TelaCartaoNovo(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		cliente.setId(id);
-			    
-	    System.out.println("o id que chegou aqui nos cartoes:"+cliente.getId());
-	    
-	    ArrayList<CartaoDeCredito> lista = cartaoService.listarCartoes(cliente);
+		System.out.println("o id que chegou aqui nos AddCartao:" + cliente.getId());
+		request.setAttribute("id", id);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeuCartoesADDNovo.jsp");
+		rd.forward(request, response);
 
-	    request.setAttribute("listaCartoes", lista);
-	    request.setAttribute("id", id);
-	    
-	    RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusCartoes.jsp");
-	    rd.forward(request, response);
+
+	
+	}
+	
+	protected void ListarCartao(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		System.out.println("ESTOU NA LISTAGEM DO cartao");
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		cartao.setId(id);
+		
+	}
+	
+	protected void areaMeusCartoes(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		int id = Integer.parseInt(request.getParameter("id"));
+		cliente.setId(id);
+
+		System.out.println("o id que chegou aqui nos cartoes:" + cliente.getId());
+
+		ArrayList<CartaoDeCredito> lista = cartaoService.listarCartoes(cliente);
+
+		request.setAttribute("listaCartoes", lista);
+		request.setAttribute("id", id);
+
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusCartoes.jsp");
+		rd.forward(request, response);
 	}
 
 }
