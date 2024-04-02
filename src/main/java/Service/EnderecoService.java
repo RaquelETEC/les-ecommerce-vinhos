@@ -24,14 +24,10 @@ public class EnderecoService {
     public Endereco selecionarEndereco(Cliente cliente, Endereco endereco) {
 		System.out.println("Cheguei no selecionarEndereco Service");
 		
-
-        // Chamada ao DAO para inserir o endere�o
         return daoEndereco.selecionarEndereco(cliente, endereco);
     }
     
     
-    
-    //Listar endereços do cliente
     public ArrayList<Endereco> listarEnderecos(Cliente cliente) {
         return daoEndereco.ListarEnderecos(cliente);
     }

@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+
+<%@ page import="model.entity.CartaoDeCredito"%>
+<%@ page import="model.entity.BandeiraCartao"%>
+
+<%
+CartaoDeCredito cartao = (CartaoDeCredito) request.getAttribute("cartao");
+BandeiraCartao bandeira = (BandeiraCartao) request.getAttribute("bandeira");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,46 +44,71 @@ body {
 			<div class="col-12 col-md-8 col-lg-6 col-xl-8">
 				<div class="card shadow-2-strong">
 					<div class="card-body p-5 ">
-						<h3 class="mb-4 c text-center">Cadastro de Cartão</h3>
+						<h3 class="mb-4 c text-center">Editar Cartão</h3>
 						<!-- Seu formulÃ¡rio de cadastro aqui -->
-                         <form name="frmcartao" action="insertCartao" onsubmit="return validarCadastro()">
+						<form name="frmEditarCartao" action="EditarCartao"
+							onsubmit="return validarCadastro()">
 							<fieldset>
+								<input value="<%=request.getAttribute("id")%>" type="text"
+									name="id" id="id" style="display: none" /> <input
+									value="<%=request.getAttribute("idCartao")%>" type="text"
+									name="idCartao" id="idCartao" style="display: none" /> <input
+									value="<%=request.getAttribute("idBandeira")%>" type="text"
+									name="idBandeira" id="idBandeira" style="display: none" />
+
 								<legend>Cartão</legend>
 								<div class="row">
 									<div class="col-md-6 mb-4">
 										<label class="form-label" for="CartaoNome">Nome
 											impresso do cartão</label> <input type="text" name="CartaoNome"
 											id="CartaoNome" class="form-control form-control-lg" required
-											value=<%= request.getAttribute("nome")%> />
+											value=<%=cartao.getNome()%>>
 									</div>
 
 									<div class="col-md-6 mb-4">
 										<label class="form-label" for="tipoBandeira">Bandeira</label>
 										<select class="form-select form-select-lg" name="tipoBandeira"
 											id="tipoBandeira" required>
-											<option value="1" <%= "1".equals(request.getAttribute("tiposbandeira")) ? "selected" : "" %>>Mastercard</option>
-											<option value="2" <%= "2".equals(request.getAttribute("tiposbandeira")) ? "selected" : "" %>>Visa</option>
+											<option value="1"
+												<%="1".equals(request.getAttribute("tipoBandeira")) ? "selected" : ""%>>Mastercard</option>
+											<option value="2"
+												<%="2".equals(request.getAttribute("tipoBandeira")) ? "selected" : ""%>>Visa</option>
 										</select>
 									</div>
+
 								</div>
 								<div class="row">
 
 									<div class="col-md-6 mb-4">
 										<label class="form-label" for="CartaoNumero">N° *</label> <input
 											type="text" name="CartaoNumero" id="CartaoNumero"
-											class="form-control form-control-lg" required  value=<%= request.getAttribute("numero")%> />
+											class="form-control form-control-lg" required
+											value=<%=cartao.getNumero()%> />
 									</div>
 
 									<div class="col-md-6 mb-4">
-										<label class="form-label" for="CartaoCodigo">Codigo de Segurança</label> <input type="text" name="CartaoCodigo"
+										<label class="form-label" for="CartaoCodigo">Codigo de
+											Segurança</label> <input type="text" name="CartaoCodigo"
 											id="CartaoCodigo" class="form-control form-control-lg"
-											required value=<%= request.getAttribute("Codigo")%>  />
+											required value=<%=cartao.getCodigoSeguranca()%> />
+									</div>
+
+									<div class="col-md-6 mb-4">
+										<label class="form-label" for="CartaoPadrao">Padrão</label> <select
+											class="form-select form-select-lg" name="CartaoPadrao"
+											id="CartaoPadrao" required>
+											<option value="SIM"
+												<%=cartao.getPadrao().equals("SIM") ? "selected" : ""%>>SIM</option>
+											<option value="NAO"
+												<%=cartao.getPadrao().equals("NAO") ? "selected" : ""%>>NÃO</option>
+										</select>
 									</div>
 								</div>
 
 							</fieldset>
 							<div class="text-center">
-								<input class="btn btn-primary btn-lg btn-block" type="submit" value="Salvar">
+								<input class="btn btn-primary btn-lg btn-block" type="submit"
+									value="Salvar">
 								<hr class="my-4">
 							</div>
 						</form>

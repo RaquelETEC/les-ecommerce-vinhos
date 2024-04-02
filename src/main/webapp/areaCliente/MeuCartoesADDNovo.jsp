@@ -38,13 +38,13 @@ body {
 						<!-- Seu formulÃ¡rio de cadastro aqui -->
 						<form name="frmcartao" action="inserirCartao">
 							<fieldset>
-								<div class="box-input-form" style = "display: none;">
+								<div class="box-input-form" style="display: none;">
 									<div class="box-label">
 										<label for="typeId">Id</label>
 									</div>
 									<input type="text" name="typeId" id="typeId"
 										class="input-form input-width-1"
-										value="<%= request.getAttribute("id")%>">
+										value="<%=request.getAttribute("id")%>">
 
 								</div>
 								<legend>Cartão</legend>
@@ -78,6 +78,16 @@ body {
 											Segurança</label> <input type="text" name="CartaoCodigo"
 											id="CartaoCodigo" class="form-control form-control-lg"
 											required />
+									</div>
+
+									<div class="col-md-6 mb-4">
+										<label class="form-label" for="CartaoPadrao">Padrão</label>
+										 <select class="form-select form-select-lg" name="CartaoPadrao"
+											id="CartaoPadrao" required>
+											<option value="" disabled selected></option>
+											<option value="SIM">SIM</option>
+											<option value="NAO">NAO</option>
+										</select>
 									</div>
 								</div>
 
