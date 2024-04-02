@@ -55,10 +55,10 @@
                         <span>Minha Conta</span>
                     </button>
                     <div class="box-exibir-opcoes MinhaConta">
-                        <button onclick="window.location.href=>'Perfil.html';">Meu Perfil</button>
-                   		<button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
-                        <button class="ativo" onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
-                        <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
+                        <button onclick="window.location.href=>'Perfil.html?id=<%=request.getAttribute("id")%>';">Meu Perfil</button>
+                   		<button onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
+                        <button class="ativo" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
+                        <button onclick="window.location.href='PerfilTrocarSenha.jsp'?id=<%=request.getAttribute("id")%>;">Trocar Senha</button>
                     </div>
 
                     <button class="button-dados-perfil">
@@ -93,7 +93,7 @@
    					<div class="buttons-content">
    				        <button 
    				        class="botaoADDNovoCartao" 
-   				        onclick="window.location.href='MeusEnderecosADDEnd.html';">
+   				        onclick="window.location.href='MeusCartoesADDNovo.html?id=<%=request.getAttribute("id")%>';">
    				        + Adicionar Novo Endereço
    				       </button>
    					</div>
@@ -105,10 +105,10 @@
 								Endereco endereco = listaEntrega.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 6rem">
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-9">
+					            <div class="col-md-10">
 					                <h5 class="card-title "><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -119,8 +119,8 @@
 										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
 									 </p>					                
 					            </div>
-					            <div class="col-md-3 buttons-options">
-					                <button type="button" class="btn btn-primary">Editar</button>
+					            <div class="col-md buttons-options">
+					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
 					                <button type="button" class="btn btn-danger">Excluir</button>
 					           </div>
 					        </div>
@@ -141,10 +141,10 @@
 								Endereco endereco = listaCobranca.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 6rem">
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-9">
+					            <div class="col-md-10">
 									<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -154,8 +154,8 @@
 										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
 									 </p>					                
 					            </div>
-					            <div class="col-md-3 buttons-options">
-					                <button type="button" class="btn btn-primary">Editar</button>
+					            <div class="col-md buttons-options">
+					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
 					                <button type="button" class="btn btn-danger">Excluir</button>
 					           </div>
 					        </div>
@@ -176,10 +176,10 @@
 								Endereco endereco = listaResidencial.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 60rem;height: 6rem">
+					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-9">
+					            <div class="col-md-10">
 								<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -189,8 +189,8 @@
 										  <%=endereco.getBairro()%>, <%=endereco.getCidade()%>, <%=endereco.getEstado()%> - <%=endereco.getCep()%>, <%=endereco.getPais()%>
 									 </p>					                
 					            </div>
-					            <div class="col-md-3 buttons-options">
-					                <button type="button" class="btn btn-primary">Editar</button>
+					            <div class="col-md buttons-options">
+					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
 					                <button type="button" class="btn btn-danger">Excluir</button>
 					           </div>
 					        </div>

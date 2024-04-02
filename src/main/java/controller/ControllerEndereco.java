@@ -16,7 +16,7 @@ import model.entity.TiposEndereco;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/inserirEndereco", "/areaCliente/MeusEnderecos.html" })
+@WebServlet(urlPatterns = { "/areaCliente/inserirEndereco", "/areaCliente/EditarEndereco", "/areaCliente/MeusEnderecos.html", "/areaCliente/MeusEnderecosEditar.html" })
 public class ControllerEndereco extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -36,26 +36,36 @@ public class ControllerEndereco extends HttpServlet {
 		String action = request.getServletPath();
 		
 		System.out.println("chegou aqui: "+action);
-		if (action.equals("/inserirEndereco")) {
+		
+		if(action.equals("/areaCliente/MeusEnderecos.html")){
+			ExibirEndereco(request, response);
+		}
+		else if (action.equals("/areaCliente/inserirEndereco")){
 			AdicionarEndereco(request, response);
 		}
-		else if(action.equals("/areaCliente/MeusEnderecos.html")){
-			ExibirEndereco(request, response);
+		else if(action.equals("/areaCliente/MeusEnderecosEditar.html")) {
+			TelaEditarEndereco(request,response);
+		}
+		else if(action.equals("/areaCliente/EditarEndereco")){
+			EditarEndereco(request,response);
 		}
 		else {
 			response.sendRedirect("index.html");
 		}
 	}
 	
-
-	protected void AdicionarEndereco(HttpServletRequest request, HttpServletResponse response)
+		
+	protected void  AdicionarEndereco(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
                 
 			System.out.println("voce conseguiu chegar aqui no AdicionarEndereco:)");
 			
-			Cliente cliente = (Cliente) request.getAttribute("cliente");
+			int id = Integer.parseInt(request.getParameter("id"));
+			cliente.setId(id);
+			
             System.out.println("o id do cliente no adicionar endere�o servelet: "+cliente.getId());
 
+			String nome = request.getParameter("nome");
 			String tipoResidencia = request.getParameter("typeTipoResidencia");
 			String tipoLogradouro = request.getParameter("typeTipoLogradouro");
 			String logradouro = request.getParameter("typeLogradouro");
@@ -66,10 +76,12 @@ public class ControllerEndereco extends HttpServlet {
             String estado = request.getParameter("typeEstado");
 			String pais = request.getParameter("typePais");
 			String observacoes = request.getParameter("observacoes");
-			String tipoEndereco = "R";
-            String enderecoPadrao = "N";
+
+            String tipoEnderecoParam = request.getParameter("tipoEndereco");
+            TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
 
             endereco.setCliente(cliente);
+            endereco.setNome(nome);
             endereco.setTipoResidencia(tipoResidencia);
             endereco.setTipoLogradouro(tipoLogradouro);
             endereco.setLogradouro(logradouro);
@@ -77,20 +89,23 @@ public class ControllerEndereco extends HttpServlet {
             endereco.setBairro(bairro);
             endereco.setCep(cep);
             endereco.setCidade(cidade);
-            endereco.setEstado(tipoEndereco);
             endereco.setEstado(estado);
             endereco.setPais(pais);
-            endereco.setPadrao(enderecoPadrao);
+            endereco.setPadrao("N");
             endereco.setObservacao(observacoes);		
+            endereco.setTipos(tiposEndereco);
 
-			//daoEndereco.inserirEndereco(cliente, endereco);
+            enderecoService.adicionarEndereco(cliente, endereco);
+            
+    		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusEnderecos.html?id="+id);
+
 			
 	}
 	
 	protected void ExibirEndereco(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		System.out.println("voce conseguiu chegar aqui no ExibirEndereco :)");
+		System.out.println("voce conseguiu chegar aqui na tela ExibirEndereco :)");
 
 		int id = Integer.parseInt(request.getParameter("id"));
 		cliente.setId(id);
@@ -129,4 +144,43 @@ public class ControllerEndereco extends HttpServlet {
 
 		}
 	
+	protected void  TelaEditarEndereco(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+                
+			System.out.println("voce conseguiu chegar aqui no EditarEndereco:)");
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			int idEndereco = Integer.parseInt(request.getParameter("idEnd"));
+			cliente.setId(id);
+			endereco.setId(idEndereco);
+			
+            System.out.println("o id do cliente no tela editar endere�o servelet: "+ cliente.getId() +"e" + endereco.getId());
+
+            endereco = enderecoService.selecionarEndereco(cliente, endereco);
+            
+            request.setAttribute("endereco", endereco);
+    		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusEnderecosEditar.jsp");
+    		rd.forward(request, response);	
+			
+	}
+	
+	protected void  EditarEndereco(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+                
+			System.out.println("voce conseguiu chegar aqui no EditarEndereco:)");
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			int idEndereco = Integer.parseInt(request.getParameter("idEnd"));
+			cliente.setId(id);
+			endereco.setId(idEndereco);
+			
+            System.out.println("o id do cliente no  EditarEndereco�o servelet: "+ cliente.getId() +"e" + endereco.getId());
+
+             enderecoService.editarEndereco(cliente, endereco);
+            
+            request.setAttribute("endereco", endereco);
+    		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusEnderecos.jsp");
+    		rd.forward(request, response);	
+			
+	}
 }
