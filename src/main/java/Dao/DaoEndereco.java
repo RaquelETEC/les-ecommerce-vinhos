@@ -105,7 +105,6 @@ public class DaoEndereco {
                endereco.setPadrao(rs.getString("end_padrao"));
                endereco.setObservacao(rs.getString("end_observacoes"));
                endereco.setNome(rs.getString("end_nome"));
-            	
                
                // Converter a string do tipo de endereço para o enum correspondente
                String tipoEnderecoString = rs.getString("end_tipo");

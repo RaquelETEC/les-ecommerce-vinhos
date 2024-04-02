@@ -65,7 +65,7 @@
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='Notificaï¿½ï¿½es.jsp';">Notificacoes</span>
+                       <span onclick="window.location.href='Notificações.jsp';">Notificacoes</span>
                     </button>
                     
 
@@ -88,9 +88,9 @@
    				<div class="content-Cupons">
    					<div class="buttons-content">
    				        <button 
-   				        class="botaoADDNovoCartao" 
-   				        onclick="window.location.href='MeusCartoesADDNovo.html';">
-   				        + Adicionar Novo Cartão
+   				       onclick="window.location.href='LoginCartao.html?id=<%=request.getAttribute("id")%>';"
+   				       class="botaoADDNovoCartao" 
+   				       >+ Adicionar Novo Cartão
    				       </button>
    					</div>
 	                   <%
@@ -107,10 +107,10 @@
 					                <h5 class="card-title"><%=lista.get(i).getNome()%></h5>
 					                <p class="card-text">Número: <%=lista.get(i).getNumero()%></p>
 					                <p class="card-text">Padrão: <span style="color: green;"><%=lista.get(i).getPadrao()%></span></p>
-					            </div>
+					            </div>					   
 					            <div class="col-md-3 buttons-options">
-					                <button type="button" class="btn btn-primary">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <a type="button" class="btn btn-primary" onclick="window.location.href='EditarCartao.jsp?id=<%=lista.get(i).getId()%>';">Editar</a>
+					                <a href="javascript: confirmarCartao(<%=lista.get(i).getId()%>)" class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>

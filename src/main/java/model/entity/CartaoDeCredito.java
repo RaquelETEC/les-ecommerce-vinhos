@@ -2,6 +2,7 @@ package model.entity;
 
 public class CartaoDeCredito {
 	private int id;
+	private Cliente cliente;
 	private String numero;
 	private String nome;
 	private String padrao;
@@ -13,9 +14,10 @@ public class CartaoDeCredito {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CartaoDeCredito(int id, String numero, String nome, String padrao, BandeiraCartao bandeira, int codigoSeguranca) {
+	public CartaoDeCredito(int id, Cliente cliente, String numero, String nome, String padrao, BandeiraCartao bandeira, int codigoSeguranca) {
 		super();
 		this.id = id;
+		this.cliente = cliente;
 		this.numero = numero;
 		this.nome = nome;
 		this.padrao = padrao;
@@ -26,6 +28,14 @@ public class CartaoDeCredito {
 	
 	
 	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	public String getPadrao() {
 		return padrao;
 	}
