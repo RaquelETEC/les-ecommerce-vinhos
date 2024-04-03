@@ -14,7 +14,6 @@ public class EnderecoService {
     }	
 
     public String adicionarEndereco(Cliente cliente, Endereco endereco) {
-        // Valida��o dos dados se necess�rio
 		System.out.println("Cheguei no adicionarEndereco Service");
 		
         // Chamada ao DAO para inserir o endere�o
@@ -23,23 +22,26 @@ public class EnderecoService {
     
     public Endereco selecionarEndereco(Cliente cliente, Endereco endereco) {
 		System.out.println("Cheguei no selecionarEndereco Service");
-		
-
         // Chamada ao DAO para inserir o endere�o
         return daoEndereco.selecionarEndereco(cliente, endereco);
     }
-    
-    
-    
     //Listar endereços do cliente
     public ArrayList<Endereco> listarEnderecos(Cliente cliente) {
         return daoEndereco.ListarEnderecos(cliente);
     }
 
-	public String editarEndereco(Cliente cliente, Endereco endereco) {
+	public String EditarEndereco(Cliente cliente, Endereco endereco) {
 	
 		return daoEndereco.EditarEndereco(cliente, endereco);
 	}
+	
+	public String ExcluirEndereco(Cliente cliente, Endereco endereco) {
+        // Valida��o dos dados se necess�rio
+		System.out.println("Cheguei no adicionarEndereco Service");
+		
+        // Chamada ao DAO para inserir o endere�o
+        return daoEndereco.ExcluirEndereco(cliente, endereco);
+    }
 }
 
 

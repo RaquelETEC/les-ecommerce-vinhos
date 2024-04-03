@@ -20,6 +20,7 @@
     <title>Meus enderecos</title>
     <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
     <link rel="stylesheet" href="../Styles/StyleMeusCartoesV4.css">
+	<script src="../scripts/confirmador.js"></script>
 
     <script src="../scripts/exibirMenus.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
@@ -89,14 +90,15 @@
                     <!-- titulo do cabecalho -->
                     <h1 class="text-perfil">Endereços</h1>
                 </div>
-   				<div class="content-Cupons">
-   					<div class="buttons-content">
+                <div class="buttons-content">
    				        <button 
    				        class="botaoADDNovoCartao" 
    				        onclick="window.location.href='MeusCartoesADDNovo.html?id=<%=request.getAttribute("id")%>';">
    				        + Adicionar Novo Endereço
    				       </button>
    					</div>
+   				<div class="content-Cupons">
+   					
    					<p class="text-name">Endereços de Entrega</p>
    				 	<!--   Conteúdo do primeiro card -->
    					
@@ -121,7 +123,8 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
+					                
 					           </div>
 					        </div>
 					    </div>
@@ -156,7 +159,7 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>
@@ -191,7 +194,7 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>

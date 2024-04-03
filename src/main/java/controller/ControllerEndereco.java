@@ -16,7 +16,7 @@ import model.entity.TiposEndereco;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/inserirEndereco", "/areaCliente/EditarEndereco", "/areaCliente/MeusEnderecos.html", "/areaCliente/MeusEnderecosEditar.html" })
+@WebServlet(urlPatterns = { "/areaCliente/inserirEndereco", "/areaCliente/deleteEndereco" ,"/areaCliente/EditarEndereco", "/areaCliente/MeusEnderecos.html", "/areaCliente/MeusEnderecosEditar.html" })
 public class ControllerEndereco extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -48,6 +48,9 @@ public class ControllerEndereco extends HttpServlet {
 		}
 		else if(action.equals("/areaCliente/EditarEndereco")){
 			EditarEndereco(request,response);
+		}
+		else if(action.equals("/areaCliente/deleteEndereco")) {
+			ExcluirEndereco(request,response);
 		}
 		else {
 			response.sendRedirect("index.html");
@@ -171,16 +174,65 @@ public class ControllerEndereco extends HttpServlet {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			int idEndereco = Integer.parseInt(request.getParameter("idEnd"));
+			
+			
+			String nome = request.getParameter("nome");
+			String tipoResidencia = request.getParameter("typeTipoResidencia");
+			String tipoLogradouro = request.getParameter("typeTipoLogradouro");
+			String logradouro = request.getParameter("typeLogradouro");
+			String numero = request.getParameter("typeNumero");
+			String bairro = request.getParameter("typeBairro");
+			String cidade = request.getParameter("typeCidade");
+			String cep = request.getParameter("typeCep");
+            String estado = request.getParameter("typeEstado");
+			String pais = request.getParameter("typePais");
+			String observacoes = request.getParameter("observacoes");
+
+            String tipoEnderecoParam = request.getParameter("tipoEndereco");
+            TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
+
+            endereco.setCliente(cliente);
+            endereco.setNome(nome);
+            endereco.setTipoResidencia(tipoResidencia);
+            endereco.setTipoLogradouro(tipoLogradouro);
+            endereco.setLogradouro(logradouro);
+            endereco.setNumero(numero);
+            endereco.setBairro(bairro);
+            endereco.setCep(cep);
+            endereco.setCidade(cidade);
+            endereco.setEstado(estado);
+            endereco.setPais(pais);
+            endereco.setPadrao("N");
+            endereco.setObservacao(observacoes);		
+            endereco.setTipos(tiposEndereco);
+			
 			cliente.setId(id);
 			endereco.setId(idEndereco);
 			
             System.out.println("o id do cliente no  EditarEndereco�o servelet: "+ cliente.getId() +"e" + endereco.getId());
 
-             enderecoService.editarEndereco(cliente, endereco);
+            enderecoService.EditarEndereco(cliente, endereco);
             
-            request.setAttribute("endereco", endereco);
-    		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusEnderecos.jsp");
-    		rd.forward(request, response);	
+    		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusEnderecos.html?id="+id);
+
 			
+	}
+	protected void  ExcluirEndereco(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+                
+			System.out.println("voce conseguiu chegar aqui no ExcluiEndereco:)");
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			int idEndereco = Integer.parseInt(request.getParameter("idEnd"));
+			
+			cliente.setId(id);
+			endereco.setId(idEndereco);
+			
+            System.out.println("o id do cliente no tela editar endere�o servelet: "+ cliente.getId() +"e" + endereco.getId());
+
+            String retorno = enderecoService.ExcluirEndereco(cliente, endereco);
+            
+
+    		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusEnderecos.html?id="+id);
 	}
 }
