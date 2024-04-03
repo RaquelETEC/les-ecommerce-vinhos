@@ -122,12 +122,9 @@ public class DaoCartoes {
 	}
     
     
-    public String EditarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
-        System.out.println("DAO : id do cliente para o cartao:"+ cliente.getId());
-        System.out.println("DAO : id do cartao para o cartao :"+ cartao.getId());
-        System.out.println("DAO : id do cartao para a bandeira" + bandeira.getId());
-
-        String update = "UPDATE cartao_de_credito SET "
+    public CartaoDeCredito EditarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
+        String update = "update cartao_de_credito set "
+        		+ "cart_id_cli =?, "
                 + "cart_numero = ?, "
                 + "cart_nome = ?, "
                 + "cart_padrao = ?, "
@@ -138,21 +135,23 @@ public class DaoCartoes {
 			Connection con = Conexao.conectar();
             System.out.println("chegou no try do updateCartao" +cliente.getId() );
 			PreparedStatement pst = con.prepareStatement(update);
-			pst.setString(1, cartao.getNumero());
-			pst.setString(2, cartao.getNome());
-			pst.setString(3, cartao.getPadrao());
-			pst.setInt(4, bandeira.getId());
-			pst.setInt(5, cartao.getCodigoSeguranca());	
-			pst.setInt(6, cartao.getId());
+		    pst.setInt(1, cliente.getId());
+			pst.setString(2, cartao.getNumero());
+			pst.setString(3, cartao.getNome());
+			pst.setString(4, cartao.getPadrao());
+			pst.setInt(5, bandeira.getId());
+			pst.setInt(6, cartao.getCodigoSeguranca());	
+			pst.setInt(7, cartao.getId());
+		
 			pst.executeUpdate(); 
 			con.close();
 			
-			System.err.println("Atualizado o cartao no dao!!");
-			return "Sucesso";
+			System.err.println("Atualizado o cartao no dao!!" + cartao.getId());
+			return cartao;
 
 		} catch (Exception e) {
 			System.out.println("erro ao atualizar o cartao: "+e);
-			return "Erro";
+			return cartao;
 		}
 	}
     

@@ -14,7 +14,7 @@ function confirmar(idcon) {
 
 
 function confirmarCliente(id) {
-	debugger;
+
 	let resposta = confirm("Confirma a exclusão deste contato? ID:" + id)
 	if (resposta === true) {
 		window.location.href = "deleteClient?id=" + id

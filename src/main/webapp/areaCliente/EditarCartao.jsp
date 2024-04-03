@@ -107,8 +107,7 @@ body {
 
 							</fieldset>
 							<div class="text-center">
-								<input class="btn btn-primary btn-lg btn-block" type="submit"
-									value="Salvar">
+								<input class="btn btn-primary btn-lg btn-block" type="submit" value="Atualizar">
 								<hr class="my-4">
 							</div>
 						</form>

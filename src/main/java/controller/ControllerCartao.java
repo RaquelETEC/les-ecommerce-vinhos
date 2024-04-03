@@ -158,6 +158,8 @@ public class ControllerCartao extends HttpServlet {
             cartao = cartaoService.selecionarCartao(cliente, cartao, tipoBandeira);
             
             request.setAttribute("cartao", cartao);
+            
+
     		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/EditarCartao.jsp");
     		rd.forward(request, response);	
 			
@@ -170,28 +172,41 @@ public class ControllerCartao extends HttpServlet {
 			
 			int id = Integer.parseInt(request.getParameter("id"));
 			int idCartao = Integer.parseInt(request.getParameter("idCartao"));
-			int idBandeira = Integer.parseInt(request.getParameter("idBandeira"));
 			cliente.setId(id);
 			cartao.setId(idCartao);
-			tipoBandeira.setId(idBandeira);
-			
-            System.out.println("o id do cliente no tela editar cartao servelet: "+ cliente.getId() +"e" + cartao.getId() + "e" + tipoBandeira.getId());
 
+			
+			int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
+			tipoBandeira.setId(Codigobandeira);
+			            
+            cartao.setNumero(request.getParameter("CartaoNumero"));
+            cartao.setNome(request.getParameter("CartaoNome"));
+            cartao.setPadrao(request.getParameter("CartaoPadrao"));
+            cartao.setCodigoSeguranca(Integer.parseInt(request.getParameter("CartaoCodigo")));
+            cartao.setBandeira(tipoBandeira);
             cartaoService.editarCartao(cliente, cartao, tipoBandeira);
             
-            RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MeusCartoes.jsp");
-    		rd.forward(request, response);
+    		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id="+id);
+
 	} 
 	
 	protected void ExcluirCartao(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("EU CHEGUEI NO EXCLUIR CARTAO");
 		
+		int id = Integer.parseInt(request.getParameter("id"));
+		cliente.setId(id);
 
-		cartao.setId(Integer.parseInt(request.getParameter("id")));
-
+		cartao.setId(Integer.parseInt(request.getParameter("idCartao")));
+		
 		daocartao.deletarCartao(cartao);
-		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.jsp");
+		
+		System.out.println("ID que chegou aqui"+ cartao.getId());
+		System.out.println("ID do cliente no excluir cartao"+cliente.getId());
+
+		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id="+id);
+
+
 	}
 
 }

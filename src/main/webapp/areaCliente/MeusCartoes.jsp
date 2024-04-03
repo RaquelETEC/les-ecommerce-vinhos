@@ -133,9 +133,10 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 								<div class="col-md-3 buttons-options">
 									<a type="button" class="btn btn-primary"
 										onclick="window.location.href='EditarCartao.html?id=<%=request.getAttribute("id")%>&idCartao=<%=cartao.getId()%>&idBandeira=<%=cartao.getBandeira().getId()%>';">Editar</a>
-									<a
-										href="javascript: confirmarCartao(<%=lista.get(i).getId()%>)"
+									<a	
+										href="javascript: confirmarCartao(<%=lista.get(i).getId()%>, id=<%=request.getAttribute("id")%>)"
 										class="btn btn-danger">Excluir</a>
+	
 								</div>
 							</div>
 						</div>
@@ -154,6 +155,7 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 
 
 		</div>
+		<script src="../scripts/confirmadorCartao.js"></script>
 	</main>
 </body>
 

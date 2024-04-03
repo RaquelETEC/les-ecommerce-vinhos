@@ -35,7 +35,7 @@ public class CartoesService {
         return daoCartoes.ListarCartoes(cliente);
     }
     
-    public String editarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
+    public CartaoDeCredito editarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
     	
 		return daoCartoes.EditarCartao(cliente, cartao, bandeira);
 	}
