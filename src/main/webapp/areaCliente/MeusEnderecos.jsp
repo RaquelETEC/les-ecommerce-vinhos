@@ -108,7 +108,7 @@
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-10">
+					            <div class="col-md-9">
 					                <h5 class="card-title "><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -144,7 +144,7 @@
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-10">
+					            <div class="col-md-9">
 									<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -179,7 +179,7 @@
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-10">
+					            <div class="col-md-9">
 								<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
