@@ -157,7 +157,7 @@ public class ControllerEndereco extends HttpServlet {
 			cliente.setId(id);
 			endereco.setId(idEndereco);
 			
-            System.out.println("o id do cliente no tela editar endereï¿½o servelet: "+ cliente.getId() +"e" + endereco.getId());
+            System.out.println("o id do cliente no tela editar endereço servelet: "+ cliente.getId() +"e" + endereco.getId());
 
             endereco = enderecoService.selecionarEndereco(cliente, endereco);
             

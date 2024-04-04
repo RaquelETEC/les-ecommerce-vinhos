@@ -18,7 +18,7 @@ import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/areaCliente/MeusCartoes.html", "/areaCliente/LoginCartao.html" , "/listarCartao", "/areaCliente/deleteCartao" })
+@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/areaCliente/EditarCartao",  "/areaCliente/MeusCartoes.html", "/areaCliente/LoginCartao.html" , "/areaCliente/EditarCartao.html", "/areaCliente/deleteCartao" })
 public class ControllerCartao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -53,9 +53,13 @@ public class ControllerCartao extends HttpServlet {
 		else if (action.equals("/areaCliente/LoginCartao.html")) {
 			TelaCartaoNovo(request, response);
 		}
-		else if (action.equals("/listarCartao")) {
-			ListarCartao(request, response);
+		else if (action.equals("/areaCliente/EditarCartao.html")) {
+			TelaEditarCartao(request, response);
 		}
+		else if (action.equals("/areaCliente/EditarCartao")) {
+			EditarCartao(request, response);
+		}
+		
 		else if (action.equals("/areaCliente/deleteCartao")) {
 			ExcluirCartao(request, response);
 		}
@@ -78,7 +82,7 @@ public class ControllerCartao extends HttpServlet {
 
 		String numero = request.getParameter("CartaoNumero");
 		String nome = request.getParameter("CartaoNome");
-		String padrao = "SIM";
+		String padrao = request.getParameter("CartaoPadrao");
 		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
 		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);
 		
@@ -116,15 +120,6 @@ public class ControllerCartao extends HttpServlet {
 	
 	}
 	
-	protected void ListarCartao(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		System.out.println("ESTOU NA LISTAGEM DO cartao");
-		
-		int id = Integer.parseInt(request.getParameter("id"));
-		cartao.setId(id);
-		
-	}
 	
 	protected void areaMeusCartoes(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -143,15 +138,75 @@ public class ControllerCartao extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
+	protected void  TelaEditarCartao(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+                
+			System.out.println("voce conseguiu chegar aqui no EditarEndereco:)");
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			int idCartao = Integer.parseInt(request.getParameter("idCartao"));
+			int idBandeira = Integer.parseInt(request.getParameter("idBandeira"));
+			cliente.setId(id);
+			cartao.setId(idCartao);
+			tipoBandeira.setId(idBandeira);
+			
+            System.out.println("o id do cliente no tela editar cartao servelet: "+ cliente.getId() +"e" + cartao.getId() + "e" + tipoBandeira.getId());
+            request.setAttribute("id", id);
+            request.setAttribute("idCartao", idCartao);
+            request.setAttribute("idBandeira", idBandeira);
+            
+            cartao = cartaoService.selecionarCartao(cliente, cartao, tipoBandeira);
+            
+            request.setAttribute("cartao", cartao);
+            
+
+    		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/EditarCartao.jsp");
+    		rd.forward(request, response);	
+			
+	}
+	
+	protected void  EditarCartao(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+                
+			System.out.println("voce conseguiu chegar aqui no EditarCartao:)");
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+			int idCartao = Integer.parseInt(request.getParameter("idCartao"));
+			cliente.setId(id);
+			cartao.setId(idCartao);
+
+			
+			int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
+			tipoBandeira.setId(Codigobandeira);
+			            
+            cartao.setNumero(request.getParameter("CartaoNumero"));
+            cartao.setNome(request.getParameter("CartaoNome"));
+            cartao.setPadrao(request.getParameter("CartaoPadrao"));
+            cartao.setCodigoSeguranca(Integer.parseInt(request.getParameter("CartaoCodigo")));
+            cartao.setBandeira(tipoBandeira);
+            cartaoService.editarCartao(cliente, cartao, tipoBandeira);
+            
+    		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id="+id);
+
+	} 
+	
 	protected void ExcluirCartao(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("EU CHEGUEI NO EXCLUIR CARTAO");
 		
+		int id = Integer.parseInt(request.getParameter("id"));
+		cliente.setId(id);
 
-		cartao.setId(Integer.parseInt(request.getParameter("id")));
-
+		cartao.setId(Integer.parseInt(request.getParameter("idCartao")));
+		
 		daocartao.deletarCartao(cartao);
-		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.jsp");
+		
+		System.out.println("ID que chegou aqui"+ cartao.getId());
+		System.out.println("ID do cliente no excluir cartao"+cliente.getId());
+
+		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id="+id);
+
+
 	}
 
 }

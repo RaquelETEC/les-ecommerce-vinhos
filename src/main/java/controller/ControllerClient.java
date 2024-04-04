@@ -25,7 +25,8 @@ import Service.ClienteService;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/areaAdministrador/Clientes.html", "/areaCliente/Perfil.html", "/updateCliente" , "/areaAdministrador/deleteClient"})
+@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/areaAdministrador/Clientes.html",
+		"/areaCliente/Perfil.html", "/updateCliente", "/areaAdministrador/deleteClient" })
 public class ControllerClient extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -39,16 +40,16 @@ public class ControllerClient extends HttpServlet {
 
 	/* The endereco */
 	Endereco endereco = new Endereco();
-	
+
 	/* The cartao */
 	CartaoDeCredito cartao = new CartaoDeCredito();
-	
+
 	/* The cartao */
 	BandeiraCartao bandeira = new BandeiraCartao();
-	
+
 	/* The ServiceCliente */
 	ClienteService clienteService = new ClienteService();
-	
+
 	public ControllerClient() {
 		super();
 	}
@@ -58,23 +59,21 @@ public class ControllerClient extends HttpServlet {
 		String action = request.getServletPath();
 
 		System.out.println("chegou aqui: " + action);
-		
+
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
-			
+
 		} else if (action.equals("/areaCliente")) {
 			AreaCliente(request, response);
-			
+
 		} else if (action.equals("/areaAdministrador/Clientes.html")) {
 			Clientes(request, response);
-			
+
 		} else if (action.equals("/areaCliente/Perfil.html")) {
 			ListarCliente(request, response);
-		}
-		else if (action.equals("/updateCliente")) {
+		} else if (action.equals("/updateCliente")) {
 			EditarCliente(request, response);
-		}	
-		else if (action.equals("/areaAdministrador/deleteClient")) {
+		} else if (action.equals("/areaAdministrador/deleteClient")) {
 			ExcluirCliente(request, response);
 		}
 		// } else if (action.equals("/report")) {
@@ -84,8 +83,6 @@ public class ControllerClient extends HttpServlet {
 			response.sendRedirect("index.html");
 		}
 	}
-
-
 
 	/**
 	 * @param request
@@ -123,92 +120,85 @@ public class ControllerClient extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		//Endereï¿½o Residencial 
+		// Endereï¿½o Residencial
 		Endereco enderecoR = new Endereco();
-		
-        String tipoEnderecoParam = request.getParameter("RESIDENCIAL");
-        TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
 
-        enderecoR.setTipoResidencia( request.getParameter("typeTipoResidencia"));
-        enderecoR.setTipoLogradouro( request.getParameter("typeTipoLogradouro"));
-        enderecoR.setLogradouro( request.getParameter("typeLogradouro"));
-        enderecoR.setNumero(  request.getParameter("typeNumero"));
-        enderecoR.setBairro( request.getParameter("typeBairro"));
-        enderecoR.setCep( request.getParameter("typeCep"));
-        enderecoR.setCidade( request.getParameter("typeCidade"));
-        enderecoR.setEstado( request.getParameter("typeEstado"));
-        enderecoR.setPais( request.getParameter("typePais"));
-        enderecoR.setPadrao("SIM");
-        enderecoR.setNome(request.getParameter("TypeNomeEnd"));
-        enderecoR.setObservacao( request.getParameter("observacoes"));		
-        enderecoR.setTipos(tiposEndereco);
-        
-        
-        //Endereï¿½o Entrega 
+		String tipoEnderecoParam = request.getParameter("RESIDENCIAL");
+		TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
+
+		enderecoR.setTipoResidencia(request.getParameter("typeTipoResidencia"));
+		enderecoR.setTipoLogradouro(request.getParameter("typeTipoLogradouro"));
+		enderecoR.setLogradouro(request.getParameter("typeLogradouro"));
+		enderecoR.setNumero(request.getParameter("typeNumero"));
+		enderecoR.setBairro(request.getParameter("typeBairro"));
+		enderecoR.setCep(request.getParameter("typeCep"));
+		enderecoR.setCidade(request.getParameter("typeCidade"));
+		enderecoR.setEstado(request.getParameter("typeEstado"));
+		enderecoR.setPais(request.getParameter("typePais"));
+		enderecoR.setPadrao("SIM");
+		enderecoR.setNome(request.getParameter("TypeNomeEnd"));
+		enderecoR.setObservacao(request.getParameter("observacoes"));
+		enderecoR.setTipos(tiposEndereco);
+
+		// Endereï¿½o Entrega
 		Endereco enderecoE = new Endereco();
-		
+
 		System.out.println("chegamos na entrega");
-		
+
 		String tipoEnderecoParamE = request.getParameter("ENTREGA");
 		TiposEndereco tiposEnderecoE = TiposEndereco.valueOf(tipoEnderecoParamE);
-	
-		enderecoE.setTipoResidencia( request.getParameter("typeTipoResidenciaE"));
-		enderecoE.setTipoLogradouro( request.getParameter("typeTipoLogradouroE"));
-		enderecoE.setLogradouro( request.getParameter("typeLogradouroE"));
-		enderecoE.setNumero(  request.getParameter("typeNumeroE"));
-		enderecoE.setBairro( request.getParameter("typeBairroE"));
-		enderecoE.setCep( request.getParameter("typeCepE"));
-		enderecoE.setCidade( request.getParameter("typeCidadeE"));
-		enderecoE.setEstado( request.getParameter("typeEstadoE"));
-		enderecoE.setPais( request.getParameter("typePaisE"));
+
+		enderecoE.setTipoResidencia(request.getParameter("typeTipoResidenciaE"));
+		enderecoE.setTipoLogradouro(request.getParameter("typeTipoLogradouroE"));
+		enderecoE.setLogradouro(request.getParameter("typeLogradouroE"));
+		enderecoE.setNumero(request.getParameter("typeNumeroE"));
+		enderecoE.setBairro(request.getParameter("typeBairroE"));
+		enderecoE.setCep(request.getParameter("typeCepE"));
+		enderecoE.setCidade(request.getParameter("typeCidadeE"));
+		enderecoE.setEstado(request.getParameter("typeEstadoE"));
+		enderecoE.setPais(request.getParameter("typePaisE"));
 		enderecoE.setPadrao("SIM");
-        enderecoE.setNome(request.getParameter("TypeNomeEndE"));
-		enderecoE.setObservacao( request.getParameter("observacoesE"));		
+		enderecoE.setNome(request.getParameter("TypeNomeEndE"));
+		enderecoE.setObservacao(request.getParameter("observacoesE"));
 		enderecoE.setTipos(tiposEnderecoE);
-		
-		 //Endereï¿½o Cobranï¿½a 
+
+		// Endereï¿½o Cobranï¿½a
 		Endereco enderecoC = new Endereco();
 		System.out.println("chegamos na COBRANCA");
 		String tipoEnderecoParamC = request.getParameter("COBRANCA");
 		TiposEndereco tiposEnderecoC = TiposEndereco.valueOf(tipoEnderecoParamC);
 
-	
-		enderecoC.setTipoResidencia( request.getParameter("typeTipoResidenciaC"));
-		enderecoC.setTipoLogradouro( request.getParameter("typeTipoLogradouroC"));
-		enderecoC.setLogradouro( request.getParameter("typeLogradouroC"));
-		enderecoC.setNumero(  request.getParameter("typeNumeroC"));
-		enderecoC.setBairro( request.getParameter("typeBairroC"));
-		enderecoC.setCep( request.getParameter("typeCepC"));
-		enderecoC.setCidade( request.getParameter("typeCidadeC"));
-		enderecoC.setEstado( request.getParameter("typeEstadoC"));
-		enderecoC.setPais( request.getParameter("typePaisC"));
+		enderecoC.setTipoResidencia(request.getParameter("typeTipoResidenciaC"));
+		enderecoC.setTipoLogradouro(request.getParameter("typeTipoLogradouroC"));
+		enderecoC.setLogradouro(request.getParameter("typeLogradouroC"));
+		enderecoC.setNumero(request.getParameter("typeNumeroC"));
+		enderecoC.setBairro(request.getParameter("typeBairroC"));
+		enderecoC.setCep(request.getParameter("typeCepC"));
+		enderecoC.setCidade(request.getParameter("typeCidadeC"));
+		enderecoC.setEstado(request.getParameter("typeEstadoC"));
+		enderecoC.setPais(request.getParameter("typePaisC"));
 		enderecoC.setPadrao("SIM");
-        enderecoC.setNome(request.getParameter("TypeNomeEndC"));
-		enderecoC.setObservacao( request.getParameter("observacoesC"));		
+		enderecoC.setNome(request.getParameter("TypeNomeEndC"));
+		enderecoC.setObservacao(request.getParameter("observacoesC"));
 		enderecoC.setTipos(tiposEnderecoC);
 
-		
 		// Cartão
-		
+
 		int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
 		bandeira.setId(Codigobandeira);
-		
+
 		cartao.setNumero(request.getParameter("CartaoNumero"));
 		cartao.setNome(request.getParameter("CartaoNome"));
 		cartao.setPadrao("SIM");
-		
+
 		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
 		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);
 		cartao.setCodigoSeguranca(codigoSeguranca);
-		
-		
-		clienteService.adicionarCliente(cliente,enderecoR,enderecoE,enderecoC,cartao, bandeira);
-		
-		
+
+		clienteService.adicionarCliente(cliente, enderecoR, enderecoE, enderecoC, cartao, bandeira);
+
 		System.out.println("Passou por tudo ta joia: ");
-		
-		
-		
+
 		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
 
 	}
@@ -239,9 +229,9 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("telefone", telefone);
 		request.setAttribute("nascimento", nascimento);
 		request.setAttribute("genero", genero);
-		
+
 		request.setAttribute("cliente", cliente);
-		
+
 		System.out.println("o nascimento que chegou na area do cliente: " + nascimento);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
@@ -259,15 +249,16 @@ public class ControllerClient extends HttpServlet {
 		rd.forward(request, response);
 
 	}
-	
-	private void ListarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	private void ListarCliente(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("ESTOU NA LISTAGEM DO CLIENTE");
 
 		int id = Integer.parseInt(request.getParameter("id"));
 		cliente.setId(id);
 		daoCliente.selecionarCliente(cliente);
-		
+
 		request.setAttribute("id", cliente.getId());
 		request.setAttribute("nome", cliente.getNome());
 		request.setAttribute("email", cliente.getEmail());
@@ -277,26 +268,25 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("telefone", cliente.getTelefone());
 		request.setAttribute("genero", cliente.getGenero());
 		request.setAttribute("status", cliente.getStatus());
-		
+
 		request.setAttribute("cliente", cliente);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/Perfil.jsp");
-		rd.forward(request, response);	
+		rd.forward(request, response);
 	}
-	
-	private void EditarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		
+
+	private void EditarCliente(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		System.out.println("cheguei no editar cliente em");
-		
-		
-		
+
 		int id = Integer.parseInt(request.getParameter("typeId"));
 		cliente.setId(id);
 		cliente.setNome(request.getParameter("typeNome"));
 		cliente.setEmail(request.getParameter("typeEmail"));
 		cliente.setCpf(request.getParameter("typeCPF"));
 		String nascimento = request.getParameter("typeNascimento");
-	
+
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adapte o formato conforme necessÃ¡rio
 			Date nascimentoDate = dateFormat.parse(nascimento);
@@ -304,24 +294,22 @@ public class ControllerClient extends HttpServlet {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-				
+
 		cliente.setTelefone(request.getParameter("typeNumeroTelefone"));
 		cliente.setTipoTelefone(request.getParameter("tipoTelefone"));
 		cliente.setGenero(request.getParameter("genero"));
 		cliente.setStatus(request.getParameter("statusCliente"));
-		
-		
-		
+
 		daoCliente.alterarCliente(cliente);
-		
+
 		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
 
 	}
-	
+
 	protected void ExcluirCliente(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("EU CHEGUEI NO EXCLUIRS");
-		
+
 		cliente.setId(Integer.parseInt(request.getParameter("id")));
 		daoCliente.deletarCliente(cliente);
 		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
+import model.entity.Endereco;
 
 public class DaoCartoes {
 
@@ -93,7 +94,7 @@ public class DaoCartoes {
     }
     
 	
-    public void selecionarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
+    public CartaoDeCredito selecionarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
 		String read2 = "select *  from cartao_de_credito where cart_id = ?";
 		try {
 			Connection con = Conexao.conectar();
@@ -117,7 +118,44 @@ public class DaoCartoes {
 			System.out.println("ERRO AO SELECIONAR" + e);
 		}
 		
+		return cartao;
 	}
+    
+    
+    public CartaoDeCredito EditarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
+        String update = "update cartao_de_credito set "
+        		+ "cart_id_cli =?, "
+                + "cart_numero = ?, "
+                + "cart_nome = ?, "
+                + "cart_padrao = ?, "
+                + "cart_id_bandeira = ?, "
+                + "cart_cod_seguranca = ? "
+                + "WHERE cart_id = ?;";
+		try {
+			Connection con = Conexao.conectar();
+            System.out.println("chegou no try do updateCartao" +cliente.getId() );
+			PreparedStatement pst = con.prepareStatement(update);
+		    pst.setInt(1, cliente.getId());
+			pst.setString(2, cartao.getNumero());
+			pst.setString(3, cartao.getNome());
+			pst.setString(4, cartao.getPadrao());
+			pst.setInt(5, bandeira.getId());
+			pst.setInt(6, cartao.getCodigoSeguranca());	
+			pst.setInt(7, cartao.getId());
+		
+			pst.executeUpdate(); 
+			con.close();
+			
+			System.err.println("Atualizado o cartao no dao!!" + cartao.getId());
+			return cartao;
+
+		} catch (Exception e) {
+			System.out.println("erro ao atualizar o cartao: "+e);
+			return cartao;
+		}
+	}
+    
+    
     
 	public void deletarCartao(CartaoDeCredito cartao) {
 		String delete = "delete from cartao_de_credito where cart_id=?";
