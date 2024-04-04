@@ -44,8 +44,8 @@
                     </button>
                     <div class="box-exibir-opcoes MinhaConta">
                         <button class="ativo">Perfil</button>
-                   		<button onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
-                        <button onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
+                   		<button class = "cartoes" onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
+                        <button class = "enderecos" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
                         <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
                     </div>
 
