@@ -131,7 +131,7 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 									</p>
 								</div>
 								<div class="col-md-3 buttons-options">
-									<a type="button" class="btn btn-primary"
+									<a type="button" id="BotaoEditar" class="btn btn-primary"
 										onclick="window.location.href='EditarCartao.html?id=<%=request.getAttribute("id")%>&idCartao=<%=cartao.getId()%>&idBandeira=<%=cartao.getBandeira().getId()%>';">Editar</a>
 									<a	
 										href="javascript: confirmarCartao(<%=lista.get(i).getId()%>, id=<%=request.getAttribute("id")%>)"
