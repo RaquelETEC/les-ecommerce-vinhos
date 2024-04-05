@@ -71,7 +71,7 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 					<button class="button-dados-perfil">
 						<img src="../imagens/assets/icons-left-perfil-2.png" alt=""
 							class="img-icons-perfil"> <span
-							onclick="window.location.href='MinhasCompra.html';">Minhas
+							onclick="window.location.href='MinhasCompras.html';">Minhas
 							Compras</span>
 					</button>
 
