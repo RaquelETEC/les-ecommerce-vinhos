@@ -14,9 +14,6 @@ class CRUDTesteInserir {
 	@Test
 	public void testInsert() {
 		WebDriver browser = new EdgeDriver();
-		
-		browser.manage().window().maximize();
-		
 		browser.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/Clientes.html");
 
 		WebElement botaoCadastar = browser.findElement(By.id("btnCadastrar"));
@@ -51,12 +48,6 @@ class CRUDTesteInserir {
 		WebElement campoGenero = browser.findElement(By.id("typeGenero"));
 		Select genero = new Select(campoGenero);
 		genero.selectByValue("Masculino");
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		// Endere�o Residencial
 		WebElement campoTipoResidencia = browser.findElement(By.id("typeTipoResidencia"));
@@ -129,13 +120,7 @@ class CRUDTesteInserir {
 
 		WebElement campoObsE = browser.findElement(By.id("observacoesE"));
 		campoObsE.sendKeys("Nenhuma");
-		
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
+
 		// Endere�o Cobran�a
 		WebElement campoTipoResidenciaC = browser.findElement(By.id("typeTipoResidenciaC"));
 		Select residenciaC = new Select(campoTipoResidenciaC);
@@ -171,6 +156,7 @@ class CRUDTesteInserir {
 
 		WebElement campoObsC = browser.findElement(By.id("observacoesC"));
 		campoObsC.sendKeys("Nenhuma");
+
 		// Cartao
 
 		WebElement campoCartaoNome = browser.findElement(By.id("CartaoNome"));

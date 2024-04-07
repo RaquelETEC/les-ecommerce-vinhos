@@ -212,7 +212,7 @@ header {
     justify-content: center;
     align-items: flex-start;
 }
-.botaoADDNovoCartao{width: 308px;height: 50px;left: 100%;top: 132px;background: black;color: white; border-radius: 10px}
+.botaoADDNovoCartao{width: 308px;height: 50px;left: 1090px;top: 132px;background: black;color: white; border-radius: 10px}
 
 .span-nav{text-align: center;padding-left: 100px;font-size: 21px;}
 

@@ -17,7 +17,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus enderecos</title>
-    <link rel="stylesheet" href="../Styles/StyleMeusEnderecos.css">
+    <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
+    <link rel="stylesheet" href="../Styles/StyleMeusCartoesV4.css">
 	<script src="../scripts/confirmador.js"></script>
 
     <script src="../scripts/exibirMenus.js" defer></script>
@@ -191,8 +192,8 @@
 									 </p>					                
 					            </div>
 					            <div class="col-md buttons-options">
-					                <button type="button" id="BotaoEditar" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <a  id="BotaoExcluir"  href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
+					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>
