@@ -1,10 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ page import="model.entity.Cliente"%>
-	
-<%
-    Cliente cliente = (Cliente) request.getAttribute("cliente");
-%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -45,11 +38,11 @@
                         <img src="../imagens/assets/icons-left-perfil-1.png" alt="" class="img-icons-perfil">
                         <span>Minha Conta</span>
                     </button>
-                    <div class="box-exibir-opcoes">
-                        <button onclick="window.location.href=>'Perfil.html?id=<%=cliente.getId() %>';">Perfil</button>
-                   		<button class = "cartoes" onclick="window.location.href='MeusCartoes.html?id=<%=cliente.getId()%>';">Cartões</button>
-                        <button class = "enderecos" onclick="window.location.href='MeusEnderecos.html?id=<%=cliente.getId()%>';">Endereços</button>
-                         <button class="ativo">Trocar Senha</button>
+                    <div class="box-exibir-opcoes MinhaConta">
+                        <button >Perfil</button>
+                   	<button onclick="window.location.href='MeusCartoes.html';">Cartoes</button>
+                        <button onclick="window.location.href='MeusEnderecos.html';">Enderecos</button>
+                        <button class="ativo" onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
                     </div>
 
                     <button class="button-dados-perfil">

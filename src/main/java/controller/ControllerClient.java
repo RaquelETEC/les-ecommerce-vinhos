@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Dao.DaoCliente;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,14 +26,14 @@ import Service.ClienteService;
 // TODO: Auto-generated Javadoc
 
 @WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/areaAdministrador/Clientes.html",
-		"/areaCliente/Perfil.html", "/updateCliente", "/areaAdministrador/deleteClient",
-		"/areaCliente/TrocarSenha.html" })
+		"/areaCliente/Perfil.html", "/updateCliente", "/areaAdministrador/deleteClient" })
 public class ControllerClient extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The dao. */
+	DaoCliente daoCliente = new DaoCliente();
 
 	/** The cliente. */
 	Cliente cliente = new Cliente();
@@ -56,7 +58,7 @@ public class ControllerClient extends HttpServlet {
 			throws ServletException, IOException {
 		String action = request.getServletPath();
 
-		System.out.println("FILHO DA PUTA QUE NAO ATUALIZAAAAAAA");
+		System.out.println("chegou aqui: " + action);
 
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
@@ -69,16 +71,15 @@ public class ControllerClient extends HttpServlet {
 
 		} else if (action.equals("/areaCliente/Perfil.html")) {
 			ListarCliente(request, response);
-
 		} else if (action.equals("/updateCliente")) {
 			EditarCliente(request, response);
-
 		} else if (action.equals("/areaAdministrador/deleteClient")) {
 			ExcluirCliente(request, response);
-		} else if (action.equals("/areaCliente/TrocarSenha.html")) {
-			ListarCliente(request, response);
-			// TelaEditarSenha(request, response);
-		} else {
+		}
+		// } else if (action.equals("/report")) {
+		// gerarRelatorio(request, response);
+		// }
+		else {
 			response.sendRedirect("index.html");
 		}
 	}
@@ -181,7 +182,7 @@ public class ControllerClient extends HttpServlet {
 		enderecoC.setObservacao(request.getParameter("observacoesC"));
 		enderecoC.setTipos(tiposEnderecoC);
 
-		// Cartï¿½o
+		// Cartão
 
 		int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
 		bandeira.setId(Codigobandeira);
@@ -242,8 +243,7 @@ public class ControllerClient extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("ESTOU NO ARRAY DA LISTACLIENTE");
 
-		ArrayList<Cliente> lista = clienteService.ListarCliente();
-
+		ArrayList<Cliente> lista = daoCliente.ListarCliente();
 		request.setAttribute("Requeclientes", lista);
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/Clientes.jsp");
 		rd.forward(request, response);
@@ -257,8 +257,17 @@ public class ControllerClient extends HttpServlet {
 
 		int id = Integer.parseInt(request.getParameter("id"));
 		cliente.setId(id);
+		daoCliente.selecionarCliente(cliente);
 
-		cliente = clienteService.selecionarCliente(cliente);
+		request.setAttribute("id", cliente.getId());
+		request.setAttribute("nome", cliente.getNome());
+		request.setAttribute("email", cliente.getEmail());
+		request.setAttribute("cpf", cliente.getCpf());
+		request.setAttribute("nascimento", cliente.getDataNasc());
+		request.setAttribute("telefoneTipo", cliente.getTipoTelefone());
+		request.setAttribute("telefone", cliente.getTelefone());
+		request.setAttribute("genero", cliente.getGenero());
+		request.setAttribute("status", cliente.getStatus());
 
 		request.setAttribute("cliente", cliente);
 
@@ -291,7 +300,7 @@ public class ControllerClient extends HttpServlet {
 		cliente.setGenero(request.getParameter("genero"));
 		cliente.setStatus(request.getParameter("statusCliente"));
 
-		String retornoService = clienteService.alterarCliente(cliente);
+		daoCliente.alterarCliente(cliente);
 
 		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
 
@@ -302,22 +311,8 @@ public class ControllerClient extends HttpServlet {
 		System.out.println("EU CHEGUEI NO EXCLUIRS");
 
 		cliente.setId(Integer.parseInt(request.getParameter("id")));
-
-		String retornoService = clienteService.deletarCliente(cliente);
+		daoCliente.deletarCliente(cliente);
 		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
-	}
-
-	protected void TelaEditarSenha(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("EU CHEGUEI NO TelaEditarSenha");
-
-		cliente.setId(Integer.parseInt(request.getParameter("id")));
-
-		cliente = clienteService.selecionarCliente(cliente);
-
-		// request.setAttribute("cliente", cliente);
-		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
-
 	}
 
 }

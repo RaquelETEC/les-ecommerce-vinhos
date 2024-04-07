@@ -5,16 +5,16 @@ package model.entity;
  * The Class JavaBeans.
  */
 public class JavaBeans {
-
+	
 	/** The idcon. */
 	private int idcon;
-
+	
 	/** The nome. */
 	private String nome;
-
+	
 	/** The fone. */
 	private String fone;
-
+	
 	/** The email. */
 	private String email;
 
@@ -28,13 +28,13 @@ public class JavaBeans {
 	/**
 	 * Instantiates a new java beans.
 	 *
-	 * @param id    the idcon
-	 * @param nome  the nome
-	 * @param fone  the fone
+	 * @param id the idcon
+	 * @param nome the nome
+	 * @param fone the fone
 	 * @param email the email
 	 */
 	public JavaBeans(int id, String nome, String fone, String email) {
-		super();
+		super();	
 		this.nome = nome;
 		this.fone = fone;
 		this.email = email;
@@ -114,7 +114,7 @@ public class JavaBeans {
 
 	public void setIdcon(String parameter) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }
