@@ -17,8 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus enderecos</title>
-    <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
-    <link rel="stylesheet" href="../Styles/StyleMeusCartoesV4.css">
+    <link rel="stylesheet" href="../Styles/StyleMeusEnderecosv2.css">
 	<script src="../scripts/confirmador.js"></script>
 
     <script src="../scripts/exibirMenus.js" defer></script>
@@ -58,7 +57,8 @@
                         <button onclick="window.location.href=>'Perfil.html?id=<%=request.getAttribute("id")%>';">Perfil</button>
                    		<button onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
                         <button class="ativo" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
-                        <button onclick="window.location.href='TrocarSenha.html?id=<%=request.getAttribute("id")%>';">Trocar Senha</button>
+                        <button onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/TrocarSenha.html?id=<%=request.getAttribute("id")%>';">Trocar Senha</button>
+                        <button onclick="window.location.href='PerfilTrocarSenha.jsp'">Trocar Senha2</button>
                         
                     </div>
 
@@ -90,13 +90,14 @@
                     <!-- titulo do cabecalho -->
                     <h1 class="text-perfil">Endereços</h1>
                 </div>
-   					<div class="content-Cupons">
-					<div class="buttons-content">
+                <div class="buttons-content">
 						<button
 							onclick="window.location.href='MeusCartoesADDNovo.html?id=<%=request.getAttribute("id")%>';"
 							class="botaoADDNovoCartao">+ Adicionar
 							Novo Cartão</button>
 					</div>
+   					<div class="content-Cupons">
+					
    					<p class="text-name">Endereços de Entrega</p>
    				 	<!--   Conteúdo do primeiro card -->
    					
@@ -192,8 +193,8 @@
 									 </p>					                
 					            </div>
 					            <div class="col-md buttons-options">
-					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
+					                <button type="button" id="BotaoEditar" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
+					                <a  id="BotaoExcluir"  href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>
