@@ -49,7 +49,7 @@ class CRUDTesteInserir {
 		Select genero = new Select(campoGenero);
 		genero.selectByValue("Masculino");
 
-		// Endereço Residencial
+		// Endereï¿½o Residencial
 		WebElement campoTipoResidencia = browser.findElement(By.id("typeTipoResidencia"));
 		Select residencia = new Select(campoTipoResidencia);
 		residencia.selectByValue("casa");
@@ -75,18 +75,17 @@ class CRUDTesteInserir {
 
 		WebElement campoCEP = browser.findElement(By.id("typeCep"));
 		campoCEP.sendKeys("08773-600");
-		
+
 		WebElement campoPais = browser.findElement(By.id("typePais"));
 		campoPais.sendKeys("Brasil");
 
 		WebElement campoDest = browser.findElement(By.id("TypeNomeEnd"));
 		campoDest.sendKeys("Fatec");
-		
+
 		WebElement campoObs = browser.findElement(By.id("observacoes"));
 		campoObs.sendKeys("Nenhuma");
-		
-		
-		// Endereço Entrega
+
+		// Endereï¿½o Entrega
 		WebElement campoTipoResidenciaE = browser.findElement(By.id("typeTipoResidenciaE"));
 		Select residenciaE = new Select(campoTipoResidenciaE);
 		residenciaE.selectByValue("apartamento");
@@ -95,7 +94,7 @@ class CRUDTesteInserir {
 		Select logradouroE = new Select(campoTipoLogradouroE);
 		logradouroE.selectByValue("Estrada");
 
-		WebElement campoLogradouroE= browser.findElement(By.id("typeLogradouroE"));
+		WebElement campoLogradouroE = browser.findElement(By.id("typeLogradouroE"));
 		campoLogradouroE.sendKeys("Rua Carlos Barattino");
 
 		WebElement campoNumeroE = browser.findElement(By.id("typeNumeroE"));
@@ -112,26 +111,26 @@ class CRUDTesteInserir {
 
 		WebElement campoCEPE = browser.findElement(By.id("typeCepE"));
 		campoCEPE.sendKeys("08773-600");
-		
+
 		WebElement campoPaisE = browser.findElement(By.id("typePaisE"));
 		campoPaisE.sendKeys("Brasil");
 
 		WebElement campoDestE = browser.findElement(By.id("TypeNomeEndE"));
 		campoDestE.sendKeys("Fatec");
-		
+
 		WebElement campoObsE = browser.findElement(By.id("observacoesE"));
 		campoObsE.sendKeys("Nenhuma");
-		
-		// Endereço Cobrança
+
+		// Endereï¿½o Cobranï¿½a
 		WebElement campoTipoResidenciaC = browser.findElement(By.id("typeTipoResidenciaC"));
-		Select residenciaC= new Select(campoTipoResidenciaC);
+		Select residenciaC = new Select(campoTipoResidenciaC);
 		residenciaC.selectByValue("condominio");
 
 		WebElement campoTipoLogradouroC = browser.findElement(By.id("typeTipoLogradouroC"));
 		Select logradouroC = new Select(campoTipoLogradouroC);
 		logradouroC.selectByValue("Avenida");
 
-		WebElement campoLogradouroC= browser.findElement(By.id("typeLogradouroC"));
+		WebElement campoLogradouroC = browser.findElement(By.id("typeLogradouroC"));
 		campoLogradouroC.sendKeys("Rua Carlos Barattino");
 
 		WebElement campoNumeroC = browser.findElement(By.id("typeNumeroC"));
@@ -148,41 +147,35 @@ class CRUDTesteInserir {
 
 		WebElement campoCEPC = browser.findElement(By.id("typeCepC"));
 		campoCEPC.sendKeys("08773-600");
-		
+
 		WebElement campoPaisC = browser.findElement(By.id("typePaisC"));
 		campoPaisC.sendKeys("Brasil");
 
 		WebElement campoDestC = browser.findElement(By.id("TypeNomeEndC"));
 		campoDestC.sendKeys("Fatec");
-		
+
 		WebElement campoObsC = browser.findElement(By.id("observacoesC"));
 		campoObsC.sendKeys("Nenhuma");
-		
-		
+
 		// Cartao
 
 		WebElement campoCartaoNome = browser.findElement(By.id("CartaoNome"));
 		campoCartaoNome.sendKeys("Rodrigo Rocha");
-		
+
 		WebElement campoCartaoBandeira = browser.findElement(By.id("tipoBandeira"));
 		Select bandeira = new Select(campoCartaoBandeira);
 		bandeira.selectByValue("2");
-		
+
 		WebElement campoCartaoNumero = browser.findElement(By.id("CartaoNumero"));
 		campoCartaoNumero.sendKeys("123");
-		
+
 		WebElement campoCartaoCodigo = browser.findElement(By.id("CartaoCodigo"));
 		campoCartaoCodigo.sendKeys("321");
-		
-		
-		
-		 WebElement botaoEnviar = browser.findElement(By.id("BotaoCadastrar"));
-		 botaoEnviar.click();
-		 browser.quit();
 
+		WebElement botaoEnviar = browser.findElement(By.id("BotaoCadastrar"));
+		botaoEnviar.click();
+		browser.quit();
 
-		 
 	}
-	
 
 }

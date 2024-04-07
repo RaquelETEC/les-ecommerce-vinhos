@@ -56,14 +56,14 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 						<img src="../imagens/assets/icons-left-perfil-1.png" alt=""
 							class="img-icons-perfil"> <span>Minha Conta</span>
 					</button>
-					<div class="box-exibir-opcoes MinhaConta">
+					<div class="box-exibir-opcoes">
 						<button
-							onclick="window.location.href=>'Perfil.html?id=<%=request.getAttribute("id")%>';">Meu
+							onclick="window.location.href='Perfil.html?id=<%=request.getAttribute("id")%>';">
 							Perfil</button>
 						<button class="ativo"
-							onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
+							onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
 						<button
-							onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
+							onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
 						<button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar
 							Senha</button>
 					</div>

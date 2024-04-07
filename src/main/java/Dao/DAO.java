@@ -12,17 +12,17 @@ import model.entity.JavaBeans;
  * Recebe e envia dados para banco de dados
  */
 public class DAO {
-	/** Módulo de conexão**/
-	//Parâmetros de conexão
-	//quando usamos o private somente a classe dao tem acesso 
+	/** Módulo de conexão **/
+	// Parâmetros de conexão
+	// quando usamos o private somente a classe dao tem acesso
 
 	private String driver = "com.mysql.cj.jdbc.Driver";
 
-	//definindo ip, user e senha e horario  do servidor universal 
+	// definindo ip, user e senha e horario do servidor universal
 	private String url = "jdbc:mysql://localhost:3306/dbagenda?useTimezone=true&serverTimezone=UTC";
 	private String user = "root";
 	private String password = "12345";
-	
+
 	private Connection conectar() {
 		Connection con = null;
 		try {
@@ -30,24 +30,18 @@ public class DAO {
 			con = DriverManager.getConnection(url, user, password);
 			return con;
 		} catch (Exception e) {
-			System.out.println("ERRO: Connection conectar()"+ e);
+			System.out.println("ERRO: Connection conectar()" + e);
 			return null;
 		}
 	}
-	
-	//teste de conexão
-	/*public void testeConexao() {
-		//void é um metodo sem retorno
-		try {
-			Connection con = conectar(); 
-			System.out.println("CONEXÃO ESTABELECIDA COM SUCESSO"+ con);
-			con.close();
-		} catch (Exception e) {
-			System.out.println("ERRO: testeConexao"+ e);
-			// TODO: handle exception
-		}
-	}
-	*/
+
+	// teste de conexão
+	/*
+	 * public void testeConexao() { //void é um metodo sem retorno try { Connection
+	 * con = conectar(); System.out.println("CONEXÃO ESTABELECIDA COM SUCESSO"+
+	 * con); con.close(); } catch (Exception e) {
+	 * System.out.println("ERRO: testeConexao"+ e); // TODO: handle exception } }
+	 */
 	/**
 	 * Inserir contato.
 	 *
@@ -61,8 +55,8 @@ public class DAO {
 			pst.setString(1, contato.getNome());
 			pst.setString(2, contato.getFone());
 			pst.setString(3, contato.getEmail());
-			pst.executeUpdate(); 
-			
+			pst.executeUpdate();
+
 			con.close();
 		} catch (Exception e) {
 			System.out.println(e);
@@ -160,4 +154,3 @@ public class DAO {
 	}
 
 }
-
