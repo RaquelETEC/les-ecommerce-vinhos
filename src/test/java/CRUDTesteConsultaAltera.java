@@ -22,7 +22,7 @@ class CRUDTesteConsultaAltera {
 		botaoConsultar.click();
 
 		WebElement botaoEditar = browser.findElement(By.id("BotaoEditar"));
-		
+
 		JavascriptExecutor executor = (JavascriptExecutor) browser;
 		executor.executeScript("arguments[0].click();", botaoEditar);
 
@@ -30,11 +30,11 @@ class CRUDTesteConsultaAltera {
 		WebElement campoNome2 = browser.findElement(By.id("typeNome"));
 		campoNome2.clear();
 		campoNome2.sendKeys("Rodrigo Rocha Silva");
-		
+
 		WebElement campoEmail = browser.findElement(By.id("typeEmail"));
 		campoEmail.clear();
 		campoEmail.sendKeys("rodrigorochaSilva@gmail.com");
-		
+
 		WebElement botaoAtualizar = browser.findElement(By.className("button-salvar"));
 		botaoAtualizar.click();
 		browser.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/Clientes.html");
