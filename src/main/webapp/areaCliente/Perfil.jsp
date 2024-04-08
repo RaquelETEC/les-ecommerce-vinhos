@@ -49,9 +49,9 @@
                     </button>
                     <div class="box-exibir-opcoes">
                         <button class="ativo">Perfil</button>
-                   		<button class = "cartoes" onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
-                        <button class = "enderecos" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
-                        <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
+                   		<button class = "cartoes" onclick="window.location.href='MeusCartoes.html?id=<%=cliente.getId()%>';">Cartões</button>
+                        <button class = "enderecos" onclick="window.location.href='MeusEnderecos.html?id=<%=cliente.getId()%>';">Endereços</button>
+                        <button onclick="window.location.href='TrocarSenha.html?id='<%=cliente.getId()%>';">Trocar Senha</button>
                     </div>
 
                     <button class="button-dados-perfil">
@@ -94,7 +94,7 @@
                                 <label for="typeId">Id</label>
                             </div>
                              <input type="text" name="typeId" id="typeId" class="input-form input-width-1" 
-                             value="<%= request.getAttribute("id") %>">
+                             value="<%= cliente.getId() %>">
                             
                         </div>
                         <div class="box-input-form">

@@ -76,8 +76,7 @@ public class ControllerClient extends HttpServlet {
 		} else if (action.equals("/areaAdministrador/deleteClient")) {
 			ExcluirCliente(request, response);
 		} else if (action.equals("/areaCliente/TrocarSenha.html")) {
-			ListarCliente(request, response);
-			// TelaEditarSenha(request, response);
+			TelaEditarSenha(request, response);
 		} else {
 			response.sendRedirect("index.html");
 		}
@@ -230,6 +229,7 @@ public class ControllerClient extends HttpServlet {
 		request.setAttribute("genero", genero);
 
 		request.setAttribute("cliente", cliente);
+		request.setAttribute("id", cliente.getId());
 
 		System.out.println("o nascimento que chegou na area do cliente: " + nascimento);
 
@@ -311,12 +311,19 @@ public class ControllerClient extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("EU CHEGUEI NO TelaEditarSenha");
 
-		cliente.setId(Integer.parseInt(request.getParameter("id")));
-
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		cliente.setId(id);
+		
 		cliente = clienteService.selecionarCliente(cliente);
+		
+		
+		request.setAttribute("id", id);
+		request.setAttribute("cliente", cliente);
+		System.out.println("o cliente:"+ cliente.getNome());
 
-		// request.setAttribute("cliente", cliente);
-		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Clientes.html");
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/PerfilTrocarSenha.jsp");
+		rd.forward(request, response);
 
 	}
 

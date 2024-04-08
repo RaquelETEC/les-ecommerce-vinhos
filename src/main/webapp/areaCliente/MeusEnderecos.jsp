@@ -58,7 +58,6 @@
                    		<button onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
                         <button class="ativo" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
                         <button onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/TrocarSenha.html?id=<%=request.getAttribute("id")%>';">Trocar Senha</button>
-                        <button onclick="window.location.href='PerfilTrocarSenha.jsp'">Trocar Senha2</button>
                         
                     </div>
 
