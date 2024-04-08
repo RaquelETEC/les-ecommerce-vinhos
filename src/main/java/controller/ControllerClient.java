@@ -58,7 +58,7 @@ public class ControllerClient extends HttpServlet {
 			throws ServletException, IOException {
 		String action = request.getServletPath();
 
-		System.out.println("chegou aqui: " + action);
+		System.out.println("chegou aqui: FILHO DA PUTAAAAAAAA " + action);
 
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
@@ -182,7 +182,7 @@ public class ControllerClient extends HttpServlet {
 		enderecoC.setObservacao(request.getParameter("observacoesC"));
 		enderecoC.setTipos(tiposEnderecoC);
 
-		// Cartão
+		// Cartï¿½o
 
 		int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
 		bandeira.setId(Codigobandeira);
