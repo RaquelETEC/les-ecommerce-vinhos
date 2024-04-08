@@ -91,8 +91,8 @@
                 </div>
                 <div class="buttons-content">
 						<button
-							onclick="window.location.href='MeusCartoesADDNovo.html?id=<%=request.getAttribute("id")%>';"
-							class="botaoADDNovoCartao">+ Adicionar
+							onclick="window.location.href='MeusEnderecosNovo.html?id=<%=request.getAttribute("id")%>';"
+							class="botaoADDNovoEndereco">+ Adicionar
 							Novo Cartão</button>
 					</div>
    					<div class="content-Cupons">
@@ -122,7 +122,7 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )" id="BotaoExcluir" class="btn btn-danger">Excluir</a>
 					                
 					           </div>
 					        </div>
@@ -158,7 +158,7 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )" id="BotaoExcluir" class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>
@@ -193,7 +193,7 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" id="BotaoEditar" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <a  id="BotaoExcluir"  href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
+					                <a  id="BotaoExcluir"  href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )" class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>

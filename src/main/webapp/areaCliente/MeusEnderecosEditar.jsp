@@ -133,7 +133,7 @@
                                 </fieldset>
                                 
                                 <div class="text-center">
-                                   	<input class="btn btn-primary btn-lg btn-block" type="submit" value="Salvar"> 
+                                   	<input class="btn btn-primary btn-lg btn-block" id="BotaoCadastrar" type="submit" value="Salvar"> 
                                     <hr class="my-4">
                                 </div>
                             </form>
