@@ -8,13 +8,14 @@ public class CartaoDeCredito {
 	private String padrao;
 	private BandeiraCartao bandeira;
 	private int codigoSeguranca;
-	
+
 	public CartaoDeCredito() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public CartaoDeCredito(int id, Cliente cliente, String numero, String nome, String padrao, BandeiraCartao bandeira, int codigoSeguranca) {
+	public CartaoDeCredito(int id, Cliente cliente, String numero, String nome, String padrao, BandeiraCartao bandeira,
+			int codigoSeguranca) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
@@ -24,10 +25,7 @@ public class CartaoDeCredito {
 		this.bandeira = bandeira;
 		this.codigoSeguranca = codigoSeguranca;
 	}
-	
-	
-	
-	
+
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -47,35 +45,41 @@ public class CartaoDeCredito {
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNumero() {
 		return numero;
 	}
+
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public BandeiraCartao getBandeira() {
 		return bandeira;
 	}
+
 	public void setBandeira(BandeiraCartao bandeira) {
 		this.bandeira = bandeira;
 	}
+
 	public int getCodigoSeguranca() {
 		return codigoSeguranca;
 	}
+
 	public void setCodigoSeguranca(int codigoSeguranca) {
 		this.codigoSeguranca = codigoSeguranca;
 	}
-	
-	
-	
-	
+
 }

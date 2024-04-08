@@ -123,7 +123,7 @@
         </form>
                         <div class="col-md-12 button-component">
     						<button id="btnBuscar" type="button" class="btn btn-primary">Buscar</button>
-                            <button onclick="window.location.href='/les-ecommerce-vinhos/login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
+                            <button id= "btnCadastrar" onclick="window.location.href='/les-ecommerce-vinhos/login.html';" type="submit" class="btn btn-primary">Cadastrar</button>
                         </div>
                 <!-- Tabela de resultados -->
          <div class="text-center">
@@ -161,8 +161,8 @@
 								
 								<td>
 								<div class= "option-button">
-									<a href="/les-ecommerce-vinhos/areaCliente/Perfil.html?id=<%=lista.get(i).getId()%>" class="Botao1">Editar</a>
-									<a href="javascript: confirmarCliente(<%=lista.get(i).getId()%>)"class="Botao2">Excluir</a>
+									<a href="/les-ecommerce-vinhos/areaCliente/Perfil.html?id=<%=lista.get(i).getId()%>" class="Botao1" id="BotaoEditar">Editar</a>
+									<a href="javascript: confirmarCliente(<%=lista.get(i).getId()%>)"class="Botao2" id="BotaoExcluir">Excluir</a>
 								</div>
 								</td>
 							</tr>

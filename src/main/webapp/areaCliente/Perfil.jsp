@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ page import="model.entity.Cliente"%>
+	
+<%
+    Cliente cliente = (Cliente) request.getAttribute("cliente");
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -38,14 +43,14 @@
                 </div>
 
                 <div class="box-dados-perfil">
-                    <button class="button-dados-perfil" onclick="exibirMinhaConta()">
+                    <button class="button-dados-perfil" >
                         <img src="../imagens/assets/icons-left-perfil-1.png" alt="" class="img-icons-perfil">
                         <span>Minha Conta</span>
                     </button>
-                    <div class="box-exibir-opcoes MinhaConta">
+                    <div class="box-exibir-opcoes">
                         <button class="ativo">Perfil</button>
-                   		<button onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
-                        <button onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
+                   		<button class = "cartoes" onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
+                        <button class = "enderecos" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
                         <button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar Senha</button>
                     </div>
 
@@ -88,49 +93,55 @@
                             <div class="box-label" >
                                 <label for="typeId">Id</label>
                             </div>
-                             <input type="text" name="typeId" id="typeId" class="input-form input-width-1" value="<%= request.getAttribute("id") %>">
+                             <input type="text" name="typeId" id="typeId" class="input-form input-width-1" 
+                             value="<%= request.getAttribute("id") %>">
                             
                         </div>
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="typeNome">Nome</label>
                             </div>
-                             <input type="text" name="typeNome" id="typeNome" class="input-form input-width-1" value="<%= request.getAttribute("nome") %>">
+                             <input type="text" name="typeNome" id="typeNome" class="input-form input-width-1" 
+                             value="<%=cliente.getNome() %>">
                             
                         </div>
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="typeEmail">E-Mail</label>
                             </div>
-                            <input type="email" name="typeEmail" id="typeEmail" class="input-form input-width-1 " value="<%= request.getAttribute("email") %>">
+                            <input type="email" name="typeEmail" id="typeEmail" class="input-form input-width-1 " 
+                            value="<%= cliente.getEmail() %>">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="typeCPF">CPF</label>
                             </div>
-                            <input type="number" name="typeCPF" id="typeCPF" class="input-form input-width-2 " value="<%= request.getAttribute("cpf") %>">
+                            <input type="number" name="typeCPF" id="typeCPF" class="input-form input-width-2 " 
+                             value="<%= cliente.getCpf() %>">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="typeNascimento">Data de nascimento</label>
                             </div>
-                            <input type="date" name="typeNascimento" id="typeNascimento" class="input-form input-width-3 " value="<%= request.getAttribute("nascimento") %>">
+                            <input type="date" name="typeNascimento" id="typeNascimento" class="input-form input-width-3 " 
+                             value="<%= cliente.getDataNasc() %>">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="typeNumeroTelefone">Telefone</label>
                             </div>
-                            <input type="tel" name="typeNumeroTelefone" id="typeNumeroTelefone" class="input-form input-width-2 " value="<%= request.getAttribute("telefone") %>">
+                            <input type="tel" name="typeNumeroTelefone" id="typeNumeroTelefone" class="input-form input-width-2 " 
+                            value="<%= cliente.getTelefone() %>">
                              
                              <div class="box-label-tipo">
                                 <label for="tipoTelefone">Tipo Telefone</label>
                             </div>
                           <select id="tipoTelefone" name="tipoTelefone" class="input-form input-width-2">
-						    <option value="Fixo" <%= "Fixo".equals(request.getAttribute("telefoneTipo")) ? "selected" : "" %>>Fixo</option>
-						    <option value="Celular" <%= "Celular".equals(request.getAttribute("telefoneTipo")) ? "selected" : "" %>>Celular</option>
+						    <option value="Fixo" <%= "Fixo".equals(cliente.getTipoTelefone()) ? "selected" : "" %>>Fixo</option>
+						    <option value="Celular" <%= "Celular".equals(cliente.getTipoTelefone()) ? "selected" : "" %>>Celular</option>
 						</select>
                         </div>
 
@@ -138,16 +149,20 @@
                             <div class="box-label">
                                 <label for="genero">Gênero</label>
                             </div>
-                             <input type="radio" name="genero" id="Feminino" class="input-radio" value="Feminino" <%= "Feminino".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+                             <input type="radio" name="genero" id="Feminino" class="input-radio" 
+                             value="Feminino" <%= "Feminino".equals(cliente.getGenero()) ? "checked" : "" %>>
 						     <label for="Feminino" style="font-weight: 100"  >Feminino</label>
 						
-						     <input type="radio" name="genero" id="Masculino" class="input-radio" value="Masculino" <%= "Masculino".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+						     <input type="radio" name="genero" id="Masculino" class="input-radio" 
+						     value="Masculino" <%= "Masculino".equals(cliente.getGenero()) ? "checked" : "" %>>
 						     <label for="Masculino" style="font-weight: 100;">Masculino</label>
 						     
-						 	 <input type="radio" name="genero" id="nao_binario" class="input-radio" value="Não Binário" <%= "Não Binário".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+						 	 <input type="radio" name="genero" id="nao_binario" class="input-radio" 
+						 	 value="Não Binário" <%= "Não Binário".equals(cliente.getGenero()) ? "checked" : "" %>>
 						     <label for="nao_binario" style="font-weight: 100;">Não Binario</label>
 						     
-						     <input type="radio" name="genero" id="Outros" class="input-radio" value="Outros" <%= "Outros".equals(request.getAttribute("genero")) ? "checked" : "" %>>
+						     <input type="radio" name="genero" id="Outros" class="input-radio" 
+						     value="Outros" <%= "Outros".equals(cliente.getGenero()) ? "checked" : "" %>>
 						     <label for="Outros" style="font-weight: 100;">Outros</label>
                         </div>
 						<div class="box-input-form">
@@ -155,8 +170,8 @@
 						        <label for="statusCliente">Status</label>
 						    </div>
 						     <select id="statusCliente" name="statusCliente" class="input-form input-width-1">
-							    <option value="Ativo" <%= "Ativo".equals(request.getAttribute("status")) ? "selected" : "" %>>Ativo</option>
-							    <option value="Inativo" <%= "Inativo".equals(request.getAttribute("status")) ? "selected" : "" %>>Inativo</option>
+							    <option value="Ativo" <%= "Ativo".equals(cliente.getStatus()) ? "selected" : "" %>>Ativo</option>
+							    <option value="Inativo" <%= "Inativo".equals(cliente.getStatus()) ? "selected" : "" %>>Inativo</option>
 							</select>
 						</div>
                          <input class="button-salvar" type="submit" value="Atualizar"> 

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ page import="model.entity.Endereco"%>
 <%@ page import="java.util.ArrayList"%>
 <%
@@ -17,8 +17,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus enderecos</title>
-    <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
-    <link rel="stylesheet" href="../Styles/StyleMeusCartoesV4.css">
+    <link rel="stylesheet" href="../Styles/StyleMeusEnderecosv2.css">
+	<script src="../scripts/confirmador.js"></script>
 
     <script src="../scripts/exibirMenus.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
                 <div class="box-name-perfil">
                     <img src="../imagens/assets/icon-box-image-name.png" alt="" class="img-name-perfil">
                     <div class="box-name-e-nivel">
-                        <p class="text-name">Usuario</p>
+                        <p class="text-name">	</p>
                         <p class="text-nivel">NIVEL: 1</p>
                     </div>
                 </div>
@@ -53,11 +53,13 @@
                         <img src="../imagens/assets/icons-left-perfil-1.png" alt="" class="img-icons-perfil">
                         <span>Minha Conta</span>
                     </button>
-                    <div class="box-exibir-opcoes MinhaConta">
-                        <button onclick="window.location.href=>'Perfil.html?id=<%=request.getAttribute("id")%>';">Meu Perfil</button>
-                   		<button onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
-                        <button class="ativo" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
-                        <button onclick="window.location.href='PerfilTrocarSenha.jsp'?id=<%=request.getAttribute("id")%>;">Trocar Senha</button>
+                    <div class="box-exibir-opcoes">
+                        <button onclick="window.location.href=>'Perfil.html?id=<%=request.getAttribute("id")%>';">Perfil</button>
+                   		<button onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
+                        <button class="ativo" onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
+                        <button onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/TrocarSenha.html?id=<%=request.getAttribute("id")%>';">Trocar Senha</button>
+                        <button onclick="window.location.href='PerfilTrocarSenha.jsp'">Trocar Senha2</button>
+                        
                     </div>
 
                     <button class="button-dados-perfil">
@@ -88,14 +90,14 @@
                     <!-- titulo do cabecalho -->
                     <h1 class="text-perfil">Endereços</h1>
                 </div>
-   				<div class="content-Cupons">
-   					<div class="buttons-content">
-   				        <button 
-   				        class="botaoADDNovoCartao" 
-   				        onclick="window.location.href='MeusCartoesADDNovo.html?id=<%=request.getAttribute("id")%>';">
-   				        + Adicionar Novo Endereço
-   				       </button>
-   					</div>
+                <div class="buttons-content">
+						<button
+							onclick="window.location.href='MeusCartoesADDNovo.html?id=<%=request.getAttribute("id")%>';"
+							class="botaoADDNovoCartao">+ Adicionar
+							Novo Cartão</button>
+					</div>
+   					<div class="content-Cupons">
+					
    					<p class="text-name">Endereços de Entrega</p>
    				 	<!--   Conteúdo do primeiro card -->
    					
@@ -104,10 +106,11 @@
 								Endereco endereco = listaEntrega.get(i); // Crie um novo objeto Endereco
 
 					%>
-					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
-					    <div class="card-body">
-					        <div class="row">
-					            <div class="col-md-10">
+						<div class="card mt-3"
+						style="background-color: #F0F0F0; width: 60rem">
+						<div class="card-body">
+							<div class="row">
+					            <div class="col-md-9">
 					                <h5 class="card-title "><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -120,7 +123,8 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
+					                
 					           </div>
 					        </div>
 					    </div>
@@ -143,7 +147,7 @@
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-10">
+					            <div class="col-md-9">
 									<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -155,7 +159,7 @@
 					            </div>
 					            <div class="col-md buttons-options">
 					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <a href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>
@@ -178,7 +182,7 @@
 					<div class="card mt-3" style="background-color: #F0F0F0; width: 100%;height: 6rem">
 					    <div class="card-body">
 					        <div class="row">
-					            <div class="col-md-10">
+					            <div class="col-md-9">
 								<h5 class="card-title"><%=endereco.getNome()%>
 					                 <% if ("S".equals(endereco.getPadrao())) { %>
 									        <span  style="background-color: #56b07a; color: white;" class="badge rounded-pill">Padrão</span>
@@ -189,8 +193,8 @@
 									 </p>					                
 					            </div>
 					            <div class="col-md buttons-options">
-					                <button type="button" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
-					                <button type="button" class="btn btn-danger">Excluir</button>
+					                <button type="button" id="BotaoEditar" class="btn btn-primary" onClick="window.location.href='MeusEnderecosEditar.html?id=<%=request.getAttribute("id")%>&idEnd=<%=endereco.getId()%>';">Editar</button>
+					                <a  id="BotaoExcluir"  href="javascript: confirmarExcluirEndereco(<%=endereco.getId()%>,<%=request.getAttribute("id")%> )"class="btn btn-danger">Excluir</a>
 					           </div>
 					        </div>
 					    </div>

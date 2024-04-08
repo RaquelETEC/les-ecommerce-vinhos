@@ -81,8 +81,7 @@ body {
 
 									<div class="col-md-6 mb-4">
 										<label class="form-label" for="CartaoPadrao">Padrão</label>
-										 <select class="form-select form-select-lg" name="CartaoPadrao"
-											id="CartaoPadrao" required>
+										 <select id="CartaoPadrao" class="form-select form-select-lg" name="CartaoPadrao"required>
 											<option value="" disabled selected></option>
 											<option value="SIM">SIM</option>
 											<option value="NAO">NAO</option>
@@ -92,7 +91,7 @@ body {
 
 							</fieldset>
 							<div class="text-center">
-								<input class="btn btn-primary btn-lg btn-block" type="submit"
+								<input id="BotaoCadastrar" class="btn btn-primary btn-lg btn-block" type="submit"
 									value="Cadastrar">
 								<hr class="my-4">
 							</div>

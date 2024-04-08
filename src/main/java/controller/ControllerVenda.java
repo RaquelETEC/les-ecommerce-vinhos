@@ -14,49 +14,47 @@ import model.entity.CarrinhoItem;
 
 @WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho" })
 public class ControllerVenda extends HttpServlet {
-	 private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-	 CarrinhoItem carrinho = new CarrinhoItem(); 
-	 
-	 
+	CarrinhoItem carrinho = new CarrinhoItem();
+
 	public ControllerVenda() {
 		super();
 	}
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String action = request.getServletPath();
 
-	    System.out.println("chegou aqui: " + action);
-	    
-	    if (action.equals("/AdicionarAoCarrinho")) {
-	    	AdicionarAoCarriho(request, response);
-	    }
-		else if (action.equals("/ExibirCarrinho")) {
+		System.out.println("chegou aqui: " + action);
+
+		if (action.equals("/AdicionarAoCarrinho")) {
+			AdicionarAoCarriho(request, response);
+		} else if (action.equals("/ExibirCarrinho")) {
 			ExibirCarrinho(request, response);
-		}
-		else {
-			System.out.println("erro ao redirecionar "+action);
+		} else {
+			System.out.println("erro ao redirecionar " + action);
 			response.sendRedirect("index.html");
 		}
 	}
 
 	protected void AdicionarAoCarriho(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		    
 
-		    RequestDispatcher rd = request.getRequestDispatcher("/ExibirCarrinho");
-			rd.forward(request, response);
-         
+		RequestDispatcher rd = request.getRequestDispatcher("/ExibirCarrinho");
+		rd.forward(request, response);
+
 	}
+
 	protected void ExibirCarrinho(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		  ArrayList<CarrinhoItem> lista = new ArrayList<>();
-		  
-		  lista.add(new CarrinhoItem("vinho", 99.30, 2)); 
-	    
+		ArrayList<CarrinhoItem> lista = new ArrayList<>();
+
+		lista.add(new CarrinhoItem("vinho", 99.30, 2));
+
 		request.setAttribute("itemsCarrinho", lista);
 		RequestDispatcher rd = request.getRequestDispatcher("meuCarrinho.jsp");
 		rd.forward(request, response);
-		
-	  
+
 	}
 }

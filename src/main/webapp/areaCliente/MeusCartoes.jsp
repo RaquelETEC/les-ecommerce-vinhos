@@ -55,14 +55,14 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 						<img src="../imagens/assets/icons-left-perfil-1.png" alt=""
 							class="img-icons-perfil"> <span>Minha Conta</span>
 					</button>
-					<div class="box-exibir-opcoes MinhaConta">
+					<div class="box-exibir-opcoes">
 						<button
-							onclick="window.location.href=>'Perfil.html?id=<%=request.getAttribute("id")%>';">Meu
+							onclick="window.location.href='Perfil.html?id=<%=request.getAttribute("id")%>';">
 							Perfil</button>
 						<button class="ativo"
-							onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartoes</button>
+							onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
 						<button
-							onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Enderecos</button>
+							onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
 						<button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar
 							Senha</button>
 					</div>
@@ -70,7 +70,7 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 					<button class="button-dados-perfil">
 						<img src="../imagens/assets/icons-left-perfil-2.png" alt=""
 							class="img-icons-perfil"> <span
-							onclick="window.location.href='MinhasCompra.html';">Minhas
+							onclick="window.location.href='MinhasCompras.html';">Minhas
 							Compras</span>
 					</button>
 
@@ -130,11 +130,11 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 									</p>
 								</div>
 								<div class="col-md-3 buttons-options">
-									<a type="button" class="btn btn-primary"
+									<a type="button" id="BotaoEditar" class="btn btn-primary"
 										onclick="window.location.href='EditarCartao.html?id=<%=request.getAttribute("id")%>&idCartao=<%=cartao.getId()%>&idBandeira=<%=cartao.getBandeira().getId()%>';">Editar</a>
 									<a	
 										href="javascript: confirmarCartao(<%=lista.get(i).getId()%>, id=<%=request.getAttribute("id")%>)"
-										class="btn btn-danger">Excluir</a>
+										id="btnExcluir" class="btn btn-danger">Excluir</a>
 	
 								</div>
 							</div>
