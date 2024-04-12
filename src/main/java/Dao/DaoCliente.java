@@ -91,6 +91,8 @@ public class DaoCliente {
 	}
 
 	public Cliente selecionarCliente(Cliente cliente) {
+		System.out.println("cheguei no SELECIONAR cliente DAO" + cliente.getId());
+
 		String read2 = "select *  from cliente where cli_id = ?";
 		try {
 			Connection con = Conexao.conectar();
@@ -170,6 +172,27 @@ public class DaoCliente {
 			return "Erro ao cadastrar cliente: " + e;
 		}
 		return "Cliente Apagado com sucesso";
+	}
+	
+	public String AlterarSenha(Cliente cliente) {
+		System.out.println("cheguei no alterar senha DAO" + cliente.getNome());
+
+		String update = "update cliente set cli_senha=?  where cli_id=?"; // 9
+		try {
+
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(update);
+
+			pst.setString(1, cliente.getSenha());
+			pst.setInt(2, cliente.getId());
+			
+			pst.executeUpdate();
+			con.close();
+
+		} catch (Exception e) {
+			return ("Erro ao alterar senha do cliente \n" + e);
+		}
+		return "Senha alterada com sucesso!";
 	}
 
 }

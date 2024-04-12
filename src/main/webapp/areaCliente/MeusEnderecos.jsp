@@ -106,7 +106,7 @@
 
 					%>
 						<div class="card mt-3"
-						style="background-color: #F0F0F0; width: 60rem">
+						style="background-color: #F0F0F0; width: 70rem">
 						<div class="card-body">
 							<div class="row">
 					            <div class="col-md-9">

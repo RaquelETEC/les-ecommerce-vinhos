@@ -20,11 +20,6 @@ public class CRUDTesteENDAlterar {
         System.setProperty("webdriver.edge.driver", driverPath);
 
     }
-
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
 	@Test
 	public void testEndInserir() {
 		

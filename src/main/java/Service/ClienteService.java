@@ -1,13 +1,13 @@
 package Service;
 
-import model.entity.Cliente;
-import model.entity.Endereco;
-import model.entity.CartaoDeCredito;
-
 import java.util.ArrayList;
 
 import Dao.DaoCliente;
 import model.entity.BandeiraCartao;
+import model.entity.CartaoDeCredito;
+import model.entity.Cliente;
+import model.entity.Endereco;
+import util.PasswordUtil;
 
 public class ClienteService {
 
@@ -15,15 +15,21 @@ public class ClienteService {
 
 	CartoesService cartoesService = new CartoesService();
 	EnderecoService enderecoService = new EnderecoService();
+	PasswordUtil encoder = new PasswordUtil();
 
 	public ClienteService() {
 		this.daoCliente = new DaoCliente();
+
 	}
 
 	public String adicionarCliente(Cliente cliente, Endereco enderecoR, Endereco enderecoE, Endereco enderecoC,
 			CartaoDeCredito cartao, BandeiraCartao bandeira) {
 		try {
 			// Inserir o cliente
+
+			byte[] senhaCriptografada = encoder.criptografarSenha(cliente.getSenha());  //encriptografa a senha string 			
+			cliente.setSenha(new String(senhaCriptografada)); //converte a senha criptografada para uma string
+
 			int idCliente = daoCliente.inserirCliente(cliente);
 			cliente.setId(idCliente);
 
@@ -53,19 +59,48 @@ public class ClienteService {
 	}
 
 	public Cliente selecionarCliente(Cliente cliente) {
-
 		return daoCliente.selecionarCliente(cliente);
-
 	}
 
 	public String alterarCliente(Cliente cliente) {
-
 		return daoCliente.alterarCliente(cliente);
 	}
 
 	public String deletarCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
 		return daoCliente.deletarCliente(cliente);
 	}
 
+	public String alterarSenha(Cliente cliente, String senhaAtual, String novaSenha, String repitaSenha) {
+	    try {
+	    	
+			System.out.println("cheguei no alterar senha SERVICE");
+
+	        // Verificar se a nova senha é forte
+	        String validationString = encoder.verificarSenhaForte(novaSenha, repitaSenha);
+	        
+	        if (!validationString.isEmpty()) {
+	            return validationString; // Retorna a mensagem de validação se a nova senha não for forte
+	        }
+	        
+	        System.out.println("A SENHA CADASTRADA : " + cliente.getSenha());
+	        
+	        if (!encoder.verificarSenha(senhaAtual, cliente.getSenha())) {
+	            return "A senha atual digitada está incorreta.";
+	        }
+	        
+	        // Criptografar a nova senha
+	        byte[] novaSenhaCriptografada = encoder.criptografarSenha(novaSenha);
+	        cliente.setSenha(new String(novaSenhaCriptografada));
+
+	        // Alterar a senha no banco de dados
+	        String resultado = daoCliente.AlterarSenha(cliente);
+	        
+	        return resultado;
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "Erro ao inesperado ao alterar senha : " + e.getMessage();
+	    }
+	}
+	
 }

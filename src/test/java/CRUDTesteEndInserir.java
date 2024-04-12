@@ -1,6 +1,5 @@
 import org.junit.Test;
 import org.junit.Before;
-import org.junit.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -19,11 +18,6 @@ public class CRUDTesteEndInserir {
         // Configura o caminho para o WebDriver
         System.setProperty("webdriver.edge.driver", driverPath);
 
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
     }
 	@Test
 	public void testEndInserir() {

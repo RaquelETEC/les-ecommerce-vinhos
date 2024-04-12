@@ -14,6 +14,8 @@
     <title>Trocar Senha</title>
     <link rel="stylesheet" href="../Styles/StyleAreaCliente.css">
     <script src="../scripts/exibirMenus.js" defer></script>
+    <script src="../scripts/validarSenhav2.js" defer></script>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
     
 </head>
@@ -98,30 +100,37 @@
 
                 <div class="content">
                     <!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
-                    <form action="" class="form-register">
-
+    				<form id="editarSenhaForm" class="form-register">
+						<div class="box-input-form" style="display: none;">
+                            <div class="box-label" >
+                                <label for="typeId">Id</label>
+                            </div>
+                             <input type="text" name="typeId" id="typeId" class="input-form input-width-1" 
+                             value="<%= cliente.getId() %>">
+                            
+                        </div>
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">Senha Atual</label>
                             </div>
-                             <input type="text" class="input-form input-width-1">
+                             <input type="text" name="typeSenhaAtual" id="typeSenhaAtual"  class="input-form input-width-1">
                             
                         </div>
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">Nova Senha</label>
                             </div>
-                            <input type="text" class="input-form input-width-1 ">
+                            <input type="text" name="typeNovaSenha" id="typeNovaSenha" class="input-form input-width-1 ">
                         </div>
 
                         <div class="box-input-form">
                             <div class="box-label">
                                 <label for="">Repita a Senha</label>
                             </div>
-                            <input type="text" class="input-form input-width-2 ">
+                            <input type="text" name="typeRepitaSenha" id="typeRepitaSenha"  class="input-form input-width-2 ">
                         </div>
 
-                        <button class="button-salvar">Salvar</button>
+        				<button type="button" class="button-salvar" onclick="editarSenha()">Salvar</button>
 
                     </form>
                     <!-- acaba aqui -->

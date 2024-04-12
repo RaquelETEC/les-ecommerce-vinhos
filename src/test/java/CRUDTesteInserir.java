@@ -19,12 +19,6 @@ public class CRUDTesteInserir {
         System.setProperty("webdriver.edge.driver", driverPath);
 
         // Inicializa o WebDriver
-        driver = new EdgeDriver();
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
     }
   
 	@Test

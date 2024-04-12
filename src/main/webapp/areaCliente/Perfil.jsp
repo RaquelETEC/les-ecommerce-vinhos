@@ -51,7 +51,7 @@
                         <button class="ativo">Perfil</button>
                    		<button class = "cartoes" onclick="window.location.href='MeusCartoes.html?id=<%=cliente.getId()%>';">Cartões</button>
                         <button class = "enderecos" onclick="window.location.href='MeusEnderecos.html?id=<%=cliente.getId()%>';">Endereços</button>
-                        <button onclick="window.location.href='TrocarSenha.html?id='<%=cliente.getId()%>';">Trocar Senha</button>
+                        <button onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/TrocarSenha.html?id=<%=cliente.getId()%>';">Trocar Senha</button>
                     </div>
 
                     <button class="button-dados-perfil">

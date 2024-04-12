@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -23,7 +24,7 @@ import Service.ClienteService;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/insertCliente", "/areaCliente", "/areaAdministrador/Clientes.html",
+@WebServlet(urlPatterns = { "/insertCliente", "/editarSenha", "/areaCliente", "/areaAdministrador/Clientes.html",
 		"/areaCliente/Perfil.html", "/updateCliente", "/areaAdministrador/deleteClient",
 		"/areaCliente/TrocarSenha.html" })
 public class ControllerClient extends HttpServlet {
@@ -47,6 +48,8 @@ public class ControllerClient extends HttpServlet {
 
 	/* The ServiceCliente */
 	ClienteService clienteService = new ClienteService();
+	
+	/* */ 
 
 	public ControllerClient() {
 		super();
@@ -56,7 +59,7 @@ public class ControllerClient extends HttpServlet {
 			throws ServletException, IOException {
 		String action = request.getServletPath();
 
-		System.out.println("FILHO DA PUTA QUE NAO ATUALIZAAAAAAA");
+		System.out.println("ESSA DESGRAÇAAAAAAAAAAA:" + action);
 
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
@@ -75,9 +78,15 @@ public class ControllerClient extends HttpServlet {
 
 		} else if (action.equals("/areaAdministrador/deleteClient")) {
 			ExcluirCliente(request, response);
+			
 		} else if (action.equals("/areaCliente/TrocarSenha.html")) {
 			TelaEditarSenha(request, response);
-		} else {
+			
+		} else if (action.equals("/editarSenha")) {
+			EditarSenha(request, response);
+		} 
+		
+		else {
 			response.sendRedirect("index.html");
 		}
 	}
@@ -94,17 +103,17 @@ public class ControllerClient extends HttpServlet {
 		String nome = request.getParameter("typeNome");
 		String email = request.getParameter("typeEmail");
 		String senha = request.getParameter("typeSenha");
-		String senhaRepetida = request.getParameter("typeRepitaSenha");
 		String cpf = request.getParameter("typeCPF");
 		String tipoTelefone = request.getParameter("TypeTipoTelefone");
 		String telefone = request.getParameter("typeNumeroTelefone");
 		String nascimento = request.getParameter("typeNascimento");
 		String genero = request.getParameter("typeGenero");
 
+		
+				
 		cliente.setNome(nome);
 		cliente.setEmail(email);
 		cliente.setSenha(senha);
-		cliente.setSenha(senhaRepetida);
 		cliente.setCpf(cpf);
 		cliente.setTipoTelefone(tipoTelefone);
 		cliente.setTelefone(telefone);
@@ -325,6 +334,30 @@ public class ControllerClient extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/PerfilTrocarSenha.jsp");
 		rd.forward(request, response);
 
+	}
+	protected void EditarSenha(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("EU CHEGUEI NO EditarSenha SERVELET");
+
+		int id = Integer.parseInt(request.getParameter("id"));
+		String senhaAtual = request.getParameter("typeSenhaAtual");
+		String novaSenha = request.getParameter("typeNovaSenha");
+		String repitaSenha = request.getParameter("typeRepitaSenha");
+
+		
+		cliente.setId(id);
+		cliente = clienteService.selecionarCliente(cliente);
+
+		String respostaCli = clienteService.alterarSenha(cliente, senhaAtual, novaSenha, repitaSenha); 
+		
+		 // Escreve a resposta para o HttpServletResponse
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(respostaCli);
+
+	    // Encerra a resposta
+	    response.getWriter().flush();
+		
 	}
 
 }

@@ -21,10 +21,6 @@ public class CRUDTesteCartaoInserir {
 
     }
 
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
 	@Test
 	public void testEndInserir() {
 		

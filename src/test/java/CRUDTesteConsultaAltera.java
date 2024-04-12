@@ -20,10 +20,6 @@ public class CRUDTesteConsultaAltera {
 
     }
 
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
 	@Test
 	public void testEndInserir() {
 		
