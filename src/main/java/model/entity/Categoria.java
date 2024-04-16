@@ -1,24 +1,22 @@
 package model.entity;
 
-public class Harmonizacao {
+public class Categoria {
+	
 	private int id;
 	private String desc;
-	private String tipo;
-
-	public Harmonizacao() {
+	private int status;
+	
+	public Categoria() {
 		// TODO Auto-generated constructor stub
 		super();
-
 	}
-	
-	
-	public Harmonizacao(int id, String desc, String tipo) {
+
+	public Categoria(int id, String desc, int status) {
 		super();
 		this.id = id;
 		this.desc = desc;
-		this.tipo = tipo;
+		this.status = status;
 	}
-
 
 	public int getId() {
 		return id;
@@ -36,15 +34,13 @@ public class Harmonizacao {
 		this.desc = desc;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	
-	
-
 }
