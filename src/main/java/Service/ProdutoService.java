@@ -15,8 +15,8 @@ public class ProdutoService {
 	
 	}
 	
-	public ArrayList<Produtos> listarProdutos(Produtos produtos) {
-		return daoProdutos.ListarProdutos(produtos);
+	public ArrayList<Produtos> listarProdutos() {
+		return daoProdutos.ListarProdutos();
 	}
 
 }
