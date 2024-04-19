@@ -1,3 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="model.entity.Cupons"%>
+<%@ page import="model.entity.Cliente"%>
+
+<%@ page import="java.util.ArrayList"%>
+<%
+@SuppressWarnings("unchecked")
+ArrayList<Cupons> lista = (ArrayList<Cupons>) request.getAttribute("listaCupons");
+%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -55,7 +66,7 @@
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
 
-                         <span onclick="window.location.href='Notificações.jsp';">Notificacoes</span>
+                         <span onclick="window.location.href='NotificaÃ§Ãµes.jsp';">Notificacoes</span>
                     </button>
                     
 
@@ -125,7 +136,7 @@
 				        </div>
 				    </div>
 
-    <!-- Adicione mais cards conforme necessário -->
+    <!-- Adicione mais cards conforme necessÃ¡rio -->
                    
                    
                     <!-- acaba aqui -->
