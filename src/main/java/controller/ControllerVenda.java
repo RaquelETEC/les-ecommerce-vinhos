@@ -10,14 +10,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.entity.CarrinhoItem;
+import Service.CarrinhoService;
+import model.entity.CarrinhoDeCompras;
+import model.entity.CarrinhoItens;
+import model.entity.Cliente;
+import model.entity.Endereco;
+import model.entity.TiposEndereco;
+
+//import model.entity.CarrinhoItem;
 
 @WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho" })
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	CarrinhoItem carrinho = new CarrinhoItem();
-
+	//CarrinhoItem carrinho = new CarrinhoItem();
+	CarrinhoService carrinhoService = new CarrinhoService();
+	CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
+	Cliente cliente = new Cliente(); 
+	CarrinhoItens itens = new CarrinhoItens(); 
+	
 	public ControllerVenda() {
 		super();
 	}
@@ -47,13 +58,30 @@ public class ControllerVenda extends HttpServlet {
 	}
 
 	protected void ExibirCarrinho(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		ArrayList<CarrinhoItem> lista = new ArrayList<>();
+            throws ServletException, IOException {
+        
+        cliente.setId(Integer.parseInt(request.getParameter("id")));
 
-		lista.add(new CarrinhoItem("vinho", 99.30, 2));
-
+        carrinho = carrinhoService.SelecionarCarrinho(cliente);
+    
+        ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItems(carrinho);
+        
+        //itens não removidos do carrinho 
+        ArrayList<CarrinhoItens> lista = new ArrayList<>();
+        //itens removidos do carrinho
+        ArrayList<CarrinhoItens> listaRemovidos = new ArrayList<>();
+        
+        for (CarrinhoItens item : listaItens) {
+            if (item.isRemovido()) {
+                listaRemovidos.add(item);
+            } else {
+            	lista.add(item);
+            }
+        }
+        
 		request.setAttribute("itemsCarrinho", lista);
-		RequestDispatcher rd = request.getRequestDispatcher("meuCarrinho.jsp");
+		request.setAttribute("itemsRemovidosCarrinho", listaRemovidos);
+		RequestDispatcher rd = request.getRequestDispatcher("/areaVenda/meuCarrinho.jsp");
 		rd.forward(request, response);
 
 	}
