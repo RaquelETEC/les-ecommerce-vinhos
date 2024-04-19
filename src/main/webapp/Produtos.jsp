@@ -19,6 +19,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 <script src="scripts/PagInicial.js"></script>
+
 </head>
 
 <body>
@@ -136,19 +137,19 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 			<div class="row">
 			<%for (int i = 0; i < lista.size(); i++) {%>	
 				<div class="col-sm-4">
-					<form name="productForm<%=i%>" action="AdicionarAoCarrinho">
+					<form name="productForm<%=i%>">
 						<div class="card">
-							<img src="<%=lista.get(i).getImg().toString()%>" alt="Imagem do Produto"
+							<img src="<%=lista.get(i).getImg()%>" alt="Imagem do Produto"
 								class="card-img-top">
 
 							<div class="box-input-form" style="display: none;">
 								<div class="box-label">
 									<label for="typeId">Id</label>
 								</div>
-								<input type="text" name="Id" id="Id"
+								<input type="text" name="Id" id="Id" value=20>
+								<input type="text" name="idProd" id="idProd"
 									class="input-form input-width-1" value="<%=lista.get(i).getId()%>">
 							</div>
-
 							<div class="card-body">
 								<h5 class="card-title text-center"><%=lista.get(i).getDesc()%></h5>
 								<p class="price v">
@@ -158,15 +159,15 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 									<div
 										class="d-flex justify-content-between align-items-center mb-3 ">
 										<button class="btn btn-sm btn-outline-secondary"
-											onclick="decrementarQuantidade(1)">-</button>
+											onclick="decrementarQuantidade(idProd)">-</button>
 										<span id="quantity1" class="quantity">1</span>
 										<button class="btn btn-sm btn-outline-secondary"
-											onclick="incrementarQuantidade(1)">+</button>
+											onclick="incrementarQuantidade(idProd)">+</button>
 									</div>
 								</div>
-								<input
-									class="btn btn-lg add-to-cart-btn text-center add_carrinho"
-									type="submit" value="AdicionarAoCarrinho">
+								<button class="btn btn-lg add-to-cart-btn text-center add_carrinho" onclick="AdicionarAoCarrinho()">AdicionarAoCarrinho</button>
+								
+							
 							</div>
 						</div>
 					</form>

@@ -35,7 +35,7 @@ public class DaoCarrinho {
 		return carrinho;
 	}
 
-	public ArrayList<CarrinhoItens> ArrayListarCarrinho(CarrinhoDeCompras carrinho) {
+	public ArrayList<CarrinhoItens> ListarCarrinho(CarrinhoDeCompras carrinho) {
 
 		System.out.println("Acesso ao Dao ListarCarrinho");
 

@@ -49,8 +49,6 @@ public class ControllerEndereco extends HttpServlet {
 			EditarEndereco(request, response);
 		} else if (action.equals("/areaCliente/deleteEndereco")) {
 			ExcluirEndereco(request, response);
-		} else {
-			response.sendRedirect("index.html");
 		}
 	}
 

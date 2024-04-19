@@ -42,7 +42,6 @@ public class ControllerProdutos extends HttpServlet{
 
 	}
 	
-	
 	protected void AreaProdutos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		

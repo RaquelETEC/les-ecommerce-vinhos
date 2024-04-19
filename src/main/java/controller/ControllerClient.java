@@ -86,9 +86,7 @@ public class ControllerClient extends HttpServlet {
 			EditarSenha(request, response);
 		} 
 		
-		else {
-			response.sendRedirect("index.html");
-		}
+		
 	}
 
 	/**

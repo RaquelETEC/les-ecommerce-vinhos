@@ -64,3 +64,30 @@ function adicionarAoCarrinho(produto, preco, quantidade) {
 function sendMessage() {
 	
 }
+
+
+
+function AdicionarAoCarrinho(id, idProd, quant){
+	
+  var respostaAjax; // Variável para armazenar a resposta da requisição AJAX
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/les-ecommerce-vinhos/AdicionarAoCarrinho?id=" + id + "&idProd=" + idProd + "&quant=" + quant );
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+				debugger;
+                respostaAjax = xhr.responseText; // Armazena a resposta da requisição AJAX na variável respostaAjax
+                alert(respostaAjax)
+            } else {
+                alert("Erro ao realizar a requisição.");
+            }
+        }
+    };
+    xhr.send();
+
+    // A partir daqui, você pode usar a variável respostaAjax conforme necessário
+
+	
+}
