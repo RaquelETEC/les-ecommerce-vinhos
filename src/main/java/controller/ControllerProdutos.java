@@ -14,7 +14,7 @@ import Service.ProdutoService;
 import model.entity.Produtos;
 
 
-@WebServlet(urlPatterns = { "/abc.html" })
+@WebServlet(urlPatterns = { "/Produtos.html"})
 
 public class ControllerProdutos extends HttpServlet{
 	
@@ -36,8 +36,8 @@ public class ControllerProdutos extends HttpServlet{
 
 		System.out.println("chegou aqui: " + action);
 
-		if (action.equals("/index.html")) {
-			AreaProdutos(request, response);
+		if (action.equals("/Produtos.html")) {
+			AreaProdutos(request,response);
 		} 
 
 	}
@@ -45,15 +45,17 @@ public class ControllerProdutos extends HttpServlet{
 	
 	protected void AreaProdutos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		//ArrayList<Produtos> lista = produtoservice.listarProdutos(produtos);
-
-		//request.setAttribute("listaProdutos", lista);
-
-		//RequestDispatcher rd = request.getRequestDispatcher("/index.html");
-		//rd.forward(request, response);
 		
-		response.sendRedirect(request.getContextPath() + "/index.html");
+		System.out.println("Cheguei no area produtos");
+		
+		ArrayList<Produtos> lista = produtoservice.listarProdutos();
+		
+		request.setAttribute("listaProdutos", lista);
+	
+		RequestDispatcher rd = request.getRequestDispatcher("/Produtos.jsp");
+		rd.forward(request, response);
+		
+		
 
 	}
 	
