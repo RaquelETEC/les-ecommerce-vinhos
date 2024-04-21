@@ -18,7 +18,8 @@ public class Cliente {
 
 	private ArrayList<Endereco> listadeEnderecos = new ArrayList<>();
 	private ArrayList<CartaoDeCredito> listaDeCartoes = new ArrayList<>();
-
+	private ArrayList<Cupons> listadeCupons = new ArrayList<>();
+	
 	public Cliente() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -26,7 +27,7 @@ public class Cliente {
 
 	public Cliente(int id, String nome, String email, String senha, String cpf, String tipoTelefone, String telefone,
 			Date dataNasc, String genero, String status, ArrayList<Endereco> listadeEnderecos,
-			ArrayList<CartaoDeCredito> listaDeCartoes) {
+			ArrayList<CartaoDeCredito> listaDeCartoes, ArrayList<Cupons> listadeCupons) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -38,7 +39,16 @@ public class Cliente {
 		this.genero = genero;
 		this.listadeEnderecos = listadeEnderecos;
 		this.listaDeCartoes = listaDeCartoes;
+		this.listadeCupons = listadeCupons;
 		this.status = status;
+	}
+
+	public ArrayList<Cupons> getListadeCupons() {
+		return listadeCupons;
+	}
+
+	public void setListadeCupons(ArrayList<Cupons> listadeCupons) {
+		this.listadeCupons = listadeCupons;
 	}
 
 	public int getId() {

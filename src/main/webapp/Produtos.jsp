@@ -138,7 +138,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 				<div class="col-sm-4">
 					<form name="productForm<%=i%>" action="AdicionarAoCarrinho">
 						<div class="card">
-							<img src="<%=lista.get(i).getImg().toString()%>" alt="Imagem do Produto"
+							<img src="<%=lista.get(i).getImg()%>" alt="Imagem do Produto"
 								class="card-img-top">
 
 							<div class="box-input-form" style="display: none;">

@@ -68,7 +68,7 @@
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-4.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='PerfilMeusCupons.jsp';">Meus Cupons</span>
+                       <span onclick="window.location.href='MeusCupons.html?id=<%=cliente.getId()%>';">Meus Cupons</span>
                     </button>
                     
                 </div>

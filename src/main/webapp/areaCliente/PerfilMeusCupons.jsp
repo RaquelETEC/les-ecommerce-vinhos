@@ -1,3 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="model.entity.Cupons"%>
+<%@ page import="model.entity.Cliente"%>
+
+<%@ page import="java.util.ArrayList"%>
+<%
+@SuppressWarnings("unchecked")
+ArrayList<Cupons> lista = (ArrayList<Cupons>) request.getAttribute("listaCupons");
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -55,7 +65,7 @@
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
 
-                         <span onclick="window.location.href='Notificações.jsp';">Notificacoes</span>
+                         <span onclick="window.location.href='NotificaÃ§Ãµes.jsp';">Notificacoes</span>
                     </button>
                     
 
@@ -92,40 +102,26 @@
 
                 <div class="content-Cupons">
                     <!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
-	                   
+	              <%for (int i = 0; i < lista.size(); i++) {%>	     
 				    <div class="card mt-3" style="background-color: #F0F0F0; width: 50rem;">
 				        <div class="card-body">
 				            <div class="row">
 				                <!-- Parte esquerda com a imagem do cupom -->
 				                <div class="col-md-3">
-				                    <img src="../imagens/assets/CupomFrete.png" alt="Imagem do Cupom" class="img-fluid">
+				                    <img src="<%=lista.get(i).getImg()%>" alt="Imagem do Cupom" class="img-fluid">
 				                </div>
 				                <!-- Parte direita com o nome do cupom e a data de vencimento -->
 				                <div class="col-md-9">
-				                    <h5 class="card-title">Nome do Cupom 1</h5>
-				                    <p class="card-text">Data de vencimento: 20/03/2024</p>
+				                    <h5 class="card-title"><%=lista.get(i).getDesc()%></h5>
+				                    <p class="card-text">Data de vencimento: <%=lista.get(i).getValidade()%></p>
 				                </div>
 				            </div>
 				        </div>
+				        <%}%>
 				    </div>
 				
-				    <div class="card mt-3" style="background-color: #F0F0F0; width: 50rem;">
-				        <div class="card-body">
-				            <div class="row">
-				                <!-- Parte esquerda com a imagem do cupom -->
-				                <div class="col-md-3">
-				                    <img src="../imagens/assets/descontoCupom.png" alt="Imagem do Cupom" class="img-fluid">
-				                </div>
-				                <!-- Parte direita com o nome do cupom e a data de vencimento -->
-				                <div class="col-md-9">
-				                    <h5 class="card-title">Nome do Cupom 2</h5>
-				                    <p class="card-text">Data de vencimento: 25/03/2024</p>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
 
-    <!-- Adicione mais cards conforme necessário -->
+    <!-- Adicione mais cards conforme necessÃ¡rio -->
                    
                    
                     <!-- acaba aqui -->

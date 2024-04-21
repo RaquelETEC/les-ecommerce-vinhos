@@ -21,6 +21,9 @@ create table cliente(
 `cli_status` varchar(15) NOT NULL ,
 PRIMARY KEY (`cli_id`)
 );
+
+select * from cliente;
+
 create table endereco(
 `end_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `end_cli_id` int NOT NULL  ,
@@ -36,6 +39,8 @@ create table endereco(
 `end_padrao` varchar(3) NOT NULL,
 `end_observacoes` varchar(200)
 );
+ 
+ select * from endereco;
  
 create table bandeiras_cartao(
 `band_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -132,12 +137,9 @@ INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_prec
 INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (10,1,5,66.05,66.05,'Migração','VTE07','BODEGAS RAÚL PÉREZ','Espanha','Bierzo','2017','LA CLAVE D.O.','Tinto','Mencía','14%','31','7','750mL','31cm','O La Clave faz parte do projeto autoral de Raúl Perez chamado Proyectos de Autor, uma coleção de pequenas joias apreciadas por amantes do vinho de todo o mundo. É o objeto de desejo de muitos enófilos. Este vinho vem de vinhedos de solo argiloso e calcário localizados na cidade de Valtuille de Abajo. É feito principalmente com Mencía e uma pequena quantidade de uvas Syrah e Tempranillo, todas colhidas manualmente. Este vinho, na safra de 2013, recebeu 89/100 no prestigioso site de Robert Parker e isto por si só já é indicativo do padrão de qualidade do rótulo ao longo dos anos.','http://localhost:8080/les-ecommerce-vinhos/imagens/produtos/VTE07.png');
 INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (11,1,1,82.2,82.2,'Migração','VBE01','HERETAT OLLER DEL MAS','Espanha','Catalunha','2019','BERNAT BLANC DE PICAPOLLS D.O.','Branco','Picapoll Tinto','11,50%','30','9','750mL','32cm','Este vinho é mais um exemplar de altíssima qualidade produzido pela vinícola Heretat Oller del Mas, localizada na D.O. Pla de Bages. Misturando uma casta branca e uma tinta de mesma família, o Bernat Oller de Picapolls é praticamente um blanc de noir, feito a partir de cultivo orgânico e vinificação vegana. Promete complexidade e expressa bem seu terroir. ','http://localhost:8080/les-ecommerce-vinhos/imagens/produtos/VBE01.png');
 INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (12,1,2,56.7,56.7,'Migração','VTF05','MAISON VENTENAC','França','Cabardès - Languedoc-Rousillon','2021','LE PARIA','Tinto','Grenache','13%','31','8','750mL','33cm','Le Paria - Era uma vez uma indesejável casta de uva plantada nas regiões frescas. Não é maduro o suficiente para alguns, fora do lugar para outros, simplesmente perfeito na opinião da Maison Ventenac. Esta uva é Grenache, e o resultado está nesta garrafa. Um vinho saboroso e suculento, para partilhar entre bebedores livres. Um vinho da linha Les Dissidents que expressa a alma da vinícola Maison Ventenac, sem qualquer tipo de constrangimento, cultivado nos melhores terrenos da forma mais natural possível, o que melhor classifica os solos da vinícola. Esta vinificação resultou em um vinho de qualidade fresca e frutada, que expressa o terroir de Cabardès. Um vinho descompromissado, Le Paria vai te acompanhar diariamente.','http://localhost:8080/les-ecommerce-vinhos/imagens/produtos/VTF05.png');
-
 INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (13,1,3,20.4,20.4,'Migração','EBB13','VALMARINO','Brasil','Pinto Bandeira','2019','ESPUMANTE VALMARINO MOSCATEL','Espumante','Moscato Giallo','12%','30','7','750mL','30cm','Este espumante moscatel da Valmarino é elaborado a partir da produção própria da vinícola, em Pinto Bandeira. Sua vinificação é feita adicionando leveduras e com fermentação do mosto a 14º C por 40 dias em autoclave até obtenção do grau alcoólico desejado (8% vol.) e pressão de 6 atm. Produção limitada. Esta safra ganhou Medalha Duplo Ouro (93 pontos - campeão da categoria) na Grande Prova de Vinhos do Brasil 2020. ','http://localhost:8080/les-ecommerce-vinhos/imagens/produtos/EBB13.png');
-
-
-INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (14,1,4,66,66,'Migração','EBB16','VALMARINO','Brasil','Pinto Bandeira','2019','ESPUMANTE VALMARINO & CHURCHILL EXTRA-BRUT','Branco','Chardonnay','12%','31','9','750mL','31cm',?,'../imagens/produtos/EBB16.png');
-INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (15,1,1,219,219,'Migração','SRP01',NULL,'Brasil',NULL,NULL,'SACA-ROLHAS PREMIUM','Outros',NULL,NULL,'12','3','60gr','5',?,'../imagens/produtos/SRP01.png');
+INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (14,1,4,66,66,'Migração','EBB16','VALMARINO','Brasil','Pinto Bandeira','2019','ESPUMANTE VALMARINO & CHURCHILL EXTRA-BRUT','Branco','Chardonnay','12%','31','9','750mL','31cm','Um belo espumante, elegante e estruturado. Suas uvas são cultivadas nos vinhedos próprios da Valmarino, em Pinto Bandeira. As batonagens e maturação são em barricas de carvalho por 12 meses. Premiado com Medalha Grand Gold (92 pontos) na Wines of Brazil Awards 2021. ','http://localhost:8080/les-ecommerce-vinhos/imagens/produtos/EBB16.png');
+INSERT INTO produto (`pro_id`,`pro_categoria_id`,`pro_precificacao_id`,`pro_preco_venda`,`pro_preco_compra`,`pro_justificativa`,`pro_codigo_barra`,`pro_vinicola`,`pro_pais`,`pro_regiao`,`pro_safra`,`pro_desc`,`pro_tipo`,`pro_uva`,`pro_alcool`,`pro_altura`,`pro_largura`,`pro_peso`,`pro_profundidade`,`pro_inf`,`pro_img`) VALUES (15,1,1,219,219,'Migração','SRP01','Brasil','Brasil','Brasil','Brasil','SACA-ROLHAS PREMIUM','Outros','Brasil','Brasil','12','3','60gr','5','O saca-rolhas premium apresenta um design sofisticado e elegante que combina forma e função de maneira harmoniosa. Sua estética é cuidadosamente elaborada para transmitir uma sensação de luxo e requinte, tornando-o não apenas uma ferramenta útil, mas também um objeto de desejo para qualquer apreciador de vinho.','http://localhost:8080/les-ecommerce-vinhos/imagens/produtos/SRP01.png');
 
 
 
@@ -165,14 +167,18 @@ CREATE TABLE `carrinho_de_compras` (
 
 CREATE TABLE `cupons`(
   `cup_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `cup_cli_id` int NOT NULL,
   `cup_codigo` varchar(10)  NOT NULL ,
   `cup_desc` varchar(10) NOT NULL,
   `cup_img`   varchar(25) NOT NULL,
   `cup_tipo` varchar(10) ,
   `cup_valor` double ,
   `cup_validade` date  NOT NULL,
-  FOREIGN KEY (`cup_id`) REFERENCES cliente(`cli_id`)
+  FOREIGN KEY (`cup_cli_id`) REFERENCES cliente(`cli_id`)
 );
+
+drop table `cupons`;
+select * from cupons;
 
 CREATE TABLE `rel_cup_cli`(
   `rcc_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -182,6 +188,51 @@ CREATE TABLE `rel_cup_cli`(
   FOREIGN KEY (`rcc_cup_id`) REFERENCES cupons(`cup_id`)
 );
 
+
+create table pedido_venda(
+    `ven_id` int NOT NULL AUTO_INCREMENT primary KEY,
+    `vend_id_cliente` int NOT NULL,
+    `ven_end_id` int NOT NULL,
+    `ven_cupom_promocional_id` int NOT NULL,
+    `ven_status` varchar(20),
+    `ven_data` date,
+    `ven_valor` Double,
+    FOREIGN KEY (`ven_cupom_promocional_id`) REFERENCES cupons(`cup_id`),
+    FOREIGN KEY (`vend_id_cliente`) REFERENCES cliente(`cli_id`),
+    FOREIGN KEY (`ven_end_id`) REFERENCES endereco(`end_id`)
+);
+
+select * from pedido_venda;
+
+create table itens_venda(
+`ped_item_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`ped_item_prod_id` int not null, 
+`ped_item_ven_id` int not null, 
+`ped_item_prod_desc` varchar(220) not null, 
+`ped_item_prod_valor` Double not null, 
+`ped_item_prod_valor_total` Double not null, 
+`ped_item_prod_quantidade` int not null, 
+FOREIGN KEY (`ped_item_prod_id`) REFERENCES produto(`pro_id`),
+FOREIGN KEY (`ped_item_ven_id`) REFERENCES pedido_venda(`ven_id`)
+);
+
+ 
+create table rel_cupom_venda(
+`REL_CUPVE_ID` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`REL_CUP_ID` int NOT NULL,
+`REL_VEN_ID` int NOT NULL,
+FOREIGN KEY (`REL_CUP_ID`) REFERENCES cupons(`cup_id`),
+FOREIGN KEY (`REL_VEN_ID`) REFERENCES pedido_venda(`ven_id`)
+ );
+ 
+ create table rel_cartao_venda(
+`REL_CARVE_ID` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`REL_CAR_ID` int NOT NULL,
+`REL_VEN_ID` int NOT NULL,
+FOREIGN KEY (`REL_CAR_ID`) REFERENCES cartao_de_credito(`cart_id`),
+FOREIGN KEY (`REL_VEN_ID`) REFERENCES pedido_venda(`ven_id`)
+ );
+ 
 
 
 SELECT cli_id FROM cliente where cli_nome = 'tuou' order by cli_id desc LIMIT 1;
