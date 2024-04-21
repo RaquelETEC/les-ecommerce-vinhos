@@ -13,8 +13,16 @@ public class DAOCupons {
 
 		public ArrayList<Cupons> ListarCupons(Cliente cliente) {
 			ArrayList<Cupons> listaDeCartoes = new ArrayList<>();
-			String read = "SELECT " + "cup_id, " + "cup_codigo, " + "cup_desc, " + "cup_img, " + "cup_tipo, "
-					+ "cup_valor, " + "cup_validade "  + "FROM cupons " + "WHERE cup_cli_id = ?";
+			String read = "SELECT " +
+				    "cup_id, " +
+				    "cup_codigo, " +
+				    "cup_desc, " +
+				    "cup_img, " +
+				    "cup_tipo, " +
+				    "cup_valor, " +
+				    "cup_validade " +
+				    "FROM cupons " +
+				    "WHERE cup_cli_id = ?";
 			try {
 				Connection con = Conexao.conectar();
 				PreparedStatement pst = con.prepareStatement(read);
