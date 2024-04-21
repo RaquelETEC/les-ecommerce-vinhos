@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -331,6 +330,7 @@ public class ControllerClient extends HttpServlet {
 
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/PerfilTrocarSenha.jsp");
 		rd.forward(request, response);
+		
 
 	}
 	protected void EditarSenha(HttpServletRequest request, HttpServletResponse response)
@@ -346,15 +346,16 @@ public class ControllerClient extends HttpServlet {
 		cliente.setId(id);
 		cliente = clienteService.selecionarCliente(cliente);
 
-		String respostaCli = clienteService.alterarSenha(cliente, senhaAtual, novaSenha, repitaSenha); 
+		//String respostaCli = clienteService.alterarSenha(cliente, senhaAtual, novaSenha, repitaSenha); 
 		
 		 // Escreve a resposta para o HttpServletResponse
 	    response.setContentType("text/plain");
 	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(respostaCli);
+	    response.getWriter().write("aaa"); //respostaCli
 
 	    // Encerra a resposta
 	    response.getWriter().flush();
+	   
 		
 	}
 

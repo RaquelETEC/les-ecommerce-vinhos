@@ -7,6 +7,7 @@ import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Endereco;
+//import util.PasswordUtil;
 import util.PasswordUtil;
 
 public class ClienteService {
@@ -15,7 +16,6 @@ public class ClienteService {
 
 	CartoesService cartoesService = new CartoesService();
 	EnderecoService enderecoService = new EnderecoService();
-	PasswordUtil encoder = new PasswordUtil();
 
 	public ClienteService() {
 		this.daoCliente = new DaoCliente();
@@ -25,10 +25,12 @@ public class ClienteService {
 	public String adicionarCliente(Cliente cliente, Endereco enderecoR, Endereco enderecoE, Endereco enderecoC,
 			CartaoDeCredito cartao, BandeiraCartao bandeira) {
 		try {
+			PasswordUtil encoder = new PasswordUtil();
+
 			// Inserir o cliente
 
-			byte[] senhaCriptografada = encoder.criptografarSenha(cliente.getSenha());  //encriptografa a senha string 			
-			cliente.setSenha(new String(senhaCriptografada)); //converte a senha criptografada para uma string
+			//byte[] senhaCriptografada = encoder.criptografarSenha(cliente.getSenha());  //encriptografa a senha string 			
+			//cliente.setSenha(new String(senhaCriptografada)); //converte a senha criptografada para uma string
 
 			int idCliente = daoCliente.inserirCliente(cliente);
 			cliente.setId(idCliente);
@@ -74,7 +76,7 @@ public class ClienteService {
 	    try {
 	    	
 			System.out.println("cheguei no alterar senha SERVICE");
-
+/*
 	        // Verificar se a nova senha é forte
 	        String validationString = encoder.verificarSenhaForte(novaSenha, repitaSenha);
 	        
@@ -95,8 +97,8 @@ public class ClienteService {
 	        // Alterar a senha no banco de dados
 	        String resultado = daoCliente.AlterarSenha(cliente);
 	        
-	        return resultado;
-	        
+	        return resultado;*/
+	        return "aaaa";
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return "Erro ao inesperado ao alterar senha : " + e.getMessage();

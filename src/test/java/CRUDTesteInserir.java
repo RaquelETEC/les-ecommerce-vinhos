@@ -34,13 +34,13 @@ public class CRUDTesteInserir {
 
 		// Dados pessoais
 		WebElement campoNome = browser.findElement(By.id("typeNome"));
-		campoNome.sendKeys("Rodrigo Rocha");
+		campoNome.sendKeys("Rodrigo Rocha 234");
 
 		WebElement campoEmail = browser.findElement(By.id("typeEmail"));
-		campoEmail.sendKeys("rodrigorocha@gmail.com");
+		campoEmail.sendKeys("rodrigorocha123@gmail.com");
 
 		WebElement campoSenha = browser.findElement(By.id("typeSenha"));
-		campoSenha.sendKeys("suaSenha123@");
+		campoSenha.sendKeys("suaSenha1234@");
 
 		WebElement campoSenhaRepetida = browser.findElement(By.id("typeRepitaSenha"));
 		campoSenhaRepetida.sendKeys("suaSenha123@");

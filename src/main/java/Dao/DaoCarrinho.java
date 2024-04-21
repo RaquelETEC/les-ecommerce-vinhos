@@ -96,6 +96,9 @@ public class DaoCarrinho {
 
 			pst.executeUpdate();
 			con.close();
+			}catch(e) {
+				
+			}
 			
 		return null;
 	}

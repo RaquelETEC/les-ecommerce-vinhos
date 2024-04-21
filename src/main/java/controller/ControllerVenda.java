@@ -45,8 +45,7 @@ public class ControllerVenda extends HttpServlet {
 			ExibirCarrinho(request, response);
 		}else if(action.equals("/AlterarQuantCarrinho")) {
 			AlterarQuantCarrinho(request, response);
-		}
-		
+		}	
 		else {
 			System.out.println("erro ao redirecionar " + action);
 			response.sendRedirect("index.html");
