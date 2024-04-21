@@ -30,7 +30,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 				style="width: 200px;" class="mx-3">
 			<div class="navbar-nav ms-auto">
 				<a href="areaCliente/MinhasCompras.html" class="btn btn-light ms-2">MINHAS
-					COMPRAS</a> <a href="meuCarrinho.jsp" class="btn btn-light ms-2">MEU
+					COMPRAS</a> <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">MEU
 					CARRINHO</a> <a href="areaAdministrador/Login.html"
 					class="btn btn-light ms-2">GERENCIAMENTO</a>
 			</div>
@@ -140,7 +140,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					<form name="productForm<%=i%>">
 						<div class="card">
 							<img src="<%=lista.get(i).getImg()%>" alt="Imagem do Produto"
-								class="card-img-top">
+							 class="card-img-top img-fluid rounded-start"
+							 style="width: 50%;">
 
 							<div class="box-input-form" style="display: none;">
 								<div class="box-label">

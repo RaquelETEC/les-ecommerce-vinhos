@@ -7,7 +7,9 @@
 	flex-direction: column;
 	display: flex;
 }
-
+.card-options{
+	max-width: 40%;
+}
 .subtotal{
 	display: flex;
 	flex-direction: column;

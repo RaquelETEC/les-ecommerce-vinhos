@@ -9,6 +9,7 @@ import model.entity.Produtos;
 public class ProdutoService {
 	
 	private DAOProdutos daoProdutos;
+	Produtos produto = new Produtos();
 	
 	public ProdutoService() {
 	this.daoProdutos = new DAOProdutos();
@@ -18,5 +19,7 @@ public class ProdutoService {
 	public ArrayList<Produtos> listarProdutos() {
 		return daoProdutos.ListarProdutos();
 	}
+	
+
 
 }

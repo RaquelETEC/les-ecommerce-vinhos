@@ -13,35 +13,41 @@ public class DaoCarrinho {
 	Connection con = Conexao.conectar();
 
 	public CarrinhoDeCompras SelecionarCarrinho(Cliente cliente) {
-		System.out.println("cheguei no SSelecionarCarrinho" + cliente.getId());
-		CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
+	    System.out.println("cheguei no SSelecionarCarrinho" + cliente.getId());
+	    CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
 
-		String read = "select *  from carrinho_de_compras where car_cli_id = ?";
-		try {
-			PreparedStatement pst = con.prepareStatement(read);
-			pst.setInt(1, cliente.getId());
-			ResultSet rs = pst.executeQuery();
+	    String read = "select * from carrinho_de_compras where car_cli_id = ?";
+	    try {
+	        Connection con = Conexao.conectar(); // Criação da conexão local
+	        PreparedStatement pst = con.prepareStatement(read);
+	        pst.setInt(1, cliente.getId());
+	        ResultSet rs = pst.executeQuery();
 
-			while (rs.next()) {
-				carrinho.setId(rs.getInt(1));
-				carrinho.setCliente(cliente);
-				carrinho.setQuantItems(rs.getInt(3));
-			}
-			con.close();
+	        while (rs.next()) {
+	            carrinho.setId(rs.getInt(1));
+	            carrinho.setCliente(cliente);
+	            carrinho.setQuantItems(rs.getInt(3));
+	        }
+	        con.close(); 
 
-		} catch (Exception e) {
-			System.out.println("ERRO AO SELECIONAR carrinho_de_compras" + e);
-		}
-		return carrinho;
+	    } catch (Exception e) {
+	        System.out.println("ERRO AO SELECIONAR carrinho_de_compras" + e);
+	    }
+	    return carrinho;
 	}
-
 	public ArrayList<CarrinhoItens> ListarCarrinho(CarrinhoDeCompras carrinho) {
 
 		System.out.println("Acesso ao Dao ListarCarrinho");
 
 		ArrayList<CarrinhoItens> ArrayListcarrinhoItems = new ArrayList<>();
-		String read = "SELECT car_itens_id," + "car_itens_car_id," + "car_itens_prod_id," + "car_itens_prod_quant,"
-				+ "car_itens_removido," + "car_itens_motivo" + "FROM carrinho_itens" + "WHERE car_itens_car_id = ?";
+		String read = "SELECT car_itens_id, " + 
+	              "car_itens_car_id, " + 
+	              "car_itens_prod_id, " + 
+	              "car_itens_prod_quant, " +
+	              "car_itens_removido, " + 
+	              "car_itens_motivo " + 
+	              "FROM carrinho_itens " + 
+	              "WHERE car_itens_car_id = ?";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
@@ -72,6 +78,26 @@ public class DaoCarrinho {
 			return null;
 		}
 
+	}
+	public String AlterarQuantidade(int carrinhoId, int prodId, int quantidade) {
+		String read = "UPDATE  car_itens_car_id SET, " + 
+					"car_itens_prod_quant = ? " +
+					 "WHERE car_itens_car_id = ?"+ 
+					 "AND  car_itens_prod_id = ?";
+	            
+	             
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			
+			pst.setInt(1, quantidade);
+			pst.setInt(2, carrinhoId);
+			pst.setInt(3, prodId);
+
+			pst.executeUpdate();
+			con.close();
+			
+		return null;
 	}
 
 }
