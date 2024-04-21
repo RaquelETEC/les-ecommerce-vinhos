@@ -25,7 +25,7 @@ public class ClienteService {
 	public String adicionarCliente(Cliente cliente, Endereco enderecoR, Endereco enderecoE, Endereco enderecoC,
 			CartaoDeCredito cartao, BandeiraCartao bandeira) {
 		try {
-			PasswordUtil encoder = new PasswordUtil();
+			//PasswordUtil encoder = new PasswordUtil();
 
 			// Inserir o cliente
 
