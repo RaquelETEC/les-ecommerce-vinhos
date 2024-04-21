@@ -66,27 +66,47 @@ PedidoVenda pedidoVenda = (PedidoVenda) request.getAttribute("pedidoVenda");
 
 								<div class="mb-3">
 									<label for="id" class="form-label">Numero do Pedido:</label> <input
-										type="text" class="form-control" name="id"id="id" readonly
+										type="text" class="form-control" name="id" id="id" readonly
 										value="<%=pedidoVenda.getId()%>">
 								</div>
 
 
 								<div class="mb-3">
-									<label for="PedidoValor" class="form-label">Valor do Pedido:</label> <input
-										type="text" class="form-control" id="PedidoValor" readonly
-										value="<%=pedidoVenda.getValor()%>">
+									<label for="PedidoValor" class="form-label">Valor do
+										Pedido:</label> <input type="text" class="form-control"
+										id="PedidoValor" readonly value="<%=pedidoVenda.getValor()%>">
 								</div>
 
 								<div class="mb-3">
 									<label for="PedidoStatus" class="form-label">Status:</label> <select
 										class="form-select" id="PedidoStatus" name="PedidoStatus">
 										<option value="" disabled></option>
-                                        <option value="EM-PROCESSAMENTO" <%= "EM-PROCESSAMENTO".equals(pedidoVenda.getStatus()) ? "selected" : "" %>>EM-PROCESSAMENTO</option>
-										<option value="PAGAMENTO REALIZADO" <%= "PAGAMENTO REALIZADO".equals(pedidoVenda.getStatus()) ? "selected" : "" %>>PAGAMENTO REALIZADO</option>
-										<option value="PAGAMENTO RECUSADO" <%= "PAGAMENTO RECUSADO".equals(pedidoVenda.getStatus()) ? "selected" : "" %>>PAGAMENTO RECUSADO</option>
-										<option value="PEDIDO CANCELADO" <%= "PEDIDO CANCELADO".equals(pedidoVenda.getStatus()) ? "selected" : "" %>>PEDIDO CANCELADO</option>
-									    <option value="EM TRANSPORTE" <%= "EM TRANSPORTE".equals(pedidoVenda.getStatus()) ? "selected" : "" %>>EM TRANSPORTE</option>
-									    <option value="ENTREGUE" <%= "ENTREGUE".equals(pedidoVenda.getStatus()) ? "selected" : "" %>>ENTREGUE</option>
+										<%
+										if ("EM-PROCESSAMENTO".equals(pedidoVenda.getStatus())) {
+										%>
+										<option value="PAGAMENTO REALIZADO"
+											<%="PAGAMENTO REALIZADO".equals(pedidoVenda.getStatus()) ? "selected" : ""%>>PAGAMENTO
+											REALIZADO</option>
+										<option value="PAGAMENTO RECUSADO"
+											<%="PAGAMENTO RECUSADO".equals(pedidoVenda.getStatus()) ? "selected" : ""%>>PAGAMENTO
+											RECUSADO</option>
+										<option value="PEDIDO CANCELADO"
+											<%="PEDIDO CANCELADO".equals(pedidoVenda.getStatus()) ? "selected" : ""%>>PEDIDO
+											CANCELADO</option>
+										<%
+										} else if ("PAGAMENTO REALIZADO".equals(pedidoVenda.getStatus())) {
+										%>
+										<option value="EM TRANSPORTE"
+											<%="EM TRANSPORTE".equals(pedidoVenda.getStatus()) ? "selected" : ""%>>EM
+											TRANSPORTE</option>
+										<%
+										} else if ("EM TRANSPORTE".equals(pedidoVenda.getStatus())) {
+										%>
+										<option value="ENTREGUE"
+											<%="ENTREGUE".equals(pedidoVenda.getStatus()) ? "selected" : ""%>>ENTREGUE</option>
+										<%
+										}
+										%>
 									</select>
 								</div>
 
