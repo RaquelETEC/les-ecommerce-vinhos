@@ -14,12 +14,9 @@ import Service.CarrinhoService;
 import model.entity.CarrinhoDeCompras;
 import model.entity.CarrinhoItens;
 import model.entity.Cliente;
-import model.entity.Endereco;
-import model.entity.TiposEndereco;
+import model.entity.Produtos;
 
-//import model.entity.CarrinhoItem;
-
-@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho" })
+@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" })
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -34,18 +31,21 @@ public class ControllerVenda extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String action = request.getServletPath();
+	        throws ServletException, IOException {
+	    String action = request.getServletPath();
 
-		System.out.println("chegou aqui: " + action);
+	    System.out.println("chegou aqui: " + action);
 
-		if (action.equals("/AdicionarAoCarrinho")) {
-			AdicionarAoCarriho(request, response);
-		} else if (action.equals("/ExibirCarrinho")) {
-			ExibirCarrinho(request, response);
-		}else if(action.equals("/AlterarQuantCarrinho")) {
+	    if (action.equals("/AdicionarAoCarrinho")) {
+	        AdicionarAoCarriho(request, response);
+	    } else if (action.equals("/ExibirCarrinho")) {
+	        ExibirCarrinho(request, response);
+	    }else if(action.equals("/AlterarQuantCarrinho")) {
 			AlterarQuantCarrinho(request, response);
 		}	
+	    else if(action.equals("/RemoverProdutoCarrinho")) {
+			RemoverProduto(request, response);
+	    }
 		else {
 			System.out.println("erro ao redirecionar " + action);
 			response.sendRedirect("index.html");
@@ -54,13 +54,32 @@ public class ControllerVenda extends HttpServlet {
 
 
 	protected void AdicionarAoCarriho(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	        throws ServletException, IOException {
+	    // Obtendo os parâmetros da requisição
+	    int idCliente = Integer.parseInt(request.getParameter("id"));
+	    int idProduto = Integer.parseInt(request.getParameter("idProd"));
+	    int quantidade = Integer.parseInt(request.getParameter("quant"));
 
-		RequestDispatcher rd = request.getRequestDispatcher("/ExibirCarrinho");
-		rd.forward(request, response);
+	    System.out.println("Parâmetros recebidos: " + idCliente + ", " + idProduto + ", " + quantidade);
 
+	    // Configurando o cliente e o produto
+	    Cliente cliente = new Cliente();
+	    cliente.setId(idCliente);
+
+	    Produtos produto = new Produtos();
+	    produto.setId(idProduto);
+
+	    // Chamando o serviço para adicionar ao carrinho
+	    String resposta = carrinhoService.AdicionarAoCrrinho(cliente, produto, quantidade);
+	    System.out.println(resposta);
+	    
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta); 
+	    response.getWriter().flush();
+	    	
 	}
-
+	    
 	protected void ExibirCarrinho(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -78,18 +97,18 @@ public class ControllerVenda extends HttpServlet {
         
         for (CarrinhoItens item : listaItens) {
             if (item.isRemovido()) {
-            	System.out.println("-----------------------");
-            	System.out.println(item.getProduto().getDesc()+" Produto removido");
-            	System.out.println(item.getQuantProd());
-            	System.out.println(item.getProduto().getPro_preco_venda());
-            	System.out.println(item.getProduto().getJustificativa());
+           	System.out.println("-----------------------");
+           	// 	System.out.println(item.getProduto().getDesc()+" Produto removido");
+           	//	System.out.println(item.getQuantProd());
+           	//	System.out.println(item.getProduto().getPro_preco_venda());
+           	//	System.out.println(item.getProduto().getJustificativa());
 
                 listaRemovidos.add(item);
             } else {
-            	System.out.println("-----------------------");
-            	System.out.println(item.getProduto().getDesc()+" Produto no carrinho");
-            	System.out.println(item.getQuantProd());
-            	System.out.println(item.getProduto().getPro_preco_venda());
+            	//	System.out.println("-----------------------");
+            	//	System.out.println(item.getProduto().getDesc()+" Produto no carrinho");
+            	//	System.out.println(item.getQuantProd());
+            	//	System.out.println(item.getProduto().getPro_preco_venda());
             	lista.add(item);
             }
         }
@@ -105,13 +124,45 @@ public class ControllerVenda extends HttpServlet {
 			throws ServletException, IOException {
 	
 		System.out.println("cheguei no alterar carrinho");
-		int carrinhoId = Integer.parseInt(request.getParameter("id"));
-		int prodId = Integer.parseInt(request.getParameter("prodId"));
-		int quantidade = Integer.parseInt(request.getParameter("quantidade"));
 		
-		
-		String reposta = carrinhoService.AlterarQuantidadeProd(carrinhoId,prodId,quantidade);
-		
-		
+		int quantidade = Integer.parseInt(request.getParameter("quant"));
+
+	    CarrinhoItens CarrinhoItem = new CarrinhoItens();
+	    CarrinhoItem.setId(Integer.parseInt(request.getParameter("idItem")));
+	    
+	    // Chamar o serviço para remover o item do carrinho
+		String resposta = carrinhoService.AlterarQuantidadeProd(CarrinhoItem,quantidade);
+
+	    System.out.println(resposta);
+	    
+	    // Enviar resposta para o cliente
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta); 
+	    response.getWriter().flush();
+	}
+	private void RemoverProduto(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    System.out.println("RemoverProduto");
+	    
+	    // Obter parâmetros da requisição
+	    int carrinhoId = Integer.parseInt(request.getParameter("carrinhoId"));
+	    int prodId = Integer.parseInt(request.getParameter("produtoId"));
+	    
+	    // Criar objetos para o carrinho e produto
+	    CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
+	    carrinho.setId(carrinhoId);
+	    
+	    Produtos produto = new Produtos();
+	    produto.setId(prodId);
+	    
+	    // Chamar o serviço para remover o item do carrinho
+	    String resposta = carrinhoService.removerItem(carrinho, produto);
+	    System.out.println(resposta);
+	    
+	    // Enviar resposta para o cliente
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta); 
+	    response.getWriter().flush();
 	}
 }

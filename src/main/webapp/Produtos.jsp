@@ -5,7 +5,7 @@
 
 <%@ page import="java.util.ArrayList"%>
 <%
-@ SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked")
 ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaProdutos");
 %>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 <link rel="stylesheet" href="Styles/styleIndexv5.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
-<script src="scripts/PagInicial.js"></script>
+<script src="scripts/PagInicialv1.js"></script>
 
 </head>
 
@@ -30,7 +30,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 				style="width: 200px;" class="mx-3">
 			<div class="navbar-nav ms-auto">
 				<a href="areaCliente/MinhasCompras.html" class="btn btn-light ms-2">MINHAS
-					COMPRAS</a> <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">MEU
+					COMPRAS </a> <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">MEU
 					CARRINHO</a> <a href="areaAdministrador/Login.html"
 					class="btn btn-light ms-2">GERENCIAMENTO</a>
 			</div>
@@ -132,52 +132,58 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					<BR>
 				</div>
 			</div>
-		
-			
+
+
 			<div class="row">
-			<%for (int i = 0; i < lista.size(); i++) {%>	
+				<%
+				for (int i = 0; i < lista.size(); i++) {
+				%>
 				<div class="col-sm-4">
 					<form name="productForm<%=i%>">
 						<div class="card">
 							<img src="<%=lista.get(i).getImg()%>" alt="Imagem do Produto"
-							 class="card-img-top img-fluid rounded-start"
-							 style="width: 50%;">
+								class="card-img-top img-fluid rounded-start"
+								style="width: 50%; display: block; margin: 0 auto;">
 
 							<div class="box-input-form" style="display: none;">
 								<div class="box-label">
 									<label for="typeId">Id</label>
 								</div>
-								<input type="text" name="Id" id="Id" value=20>
-								<input type="text" name="idProd" id="idProd"
-									class="input-form input-width-1" value="<%=lista.get(i).getId()%>">
+								<input type="text" name="Id" id="Id" value=20> <input
+									type="text" name="idProd" id="idProd"
+									class="input-form input-width-1"
+									value="<%=lista.get(i).getId()%>">
 							</div>
 							<div class="card-body">
-								<h5 class="card-title text-center"><%=lista.get(i).getDesc()%></h5>
+								<h6 class="card-title text-center" style="height: 5vh;"><%=lista.get(i).getDesc()%></h6>
 								<p class="price v">
-									<span id="price"><%=lista.get(i).getPro_preco_venda()%></span>
+									<span id="price">R$ <%=lista.get(i).getPro_preco_venda()%></span>
 								</p>
 								<div class="quant-carrinho">
 									<div
-										class="d-flex justify-content-between align-items-center mb-3 ">
-										<button class="btn btn-sm btn-outline-secondary"
-											onclick="decrementarQuantidade(idProd)">-</button>
-										<span id="quantity1" class="quantity">1</span>
-										<button class="btn btn-sm btn-outline-secondary"
-											onclick="incrementarQuantidade(idProd)">+</button>
+										class="d-flex justify-content-between align-items-center mb-3">
+										<button type="button" class="btn btn-sm btn-outline-secondary"
+											onclick="decrementarQuant(<%=i%>)">-</button>
+										<span id="quantity<%=i%>" class="quantity">1</span>
+										<button type="button" class="btn btn-sm btn-outline-secondary"
+											onclick="incrementarQuant(<%=i%>)">+</button>
 									</div>
 								</div>
-								<button class="btn btn-lg add-to-cart-btn text-center add_carrinho" onclick="AdicionarAoCarrinho()">AdicionarAoCarrinho</button>
-								
-							
+								<button type="button"
+									class="btn btn-lg add-to-cart-btn text-center add_carrinho"
+									onclick="AdicionarAoCarrinho(20, <%=lista.get(i).getId()%>, document.getElementById('quantity<%=i%>').textContent)">
+									AdicionarAoCarrinho</button>
 							</div>
 						</div>
 					</form>
-					
+
 				</div>
-					<%}%>
+				<%
+				}
+				%>
 			</div>
 		</div>
-	
+
 		<!-- Chatbot container -->
 		<div id="chatbot-container" class="collapsed">
 			<div class="container-fluid">

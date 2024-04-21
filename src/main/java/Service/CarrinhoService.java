@@ -40,20 +40,36 @@ public class CarrinhoService {
 	  for (CarrinhoItens item : itemsCarrinho) {
 	        produto = daoprod.buscarProdutoPorId(item.getProduto().getId());
 	        item.setProduto(produto);  
+	        item.setId(item.getId());
 	    }
 	  
 		return itemsCarrinho;
 	}
 
 
-	public String AlterarQuantidadeProd(int carrinhoId, int prodId, int quantidade) {
+	public String AlterarQuantidadeProd(CarrinhoItens CarrinhoItem, int quantidade) {
 		
 		if(quantidade <= 0 ) {
 			return "Não é possivel adicionar um item com 0 quantidades ao carrinho";
 		}
 		else {
-			return daoCarrinho.AlterarQuantidade(carrinhoId,prodId,quantidade);
+			return daoCarrinho.AlterarQuantidade(CarrinhoItem, quantidade);
 		}
+	}
+
+
+	public String AdicionarAoCrrinho(Cliente cliente, Produtos produto, int quant) {
+		
+		CarrinhoDeCompras carrinho = daoCarrinho.SelecionarCarrinho(cliente);
+		
+		return (String) daoCarrinho.adicionarAoCarrinho(carrinho,produto,quant);
+		
+	}
+
+
+	public String removerItem(CarrinhoDeCompras carrinho, Produtos produto) {
+		// TODO Auto-generated method stub
+		return (String) daoCarrinho.removerItem(carrinho,produto);
 	}
 
 

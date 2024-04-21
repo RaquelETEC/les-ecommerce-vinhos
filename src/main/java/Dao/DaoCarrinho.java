@@ -3,6 +3,7 @@ package Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import model.entity.CarrinhoItens;
 import model.entity.Cliente;
@@ -79,28 +80,83 @@ public class DaoCarrinho {
 		}
 
 	}
-	public String AlterarQuantidade(int carrinhoId, int prodId, int quantidade) {
-		String read = "UPDATE  car_itens_car_id SET, " + 
+	public String AlterarQuantidade(CarrinhoItens carrinhoItem, int quantidade) {
+		String read = "UPDATE  carrinho_itens SET " + 
 					"car_itens_prod_quant = ? " +
-					 "WHERE car_itens_car_id = ?"+ 
-					 "AND  car_itens_prod_id = ?";
-	            
-	             
+					 "WHERE car_itens_id = ?";
+             System.out.println(read);
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
 			
 			pst.setInt(1, quantidade);
-			pst.setInt(2, carrinhoId);
-			pst.setInt(3, prodId);
+			pst.setInt(2, carrinhoItem.getId());
 
 			pst.executeUpdate();
 			con.close();
-			}catch(e) {
-				
+            return "Quantidade atualizada no carrinho com sucesso!";
+			} catch (SQLException e) {
+				 e.printStackTrace();
+			     return "Erro ao atualizar quantidade: " + e;
 			}
+		}
+	
+	public String adicionarAoCarrinho(CarrinhoDeCompras carrinho, Produtos produto, int quantidade) {
+	    String selectQuery = "SELECT car_itens_prod_quant FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ? WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	    String insertQuery = "INSERT INTO carrinho_itens (car_itens_car_id, car_itens_prod_id, car_itens_prod_quant, car_itens_removido) VALUES (?, ?, ?, 0)";
+	    
+	    try (Connection con = Conexao.conectar();
+	         PreparedStatement selectPst = con.prepareStatement(selectQuery);
+	         PreparedStatement updatePst = con.prepareStatement(updateQuery);
+	         PreparedStatement insertPst = con.prepareStatement(insertQuery)) {
+	    	
+	        selectPst.setInt(1, carrinho.getId());
+	        selectPst.setInt(2, produto.getId());
+	        ResultSet rs = selectPst.executeQuery();
+	        
+	        if (rs.next()) {
+	            // Se o produto já existe no carrinho, atualize a quantidade
+	            int novaQuantidade = rs.getInt("car_itens_prod_quant") + quantidade;
+	            updatePst.setInt(1, novaQuantidade);
+	            updatePst.setInt(2, carrinho.getId());
+	            updatePst.setInt(3, produto.getId());
+	            updatePst.executeUpdate();
+	            return "Quantidade atualizada no carrinho com sucesso!";
+	        } else {
+	            // Se o produto não existe no carrinho, insira um novo registro
+	            insertPst.setInt(1, carrinho.getId());
+	            insertPst.setInt(2, produto.getId());
+	            insertPst.setInt(3, quantidade);
+	            insertPst.executeUpdate();
+	            return "Produto inserido no carrinho com sucesso!";
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return "Erro ao adicionar ao carrinho: " + e;
+	    }
+	}
+	public String removerItem(CarrinhoDeCompras carrinho, Produtos produto) {
+		String read = "UPDATE  carrinho_itens SET " 
+		        + "car_itens_removido = 1 ,"
+		        + "car_itens_motivo = 'Removido pelo usuario' " +
+		         "WHERE car_itens_car_id = ? "+ 
+		         "AND  car_itens_prod_id = ? ";
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read);
 			
-		return null;
+			pst.setInt(1, carrinho.getId());
+			pst.setInt(2, produto.getId());
+	
+			pst.executeUpdate();
+			con.close();
+            return "Item removido do carrinho com sucesso!";
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			    return "Erro ao remover item do carrinho: " + e;
+			}			
 	}
 
 }

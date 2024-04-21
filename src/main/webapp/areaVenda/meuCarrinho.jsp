@@ -4,8 +4,8 @@
 <%@ page import="java.util.ArrayList"%>
 <%
 @SuppressWarnings("unchecked")
-ArrayList<CarrinhoItens> produtos = (ArrayList<CarrinhoItens>) request.getAttribute("itemsCarrinho");
-ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.getAttribute("itemsRemovidosCarrinho");
+ArrayList<CarrinhoItens> itens = (ArrayList<CarrinhoItens>) request.getAttribute("itemsCarrinho");
+ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.getAttribute("itemsRemovidosCarrinho");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -16,7 +16,8 @@ ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="Styles/StyleCarrinhoV1.css">
-<link rel="javascript" href="script/produtos.js">
+<script src="scripts/produtosv3.js"></script>
+
 </head>
 
 <body>
@@ -26,7 +27,9 @@ ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.
 			<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3">
 			<div class="navbar-nav ms-auto">
-				<p style="color: white;">Cliente atual: 20</p>
+				<p style="color: white;">
+					Cliente atual:
+					<%=request.getParameter("id")%></p>
 			</div>
 		</div>
 	</nav>
@@ -39,8 +42,9 @@ ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.
 					<hr>
 					<%
 					double total = 0.0;
-					for (int i = 0; i < produtos.size(); i++) {
-						total += produtos.get(i).getProduto().getPro_preco_venda() * produtos.get(i).getQuantProd();
+					for (int i = 0; i < itens.size(); i++) {
+						total += itens.get(i).getProduto().getPro_preco_venda() * itens.get(i).getQuantProd();
+						int id = itens.get(i).getId();
 					%>
 
 					<!-- Inicio do produto no carrinho -->
@@ -49,27 +53,26 @@ ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.
 							<div class="card mb-3">
 								<div class="row g-0">
 									<div class="col-md-2">
-										<img src="<%=produtos.get(i).getProduto().getImg()%>"
+										<img src="<%=itens.get(i).getProduto().getImg()%>"
 											alt="Imagem do Produto" class="img-fluid rounded-start">
 									</div>
 									<div class="col-md-8">
 										<div class="card-body">
-											<h5 class="card-title"><%=produtos.get(i).getProduto().getDesc()%></h5>
+											<h6 class="card-title"><%=itens.get(i).getProduto().getDesc()%></h6>
 											<div class="card-options">
-												<p class="card-text">
-												<div
-													class="d-flex justify-content-between align-items-center mb-3 ">
-													<button class="btn btn-sm btn-outline-secondary"
-        												onclick="decrementarQuantidade('<%=produtos.get(i).getProduto().getId() %>', '<%=produtos.get(i).getCarrinho().getId() %>')">-</button>
-														<span id="quantity1" class="quantity"><%=produtos.get(i).getQuantProd()%></span>
-													<button class="btn btn-sm btn-outline-secondary"
-														onclick="incrementarQuantidade('quantity1', 'price1')">+</button>
+												<div class="card-text">
+													<div class="d-flex justify-content-between align-items-center mb-3">
+													    <button  id='btn-decrementar-<%=i%>' class="btn btn-sm btn-outline-secondary"
+													        onclick="decrementarQuantidade(<%=id%>,<%=i%>)">-</button>
+													    <span id="quantity<%=i%>" class="quantity"><%=itens.get(i).getQuantProd()%></span>
+													    <button id='btn-incrementar-<%=i%>' class="btn btn-sm btn-outline-secondary"
+													        onclick="incrementarQuantidade(<%=id%>,<%=i%>)">+</button>
+													</div>
 												</div>
-												</p>
 												<!-- Botão Remover -->
 												<div class="d-grid">
 													<button class="btn btn-sm btn-outline-danger"
-														onclick="removerProduto('product1')">Remover</button>
+														onclick="removerProduto(<%=itens.get(i).getCarrinho().getId()%>, <%=itens.get(i).getProduto().getId()%>)">Remover</button>
 												</div>
 											</div>
 										</div>
@@ -78,7 +81,7 @@ ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.
 										<div class="card-body text-end">
 											<p class="card-text fs-4">
 												R$
-												<%=produtos.get(i).getProduto().getPro_preco_venda()%></p>
+												<%=itens.get(i).getProduto().getPro_preco_venda()%></p>
 										</div>
 									</div>
 								</div>
@@ -111,7 +114,7 @@ ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.
 				<h3>Items Removidos do Carrinho 🛒🗑️</h3>
 				<hr>
 				<%
-				for (int i = 0; i < produtosRemovidos.size(); i++) {
+				for (int i = 0; i < itensRemovidos.size(); i++) {
 				%>
 
 				<!-- Inicio do produto no carrinho -->
@@ -120,36 +123,35 @@ ArrayList<CarrinhoItens> produtosRemovidos = (ArrayList<CarrinhoItens>) request.
 						<div class="card mb-3">
 							<div class="row g-0">
 								<div class="col-md-2">
-									<img src="<%=produtosRemovidos.get(i).getProduto().getImg()%>"
+									<img src="<%=itensRemovidos.get(i).getProduto().getImg()%>"
 										alt="Imagem do Produto" class="img-fluid rounded-start">
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<div class="card-body">
-										<h5 class="card-title"><%=produtosRemovidos.get(i).getProduto().getDesc()%></h5>
-										<p class="card-text">
-										<div
-											class="d-flex justify-content-between align-items-center mb-3 ">
-											<button class="btn btn-sm btn-outline-secondary"
-												onclick="decrementarQuantidade('quantity1', 'price1')">-</button>
-											<span id="quantity1" class="quantity"><%=produtosRemovidos.get(i).getQuantProd()%></span>
-											<button class="btn btn-sm btn-outline-secondary"
-												onclick="incrementarQuantidade('quantity1', 'price1')">+</button>
-										</div>
-										</p>
-										<!-- Botão Remover -->
-										<div class="d-grid">
-											<button class="btn btn-sm btn-outline-primary"
-												onclick="removerProduto('product1')">Voltar ao
-												Carrinho</button>
+										<h6 class="card-title"><%=itensRemovidos.get(i).getProduto().getDesc()%></h6>
+										<div class="card-options">
+											<div class="card-text">
+												<div
+													class="d-flex justify-content-between align-items-center mb-3 ">
+
+													<span id="quantity1" class="quantity"><%=itensRemovidos.get(i).getQuantProd()%></span>
+
+												</div>
+											</div>
+											<!-- Botão Remover -->
+											<div class="d-grid">
+												<button class="btn btn-sm btn-outline-primary"
+													onclick="removerProduto('product1')">Voltar ao
+													Carrinho</button>
+											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-3"></div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<div class="card-body text-end">
 										<p class="card-text fs-4">
 											R$
-											<%=produtosRemovidos.get(i).getProduto().getPro_preco_venda()%></p>
+											<%=itensRemovidos.get(i).getProduto().getPro_preco_venda()%></p>
 									</div>
 								</div>
 							</div>
