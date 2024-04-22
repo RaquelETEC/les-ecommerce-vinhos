@@ -1,11 +1,14 @@
 @charset "UTF-8";
-
-
 .Content{
 	margin-top:60px;
 	align-items: center;
 	flex-direction: column;
 	display: flex;
+}
+.btn-disabled {
+   color: white !important;
+   background-color: #6c757d !important;
+   border-color: #6c757d !important;
 }
 .card-options{
 	max-width: 40%;

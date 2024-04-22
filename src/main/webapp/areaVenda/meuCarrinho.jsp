@@ -4,8 +4,8 @@
 <%@ page import="java.util.ArrayList"%>
 <%
 @SuppressWarnings("unchecked")
-ArrayList<CarrinhoItens> itens = (ArrayList<CarrinhoItens>) request.getAttribute("itemsCarrinho");
-ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.getAttribute("itemsRemovidosCarrinho");
+ArrayList<CarrinhoItens> itens = (ArrayList<CarrinhoItens>) request.getAttribute("itensCarrinho");
+ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.getAttribute("itensRemovidosCarrinho");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -15,8 +15,8 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 <title>Carrinho</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="Styles/StyleCarrinhoV1.css">
-<script src="scripts/produtosv3.js"></script>
+<link rel="stylesheet" href="Styles/StyleCarrinhoV3.css">
+<script src="scripts/produtosv4.js"></script>
 
 </head>
 
@@ -53,8 +53,10 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 							<div class="card mb-3">
 								<div class="row g-0">
 									<div class="col-md-2">
+									 <div class="image-container" style="background-color: #f2f2f2;">
 										<img src="<%=itens.get(i).getProduto().getImg()%>"
 											alt="Imagem do Produto" class="img-fluid rounded-start">
+									</div>
 									</div>
 									<div class="col-md-8">
 										<div class="card-body">
@@ -99,9 +101,9 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 				<div class="Content">
 					<h2>Sub Total</h2>
 					<br> <span style="font-size: 24px; color: orange;"><strong>R$
-							<%=total%></strong></span> <br> <a
-						href="/les-ecommerce-vinhos/areaVenda/Venda.html">
-						<button class="btn btn-primary">Fazer Pedido</button>
+							<%=total%></strong></span> <br> 
+					 <a href="/les-ecommerce-vinhos/FinalizarCompra?idCliente=<%=request.getParameter("id")%>">
+						<button class="btn btn-primary">Finalizar Compra</button>
 					</a>
 				</div>
 			</div>
@@ -123,8 +125,10 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 						<div class="card mb-3">
 							<div class="row g-0">
 								<div class="col-md-2">
+								 <div class="image-container" style="background-color: #f2f2f2;">
 									<img src="<%=itensRemovidos.get(i).getProduto().getImg()%>"
 										alt="Imagem do Produto" class="img-fluid rounded-start">
+								</div>
 								</div>
 								<div class="col-md-8">
 									<div class="card-body">

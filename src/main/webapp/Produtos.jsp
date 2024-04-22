@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="model.entity.Produtos"%>
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); %>
 
 <%@ page import="java.util.ArrayList"%>
 <%
@@ -141,9 +142,11 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 				<div class="col-sm-4">
 					<form name="productForm<%=i%>">
 						<div class="card">
+						 <div class="image-container" style="background-color: #f2f2f2;">
 							<img src="<%=lista.get(i).getImg()%>" alt="Imagem do Produto"
 								class="card-img-top img-fluid rounded-start"
 								style="width: 50%; display: block; margin: 0 auto;">
+            			</div>
 
 							<div class="box-input-form" style="display: none;">
 								<div class="box-label">

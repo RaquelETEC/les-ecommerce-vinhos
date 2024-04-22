@@ -46,7 +46,6 @@ public class CarrinhoService {
 		return itemsCarrinho;
 	}
 
-
 	public String AlterarQuantidadeProd(CarrinhoItens CarrinhoItem, int quantidade) {
 		
 		if(quantidade <= 0 ) {
@@ -72,5 +71,18 @@ public class CarrinhoService {
 		return (String) daoCarrinho.removerItem(carrinho,produto);
 	}
 
+	public ArrayList<CarrinhoItens> listarItensAtivos(CarrinhoDeCompras carrinho) {
+		Produtos produto = new Produtos();
+		
+		itemsCarrinho = daoCarrinho.ListarItensAtivos(carrinho);
+		
+	  for (CarrinhoItens item : itemsCarrinho) {
+	        produto = daoprod.buscarProdutoPorId(item.getProduto().getId());
+	        item.setProduto(produto);  
+	        item.setId(item.getId());
+	    }
+	  
+		return itemsCarrinho;
+	}
 
 }

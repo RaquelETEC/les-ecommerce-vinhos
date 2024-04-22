@@ -16,15 +16,11 @@ import model.entity.CarrinhoItens;
 import model.entity.Cliente;
 import model.entity.Produtos;
 
-@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" })
+@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	//CarrinhoItem carrinho = new CarrinhoItem();
 	CarrinhoService carrinhoService = new CarrinhoService();
-	CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
-	Cliente cliente = new Cliente(); 
-	CarrinhoItens itens = new CarrinhoItens(); 
 	
 	public ControllerVenda() {
 		super();
@@ -46,6 +42,9 @@ public class ControllerVenda extends HttpServlet {
 	    else if(action.equals("/RemoverProdutoCarrinho")) {
 			RemoverProduto(request, response);
 	    }
+	    else if(action.equals("/FinalizarCompra")) {
+	    	FinalizarCompra(request, response);
+	    }
 		else {
 			System.out.println("erro ao redirecionar " + action);
 			response.sendRedirect("index.html");
@@ -53,6 +52,7 @@ public class ControllerVenda extends HttpServlet {
 	}
 
 
+	
 	protected void AdicionarAoCarriho(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 	    // Obtendo os parâmetros da requisição
@@ -82,9 +82,11 @@ public class ControllerVenda extends HttpServlet {
 	    
 	protected void ExibirCarrinho(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+		
+		Cliente cliente = new Cliente(); 
         cliente.setId(Integer.parseInt(request.getParameter("id")));
-
+        
+        CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
         carrinho = carrinhoService.SelecionarCarrinho(cliente);
     
         ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItems(carrinho);
@@ -97,7 +99,7 @@ public class ControllerVenda extends HttpServlet {
         
         for (CarrinhoItens item : listaItens) {
             if (item.isRemovido()) {
-           	System.out.println("-----------------------");
+           //	System.out.println("-----------------------");
            	// 	System.out.println(item.getProduto().getDesc()+" Produto removido");
            	//	System.out.println(item.getQuantProd());
            	//	System.out.println(item.getProduto().getPro_preco_venda());
@@ -113,8 +115,8 @@ public class ControllerVenda extends HttpServlet {
             }
         }
         
-		request.setAttribute("itemsCarrinho", lista);
-		request.setAttribute("itemsRemovidosCarrinho", listaRemovidos);
+		request.setAttribute("itensCarrinho", lista);
+		request.setAttribute("itensRemovidosCarrinho", listaRemovidos);
 		RequestDispatcher rd = request.getRequestDispatcher("/areaVenda/meuCarrinho.jsp");
 		rd.forward(request, response);
 	}
@@ -165,4 +167,23 @@ public class ControllerVenda extends HttpServlet {
 	    response.getWriter().write(resposta); 
 	    response.getWriter().flush();
 	}
+	private void FinalizarCompra(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("cheguei no finalizar compra");
+		
+		Cliente cliente = new Cliente();  
+		cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
+
+		CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
+	    carrinho = carrinhoService.SelecionarCarrinho(cliente);
+	    
+	    ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItensAtivos(carrinho);
+	    
+	  
+		request.setAttribute("itens", listaItens);
+		RequestDispatcher rd = request.getRequestDispatcher("/areaVenda/Venda.jsp");
+		rd.forward(request, response);
+		 
+	}
+
 }
