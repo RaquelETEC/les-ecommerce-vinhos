@@ -2,20 +2,21 @@ package Service;
 
 import java.util.ArrayList;
 
-import Dao.DAOCupons;
+import Dao.DaoCupons;
 import model.entity.Cliente;
 import model.entity.Cupons;
 
 public class CupomService {
+	private DaoCupons daoCupom; 
 	
-	private DAOCupons daoCupons;
-	
-	public CupomService() {
-		
-	}
+    public CupomService() {
+        this.daoCupom = new DaoCupons();
+    }
 
 	public ArrayList<Cupons> listarCupom(Cliente cliente) {
-		return daoCupons.ListarCupons(cliente);
+		return daoCupom.ListarCuponsCliente(cliente);
 	}
+
+
 
 }

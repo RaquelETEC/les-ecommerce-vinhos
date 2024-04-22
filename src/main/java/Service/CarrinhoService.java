@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import Dao.DAOProdutos;
 import Dao.DaoCarrinho;
-import Dao.DaoEndereco;
 import model.entity.CarrinhoDeCompras;
 import model.entity.CarrinhoItens;
 import model.entity.Cliente;

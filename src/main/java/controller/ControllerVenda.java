@@ -11,12 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Service.CarrinhoService;
+import Service.CartoesService;
+import Service.CupomService;
+import Service.EnderecoService;
 import model.entity.CarrinhoDeCompras;
 import model.entity.CarrinhoItens;
+import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
+import model.entity.Cupons;
+import model.entity.Endereco;
 import model.entity.Produtos;
+import model.entity.TiposEndereco;
 
-@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra"})
+@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompraV1"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,8 +49,8 @@ public class ControllerVenda extends HttpServlet {
 	    else if(action.equals("/RemoverProdutoCarrinho")) {
 			RemoverProduto(request, response);
 	    }
-	    else if(action.equals("/FinalizarCompra")) {
-	    	FinalizarCompra(request, response);
+	    else if(action.equals("/FinalizarCompraV1")) {
+	    	FinalizarCompraTela(request, response);
 	    }
 		else {
 			System.out.println("erro ao redirecionar " + action);
@@ -167,9 +174,9 @@ public class ControllerVenda extends HttpServlet {
 	    response.getWriter().write(resposta); 
 	    response.getWriter().flush();
 	}
-	private void FinalizarCompra(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void FinalizarCompraTela(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("cheguei no finalizar compra");
 		
 		Cliente cliente = new Cliente();  
 		cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
@@ -177,13 +184,60 @@ public class ControllerVenda extends HttpServlet {
 		CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
 	    carrinho = carrinhoService.SelecionarCarrinho(cliente);
 	    
+	    //listagem de itens do carrinho 
 	    ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItensAtivos(carrinho);
-	    
+	    //Listagem de endereços do cliente 
+		EnderecoService enderecoService = new EnderecoService();
+		
+		ArrayList<Endereco> lista = enderecoService.listarEnderecos(cliente);
+
+		// Listas para cada tipo de endereço
+		ArrayList<Endereco> listaEntrega = new ArrayList<>();
+
+		// Separar endereços por tipo
+		for (Endereco endereco : lista) {
+			if (endereco.getTipos().equals(TiposEndereco.ENTREGA)) {
+				System.out.println("o endereco: "+endereco.getNome());
+				listaEntrega.add(endereco);
+			}
+		}
+
+		CupomService cupomService = new CupomService();
+		
+		ArrayList<Cupons> listaCupons = cupomService.listarCupom(cliente);
+		
+		ArrayList<Cupons> listaCuponsPromocional = new ArrayList<>();
+		ArrayList<Cupons> listaCuponsTroca = new ArrayList<>();
+
+		//Separa a lista de cupons promocionais e cupons de troca para exibir na tela
+		for (Cupons cupomItem : listaCupons) {
+			if (cupomItem.getTipo().contains("P")) {
+				listaCuponsPromocional.add(cupomItem);
+			} 
+			else if (cupomItem.getTipo().contains("T")) {
+				listaCuponsTroca.add(cupomItem);
+			}
+		} 
+		
+		//listagem de cartões
+		CartoesService cartaoService = new CartoesService();
+		//ArrayList<CartaoDeCredito> listaCartoes = cartaoService.listarCartoes(cliente);
+
+		//Lista de endereços
+		request.setAttribute("listaEnderecosEntrega", listaEntrega);
+	
+		//Lista de cupom
+		//request.setAttribute("listaCuponsPromocional", listaCuponsPromocional);
+		//request.setAttribute("listaCuponsTroca", listaCuponsTroca);
+		
+		//Lista de cartao
+	//	request.setAttribute("listaCartoes", listaCartoes);		
 	  
+		//Lista de produtos
 		request.setAttribute("itens", listaItens);
 		RequestDispatcher rd = request.getRequestDispatcher("/areaVenda/Venda.jsp");
 		rd.forward(request, response);
-		 
+		
 	}
 
 }
