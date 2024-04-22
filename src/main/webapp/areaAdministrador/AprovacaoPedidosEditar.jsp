@@ -115,7 +115,8 @@ PedidoVenda pedidoVenda = (PedidoVenda) request.getAttribute("pedidoVenda");
 								</div>
 							</div>
 						</div>
-						<!-- Fim da tela para alterar pedido -->
+					</form>
+					<!-- Fim da tela para alterar pedido -->
 				</div>
 			</main>
 

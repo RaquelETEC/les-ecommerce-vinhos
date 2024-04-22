@@ -28,3 +28,12 @@ function confirmarExcluirEndereco(idEnd, id){
 	}
 }
 
+
+
+function confirmarProduto(idPedido, i) {
+	const Status = document.getElementById('status' + i).value;
+
+	window.location.href = "EditarPedido?id=" + idPedido + "&PedidoStatus=" + Status; 
+
+}
+	

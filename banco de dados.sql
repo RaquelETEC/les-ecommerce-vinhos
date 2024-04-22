@@ -154,6 +154,16 @@ FOREIGN KEY (`REL_HAR_ID`) REFERENCES harmonizacao(`HAR_ID`),
 FOREIGN KEY (`REL_HAR_PROD`) REFERENCES produto(`pro_id`)
 );  
 
+CREATE TABLE `carrinho_itens` (
+  `car_itens_id` int NOT NULL AUTO_INCREMENT primary KEY,
+  `car_itens_car_id` int NOT NULL,
+  `car_itens_prod_id` int NOT NULL,
+  `car_itens_prod_quant` int NOT NULL,
+  `car_itens_removido` boolean NOT NULL,
+  `car_itens_motivo` varchar(100),
+FOREIGN KEY (`car_itens_prod_id`) REFERENCES produto(`pro_id`)
+);
+
 CREATE TABLE `carrinho_de_compras` (
   `car_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `car_cli_id` int NOT NULL,

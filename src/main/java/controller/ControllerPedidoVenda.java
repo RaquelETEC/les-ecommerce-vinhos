@@ -83,11 +83,10 @@ public class ControllerPedidoVenda extends HttpServlet{
 	
 		pedidoVenda.setStatus(request.getParameter("PedidoStatus"));
 		
-	    
 		pedidoVendaservice.editarPedido(pedidoVenda);
 
-		response.sendRedirect(request.getContextPath() + "/areaAdministrador/PedidoVenda.html");
-
+		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/PedidoVenda.html");
+		rd.forward(request, response);
 	}
 	
 }

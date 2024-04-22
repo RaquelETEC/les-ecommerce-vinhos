@@ -93,7 +93,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						</div>
 					</form>
 
-					<table id="tabela" class="mx-auto" action="">
+					<table id="tabela" class="mx-auto">
 						<thead>
 							<tr>
 								<th>Id Pedido</th>
@@ -118,10 +118,37 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 								<td><%=lista.get(i).getCliente().getNome()%></td>
 								<td><%=data%></td>
 								<td><%=lista.get(i).getValor()%></td>
-								<td><%=lista.get(i).getStatus()%></td>
 								<td>
-									<div onclick="window.location.href='EditarPedido.html?idPedido=<%=pedido.getId()%>';" 
-									class="Botao1">Editar</div>
+									<div class="mb-3">
+										<label for="PedidoStatus" class="form-label"></label> <select
+											class="form-select" id="status<%=i%>" name="PedidoStatus">
+											<option value="" disabled></option>
+											<option value="EM-PROCESSAMENTO"
+												<%="EM-PROCESSAMENTO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM-PROCESSAMENTO</option>
+											<option value="PAGAMENTO REALIZADO"
+												<%="PAGAMENTO REALIZADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
+												REALIZADO</option>
+											<option value="PAGAMENTO RECUSADO"
+												<%="PAGAMENTO RECUSADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
+												RECUSADO</option>
+											<option value="PEDIDO CANCELADO"
+												<%="PEDIDO CANCELADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PEDIDO
+												CANCELADO</option>
+											<option value="EM TRANSPORTE"
+												<%="EM TRANSPORTE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM
+												TRANSPORTE</option>
+											<option value="ENTREGUE"
+												<%="ENTREGUE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>ENTREGUE</option>
+										</select>
+									</div>
+
+								</td>	
+								<td>
+									<div class="option-button">
+										<a class="Botao1"
+											href="javascript: confirmarProduto(<%=lista.get(i).getId()%>,<%=i%>)">Editar</a>
+									</div>
+
 								</td>
 							</tr>
 
@@ -138,7 +165,8 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 
 	<footer class="p-4 text-light text-center" style="background: black;">
 		Desenvolvido por Caynan e Raquel </footer>
-
+	<script src="../scripts/confirmador.js"></script>
+	<script src="scripts/confirmador.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

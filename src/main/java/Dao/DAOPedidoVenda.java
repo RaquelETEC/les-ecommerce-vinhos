@@ -57,9 +57,7 @@ public class DAOPedidoVenda {
 			pst.setInt(1, pedidovenda.getId());
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-
-				pedidovenda.setValor(rs.getDouble(1)); 
-				pedidovenda.setStatus(rs.getString(2)); 
+				pedidovenda.setStatus(rs.getString(1)); 
 			}
 			con.close();
 		} catch (Exception e) {
