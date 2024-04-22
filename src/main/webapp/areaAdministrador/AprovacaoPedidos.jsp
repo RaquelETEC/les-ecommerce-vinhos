@@ -123,6 +123,10 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 										<label for="PedidoStatus" class="form-label"></label> <select
 											class="form-select" id="status<%=i%>" name="PedidoStatus">
 											<option value="" disabled></option>
+
+											<%
+											if ("EM-PROCESSAMENTO".equals(lista.get(i).getStatus())) {
+											%>
 											<option value="EM-PROCESSAMENTO"
 												<%="EM-PROCESSAMENTO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM-PROCESSAMENTO</option>
 											<option value="PAGAMENTO REALIZADO"
@@ -134,15 +138,47 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 											<option value="PEDIDO CANCELADO"
 												<%="PEDIDO CANCELADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PEDIDO
 												CANCELADO</option>
+											<%
+											} else if ("PAGAMENTO REALIZADO".equals(lista.get(i).getStatus())) {
+											%>
+											<option value="PAGAMENTO REALIZADO"
+												<%="PAGAMENTO REALIZADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
+												REALIZADO</option>
+											<option value="EM TRANSPORTE"
+												<%="EM TRANSPORTE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM
+												TRANSPORTE</option>
+											<%
+											} else if ("EM TRANSPORTE".equals(lista.get(i).getStatus())) {
+											%>
 											<option value="EM TRANSPORTE"
 												<%="EM TRANSPORTE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM
 												TRANSPORTE</option>
 											<option value="ENTREGUE"
 												<%="ENTREGUE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>ENTREGUE</option>
+											<%
+											} else {
+											%>
+											<option value="EM-PROCESSAMENTO"
+												<%="EM-PROCESSAMENTO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM-PROCESSAMENTO</option>
+											<option value="PAGAMENTO RECUSADO"
+												<%="PAGAMENTO RECUSADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
+												RECUSADO</option>
+											<option value="PEDIDO CANCELADO"
+												<%="PEDIDO CANCELADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PEDIDO
+												CANCELADO</option>
+											<option value="EM TRANSPORTE"
+												<%="EM TRANSPORTE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM
+												TRANSPORTE</option>
+											<option value="ENTREGUE"
+												<%="ENTREGUE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>ENTREGUE</option>
+											<%
+											}
+											%>
+
 										</select>
 									</div>
 
-								</td>	
+								</td>
 								<td>
 									<div class="option-button">
 										<a class="Botao1"
