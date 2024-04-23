@@ -239,51 +239,115 @@ FOREIGN KEY (`REL_HAR_ID`) REFERENCES harmonizacao(`HAR_ID`),
 FOREIGN KEY (`REL_HAR_PROD`) REFERENCES produto(`pro_id`)
 );  
 
-INSERT INTO rel_harm_produto (REL_HAR_ID, REL_HAR_PROD) 
-VALUES 
-(1, 1),
-(2, 1),
-(7, 2),
-(6, 2),
-(6, 3),
-(7, 3),
-(2, 4),
-(3, 4),
-(14, 5),
-(17, 5),
-(15, 6),
-(14, 6),
-(10, 7),
-(13, 7),
-(11, 8),
-(10, 8),
-(12, 9),
-(11, 9),
-(3, 10),
-(4, 10),
-(9, 11),
-(8, 11),
-(4, 12),
-(5, 12),
-(16, 13),
-(15, 13),
-(8, 14),
-(9, 14);
+CREATE TABLE `carrinho_itens` (
+  `car_itens_id` int NOT NULL AUTO_INCREMENT primary KEY,
+  `car_itens_car_id` int NOT NULL,
+  `car_itens_prod_id` int NOT NULL,
+  `car_itens_prod_quant` int NOT NULL,
+  `car_itens_removido` boolean NOT NULL,
+  `car_itens_motivo` varchar(100),
+FOREIGN KEY (`car_itens_prod_id`) REFERENCES produto(`pro_id`)
+);
+
+CREATE TABLE `carrinho_de_compras` (
+  `car_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `car_cli_id` int NOT NULL,
+  `car_prod_id` int NOT NULL,
+  `car_prod_quant` int NOT NULL,
+  `car_removido` boolean NOT NULL,
+  `car_motivo` varchar(100),
+  FOREIGN KEY (`car_cli_id`) REFERENCES cliente(`cli_id`),
+  FOREIGN KEY (`car_prod_id`) REFERENCES produto(`pro_id`)
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `cupons`(
+  `cup_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `cup_cli_id` int NOT NULL,
+  `cup_codigo` varchar(10)  NOT NULL ,
+  `cup_desc` varchar(10) NOT NULL,
+  `cup_img`   varchar(25) NOT NULL,
+  `cup_tipo` varchar(10) ,
+  `cup_valor` double ,
+  `cup_validade` date  NOT NULL,
+  FOREIGN KEY (`cup_cli_id`) REFERENCES cliente(`cli_id`)
+);
+
+
+
+CREATE TABLE `rel_cup_cli`(
+  `rcc_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `rcc_cup_id` int NOT NULL,
+  `rcc_cli_id` int NOT NULL,
+  FOREIGN KEY (`rcc_cli_id`) REFERENCES cliente(`cli_id`),
+  FOREIGN KEY (`rcc_cup_id`) REFERENCES cupons(`cup_id`)
+);
 
 
 create table pedido_venda(
     `ven_id` int NOT NULL AUTO_INCREMENT primary KEY,
     `vend_id_cliente` int NOT NULL,
+    `ven_end_id` int NOT NULL,
+    `ven_cupom_promocional_id` int NOT NULL,
     `ven_status` varchar(20),
-    `ven_end_id` varchar(20),
-    FOREIGN KEY (`ven_cliente_id`) REFERENCES cliente(`cli_id`),
-    FOREIGN KEY (`ven_prod_id`) REFERENCES produto(`pro_id`)
+    `ven_data` date,
+    `ven_valor` Double,
+    FOREIGN KEY (`ven_cupom_promocional_id`) REFERENCES cupons(`cup_id`),
+    FOREIGN KEY (`vend_id_cliente`) REFERENCES cliente(`cli_id`),
+    FOREIGN KEY (`ven_end_id`) REFERENCES endereco(`end_id`)
 );
 
-create table itens_pedido(
-	`ped_iten_id` int NOT NULL AUTO_INCREMENT primary KEY,
-	`ped_iten_prod_id` int NOT NULL, 
-    `ped_inten_desc` varchar(220) not null, 
-    `ped_iten_prod_quant` varchar(220) not null, 
-    `` 
-); 
+select * from pedido_venda;
+
+create table itens_venda(
+`ped_item_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`ped_item_prod_id` int not null, 
+`ped_item_ven_id` int not null, 
+`ped_item_prod_desc` varchar(220) not null, 
+`ped_item_prod_valor` Double not null, 
+`ped_item_prod_valor_total` Double not null, 
+`ped_item_prod_quantidade` int not null, 
+FOREIGN KEY (`ped_item_prod_id`) REFERENCES produto(`pro_id`),
+FOREIGN KEY (`ped_item_ven_id`) REFERENCES pedido_venda(`ven_id`)
+);
+
+ 
+create table rel_cupom_venda(
+`REL_CUPVE_ID` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`REL_CUP_ID` int NOT NULL,
+`REL_VEN_ID` int NOT NULL,
+FOREIGN KEY (`REL_CUP_ID`) REFERENCES cupons(`cup_id`),
+FOREIGN KEY (`REL_VEN_ID`) REFERENCES pedido_venda(`ven_id`)
+ );
+ 
+ create table rel_cartao_venda(
+`REL_CARVE_ID` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`REL_CAR_ID` int NOT NULL,
+`REL_VEN_ID` int NOT NULL,
+FOREIGN KEY (`REL_CAR_ID`) REFERENCES cartao_de_credito(`cart_id`),
+FOREIGN KEY (`REL_VEN_ID`) REFERENCES pedido_venda(`ven_id`)
+ );
+ 
+
+
+SELECT cli_id FROM cliente where cli_nome = 'tuou' order by cli_id desc LIMIT 1;
+ 
+select * from cliente;
+ 
+ 
+select * from endereco where cli_email = ? and cli_senha = ? and cli_cpf = ? ;
+ 
+delete from cliente 
+where cli_id <> 0;
+
+delete from endereco 
+where end_id <> 0;
+
+ALTER TABLE cliente AUTO_INCREMENT = 1;
+
+
+select cli_id, cli_nome,cli_telefone,cli_email,cli_cpf,cli_telefone_tipo,cli_dt_nascimento,cli_genero  from cliente order by cli_nome;
+
+select * from endereco;
+select * from cliente;
+delete from cliente where cli_id =11;
+select cli_nome,cli_email,cli_cpf,cli_dt_nascimento,cli_telefone,cli_genero from cliente where cli_id = ?

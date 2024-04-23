@@ -101,7 +101,7 @@ public class DaoCarrinho {
 		}
 	
 	public String adicionarAoCarrinho(CarrinhoDeCompras carrinho, Produtos produto, int quantidade) {
-	    String selectQuery = "SELECT car_itens_prod_quant FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	    String selectQuery = "SELECT car_itens_prod_quant FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ?" ;
 	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ? WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
 	    String insertQuery = "INSERT INTO carrinho_itens (car_itens_car_id, car_itens_prod_id, car_itens_prod_quant, car_itens_removido) VALUES (?, ?, ?, 0)";
 	    

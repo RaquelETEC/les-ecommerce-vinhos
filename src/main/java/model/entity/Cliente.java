@@ -19,7 +19,7 @@ public class Cliente {
 	private ArrayList<Endereco> listadeEnderecos = new ArrayList<>();
 	private ArrayList<CartaoDeCredito> listaDeCartoes = new ArrayList<>();
 	private ArrayList<Cupons> listadeCupons = new ArrayList<>();
-
+	private ArrayList<PedidoVenda> listadePedidoVenda = new ArrayList<>();
 
 	public Cliente() {
 		super();
@@ -31,8 +31,7 @@ public class Cliente {
 
 	public Cliente(int id, String nome, String email, String senha, String cpf, String tipoTelefone, String telefone,
 			Date dataNasc, String genero, String status, ArrayList<Endereco> listadeEnderecos,
-			ArrayList<CartaoDeCredito> listaDeCartoes, ArrayList<Cupons> listadeCupons) {
-		super();
+			ArrayList<CartaoDeCredito> listaDeCartoes, ArrayList<Cupons> listadeCupons, ArrayList<PedidoVenda> listadePedidoVenda) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -45,6 +44,26 @@ public class Cliente {
 		this.status = status;
 		this.listadeEnderecos = listadeEnderecos;
 		this.listaDeCartoes = listaDeCartoes;
+		this.listadeCupons = listadeCupons;
+		this.listadePedidoVenda = listadePedidoVenda;
+		this.status = status;
+	}
+	
+	
+
+	public ArrayList<PedidoVenda> getListadePedidoVenda() {
+		return listadePedidoVenda;
+	}
+
+	public void setListadePedidoVenda(ArrayList<PedidoVenda> listadePedidoVenda) {
+		this.listadePedidoVenda = listadePedidoVenda;
+	}
+
+	public ArrayList<Cupons> getListadeCupons() {
+		return listadeCupons;
+	}
+
+	public void setListadeCupons(ArrayList<Cupons> listadeCupons) {
 		this.listadeCupons = listadeCupons;
 	}
 

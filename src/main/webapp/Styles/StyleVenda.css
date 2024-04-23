@@ -129,44 +129,44 @@ header {
     border: none;
 }
 .Endereco-Container{
-    width: 1420px;
-    height: 370px;
+    width: 100%;
+    height: 50%;
     margin-top: 10px;
     background-color:transparent;
     border: 1px solid grey;
     border-radius: 20px
 }
 .TextoEnd{color: #EE603D;position: absolute; margin-left: 20px}
-.EndCompleto{color: black;position: absolute;font-size: large;margin-top:17px; margin-left: 20px;font-weight: bold}
-.StatusEnd{color: white; background: lightseagreen;position: absolute;margin-top: 17px; margin-left: 500px; width:80px;border-radius: 20px; text-align: center}
-.EnderecoCompleto{color: #6B6B6B;margin-top: 17px; margin-left: 600px;position: absolute;}
-.Trocar{color: #4B96F3;margin-top: 17px; margin-left: 1250px;position: absolute; background: transparent; border: white}
+.EndCompleto{color: black;position: absolute;font-size: medium;margin-top:17px; margin-left: 20px;font-weight: bold}
+.StatusEnd{color: white; background: lightseagreen;position: absolute;margin-top: 17px; margin-left:20%; width:5%;border-radius: 20px; text-align: center}
+.EnderecoCompleto{color: #6B6B6B;margin-top: 17px; margin-left: 30%;position: absolute;}
+.Trocar{color: #4B96F3;margin-top: 1%; margin-left: 65%;position: absolute; background: transparent; border: white}
 
 
-.vinhos-container{background-color: white;width: 1420px;height: 300px;border: 1px solid black;padding-left: 20px;}
+.vinhos-container{background-color: white;width: 100%; height: 30%;  border: 1px solid black;padding-left: 20px;}
 .pedido{position: absolute; margin-top: 10px}
-.vinho_imagem{margin-top: 40px;height: 150px;border: 2px solid #606060;background:#f4f4f4;}
-.desc{padding-left: 20px;position: absolute;margin-top: 100px;}
-.valor{padding-left: 1000px;position: absolute;margin-top: 100px; font-size: 30px; color: #EE603D}
+.vinho_imagem{margin-top: 40px;height: 50%;border: 2px solid #606060;background:#f4f4f4;}
+.desc{padding-left: 20px;position: absolute;margin-top: 5%;}
+.valor{padding-left: 50%;position: absolute;margin-top: 5%; font-size: 30px; color: #EE603D}
 
-.Cupom-Container{background-color: white;width: 1420px;height:200px;border: 1px solid black;padding-left: 20px; margin-top: 30px;  border-radius: 20px }
-.Cupom{color: black;font-size: large;margin-left: 20px;font-weight: bold; position: absolute;}
-.Selecionar{color: #4B96F3; margin-left: 1250px;background: transparent; border: white;position: absolute;}
+.Cupom-Container{background-color: white;width: 100%;height:30%;border: 1px solid black;padding-left: 20px; margin-top: 5%;  border-radius: 20px }
+.Cupom{color: black;font-size: medium;margin-left: 20px;font-weight: bold; position: absolute;}
+.Selecionar{color: #4B96F3; margin-left: 65%;background: transparent; border: white;position: absolute;}
 
 
-.Total-Container{background-color: white;width: 1420px;height:500px;border: 1px solid black;padding-left: 20px; border-radius: 20px; margin-top: 30px}
+.Total-Container{background-color: white;width: 100%;height:30%;border: 1px solid black;padding-left: 20px; border-radius: 20px; margin-top: 30px}
 .Total{color: black;font-size: large; display:block; margin-bottom: 10px; margin-top: 10px}
-.ValorFinal1{position: absolute; margin-left: 1250px; margin-top: 10px; color: #EE603D;}
-.ValorFinal2{position: absolute; margin-left: 1250px;color: #EE603D;}
+.ValorFinal1{position: absolute; margin-left: 60%; margin-top: 10px; color: #EE603D;}
+.ValorFinal2{position: absolute; margin-left: 60%;color: #EE603D;}
 
 
 .Pagamento-Container{background-color: white;width: 1420px;height:300px;border: 1px solid black;padding-left: 20px; border-radius: 20px; margin-top: 30px}
 .NomePagador{color: black;position: absolute;font-size: large;margin-top:20px; margin-left: 20px;font-weight: bold}
-.CartaoCredito{position: absolute; margin-left: 350px;}
-.Cartao{width: 200px; position: absolute; margin-left: 350px; margin-top: 20px; border-radius: 10px}
-.ValorTexto{position: absolute; margin-left: 550px;}
-.ValorTotalTexto{position: absolute; margin-left: 650px;}
-.ValorDinheiro{position: absolute; margin-left: 550px; margin-top: 20px}
-.ValorDinheiroTotal{position: absolute; margin-left: 650px; margin-top: 20px;color: #EE603D;}
+.CartaoCredito{position: absolute; margin-left: 20%;}
+.Cartao{width: 30%; position: absolute; margin-left: 20%; margin-top: 20px; border-radius: 10px}
+.ValorTexto{position: absolute; margin-left: 30%;}
+.ValorTotalTexto{position: absolute; margin-left: 35%;}
+.ValorDinheiro{position: absolute; margin-left: 30%; margin-top: 20px}
+.ValorDinheiroTotal{position: absolute; margin-left: 35%; margin-top: 20px;color: #EE603D;}
 
-.FazerPedido{background: #EE603D; color: white; margin-left: 670px;margin-top: 20px; border-radius: 20px; width: 200px; height: 30px}
+.FazerPedido{background: #EE603D; color: white; margin-left: 550px;margin-top: 20px; border-radius: 20px; width: 50%; height: 30px}

@@ -77,7 +77,7 @@ public class ControllerVenda extends HttpServlet {
 	    produto.setId(idProduto);
 
 	    // Chamando o serviço para adicionar ao carrinho
-	    String resposta = carrinhoService.AdicionarAoCrrinho(cliente, produto, quantidade);
+	    String resposta = carrinhoService.AdicionarAoCarrinho(cliente, produto, quantidade);
 	    System.out.println(resposta);
 	    
 	    response.setContentType("text/plain");
