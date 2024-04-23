@@ -15,7 +15,20 @@ public class EnderecoService {
 
 	public String adicionarEndereco(Cliente cliente, Endereco endereco) {
 		System.out.println("Cheguei no adicionarEndereco Service");
-
+		 // Verifique se todos os campos obrigatórios estão preenchidos
+		
+		if (endereco == null || endereco.getNome() == null || endereco.getNome().isEmpty() ||
+	            endereco.getTipoResidencia() == null || endereco.getTipoResidencia().isEmpty() ||
+	            endereco.getTipoLogradouro() == null || endereco.getTipoLogradouro().isEmpty() ||
+	            endereco.getLogradouro() == null || endereco.getLogradouro().isEmpty() ||
+	            endereco.getNumero() == null || endereco.getNumero().isEmpty() ||
+	            endereco.getBairro() == null || endereco.getBairro().isEmpty() ||
+	            endereco.getCep() == null || endereco.getCep().isEmpty() ||
+	            endereco.getCidade() == null || endereco.getCidade().isEmpty() ||
+	            endereco.getEstado() == null || endereco.getEstado().isEmpty() ||
+	            endereco.getPais() == null || endereco.getPais().isEmpty()) {
+	            return "Falha: Todos os campos obrigatórios devem ser preenchidos";
+	        }
 		// Chamada ao DAO para inserir o endere�o
 		return daoEndereco.inserirEndereco(cliente, endereco);
 	}

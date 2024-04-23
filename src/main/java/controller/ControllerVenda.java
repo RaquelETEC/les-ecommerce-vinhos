@@ -23,7 +23,7 @@ import model.entity.Endereco;
 import model.entity.Produtos;
 import model.entity.TiposEndereco;
 
-@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompraV1"})
+@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public class ControllerVenda extends HttpServlet {
 	    else if(action.equals("/RemoverProdutoCarrinho")) {
 			RemoverProduto(request, response);
 	    }
-	    else if(action.equals("/FinalizarCompraV1")) {
+	    else if(action.equals("/FinalizarCompra")) {
 	    	FinalizarCompraTela(request, response);
 	    }
 		else {
@@ -227,8 +227,8 @@ public class ControllerVenda extends HttpServlet {
 		request.setAttribute("listaEnderecosEntrega", listaEntrega);
 	
 		//Lista de cupom
-		//request.setAttribute("listaCuponsPromocional", listaCuponsPromocional);
-		//request.setAttribute("listaCuponsTroca", listaCuponsTroca);
+		request.setAttribute("listaCuponsPromocional", listaCuponsPromocional);
+		request.setAttribute("listaCuponsTroca", listaCuponsTroca);
 		
 		//Lista de cartao
 	//	request.setAttribute("listaCartoes", listaCartoes);		

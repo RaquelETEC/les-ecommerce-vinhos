@@ -14,10 +14,10 @@ ArrayList<CarrinhoItens> itens = (ArrayList<CarrinhoItens>) request.getAttribute
 ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("listaEnderecosEntrega");
 
 //listagem de cupons promocionais
-//ArrayList<Cupons> listaCuponsPromocionais = (ArrayList<Cupons>) request.getAttribute("listaCuponsPromocional");
+ArrayList<Cupons> listaCuponsPromocionais = (ArrayList<Cupons>) request.getAttribute("listaCuponsPromocional");
 
 //listagem de cupons de troca
-//ArrayList<Cupons> listaCuponsDeTroca= (ArrayList<Cupons>) request.getAttribute("listaCuponsPromocional");
+ArrayList<Cupons> listaCuponsDeTroca= (ArrayList<Cupons>) request.getAttribute("listaCuponsPromocional");
 
 //Listagem de cartoes 
 //ArrayList<CartaoDeCredito> listaCartoesCredito= (ArrayList<CartaoDeCredito>) request.getAttribute("listaCartoes");
@@ -62,7 +62,7 @@ ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("l
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-9">
-								<p id="Nome"class="card-title "></p>
+								<p id="Nome"class="card-title "><strong></strong></p>
 								<p class="card-text">
 								<span id="Logradouro"></span>,
 							    <span id="Numero"></span>,
@@ -153,9 +153,7 @@ ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("l
 									<p class="card-text">Data de vencimento: 20/03/2024</p>
 								</div>
 								<div class="col-md-3 text-end ">
-									<a
-										href="/les-ecommerce-vinhos/areaVenda/VendaTrocaEndereco.html"
-										class="btn btn-success">Selecionar Cupom</a>
+									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCupomP">Selecionar Cupom</button>
 								</div>
 							</div>
 						</div>
@@ -264,15 +262,15 @@ ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("l
 						    </div>			            
 				         </div>
 					 	<div class="col-md-10">
-							<h6 id="Nome<%=i%>class="card-title "><%=endereco.getNome()%> </h6>
+							<p id="Nome<%=endereco.getId()%>" class="card-title "><strong><%=endereco.getNome()%> </strong></p>
 						    <p class="card-text">
-							    <span id="Logradouro<%=i%>"><%= endereco.getLogradouro() %></span>,
-							    <span id="Numero<%=i%>"><%= endereco.getNumero() %></span>,
-							    <span id="Bairro<%=i%>"><%= endereco.getBairro() %></span>,
-							    <span id="Cidade<%=i%>"><%= endereco.getCidade() %></span>,
-							    <span id="Estado<%=i%>"><%= endereco.getEstado() %></span> - 
-							    <span id="Cep<%=i%>"><%= endereco.getCep() %></span>,
-							    <span id="Pais<%=i%>"><%= endereco.getPais() %></span>
+							    <span id="Logradouro<%=endereco.getId()%>"><%= endereco.getLogradouro() %></span>,
+							    <span id="Numero<%=endereco.getId()%>"><%= endereco.getNumero() %></span>,
+							    <span id="Bairro<%=endereco.getId()%>"><%= endereco.getBairro() %></span>,
+							    <span id="Cidade<%=endereco.getId()%>"><%= endereco.getCidade() %></span>,
+							    <span id="Estado<%=endereco.getId()%>"><%= endereco.getEstado() %></span> - 
+							    <span id="Cep<%=endereco.getId()%>"><%= endereco.getCep() %></span>,
+							    <span id="Pais<%=endereco.getId()%>"><%= endereco.getPais() %></span>
 							</p>
 			            </div>
 			        </div>
@@ -281,7 +279,8 @@ ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("l
 			   <% } %>
 			    <hr>
 			    <p>Não encontrou o endereço desejado?</p>
-			    <button type="button" class="btn btn-success" onclick="cadastrarNovoEndereco()">Cadastrar Novo Endereço</button>
+			    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalCadastroEndereco">Adicionar endereço</button>
+			
 			</div>
             <div class="modal-footer">
 				<button type="button" class="btn btn-primary" onclick="salvarEndereco()">Salvar</button>
@@ -289,6 +288,155 @@ ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("l
         </div>
     </div>
 </div>
+<!-- cadastrar endereco -->
+
+<div class="modal fade" id="modalCadastroEndereco" tabindex="-1" aria-labelledby="modalCadastroEndereco" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção de Endereço</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+		<div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+		<!-- Seu formulário de cadastro aqui -->
+	           <form name="frmcliente" >
+	              <fieldset>                                               
+	              <input type="text" name="id" id="id" style="display: none"/>
+	              <div class="row">
+	               <div class="col-md-12 mb-4">
+	                      <label class="form-label" for="nome">Nome*</label>
+	                      <input type="text" name="nome" id="nome" class="form-control form-control-lg"  required/>
+	                         
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="tipoResidencia">Tipo de Residência *</label>
+	                      <select class="form-select form-select-lg" name="typeTipoResidencia" id="typeTipoResidencia" required>
+	                          <option value="" disabled selected></option>
+	                          <option value="casa">Casa</option>
+	                          <option value="apartamento">Apartamento</option>
+	                          <option value="condominio">Condomínio</option>
+	                      </select>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="tipoLogradouro">Tipo Logradouro*</label>
+	                      <select class="form-select form-select-lg" name="typeTipoLogradouro" id="typeTipoLogradouro" required>
+	                          <option value="" disabled selected></option>
+	                          <option value="Rua">Rua</option>
+	                          <option value="Estrada">Estrada</option>
+	                          <option value="Avenida">Avenida</option>
+	                          <option value="Praça">Praça</option>
+	                          <option value="Corredor">Corredor</option>
+	                          <option value="Alameda">Alameda</option>
+	                          <option value="Distrito">Distrito</option>
+	                      </select>
+	                  </div>
+	              </div>
+	              <div class="row">
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="logradouro">Logradouro *</label>
+	                      <input type="text" name="typeLogradouro" id="typeLogradouro" class="form-control form-control-lg" required/>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="numero">N° *</label>
+	                      <input type="text" name="typeNumero" id="typeNumero" class="form-control form-control-lg" required/>
+	                  </div>
+	              </div>
+	              <div class="row">
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="typeBairro">Bairro*</label>
+	                      <input type="text" name="typeBairro" id="typeBairro" class="form-control form-control-lg"required/>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="typeCidade">Cidade*</label>
+	                      <input type="text" name="typeCidade" id="typeCidade" class="form-control form-control-lg" required />
+	                  </div>
+	              </div>
+	              <div class="row">
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="typeEstado">Estado*</label>
+	                      <input type="text" name="typeEstado" id="typeEstado" class="form-control form-control-lg" required/>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="typeCep">CEP*</label>
+	                      <input type="text" name="typeCep" id="typeCep" class="form-control form-control-lg" required/>
+	                  </div>
+	              </div>
+	              <div class="row">
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="typePais">País*</label>
+	                      <input type="text" name="typePais" id="typePais" class="form-control form-control-lg" required />
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                      <label class="form-label" for="observacoes">Observações</label>
+	                      <input type="text" name="observacoes" id="observacoes" class="form-control form-control-lg"  />
+	                  </div>
+	              </div>    
+	              <label class="form-label" for="cadastrarEndNopPerfil">Incluir endereço ao perfil?</label>
+	                      <select class="form-select form-select-lg" name="cadastrarEndNopPerfil" id="cadastrarEndNopPerfil" required>
+	                          <option value="Sim" >Sim</option>
+	                          <option value="Não">Não</option>
+	                      </select>
+	              
+	              <input type="hidden" name="tipoEndereco" value="ENTREGA">
+	              
+	              <br>
+	              </fieldset>
+	             </form>
+			</div>
+            <div class="modal-footer">
+              <button class="btn btn-primary btn-lg btn-block" id="BotaoCadastrar" type="button" onClick="AdicionarNovoEndereco(<%=request.getParameter("idCliente")%>)">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Cupom -->
+<div class="modal fade" id="modalCupomP" tabindex="-1" aria-labelledby="modalCupomP" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção de Endereço</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+			<%
+			for (int i = 0; i < listaCuponsPromocionais.size(); i++) {
+				Cupons cupom = listaCuponsPromocionais.get(i); // Crie um novo objeto Endereco
+			%>
+			<div class="card mt-3">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-2 d-flex align-items-center justify-content-center"> 
+				   			<img src= <%=cupom.getImg()%>alt="Imagem do Cupom" class="img-fluid">
+				         </div>
+					 	<div class="col-md-10">
+							<p id="NomeCupom" class="card-title "><strong><%=cupom.getDesc()%> </strong></p>
+						    <p class="card-text">
+							    <span id="ValorCupom"><%= cupom.getValor() %></span>,
+							    
+							</p>
+			            </div>
+			        </div>
+	               </div>
+	           </div>
+			   <% } %>
+			    <hr>
+			    <p>Não encontrou o endereço desejado?</p>
+			    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalCadastroEndereco">Adicionar endereço</button>
+			
+			</div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="salvarEndereco()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- cadastrar endereco -->
 
 	</main>
 

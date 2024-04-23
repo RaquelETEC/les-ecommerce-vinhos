@@ -102,7 +102,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 					<h2>Sub Total</h2>
 					<br> <span style="font-size: 24px; color: orange;"><strong>R$
 							<%=total%></strong></span> <br> 
-					 <a href="/les-ecommerce-vinhos/FinalizarCompraV1?idCliente=<%=request.getParameter("id")%>">
+					 <a href="/les-ecommerce-vinhos/FinalizarCompra?idCliente=<%=request.getParameter("id")%>">
 						<button class="btn btn-primary">Finalizar Compra</button>
 					</a>
 				</div>

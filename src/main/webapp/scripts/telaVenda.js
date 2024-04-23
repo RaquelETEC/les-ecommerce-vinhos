@@ -67,23 +67,85 @@ function salvarEndereco() {
     if (enderecoSelecionado) {
         // Obtenha o valor do atributo value do radio button selecionado
         var enderecoId = enderecoSelecionado.value;
-		var logradouro = document.getElementById(`Logradouro${enderecoId}`).value;
-		
+
         // Atualize os spans com os valores dos campos do endereço
-        document.getElementById('Logradouro').textContent = document.getElementById(`Logradouro${enderecoId}`).value;
-        document.getElementById('Numero').textContent = document.getElementById(`Numero${enderecoId}`).value;
-        document.getElementById('Bairro').textContent = document.getElementById(`Bairro${enderecoId}`).value;
-        document.getElementById('Cidade').textContent = document.getElementById(`Cidade${enderecoId}`).value;
-        document.getElementById('Estado').textContent = document.getElementById(`Estado${enderecoId}`).value;
-        document.getElementById('Cep').textContent = document.getElementById(`Cep${enderecoId}`).value;
-        document.getElementById('Pais').textContent = document.getElementById(`Pais${enderecoId}`).value;
-        document.getElementById('Nome').textContent = document.getElementById(`Nome${enderecoId}`).value;
+        document.getElementById('Logradouro').textContent = document.getElementById(`Logradouro${enderecoId}`).textContent;
+        document.getElementById('Numero').textContent = document.getElementById(`Numero${enderecoId}`).textContent;
+        document.getElementById('Bairro').textContent = document.getElementById(`Bairro${enderecoId}`).textContent;
+        document.getElementById('Cidade').textContent = document.getElementById(`Cidade${enderecoId}`).textContent;
+        document.getElementById('Estado').textContent = document.getElementById(`Estado${enderecoId}`).textContent;
+        document.getElementById('Cep').textContent = document.getElementById(`Cep${enderecoId}`).textContent;
+        document.getElementById('Pais').textContent = document.getElementById(`Pais${enderecoId}`).textContent;
+        document.getElementById('Nome').textContent = document.getElementById(`Nome${enderecoId}`).textContent;
 
         // Feche o modal de seleção de endereço, se necessário
         $('#modalSelecaoEndereco').modal('hide');
+        
     } else {
         // Se nenhum radio button estiver selecionado, exiba uma mensagem de erro
         console.log("Selecione um endereço ou cadastre!");
     }
 }
+function AdicionarNovoEndereco(id) {
+	debugger
+    // Obtenha os valores dos campos do formulário
+    // Obtenha uma referência ao formulário pelo seu nome
+        var formulario = document.forms["frmcliente"];
 
+        // Obtenha os valores dos campos individualmente
+        var nome = formulario["nome"].value;
+        var tipoResidencia = formulario["typeTipoResidencia"].value;
+        var tipoLogradouro = formulario["typeTipoLogradouro"].value;
+        var logradouro = formulario["typeLogradouro"].value;
+        var numero = formulario["typeNumero"].value;
+        var bairro = formulario["typeBairro"].value;
+        var cidade = formulario["typeCidade"].value;
+        var estado = formulario["typeEstado"].value;
+        var cep = formulario["typeCep"].value;
+        var pais = formulario["typePais"].value;
+        var observacoes = formulario["observacoes"].value;
+        var cadastrarEndNopPerfil = formulario["cadastrarEndNopPerfil"].value;
+    	var tipoEndereco = "ENTREGA";
+    
+	if(cadastrarEndNopPerfil == "Sim"){
+	    var dados = "id="+id+"&nome=" + nome + "&typeTipoResidencia=" + tipoResidencia + "&typeTipoLogradouro=" + tipoLogradouro + 
+	                "&typeLogradouro=" + logradouro + "&typeNumero=" + numero + "&typeBairro=" + bairro + "&typeCidade=" + cidade + 
+	                "&typeEstado=" + estado + "&typeCep=" + cep + "&typePais=" + pais + "&observacoes=" + observacoes + 
+	                "&tipoEndereco=" + tipoEndereco + "&venda=" + cadastrarEndNopPerfil ;
+	
+		var url="/les-ecommerce-vinhos/inserirEndereco?"+dados;
+	    fazerRequisicaoAjax(url, function(resposta) {
+			
+	        alert(resposta);
+	    }, function() {
+	        alert("Erro ao cadastrar endereço");
+	    });
+	}
+	
+  // Atualize os spans com os valores dos campos do endereço
+    document.getElementById('Logradouro').textContent = nome;
+    document.getElementById('Numero').textContent = numero;
+    document.getElementById('Bairro').textContent = bairro;
+    document.getElementById('Cidade').textContent = cidade;
+    document.getElementById('Estado').textContent = estado;
+    document.getElementById('Cep').textContent = cep;
+    document.getElementById('Pais').textContent = pais;
+    document.getElementById('Nome').textContent = observacoes;
+
+}
+
+function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                sucessoCallback(xhr.responseText);
+            } else {
+                erroCallback();
+            }
+        }
+    };
+    xhr.send();
+}

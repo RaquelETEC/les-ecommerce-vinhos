@@ -16,7 +16,7 @@ import model.entity.TiposEndereco;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/inserirEndereco", "/areaCliente/deleteEndereco",
+@WebServlet(urlPatterns = { "/areaCliente/inserirEndereco","/inserirEndereco", "/areaCliente/deleteEndereco",
 		"/areaCliente/EditarEndereco", "/areaCliente/MeusEnderecos.html", "/areaCliente/MeusEnderecosEditar.html" })
 public class ControllerEndereco extends HttpServlet {
 
@@ -41,7 +41,7 @@ public class ControllerEndereco extends HttpServlet {
 
 		if (action.equals("/areaCliente/MeusEnderecos.html")) {
 			ExibirEndereco(request, response);
-		} else if (action.equals("/areaCliente/inserirEndereco")) {
+		} else if (action.equals("/areaCliente/inserirEndereco") || action.equals("/inserirEndereco") ){
 			AdicionarEndereco(request, response);
 		} else if (action.equals("/areaCliente/MeusEnderecosEditar.html")) {
 			TelaEditarEndereco(request, response);
@@ -57,45 +57,60 @@ public class ControllerEndereco extends HttpServlet {
 
 		System.out.println("voce conseguiu chegar aqui no AdicionarEndereco:)");
 
-		int id = Integer.parseInt(request.getParameter("id"));
-		cliente.setId(id);
+		try {
+			int id = Integer.parseInt(request.getParameter("id"));
+			cliente.setId(id);
 
-		System.out.println("o id do cliente no adicionar endere�o servelet: " + cliente.getId());
+			System.out.println("o id do cliente no adicionar endere�o servelet: " + cliente.getId());
 
-		String nome = request.getParameter("nome");
-		String tipoResidencia = request.getParameter("typeTipoResidencia");
-		String tipoLogradouro = request.getParameter("typeTipoLogradouro");
-		String logradouro = request.getParameter("typeLogradouro");
-		String numero = request.getParameter("typeNumero");
-		String bairro = request.getParameter("typeBairro");
-		String cidade = request.getParameter("typeCidade");
-		String cep = request.getParameter("typeCep");
-		String estado = request.getParameter("typeEstado");
-		String pais = request.getParameter("typePais");
-		String observacoes = request.getParameter("observacoes");
+			String nome = request.getParameter("nome");
+			String tipoResidencia = request.getParameter("typeTipoResidencia");
+			String tipoLogradouro = request.getParameter("typeTipoLogradouro");
+			String logradouro = request.getParameter("typeLogradouro");
+			String numero = request.getParameter("typeNumero");
+			String bairro = request.getParameter("typeBairro");
+			String cidade = request.getParameter("typeCidade");
+			String cep = request.getParameter("typeCep");
+			String estado = request.getParameter("typeEstado");
+			String pais = request.getParameter("typePais");
+			String observacoes = request.getParameter("observacoes");
 
-		String tipoEnderecoParam = request.getParameter("tipoEndereco");
-		TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
+			String tipoEnderecoParam = request.getParameter("tipoEndereco");
+			TiposEndereco tiposEndereco = TiposEndereco.valueOf(tipoEnderecoParam);
 
-		endereco.setCliente(cliente);
-		endereco.setNome(nome);
-		endereco.setTipoResidencia(tipoResidencia);
-		endereco.setTipoLogradouro(tipoLogradouro);
-		endereco.setLogradouro(logradouro);
-		endereco.setNumero(numero);
-		endereco.setBairro(bairro);
-		endereco.setCep(cep);
-		endereco.setCidade(cidade);
-		endereco.setEstado(estado);
-		endereco.setPais(pais);
-		endereco.setPadrao("N");
-		endereco.setObservacao(observacoes);
-		endereco.setTipos(tiposEndereco);
+			endereco.setCliente(cliente);
+			endereco.setNome(nome);
+			endereco.setTipoResidencia(tipoResidencia);
+			endereco.setTipoLogradouro(tipoLogradouro);
+			endereco.setLogradouro(logradouro);
+			endereco.setNumero(numero);
+			endereco.setBairro(bairro);
+			endereco.setCep(cep);
+			endereco.setCidade(cidade);
+			endereco.setEstado(estado);
+			endereco.setPais(pais);
+			endereco.setPadrao("N");
+			endereco.setObservacao(observacoes);
+			endereco.setTipos(tiposEndereco);
 
-		enderecoService.adicionarEndereco(cliente, endereco);
+			String resposta = enderecoService.adicionarEndereco(cliente, endereco);
 
-		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusEnderecos.html?id=" + id);
+			//se não for uma solicitação da tela de venda, redireciona
+			if (request.getParameter("venda") == null) {
+				response.sendRedirect(request.getContextPath() + "/areaCliente/MeusEnderecos.html?id=" + id);
+			}
+			else {
+				response.setContentType("text/plain");
+			    response.setCharacterEncoding("UTF-8");
+			    response.getWriter().write(resposta); 
+			    response.getWriter().flush();
+			}
 
+		}
+		catch(Exception e){
+			System.out.println("erro: "+e);
+		}
+	
 	}
 
 	protected void ExibirEndereco(HttpServletRequest request, HttpServletResponse response)
