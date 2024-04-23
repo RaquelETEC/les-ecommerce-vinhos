@@ -346,12 +346,12 @@ public class ControllerClient extends HttpServlet {
 		cliente.setId(id);
 		cliente = clienteService.selecionarCliente(cliente);
 
-		//String respostaCli = clienteService.alterarSenha(cliente, senhaAtual, novaSenha, repitaSenha); 
+		String respostaCli = clienteService.alterarSenha(cliente, senhaAtual, novaSenha, repitaSenha); 
 		
 		 // Escreve a resposta para o HttpServletResponse
 	    response.setContentType("text/plain");
 	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write("aaa"); //respostaCli
+	    response.getWriter().write(respostaCli); //respostaCli
 
 	    // Encerra a resposta
 	    response.getWriter().flush();

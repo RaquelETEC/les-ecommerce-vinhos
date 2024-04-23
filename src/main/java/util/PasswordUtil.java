@@ -5,16 +5,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class PasswordUtil {
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-    public byte[] criptografarSenha(String senha) {
+    //static faz o metodo se tornar um metodo de classe 
+    //voce pode chamar ele quando chama a classe , sem precisar criar um objeto 
+    public static byte[] criptografarSenha(String senha) {
         return encoder.encode(senha).getBytes();
     }
 
-    public boolean verificarSenha(String senhaDigitada, String senhaArmazenada) {
+    public static boolean verificarSenha(String senhaDigitada, String senhaArmazenada) {
         return encoder.matches(senhaDigitada, senhaArmazenada);
     }
     
-    public String verificarSenhaForte(String senha, String repitaSenha) {
+    public static String verificarSenhaForte(String senha, String repitaSenha) {
         StringBuilder mensagem = new StringBuilder();
 
         // Verifica se a senha tem pelo menos 8 caracteres
