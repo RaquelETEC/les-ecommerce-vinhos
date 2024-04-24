@@ -56,7 +56,7 @@ public class CarrinhoService {
 	}
 
 
-	public String AdicionarAoCarrinho(Cliente cliente, Produtos produto, int quant) {
+	public String AdicionarAoCarrinhoService(Cliente cliente, Produtos produto, int quant) {
 		
 		CarrinhoDeCompras carrinho = daoCarrinho.SelecionarCarrinho(cliente);
 		

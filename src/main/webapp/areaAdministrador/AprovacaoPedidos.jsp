@@ -14,7 +14,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Ãrea da AdministraÃ§Ã£o</title>
+<title>Editar Pedidos</title>
 <link rel="stylesheet" href="../Styles/styleAdm.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
@@ -106,92 +106,53 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 							</tr>
 						</thead>
 						<tbody>
-							<%
-							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-							for (int i = 0; i < lista.size(); i++) {
-								PedidoVenda pedido = lista.get(i);
-								String data = dateFormat.format(lista.get(i).getData());
-							%>
-							<tr>
-								<td><%=lista.get(i).getId()%></td>
-								<td><%=lista.get(i).getCliente().getId()%></td>
-								<td><%=lista.get(i).getCliente().getNome()%></td>
-								<td><%=data%></td>
-								<td><%=lista.get(i).getValor()%></td>
-								<td>
-									<div class="mb-3">
-										<label for="PedidoStatus" class="form-label"></label> <select
-											class="form-select" id="status<%=i%>" name="PedidoStatus">
-											<option value="" disabled></option>
-
-											<%
-											if ("EM-PROCESSAMENTO".equals(lista.get(i).getStatus())) {
-											%>
-											<option value="EM-PROCESSAMENTO"
-												<%="EM-PROCESSAMENTO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM-PROCESSAMENTO</option>
-											<option value="PAGAMENTO REALIZADO"
-												<%="PAGAMENTO REALIZADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
-												REALIZADO</option>
-											<option value="PAGAMENTO RECUSADO"
-												<%="PAGAMENTO RECUSADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
-												RECUSADO</option>
-											<option value="PEDIDO CANCELADO"
-												<%="PEDIDO CANCELADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PEDIDO
-												CANCELADO</option>
-											<%
-											} else if ("PAGAMENTO REALIZADO".equals(lista.get(i).getStatus())) {
-											%>
-											<option value="PAGAMENTO REALIZADO"
-												<%="PAGAMENTO REALIZADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
-												REALIZADO</option>
-											<option value="EM TRANSPORTE"
-												<%="EM TRANSPORTE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM
-												TRANSPORTE</option>
-											<%
-											} else if ("EM TRANSPORTE".equals(lista.get(i).getStatus())) {
-											%>
-											<option value="EM TRANSPORTE"
-												<%="EM TRANSPORTE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM
-												TRANSPORTE</option>
-											<option value="ENTREGUE"
-												<%="ENTREGUE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>ENTREGUE</option>
-											<%
-											} else {
-											%>
-											<option value="EM-PROCESSAMENTO"
-												<%="EM-PROCESSAMENTO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM-PROCESSAMENTO</option>
-											<option value="PAGAMENTO RECUSADO"
-												<%="PAGAMENTO RECUSADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PAGAMENTO
-												RECUSADO</option>
-											<option value="PEDIDO CANCELADO"
-												<%="PEDIDO CANCELADO".equals(lista.get(i).getStatus()) ? "selected" : ""%>>PEDIDO
-												CANCELADO</option>
-											<option value="EM TRANSPORTE"
-												<%="EM TRANSPORTE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>EM
-												TRANSPORTE</option>
-											<option value="ENTREGUE"
-												<%="ENTREGUE".equals(lista.get(i).getStatus()) ? "selected" : ""%>>ENTREGUE</option>
-											<%
-											}
-											%>
-
-										</select>
-									</div>
-
-								</td>
-								<td>
-									<div class="option-button">
-										<a class="Botao1"
-											href="javascript: confirmarProduto(<%=lista.get(i).getId()%>,<%=i%>)">Editar</a>
-									</div>
-
-								</td>
-							</tr>
-
-						</tbody>
-						<%
-						}
-						%>
+						    <% 
+						    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						    for (int i = 0; i < lista.size(); i++) {
+						        PedidoVenda pedido = lista.get(i);
+						        String data = dateFormat.format(pedido.getData());
+						        
+						        // Definir as opções disponíveis com base no status atual do pedido e no tipo de usuário
+						        String[] opcoesStatus;
+						        String statusAtual = pedido.getStatus();
+						        switch (statusAtual) {
+						            case "EM PROCESSAMENTO":
+						                opcoesStatus = new String[]{"PAGAMENTO REALIZADO", "PAGAMENTO RECUSADO", "PEDIDO CANCELADO"};
+						                break;
+						            case "PAGAMENTO REALIZADO":
+						                opcoesStatus = new String[]{"EM TRANSPORTE"};
+						                break;
+						            case "EM TRANSPORTE":
+						                opcoesStatus = new String[]{"ENTREGUE"};
+						                break;
+						            default:
+						                // Outros casos não definidos
+						                opcoesStatus = new String[]{statusAtual};
+						        }
+						    %>
+						    <tr>
+						        <td><%= pedido.getId() %></td>
+						        <td><%= pedido.getCliente().getId() %></td>
+						        <td><%= pedido.getCliente().getNome() %></td>
+						        <td><%= data %></td>
+						        <td><%= pedido.getValor() %></td>
+						        <!-- Renderizar o select com base nas opções disponíveis -->
+						        <td>
+						            <select class="form-select" id="statusPedido<%= i %>">
+						            		<option value="<%= pedido.getStatus() %>"><%= pedido.getStatus() %></option>
+						                <% for (String opcao : opcoesStatus) { %>
+						                    <option value="<%= opcao %>"><%= opcao %></option>
+						                <% } %>
+						            </select>
+						        </td>
+						        
+						        <td>
+						            <div class="option-button">
+						                <a class="Botao1" href="javascript: confirmarProduto(<%= pedido.getId() %>, <%= i %>)">Editar</a>
+						            </div>
+						        </td>
+						    </tr>
+						    <% } %>
 					</table>
 				</div>
 			</main>

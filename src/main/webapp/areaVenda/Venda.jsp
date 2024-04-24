@@ -143,14 +143,14 @@ ArrayList<Cupons> listaCuponsDeTroca= (ArrayList<Cupons>) request.getAttribute("
 							<div class="row">
 								<!-- Parte esquerda com a imagem do cupom -->
 								<div class="col-md-1">
-									<img src="imagens/assets/CupomFrete.png"
+									<img id="idCupomSrc"src="" 
 										class="img-fluid rounded-start"
 										style="max-width: 70px; max-height: 70px;">
 								</div>
 								<!-- Parte direita com o nome do cupom e a data de vencimento -->
 								<div class="col-md-8">
-									<h5 class="card-title">Nome do Cupom 1</h5>
-									<p class="card-text">Data de vencimento: 20/03/2024</p>
+									<p id="idCupomDesc" class="card-title"><strong></strong></p>
+									<p id="idCupomValor" class="card-text"></p>
 								</div>
 								<div class="col-md-3 text-end ">
 									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCupomP">Selecionar Cupom</button>
@@ -165,7 +165,7 @@ ArrayList<Cupons> listaCuponsDeTroca= (ArrayList<Cupons>) request.getAttribute("
 				<div class="div-adicionar">
 					<div class="col-md-9">Cupom de Troca</div>
 					<div class="col-md-3 text-end ">
-						<button class="btn btn-primary" onClick="addCupomTroca(1)">+</button>
+						<button class="btn btn-primary" onClick="addCupomTroca()">+</button>
 					</div>
 
 
@@ -411,14 +411,22 @@ ArrayList<Cupons> listaCuponsDeTroca= (ArrayList<Cupons>) request.getAttribute("
 			<div class="card mt-3">
 				<div class="card-body">
 					<div class="row">
-						<div class="col-md-2 d-flex align-items-center justify-content-center"> 
-				   			<img src= <%=cupom.getImg()%>alt="Imagem do Cupom" class="img-fluid">
+					<div class="col-md-2 d-flex align-items-center justify-content-center"> <!-- Adicionando classes para alinhar vertical e horizontalmente -->
+				   			<div class="custom-radio">
+						        <input type="radio" id="cupomselect<%=cupom.getId()%>" name="cupomsSelecionadoP" value="<%=cupom.getId()%>">
+    							<label for="cupomselect<%=cupom.getId()%>"></label>
+						    </div>			            
 				         </div>
-					 	<div class="col-md-10">
-							<p id="NomeCupom" class="card-title "><strong><%=cupom.getDesc()%> </strong></p>
+						<div class="col-md-2 d-flex align-items-center justify-content-center"> 
+				   			<img id="imagemCupom<%=cupom.getId()%>"
+				   			src="<%=cupom.getImg() %>" 
+				   			alt="Imagem do Cupom" 
+				   			class="img-fluid">
+				         </div>
+					 	<div class="col-md-8">
+							<p id="NomeCupom<%=cupom.getId()%>" class="card-title "><strong><%=cupom.getDesc()%> </strong></p>
 						    <p class="card-text">
-							    <span id="ValorCupom"><%= cupom.getValor() %></span>,
-							    
+							    <span id="ValorCupom<%=cupom.getId()%>"><%=cupom.getValor()%></span>
 							</p>
 			            </div>
 			        </div>
@@ -426,17 +434,73 @@ ArrayList<Cupons> listaCuponsDeTroca= (ArrayList<Cupons>) request.getAttribute("
 	           </div>
 			   <% } %>
 			    <hr>
-			    <p>Não encontrou o endereço desejado?</p>
-			    <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalCadastroEndereco">Adicionar endereço</button>
+			    <div class="insiraCupom">
+			      	<p>Insira um Cupom de desconto</p>
+			   		<input type="text" name="nome" id="nome" class="form-control form-control-lg"  required/>
+			    </div>
+			  <hr>
+			    <button type="button" class="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#modalCadastroEndereco">Adicionar </button>
 			
 			</div>
             <div class="modal-footer">
-				<button type="button" class="btn btn-primary" onclick="salvarEndereco()">Salvar</button>
+				<button type="button" class="btn btn-primary" onclick="salvarCupom('cupomsSelecionadoP','modalCupomP')">Salvar</button>
             </div>
         </div>
     </div>
 </div>
-<!-- cadastrar endereco -->
+
+
+<!-- Modal Cupom -->
+<div class="modal fade" id="modalCupomT" tabindex="-1" aria-labelledby="modalCupomT" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSelecaoCupomLabel">Seleção de Cupom</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+			<%
+			for (int i = 0; i < listaCuponsDeTroca.size(); i++) {
+				Cupons cupom = listaCuponsDeTroca.get(i); // Crie um novo objeto Endereco
+			%>
+			<div class="card mt-3">
+				<div class="card-body">
+					<div class="row">
+					<div class="col-md-2 d-flex align-items-center justify-content-center"> <!-- Adicionando classes para alinhar vertical e horizontalmente -->
+				   			<div class="custom-radio">
+						        <input type="radio" id="cupomTselect<%=cupom.getId()%>" name="cupomsSelecionadoT" value="<%=cupom.getId()%>">
+    							<label for="cupomTselect<%=cupom.getId()%>"></label>
+						    </div>			            
+				         </div>
+						<div class="col-md-2 d-flex align-items-center justify-content-center"> 
+				   			<img id="imagemCupom<%=cupom.getId()%>"
+				   			src="<%=cupom.getImg() %>" 
+				   			alt="Imagem do Cupom" 
+				   			class="img-fluid">
+				         </div>
+					 	<div class="col-md-8">
+							<p id="NomeCupom<%=cupom.getId()%>" class="card-title "><strong><%=cupom.getDesc()%> </strong></p>
+						    <p class="card-text">
+							    <span id="ValorCupom<%=cupom.getId()%>"><%=cupom.getValor()%></span>
+							</p>
+			            </div>
+			        </div>
+	               </div>
+	           </div>
+			   <% } %>
+			    <hr>
+			  <hr>
+			    <button type="button" class="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#modalCadastroEndereco">Adicionar </button>
+			
+			</div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="salvarCupom('cupomsSelecionadoT', 'modalCupomT')">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 	</main>
 

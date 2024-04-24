@@ -14,7 +14,7 @@ public class DaoCarrinho {
 	Connection con = Conexao.conectar();
 
 	public CarrinhoDeCompras SelecionarCarrinho(Cliente cliente) {
-	    System.out.println("cheguei no SSelecionarCarrinho" + cliente.getId());
+	    System.out.println("cheguei no SelecionarCarrinho" + cliente.getId());
 	    CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
 
 	    String read = "select * from carrinho_de_compras where car_cli_id = ?";
@@ -101,8 +101,8 @@ public class DaoCarrinho {
 		}
 	
 	public String adicionarAoCarrinho(CarrinhoDeCompras carrinho, Produtos produto, int quantidade) {
-	    String selectQuery = "SELECT car_itens_prod_quant FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ?" ;
-	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ? WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	    String selectQuery = "SELECT car_itens_prod_quant FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ? and car_itens_removido = 0" ;
+	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ? WHERE car_itens_car_id = ? AND car_itens_prod_id = ? ";
 	    String insertQuery = "INSERT INTO carrinho_itens (car_itens_car_id, car_itens_prod_id, car_itens_prod_quant, car_itens_removido) VALUES (?, ?, ?, 0)";
 	    
 	    try (Connection con = Conexao.conectar();
@@ -157,8 +157,8 @@ public class DaoCarrinho {
 			    return "Erro ao remover item do carrinho: " + e;
 			}			
 	}
+	
 	public ArrayList<CarrinhoItens> ListarItensAtivos(CarrinhoDeCompras carrinho) {
-
 		System.out.println("Acesso ao Dao ListarItensAtivos");
 
 		ArrayList<CarrinhoItens> ArrayListcarrinhoItems = new ArrayList<>();

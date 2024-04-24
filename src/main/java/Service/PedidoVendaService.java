@@ -3,9 +3,6 @@ package Service;
 import java.util.ArrayList;
 
 import Dao.DAOPedidoVenda;
-import model.entity.BandeiraCartao;
-import model.entity.CartaoDeCredito;
-import model.entity.Cliente;
 import model.entity.PedidoVenda;
 
 public class PedidoVendaService {
@@ -17,6 +14,7 @@ public class PedidoVendaService {
 	}
 	
 	public ArrayList<PedidoVenda> listarPedidoVenda() {
+		System.out.println("cheguei no pedido service ");
 		return daoPedidoVenda.ListarPedidos();
 	}
 	

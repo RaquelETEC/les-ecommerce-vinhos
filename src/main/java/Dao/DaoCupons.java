@@ -12,7 +12,7 @@ public class DAOCupons {
 
 
 		public ArrayList<Cupons> ListarCupons(Cliente cliente) {
-			ArrayList<Cupons> listaDeCartoes = new ArrayList<>();
+			ArrayList<Cupons> listaDeCupons = new ArrayList<>();
 			String read = "SELECT " +
 				    "cup_id, " +
 				    "cup_codigo, " +
@@ -21,8 +21,9 @@ public class DAOCupons {
 				    "cup_tipo, " +
 				    "cup_valor, " +
 				    "cup_validade " +
-				    "FROM cupons " +
-				    "WHERE cup_cli_id = ?";
+		            "FROM cupons c "+ 
+		            "INNER JOIN rel_cup_cli cr ON c.cup_id = cr.rcc_cup_id "+
+		            "WHERE cr.rcc_cli_id = ?";
 			try {
 				Connection con = Conexao.conectar();
 				PreparedStatement pst = con.prepareStatement(read);
@@ -40,13 +41,13 @@ public class DAOCupons {
 					cupom.setValor(rs.getDouble("cup_valor"));
 					cupom.setValidade(rs.getDate("cup_validade"));
 
-					listaDeCartoes.add(cupom);
+					listaDeCupons.add(cupom);
 				}
 				con.close();
 			} catch (Exception e) {
 				System.out.println("Erro ao listar cupons: " + e);
 			}
-			return listaDeCartoes;
+			return listaDeCupons;
 		}	
 
 }

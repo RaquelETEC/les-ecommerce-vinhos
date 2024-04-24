@@ -3,10 +3,8 @@ package Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
-
-import model.entity.BandeiraCartao;
-import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 
 import model.entity.PedidoVenda;
@@ -15,6 +13,7 @@ import model.entity.PedidoVenda;
 public class DAOPedidoVenda {
 
 	public ArrayList<PedidoVenda> ListarPedidos() {
+		System.out.println("cheguei no dao ");
 	    ArrayList<PedidoVenda> listaDePedidos = new ArrayList<>();
 	    String read = "SELECT " +
 	        "ven_id, " +
@@ -24,17 +23,16 @@ public class DAOPedidoVenda {
 	        "ven_valor " +
 	        "FROM pedido_venda";
 	    try {
-	        Connection con = Conexao.conectar();
-	        PreparedStatement pst = con.prepareStatement(read);
-	        ResultSet rs = pst.executeQuery();
+	    	Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			ResultSet rs = pst.executeQuery();
 	        while (rs.next()) {
 	            PedidoVenda pedido = new PedidoVenda();
 	            pedido.setId(rs.getInt("ven_id"));
 
 	            int clienteId = rs.getInt("vend_id_cliente");
-	           //  Cliente cliente = new DaoCliente().buscarClientePorId(clienteId); // Chamada para buscar o cliente pelo ID
+	            Cliente cliente = new DaoCliente().buscarClientePorId(clienteId); // Chamada para buscar o cliente pelo ID
 	            
-	            Cliente cliente = new Cliente(); 
 	            cliente.setId(clienteId);
 	            pedido.setCliente(cliente);
 

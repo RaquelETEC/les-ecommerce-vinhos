@@ -14,9 +14,9 @@ import Service.PedidoVendaService;
 import model.entity.PedidoVenda;
 import model.entity.Cliente;
 
-@WebServlet(urlPatterns = { "/areaAdministrador/PedidoVenda.html", "/areaAdministrador/EditarPedido.html", "/areaAdministrador/EditarPedido"})
+@WebServlet(urlPatterns = { "/areaAdministrador/PedidoVenda.html","/areaAdministrador/EditarPedido"})
 
-public class ControllerPedidoVenda extends HttpServlet{
+public class ControllerAdministracao extends HttpServlet{
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class ControllerPedidoVenda extends HttpServlet{
 	Cliente cliente = new Cliente();
 	PedidoVendaService pedidoVendaservice = new PedidoVendaService();
 	
-	public ControllerPedidoVenda() {
+	public ControllerAdministracao() {
 		super();
 	}
 	
@@ -34,12 +34,10 @@ public class ControllerPedidoVenda extends HttpServlet{
 			throws ServletException, IOException {
 		String action = request.getServletPath();
 
-		System.out.println("chegou aqui: " + action);
+		System.out.println("chegou aqui area adm: " + action);
 
 		if (action.equals("/areaAdministrador/PedidoVenda.html")) {
 			AreaPedidos(request,response);
-		} else if (action.equals("/areaAdministrador/EditarPedido.html")) {
-			TelaEditarPedido(request, response);
 		}else if (action.equals("/areaAdministrador/EditarPedido")) {
 			EditarPedido(request, response);
 		}

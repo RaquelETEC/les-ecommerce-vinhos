@@ -262,13 +262,13 @@ CREATE TABLE `carrinho_de_compras` (
 
 CREATE TABLE `cupons`(
   `cup_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `cup_cli_id` int NOT NULL,
   `cup_codigo` varchar(10)  NOT NULL ,
   `cup_desc` varchar(10) NOT NULL,
   `cup_img`   varchar(25) NOT NULL,
   `cup_tipo` varchar(10) ,
   `cup_valor` double ,
   `cup_validade` date  NOT NULL,
+  `cup_usado` boolean NOT NULL,
   FOREIGN KEY (`cup_cli_id`) REFERENCES cliente(`cli_id`)
 );
 

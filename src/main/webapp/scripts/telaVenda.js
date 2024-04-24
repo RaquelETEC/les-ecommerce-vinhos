@@ -1,36 +1,39 @@
+var idCupomTroca = 0; 
 
- 
- function addCupomTroca(id){
- // Cria um novo elemento div para representar o card de cupom
-        var novoCard = document.createElement("div");
-        novoCard.classList.add("card", "mt-3", "styleCards");
+function addCupomTroca() {	
+	debugger
+	idCupomTroca ++; 	
+    // Cria um novo elemento div para representar o card de cupom
+    var novoCard = document.createElement("div");
+    novoCard.classList.add("card", "mt-3", "styleCards");
 
-        // Conteúdo do card de cupom
-        novoCard.innerHTML = `
-            <div class="card-body">
-                <div class="row">
-                    <!-- Parte esquerda com a imagem do cupom -->
-                    <div class="col-md-1">
-                        <img src="imagens/assets/CupomFrete.png" alt="Imagem do Cupom"
-                        class="img-fluid rounded-start" style="max-width: 70px; max-height: 70px;">
+    // Cria um identificador exclusivo para o card de cupom
+    var cardId = "cupomCard_" + idCupomTroca; // Adicione um número único ou o ID do cupom como parte do identificador
 
-                    </div>
-                    <!-- Parte direita com o nome do cupom e a data de vencimento -->
-                    <div class="col-md-8">
-                        <h5 class="card-title">Nome do Cupom</h5>
-                        <p class="card-text">Data de vencimento: 20/03/2024</p>
-                    </div>
-                    <div class="col-md-3 text-end">
-                        <a href="/les-ecommerce-vinhos/areaVenda/VendaTrocaEndereco.html" class="btn btn-success">Selecionar Cupom</a>
-                    </div>
+    // Conteúdo do card de cupom
+    novoCard.innerHTML = `
+        <div id="${cardId}" class="card-body">
+            <div class="row">
+                <!-- Parte esquerda com a imagem do cupom -->
+                <div class="col-md-1">
+                    <img id="imagemCupom_${cardId}" src="imagens/assets/CupomFrete.png" alt="Imagem do Cupom"
+                    class="img-fluid rounded-start" style="max-width: 70px; max-height: 70px;">
                 </div>
-            </div> 
-        `;
+                <!-- Parte direita com o nome do cupom e a data de vencimento -->
+                <div class="col-md-8">
+                    <h5 id="NomeCupom_${cardId}" class="card-title"></h5>
+                    <p id="ValorCupom_${cardId}" class="card-text"></p>
+                </div>
+                <div class="col-md-3 text-end">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCupomT">Selecionar Cupom de Troca</button>
+                </div>
+            </div>
+        </div> 
+    `;
 
-        // Adiciona o novo card ao container de cupons
-        document.getElementById("cupomContainer").appendChild(novoCard);
-    };
-    
+    // Adiciona o novo card ao container de cupons
+    document.getElementById("cupomContainer").appendChild(novoCard);
+};
  function addCartao(id){
  // Cria um novo elemento div para representar o card de cupom
         var novoPagamento = document.createElement("div");
@@ -87,7 +90,6 @@ function salvarEndereco() {
     }
 }
 function AdicionarNovoEndereco(id) {
-	debugger
     // Obtenha os valores dos campos do formulário
     // Obtenha uma referência ao formulário pelo seu nome
         var formulario = document.forms["frmcliente"];
@@ -133,6 +135,33 @@ function AdicionarNovoEndereco(id) {
     document.getElementById('Nome').textContent = observacoes;
 
 }
+
+function salvarCupom(name, modal){
+debugger
+    var cupomSelecionado = document.querySelector(`input[name="${name}"]:checked`);
+
+    if (cupomSelecionado) {
+
+        var cupomId = cupomSelecionado.value;
+        if(name == "cupomsSelecionadoP"){
+			document.getElementById('idCupomSrc').textContent = document.getElementById(`imagemCupom${cupomId}`)	;
+	        document.getElementById('idCupomDesc').textContent = document.getElementById(`NomeCupom${cupomId}`).textContent;
+	        document.getElementById('idCupomValor').textContent = document.getElementById(`ValorCupom${cupomId}`).textContent;			
+		}else{
+        	var cardId = cupomSelecionado.closest('.card-body').id;
+        	
+			document.getElementById(`imagemCupom_${cardId}`).textContent = document.getElementById(`imagemCupom${cupomId}`)	;
+	        document.getElementById(`NomeCupom_${cardId}`).textContent = document.getElementById(`NomeCupom${cupomId}`).textContent;
+	        document.getElementById(`ValorCupom_${cardId}`).textContent = document.getElementById(`ValorCupom${cupomId}`).textContent;			
+		}
+        
+        $(`#${modal}`).modal('hide');
+        
+    } else {
+        console.log("Selecione um cupom ou vincule um novo!");
+    }
+	}
+
 
 function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
     var xhr = new XMLHttpRequest();
