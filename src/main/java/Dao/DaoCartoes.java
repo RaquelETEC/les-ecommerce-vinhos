@@ -39,11 +39,11 @@ public class DaoCartoes {
 			pst.executeUpdate();
 			System.err.println("inserido cartao no dao!!");
 			con.close();
-			return "Sucesso";
+			return "Cartão cadastrado sucesso no perfil!";
 
 		} catch (Exception e) {
 			System.out.println("erro ao inserir cartao: " + e);
-			return "Erro";
+			return "Erro ao cadastrar: "+e;
 		}
 	}
 

@@ -1,7 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +26,7 @@ import model.entity.Endereco;
 import model.entity.Produtos;
 import model.entity.TiposEndereco;
 
-@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra"})
+@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra", "/CadastrarPedido"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -52,6 +55,10 @@ public class ControllerVenda extends HttpServlet {
 	    else if(action.equals("/FinalizarCompra")) {
 	    	FinalizarCompraTela(request, response);
 	    }
+	    else if(action.equals("/CadastrarPedido")) {
+	    	CadastrarPedido(request, response);
+
+	    }
 		else {
 			System.out.println("erro ao redirecionar " + action);
 			response.sendRedirect("index.html");
@@ -60,6 +67,20 @@ public class ControllerVenda extends HttpServlet {
 
 
 	
+	private void CadastrarPedido(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		  int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+		  Double valorPedido = Double.parseDouble(request.getParameter("totalPedido"));
+		  date = DateTime.
+		  try {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adapte o formato conforme necessário
+				
+				cliente.setDataNasc(nascimentoDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+	}
+
 	protected void AdicionarAoCarriho(HttpServletRequest request, HttpServletResponse response)
 	        throws ServletException, IOException {
 	    // Obtendo os parâmetros da requisição
@@ -221,7 +242,7 @@ public class ControllerVenda extends HttpServlet {
 		
 		//listagem de cartões
 		CartoesService cartaoService = new CartoesService();
-		//ArrayList<CartaoDeCredito> listaCartoes = cartaoService.listarCartoes(cliente);
+		ArrayList<CartaoDeCredito> listaCartoes = cartaoService.listarCartoes(cliente);
 
 		//Lista de endereços
 		request.setAttribute("listaEnderecosEntrega", listaEntrega);
@@ -231,7 +252,7 @@ public class ControllerVenda extends HttpServlet {
 		request.setAttribute("listaCuponsTroca", listaCuponsTroca);
 		
 		//Lista de cartao
-	//	request.setAttribute("listaCartoes", listaCartoes);		
+		request.setAttribute("listaCartoes", listaCartoes);		
 	  
 		//Lista de produtos
 		request.setAttribute("itens", listaItens);

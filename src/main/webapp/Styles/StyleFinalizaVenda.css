@@ -77,3 +77,42 @@ button {
     background-color: #EE603D ; /* Cor de fundo laranja */
 }
 
+.Botao1 {
+	text-decoration: none;
+	background-color: #dc3545;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+
+.Botao2 {
+	text-decoration: none;
+	background-color:  #66bbff;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+
+#tabela {
+	
+	border-collapse: collapse;
+}
+
+#tabela th {
+	border: 1px solid #ddd;
+	padding: 10px;
+	text-align: left;
+
+
+}
+
+#tabela td {
+	border: 1px solid #ddd;
+	padding: 10px;
+}

@@ -18,7 +18,7 @@ import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/areaCliente/EditarCartao", "/areaCliente/MeusCartoes.html",
+@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/inserirCartao","/areaCliente/EditarCartao", "/areaCliente/MeusCartoes.html",
 		"/areaCliente/LoginCartao.html", "/areaCliente/EditarCartao.html", "/areaCliente/deleteCartao" })
 public class ControllerCartao extends HttpServlet {
 
@@ -45,7 +45,7 @@ public class ControllerCartao extends HttpServlet {
 
 		System.out.println("chegou aqui: " + action);
 
-		if (action.equals("/areaCliente/inserirCartao")) {
+		if (action.equals("/areaCliente/inserirCartao") || action.equals("inserirCartao")) {
 			AdicionarCartao(request, response);
 		} else if (action.equals("/areaCliente/MeusCartoes.html")) {
 			areaMeusCartoes(request, response);
@@ -72,7 +72,6 @@ public class ControllerCartao extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("typeId"));
 		cliente.setId(id);
 		System.out.println("o id que chegou aqui nos AddCartao:" + cliente.getId());
-		request.setAttribute("id", id);
 
 		int Codigobandeira = Integer.parseInt(request.getParameter("tipoBandeira"));
 		System.out.println("o id do bandeira cartao no adicionar cartao : " + Codigobandeira);
@@ -92,9 +91,23 @@ public class ControllerCartao extends HttpServlet {
 		cartao.setPadrao(padrao);
 		cartao.setCodigoSeguranca(codigoSeguranca);
 
-		cartaoService.adicionarCartao(cliente, cartao, tipoBandeira);
-
-		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id=" + id);
+		String resposta = cartaoService.adicionarCartao(cliente, cartao, tipoBandeira);
+		 
+		String solicitacao = request.getParameter("tipoSolicitacao");
+		
+		if(solicitacao != null) {
+			response.setContentType("text/plain");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(resposta); 
+		    response.getWriter().flush();
+			}
+		else {
+			request.setAttribute("id", id);
+			response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id=" + id);
+		
+		}
+		
+		
 	}
 
 	// fun��o para exibir a tela de adicionar cartao, passando o id do cliente e
