@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500&display=swap');
-
+/* Reset CSS básico */
 * {
     padding: 0;
     margin: 0;
@@ -7,125 +6,80 @@
     font-family: 'Inter', sans-serif;
 }
 
+/* Estilos para o botão */
 button {
     cursor: pointer;
+    background-color: #ED5833;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 12px 24px; /* Espaçamento interno para o botão */
+    font-size: 16px;
 }
 
-main {
-    width: 100%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-header {
-    width: 100%;
-    height: 5rem;
-    background-color: black;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1rem;
-    position: fixed;
-}
-
-.title-crnines {
-    color: #EE603D;
-    font-size: 32px;
-    font-weight: 100
-}
-
-.button-header-minha-conta {
-    background-color: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 190px;
-    height: 2.5rem;
-
-    border-radius: 10px;
-}
-
-.container-main {
-    width: 100%;
-    height: auto;
-
-    margin-top: 5rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 1rem;
-
-    padding: 1.5rem;
-}
-
+/* Estilos para o contêiner principal */
 .container-register {
-    width: 80%;
-    height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-
-    padding: 1rem;
-}
-
-.box-top-register {
     width: 100%;
-    height: 4.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 3rem;
-
-    border-bottom: 1px solid silver;
+    max-width: 800px; /* Define a largura máxima para o contêiner */
+    margin: 0 auto; /* Centraliza o contêiner na tela */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 20px;
 }
 
-.text-perfil {
-    font-size: 3em;
+/* Estilos para o texto do pedido */
+.PedidoTexto {
+    color: #3F7F00;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px; /* Espaçamento inferior */
+}
+
+/* Estilos para a imagem "Ok" */
+.OkIMG img {
+    max-width: 100%; /* Garante que a imagem não ultrapasse o contêiner pai */
+    height: auto;
+    display: block; /* Remove espaços extras em torno da imagem */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+}
+
+/* Estilos para o texto de aguardo */
+.AguardTexto {
+    font-style: normal;
     font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 20px; /* Espaçamento inferior */
 }
 
-.box-input-pesquisa-e-carrinho {
-    display: flex;
-    gap: 5rem;
+/* Estilos para a área do botão */
+.ButtonArea {
+    text-align: center; /* Centraliza o conteúdo horizontalmente */
 }
 
-.box-input-top-pesquisar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid black;
+/* Estilos para o contêiner do pedido */
+.Pedido-Container {
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 20px;
 }
 
-.input-top-pesquisar {
-    border: none;
-    height: 2rem;
-    display: flex;
-    font-size: 1em;
-    outline: none;
+/* Media query para dispositivos menores */
+@media (max-width: 768px) {
+    .container-register {
+        padding: 10px;
+    }
+    .PedidoTexto {
+        font-size: 20px;
+    }
+    .AguardTexto {
+        font-size: 12px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }
-
-.button-top-register {
-    background-color: transparent;
-    border: none;
-}
-.Pedido-Container{
-    width: 1420px;
-    height: 600px;
-    margin-top: 40px;
-    background-color:transparent;
-    border: 1px solid grey;
-    border-radius: 20px
-}
-.PedidoTexto{color: #3F7F00; margin-left: 540px; margin-top: 30px; position: absolute; font-size: larger}
-.OkIMG{position: absolute;left: 840px;top: 330px;}
-.AguardTexto{position: absolute;width: 401px;height: 60px;left: calc(50% - 401px/2 + 10.5px);top: 575px;font-style: normal;font-weight: 400;font-size: 12px;line-height: 15px;text-align: center;color: #000000;}
-.BotaoMinhasCompras{position: absolute;width: 269px;height: 42px;left: 810px;top: 674px;background: #ED5833;border-radius: 6px;color: white}
-
-
-
+ 	

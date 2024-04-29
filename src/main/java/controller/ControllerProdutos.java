@@ -53,9 +53,7 @@ public class ControllerProdutos extends HttpServlet{
 	
 		RequestDispatcher rd = request.getRequestDispatcher("/Produtos.jsp");
 		rd.forward(request, response);
-		
-		
-
+	
 	}
 	
 	

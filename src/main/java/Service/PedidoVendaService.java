@@ -25,4 +25,7 @@ public class PedidoVendaService {
 	public PedidoVenda editarPedido(PedidoVenda pedidovenda){
 		return daoPedidoVenda.EditarPedido(pedidovenda);
 	}
+
+	public String CadastrarPedido(PedidoVenda pedido) {
+		return daoPedidoVenda.CadastrarPedidoDao(pedido);	}
 }

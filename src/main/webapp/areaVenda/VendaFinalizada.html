@@ -2,55 +2,63 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venda</title>
-    <link rel="stylesheet" href="../Styles/StyleVendaFinalizada.css">
-    <script src="script.js" defer></script>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venda</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../Styles/StyleVendaFinalizada.css">
+ <script src="../scripts/scriptFinalizaVenda.js" defer></script>
+
 
 <body>
-    <main>
-        <header>
-            <h1 class="title-crnines">
-                <span style="color:#fff;"> CR </span> WINES
-            </h1>
-        </header>
+	<nav class="navbar navbar-expand-sm py-3 sticky-top"
+		style="background: black;">
+		<div class="container-fluid">
+			<img src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
+				style="width: 200px;" class="mx-3">
+			<div class="navbar-nav ms-auto"></div>
+		</div>
+	</nav>
 
-        <div class="container-main">
+	<main class="main">
+		
+      <div class="container-main">
 
-            <div class="container-register">
-
-                <div class="box-top-register">
-                    <!-- titulo do cabecalho -->
-                    <h1 class="text-perfil">Venda</h1>
-
-                    <div class="box-input-pesquisa-e-carrinho">
-
-                        <div class="box-input-top-pesquisar">
-                            <input type="text" class="input-top-pesquisar" placeholder="Busca">
-                            <button class="button-top-register"><img src="./assets/icons-lupa-input.png" alt=""
-                                    class="img-top-register"></button>
-                        </div>
-
-                        <button class="button-top-register"><img src="./assets/icons-carrinho.png" alt=""
-                                class="img-top-register"></button>
-                    </div>
-
-                </div>
+            <div class="container-register align-items-center">
                 <div class="Pedido-Container">
-                    <a class="PedidoTexto">PEDIDO #12 REALIZADO COM SUCESSO  !</a>
-                    <img class="OkIMG" src="../imagens/assets/Ok.PNG">
-                    <a class="AguardTexto">SEU PEDIDO ESTA AGUARDANDO APROVAÇÃO DO PAGAMENTO
+                	<div class="PedidoTexto align-items-center">
+                	   <p id=idTextPedido>PEDIDO #12 REALIZADO COM SUCESSO  !</p>
+                	</div>
+                	<div class="OkIMG">
+                		<img src="../imagens/assets/Ok.PNG">
+                	</div>
+                	<div class="AguardTexto"> 
+                	   <p id="pedidoText">SEU PEDIDO ESTA AGUARDANDO APROVAÇÃO DO PAGAMENTO
                         ACESSE “MINHAS COMPRAS” DENTRO DA ÁREA DO CLIENTE PARA
-                        VERIFICAR O STATUS</a>
-                    <button onclick="window.location.href='../areaCliente/MinhasCompras.html';" class="BotaoMinhasCompras">Acessar Minhas Compras</button>
+                        VERIFICAR O STATUS
+                    </p>
+                	</div>
+                 	<div class="ButtonArea">
+                 	  <button onclick="window.location.href='../areaCliente/MinhasCompras.html';" class="BotaoMinhasCompras">
+                 	  	Acessar Minhas Compras
+                 	  </button>
+                 	</div>
+                        
+                        
                 </div>
             </div>
 
         </div>
+		
+	</main>
 
-    </main>
+
+	<footer class="p-4 text-light text-center footer">
+		Desenvolvido por Caynan e Raquel </footer>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

@@ -3,6 +3,7 @@ package Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import model.entity.Cliente;
@@ -89,4 +90,37 @@ public class DAOPedidoVenda {
 			return pedidovenda;
 		}
 	}
+
+
+	public String CadastrarPedidoDao(PedidoVenda pedido) {
+        String mensagem = "";
+        String sql = "INSERT INTO pedido_venda (vend_id_cliente, ven_status, ven_data, ven_valor) " +
+                     "VALUES (?, ?, ?, ?)";
+
+        try {
+            Connection con = Conexao.conectar();
+
+            PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, pedido.getCliente().getId());
+            pstmt.setString(2, pedido.getStatus());
+            pstmt.setDate(3, new java.sql.Date(pedido.getData().getTime()));
+            pstmt.setDouble(4, pedido.getValor());
+
+            pstmt.executeUpdate();
+
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int idPedidoGerado = generatedKeys.getInt(1);
+                pedido.setId(idPedidoGerado); 
+            } 
+
+            con.close(); 
+
+        } catch (SQLException e) {
+            mensagem = "Erro ao cadastrar pedido: " + e.getMessage();
+            e.printStackTrace();
+        }
+
+        return  "?id=" + pedido.getCliente().getId() + "&idPedido=" + pedido.getId();
+    }
 }

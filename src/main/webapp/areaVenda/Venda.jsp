@@ -195,6 +195,8 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 									<p class="text-md-start">Total Trocas</p>
 									<p class="text-md-start">Total Pedido</p>
 									<p class="text-md-start">Total Pagamento</p>
+									<p class="text-md-start">À pagar</p>
+									
 								</div>
 								<div class="col-md-6">
 									<p id="idTotalProduto"  class="text-md-end">R$ <%=total %></p>
@@ -203,6 +205,8 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 									<p id="idTotalCupomT" class="text-md-end">R$ 00,00</p>
 									<p id="idTotalPedido" class="text-md-end">R$ <%=total %></p>
 									<p id="idTotalPagamento" class="text-md-end">R$ 00,00</p>
+									<p id="idTotalApagar" class="text-md-end">R$ 00,00</p>
+									
 								</div>
 							</div>
 						</div>
@@ -250,7 +254,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 
 			</div>
 			<br>
-			<button class="btn btn-success" onClick="validarPedido()">Finalizar Compra</button>
+			<button class="btn btn-success" onClick="validarPedido(<%=request.getParameter("idCliente")%>)">Finalizar Compra</button>
 
 			<!-- ------------------------------------- Fim da tela  ---------------------------------- -->
 			<!-- Sessão de modals -->

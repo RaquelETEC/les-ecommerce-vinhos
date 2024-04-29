@@ -17,20 +17,25 @@ import Service.CarrinhoService;
 import Service.CartoesService;
 import Service.CupomService;
 import Service.EnderecoService;
+import Service.PedidoVendaService;
 import model.entity.CarrinhoDeCompras;
 import model.entity.CarrinhoItens;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Cupons;
 import model.entity.Endereco;
+import model.entity.PedidoVenda;
 import model.entity.Produtos;
 import model.entity.TiposEndereco;
 
-@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", "/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra", "/CadastrarPedido"})
+@WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", 
+		"/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra", 
+		"/CadastrarPedidoVenda"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	CarrinhoService carrinhoService = new CarrinhoService();
+	PedidoVendaService vendaService = new PedidoVendaService(); 
 	
 	public ControllerVenda() {
 		super();
@@ -55,8 +60,8 @@ public class ControllerVenda extends HttpServlet {
 	    else if(action.equals("/FinalizarCompra")) {
 	    	FinalizarCompraTela(request, response);
 	    }
-	    else if(action.equals("/CadastrarPedido")) {
-	    	CadastrarPedido(request, response);
+	    else if(action.equals("/CadastrarPedidoVenda")) {
+	    	CadastrarPedidoVenda(request, response);
 
 	    }
 		else {
@@ -67,18 +72,39 @@ public class ControllerVenda extends HttpServlet {
 
 
 	
-	private void CadastrarPedido(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		  int idCliente = Integer.parseInt(request.getParameter("idCliente"));
-		  Double valorPedido = Double.parseDouble(request.getParameter("totalPedido"));
-		  date = DateTime.
-		  try {
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Adapte o formato conforme necessário
-				
-				cliente.setDataNasc(nascimentoDate);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+	private void CadastrarPedidoVenda(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	    System.out.println("controller cadastrar pedido venda");
+		Cliente cliente = new Cliente(); 
+
+		cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
+	    Double valorPedido = Double.parseDouble(request.getParameter("totalPedido"));
+	   
+	    
+	    Date dataAtual = new Date();
+
+	    try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        String dataFormatada = dateFormat.format(dataAtual);
+	        System.out.println("Data atual formatada: " + dataFormatada);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    PedidoVenda pedido = new PedidoVenda();
+	    
+	    pedido.setCliente(cliente);
+	    pedido.setData(dataAtual);
+	    pedido.setStatus("EM PROCESSAMENTO");
+	    pedido.setValor(valorPedido);
+	    
+	    
+	    String resposta = vendaService.CadastrarPedido(pedido);
+	    
+	    	response.setContentType("text/plain");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(resposta); 
+		    response.getWriter().flush();
+   
 	}
 
 	protected void AdicionarAoCarriho(HttpServletRequest request, HttpServletResponse response)
