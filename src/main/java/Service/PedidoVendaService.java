@@ -3,6 +3,7 @@ package Service;
 import java.util.ArrayList;
 
 import Dao.DAOPedidoVenda;
+import model.entity.CarrinhoItens;
 import model.entity.PedidoVenda;
 
 public class PedidoVendaService {
@@ -26,6 +27,7 @@ public class PedidoVendaService {
 		return daoPedidoVenda.EditarPedido(pedidovenda);
 	}
 
-	public String CadastrarPedido(PedidoVenda pedido) {
-		return daoPedidoVenda.CadastrarPedidoDao(pedido);	}
+	public String CadastrarPedido(PedidoVenda pedido, ArrayList<CarrinhoItens> itens) {
+		return daoPedidoVenda.CadastrarPedidoDao(pedido,itens);	
+	}
 }

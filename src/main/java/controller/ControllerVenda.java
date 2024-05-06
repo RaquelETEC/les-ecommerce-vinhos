@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Service.CarrinhoService;
 import Service.CartoesService;
+import Service.ClienteService;
 import Service.CupomService;
 import Service.EnderecoService;
 import Service.PedidoVendaService;
@@ -30,12 +30,13 @@ import model.entity.TiposEndereco;
 
 @WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", 
 		"/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra", 
-		"/CadastrarPedidoVenda"})
+		"/CadastrarPedidoVenda" , "/areaCliente/MinhasCompras.html"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	CarrinhoService carrinhoService = new CarrinhoService();
 	PedidoVendaService vendaService = new PedidoVendaService(); 
+	ClienteService clienteService = new ClienteService();
 	
 	public ControllerVenda() {
 		super();
@@ -62,7 +63,9 @@ public class ControllerVenda extends HttpServlet {
 	    }
 	    else if(action.equals("/CadastrarPedidoVenda")) {
 	    	CadastrarPedidoVenda(request, response);
-
+	    }
+	    else if(action.equals("/areaCliente/MinhasCompras.html")) {
+	    	MinhasComprasPage(request, response);
 	    }
 		else {
 			System.out.println("erro ao redirecionar " + action);
@@ -72,6 +75,28 @@ public class ControllerVenda extends HttpServlet {
 
 
 	
+	private void MinhasComprasPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("Minhas Compras Controller");
+		
+		Cliente cliente = new Cliente(); 
+		cliente.setId(Integer.parseInt(request.getParameter("id")));
+		
+		cliente = clienteService.selecionarCliente(cliente);
+		
+	//	ArrayList<PedidoItens> listaRemovidos = new ArrayList<>();
+		//listaPedidos = vendaService.ListarCompras(cliente);
+		
+
+		
+		request.setAttribute("cliente", cliente);
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MinhasCompras.jsp");
+		rd.forward(request, response);
+		
+		
+		
+	}
+
 	private void CadastrarPedidoVenda(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	    System.out.println("controller cadastrar pedido venda");
 		Cliente cliente = new Cliente(); 
@@ -79,6 +104,12 @@ public class ControllerVenda extends HttpServlet {
 		cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
 	    Double valorPedido = Double.parseDouble(request.getParameter("totalPedido"));
 	   
+		CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
+	    carrinho = carrinhoService.SelecionarCarrinho(cliente);
+	    
+	    //listagem de itens do carrinho 
+	    ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItensAtivos(carrinho);
+	    
 	    
 	    Date dataAtual = new Date();
 
@@ -98,7 +129,7 @@ public class ControllerVenda extends HttpServlet {
 	    pedido.setValor(valorPedido);
 	    
 	    
-	    String resposta = vendaService.CadastrarPedido(pedido);
+	    String resposta = vendaService.CadastrarPedido(pedido,listaItens);
 	    
 	    	response.setContentType("text/plain");
 		    response.setCharacterEncoding("UTF-8");

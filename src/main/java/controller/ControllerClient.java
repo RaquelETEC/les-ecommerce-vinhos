@@ -32,6 +32,9 @@ public class ControllerClient extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/** The dao. */
+	
+	//View helper 
+	
 
 	/** The cliente. */
 	Cliente cliente = new Cliente();
@@ -54,12 +57,18 @@ public class ControllerClient extends HttpServlet {
 		super();
 	}
 
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	System.out.println("teste cheguei no do post");
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getServletPath();
 
-		System.out.println("ESSA DESGRAÇAAAAAAAAAAA:" + action);
-
+//podemos fazer um map 
+//view helper
 		if (action.equals("/insertCliente")) {
 			AdicionarCliente(request, response);
 

@@ -349,8 +349,11 @@ header {
     transition: 1s;
 }
 
-
 .img-fluid{
 	 width: 50%;
      height: auto;
 }
+
+tabs-content{
+     width: 90%;
+ }

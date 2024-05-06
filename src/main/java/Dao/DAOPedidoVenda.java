@@ -5,10 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Locale;
+
+import model.entity.CarrinhoItens;
 import model.entity.Cliente;
 
 import model.entity.PedidoVenda;
+import model.entity.TiposStatusItensPedido;
 
 
 public class DAOPedidoVenda {
@@ -92,35 +98,64 @@ public class DAOPedidoVenda {
 	}
 
 
-	public String CadastrarPedidoDao(PedidoVenda pedido) {
-        String mensagem = "";
-        String sql = "INSERT INTO pedido_venda (vend_id_cliente, ven_status, ven_data, ven_valor) " +
-                     "VALUES (?, ?, ?, ?)";
+	public String CadastrarPedidoDao(PedidoVenda pedido, ArrayList<CarrinhoItens> itens) {
+	    System.out.println("Dao cadastrar pedido");
+	    String sqlPedido = "INSERT INTO pedido_venda (vend_id_cliente, ven_status, ven_data, ven_valor) VALUES (?, ?, ?, ?)";
+	    String sqlItem = "INSERT INTO pedido_itens (ped_item_ven_id, ped_item_prod_id, ped_item_prod_desc, ped_item_prod_quantidade, ped_item_prod_valor, ped_item_prod_valor_total, ped_item_status_troca) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try {
-            Connection con = Conexao.conectar();
+	    try (Connection con = Conexao.conectar();
+	         PreparedStatement pstmtPedido = con.prepareStatement(sqlPedido, PreparedStatement.RETURN_GENERATED_KEYS);
+	         PreparedStatement pstmtItem = con.prepareStatement(sqlItem)) {
 
-            PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, pedido.getCliente().getId());
-            pstmt.setString(2, pedido.getStatus());
-            pstmt.setDate(3, new java.sql.Date(pedido.getData().getTime()));
-            pstmt.setDouble(4, pedido.getValor());
+	        con.setAutoCommit(false);
 
-            pstmt.executeUpdate();
+	        // Inserir o pedido
+	        pstmtPedido.setInt(1, pedido.getCliente().getId());
+	        pstmtPedido.setString(2, pedido.getStatus());
+	        pstmtPedido.setDate(3, new java.sql.Date(pedido.getData().getTime()));
+	        pstmtPedido.setDouble(4, pedido.getValor());
+	        pstmtPedido.executeUpdate();
 
-            ResultSet generatedKeys = pstmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int idPedidoGerado = generatedKeys.getInt(1);
-                pedido.setId(idPedidoGerado); 
-            } 
+	        // Obter o ID do pedido gerado
+	        ResultSet generatedKeys = pstmtPedido.getGeneratedKeys();
+	        int idPedidoGerado = -1;
+	        if (generatedKeys.next()) {
+	            idPedidoGerado = generatedKeys.getInt(1);
+	            pedido.setId(idPedidoGerado);
+	        }
 
-            con.close(); 
+	        // Inserir os itens do pedido
+	        if (idPedidoGerado != -1) {
+	            for (CarrinhoItens item : itens) {
+	                setParametrosItemPedido(pstmtItem, idPedidoGerado, item);
+	                pstmtItem.addBatch(); // Adicionar a instrução ao batch
+	            }
 
-        } catch (SQLException e) {
-            mensagem = "Erro ao cadastrar pedido: " + e.getMessage();
-            e.printStackTrace();
-        }
+	            // Executar o batch de inserção
+	            pstmtItem.executeBatch();
+	        }
 
-        return  "?id=" + pedido.getCliente().getId() + "&idPedido=" + pedido.getId();
-    }
+	        con.commit();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return "Erro ao cadastrar pedido: " + e.getMessage();
+	    }
+
+	    return "?id=" + pedido.getCliente().getId() + "&idPedido=" + pedido.getId();
+	}
+
+	private void setParametrosItemPedido(PreparedStatement pstmtItem, int idPedido, CarrinhoItens item) throws SQLException {
+	    System.out.println("Configurando parâmetros do item do pedido");
+
+	    double valorTotal = item.getProduto().getPro_preco_venda() * item.getQuantProd();
+
+	    pstmtItem.setInt(1, idPedido);
+	    pstmtItem.setInt(2, item.getProduto().getId());
+	    pstmtItem.setString(3, item.getProduto().getDesc());
+	    pstmtItem.setDouble(4, item.getQuantProd());
+	    pstmtItem.setDouble(5, item.getProduto().getPro_preco_venda());
+	    pstmtItem.setDouble(6, valorTotal);
+	    pstmtItem.setInt(7, TiposStatusItensPedido.TROCA_NAO_SOLICITADA.ordinal());
+	}
 }

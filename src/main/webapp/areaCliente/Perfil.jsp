@@ -56,13 +56,13 @@
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-2.png" alt="" class="img-icons-perfil">
-                        <span onclick="window.location.href='MinhasCompra.html';">Minhas Compras</span>
+                        <span onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=<%=cliente.getId()%>';">Minhas Compras</span>
                     </button>
                    
 
                     <button class="button-dados-perfil">
                         <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
-                       <span onclick="window.location.href='Notificaï¿½ï¿½es.jsp';">Notificacoes</span>
+                       <span onclick="window.location.href='Notificacoes.jsp';">Notificacoes</span>
                     </button>
                     
 
