@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="model.entity.Cliente"%>
-	
+<%@ page import="model.entity.PedidoVenda"%>
+<%@ page import="model.entity.PedidoItens"%>
+<%@ page import="java.util.ArrayList"%>
 <%
     Cliente cliente = (Cliente) request.getAttribute("cliente");
+	@SuppressWarnings("unchecked")
+	ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttribute("listaPedidos");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,7 +18,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minhas Compras</title>
     <link rel="stylesheet" href="../Styles/StyleMinhasCompras.css">
-    <script src="../scripts/exibirMenus.js" defer></script>
+    <script src="../scripts/minhasCompras.js" defer></script>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 	  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -37,7 +43,7 @@
                 <div class="box-name-perfil">
                     <img src="../imagens/assets/icon-box-image-name.png" alt="" class="img-name-perfil">
                     <div class="box-name-e-nivel">
-                        <p class="text-name">Usuario</p>
+                        <p class="text-name">Usuário</p>
                         <p class="text-nivel">NIVEL: 1</p>
                     </div>
                 </div>
@@ -81,46 +87,96 @@
                     <!-- titulo do cabecalho -->
                     <h1 class="text-perfil">Minhas compras</h1>
                 </div>
-                <div class="custom-container">
+                <div class="custom-container  data-status=tabs">
 				    <div class="row tabs-content mt-2">
 					 	<div class="col-md-12">
-					 	  <ul class="nav nav-pills nav-justified" id="minhasAbas" role="tablist">
-			                 <li class="nav-item" role="presentation">
-			                     <button class="nav-link active" id="abaTudo-tab" data-bs-toggle="tab" data-bs-target="#abaTudo" type="button" role="tab" aria-controls="abaTudo" aria-selected="true">Tudo</button>
-			                 </li>
-			                 <li class="nav-item" role="presentation">
-			                     <button class="nav-link" id="abaTransito-tab" data-bs-toggle="tab" data-bs-target="#abaTransito" type="button" role="tab" aria-controls="abaTransito" aria-selected="false">Em Trânsito</button>
-			                 </li>
-			                 <li class="nav-item" role="presentation">
-			                     <button class="nav-link" id="abaEntregue-tab" data-bs-toggle="tab" data-bs-target="#abaEntregue" type="button" role="tab" aria-controls="abaEntregue" aria-selected="false">Entregue</button>
-			                 </li>
-			                 <li class="nav-item" role="presentation">
-			                     <button class="nav-link" id="abaDevolucao-tab" data-bs-toggle="tab" data-bs-target="#abaDevolucao" type="button" role="tab" aria-controls="abaDevolucao" aria-selected="false">Devolução</button>
-			                 </li>
-			             </ul>
+							<ul class="nav nav-pills nav-justified" id="minhasAbas" role="tablist">
+							    <li class="nav-item" role="presentation">
+							        <button onclick="filterStatus('Tudo')" class="nav-link active" id="abaTudo-tab" data-bs-toggle="tab" data-bs-target="#abaTudo" type="button" role="tab" aria-controls="abaTudo" aria-selected="true">Tudo</button>
+							    </li>
+							    <li class="nav-item" role="presentation">
+							        <button onclick="filterStatus('EM PROCESSAMENTO')" class="nav-link" id="abaEmProcessamento-tab" data-bs-toggle="tab" data-bs-target="#abaEmProcessamento" type="button" role="tab" aria-controls="abaEmProcessamento" aria-selected="false">Em processamento</button>
+							    </li>
+							    <li class="nav-item" role="presentation">
+							        <button onclick="filterStatus('EM TRANSPORTE')" class="nav-link" id="abaTransporte-tab" data-bs-toggle="tab" data-bs-target="#abaTransporte" type="button" role="tab" aria-controls="abaTransporte" aria-selected="false">Em transporte</button>
+							    </li>
+							    <li class="nav-item" role="presentation">
+							        <button onclick="filterStatus('ENTREGUE')" class="nav-link" id="abaEntregue-tab" data-bs-toggle="tab" data-bs-target="#abaEntregue" type="button" role="tab" aria-controls="abaEntregue" aria-selected="false">Entregue</button>
+							    </li>
+							    <li class="nav-item" role="presentation">
+							        <button onclick="filterStatus('DEVOLUCAO')" class="nav-link" id="abaDevolucao-tab" data-bs-toggle="tab" data-bs-target="#abaDevolucao" type="button" role="tab" aria-controls="abaDevolucao" aria-selected="false">Devolução</button>
+							    </li>
+							</ul>
 					 	</div>
 					 </div>
 				 </div>
-                <div class="content">
-					                <!-- Conteúdo das Abas -->
-                <div class="tab-content mt-4" id="minhasAbasConteudo">
-                    <div class="tab-pane fade show active" id="abaTudo" role="tabpanel" aria-labelledby="abaTudo-tab">
-                        <!-- Conteúdo da aba "Tudo" -->
-                        Aqui vai o conteúdo da aba "Tudo".
-                    </div>
-                    <div class="tab-pane fade" id="abaTransito" role="tabpanel" aria-labelledby="abaTransito-tab">
-                        <!-- Conteúdo da aba "Em Trânsito" -->
-                        Aqui vai o conteúdo da aba "Em Trânsito".
-                    </div>
-                    <div class="tab-pane fade" id="abaEntregue" role="tabpanel" aria-labelledby="abaEntregue-tab">
-                        <!-- Conteúdo da aba "Entregue" -->
-                        Aqui vai o conteúdo da aba "Entregue".
-                    </div>
-                    <div class="tab-pane fade" id="abaDevolucao" role="tabpanel" aria-labelledby="abaDevolucao-tab">
-                        <!-- Conteúdo da aba "Devolução" -->
-                        Aqui vai o conteúdo da aba "Devolução".
-                    </div>
-                </div>
+                <div class="content-tab">
+                	<div class="tab-content mt-12" id="minhasAbasConteudo">
+	           		<% 
+			           SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						for (PedidoVenda pedido : listaPedidos) {
+					        String data = dateFormat.format(pedido.getData());
+					%>
+                    	<div class="custom-container data-status=<%=pedido.getStatus()%>">
+                    		<div class="row border-botton">
+								<div class="col-6">
+									<p><%= data %></p>
+								</div>
+								<div class="col-4 text-end">
+									<h5> <a class="visualizarPedido" href=#>Pedido N°: <%= pedido.getId() %></a></h5>
+								</div>
+								<div class="col-2 text-end">
+									<p  class="text-success"><%= pedido.getStatus() %></p>
+								</div>
+							</div>
+							<!-- Inicio dos itens -->
+							<% if (pedido.getPedidoItens() !=null) { for (PedidoItens item : pedido.getPedidoItens()) { %>
+							<div class="row mt-3">
+								<div class="col-md-1">
+									<div class="image-container">
+										<img src="<%=item.getProduto().getImg()%>" class="card-img-top img-fluid rounded-start"
+											alt="Imagem do Produto" class="img-fluid rounded-start">
+									</div>
+								</div>
+								<div class="col-md-9">
+									<div class="card-body">
+										<h6 class="card-title">
+											<%=item.getDescricao() %>
+										</h6>
+										<div class="card-options">
+											<div class="card-text">
+												<p>
+													<%=item.getQuantidade() %> x R$<%=item.getPreco() %>
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+						        <div class="col-md-2">
+						            <div class="card-body text-end">
+						                <p class="card-text fs-4">
+						                    R$ <%=item.getTotalProduto() %>
+						                </p>
+						                <% if (pedido.getStatus().equals("ENTREGUE")) { %>
+						                    <button onlick="solicitarTroca(<%=pedido.getId()%>,<%=item.getId() %>)" class="btn btn-dark mt-2 solicitar-troca" onclick="solicitarTroca(<%=item.getId()%>)">Solicitar Troca</button>
+						                <% } %>
+						            </div>
+						        </div>
+							</div>
+							<% }
+							}else { out.println("<p>Não há itens</p>");
+							}
+							%>
+							<div class="row mt-2 border-top">
+							    <div class="col-12 text-end">
+							        <p class="total-pedido">
+							            Total Pedido: <span class="valor-pedido">R$ <%= pedido.getValor() %></span>
+							        </p>
+							    </div>
+							</div>
+                    	</div>
+                    	<% } %>
+                	</div>
  					<!--acaba aqui o content-->
                 </div>
               

@@ -348,9 +348,14 @@ header {
     transition: 1s;
 }
 
+.image-container{
+	background-color: #f2f2f2;
+	border: 1px solid #ccc;
+}
 .img-fluid{
-	 width: 50%;
-     height: auto;
+	width: 10%; 
+	display: block; 
+	margin: 0 auto;
 }
 
 .custom-container {
@@ -362,12 +367,36 @@ header {
      border: 1px solid #ccc;
  }
 
-.tabs-content{
+.tabs-content , .tab-content{
      width: 100% !important;
  }
  
- 
+.nav-link{
+	color: #000000 !important;
+}
  
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
-	background-color:#ee4d2d !important
+	background-color:#ee4d2d !important;
+	color: var(--bs-nav-pills-link-active-color) !important;
+}
+.border-botton{
+	border-bottom: 1px solid silver;
+}
+.border-top{
+	border-top: 1px solid silver;
+}
+.visualizarPedido{
+	color:#ee4d2d;
+	/*text-decoration: none !important;*/
+}
+
+.total-pedido {
+    display: inline-block; 
+    margin-bottom: 0;
+}
+
+.valor-pedido {
+    margin-left: 10px; 
+    color:#ee4d2d;
+    font-size: 25px;
 }

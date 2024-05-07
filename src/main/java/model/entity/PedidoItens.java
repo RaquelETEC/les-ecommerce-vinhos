@@ -4,6 +4,7 @@ public class PedidoItens {
 
 	private int id;
 	private PedidoVenda pedidoVenda; 
+	private Produtos produto;
 	private String descricao;
 	private int quantidade;
 	private Double preco; 
@@ -15,11 +16,12 @@ public class PedidoItens {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PedidoItens(int id, PedidoVenda pedidoVenda, String descricao, int quantidade, Double preco,
+	public PedidoItens(int id, PedidoVenda pedidoVenda, String descricao,Produtos produto, int quantidade, Double preco,
 			Double totalProduto, TiposStatusItensPedido tipos) {
 		super();
 		this.id = id;
 		this.pedidoVenda = pedidoVenda;
+		this.produto = produto;
 		this.descricao = descricao;
 		this.quantidade = quantidade;
 		this.preco = preco;
@@ -35,6 +37,14 @@ public class PedidoItens {
 		this.id = id;
 	}
 
+	public Produtos getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produtos produto) {
+		this.produto = produto;
+	}
+	
 	public PedidoVenda getPedidoVenda() {
 		return pedidoVenda;
 	}

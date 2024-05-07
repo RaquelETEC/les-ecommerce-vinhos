@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Dao.DAOPedidoVenda;
 import model.entity.CarrinhoItens;
+import model.entity.Cliente;
 import model.entity.PedidoVenda;
 
 public class PedidoVendaService {
@@ -15,8 +16,13 @@ public class PedidoVendaService {
 	}
 	
 	public ArrayList<PedidoVenda> listarPedidoVenda() {
-		System.out.println("cheguei no pedido service ");
-		return daoPedidoVenda.ListarPedidos();
+	    System.out.println("cheguei no pedido service (sem cliente)");
+	    return daoPedidoVenda.listarPedidosTodosClientes();
+	}
+
+	public ArrayList<PedidoVenda> listarPedidoVenda(Cliente cliente) {
+	    System.out.println("cheguei no pedido service (com cliente)");
+	    return daoPedidoVenda.ListarPedidos(cliente);
 	}
 	
 	public PedidoVenda selecionarPedido(PedidoVenda pedidovenda) {
@@ -30,4 +36,6 @@ public class PedidoVendaService {
 	public String CadastrarPedido(PedidoVenda pedido, ArrayList<CarrinhoItens> itens) {
 		return daoPedidoVenda.CadastrarPedidoDao(pedido,itens);	
 	}
+
+
 }

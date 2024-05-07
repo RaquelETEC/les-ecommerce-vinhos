@@ -24,6 +24,7 @@ import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Cupons;
 import model.entity.Endereco;
+import model.entity.PedidoItens;
 import model.entity.PedidoVenda;
 import model.entity.Produtos;
 import model.entity.TiposEndereco;
@@ -84,12 +85,12 @@ public class ControllerVenda extends HttpServlet {
 		
 		cliente = clienteService.selecionarCliente(cliente);
 		
-	//	ArrayList<PedidoItens> listaRemovidos = new ArrayList<>();
-		//listaPedidos = vendaService.ListarCompras(cliente);
+		ArrayList<PedidoVenda> listaPedidos = new ArrayList<>();
 		
-
+		listaPedidos = vendaService.listarPedidoVenda(cliente);
 		
 		request.setAttribute("cliente", cliente);
+		request.setAttribute("listaPedidos", listaPedidos);
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/MinhasCompras.jsp");
 		rd.forward(request, response);
 		

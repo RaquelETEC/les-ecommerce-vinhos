@@ -8,51 +8,95 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import model.entity.CarrinhoItens;
 import model.entity.Cliente;
-
+import model.entity.PedidoItens;
 import model.entity.PedidoVenda;
+import model.entity.Produtos;
 import model.entity.TiposStatusItensPedido;
 
 
 public class DAOPedidoVenda {
-
-	public ArrayList<PedidoVenda> ListarPedidos() {
-		System.out.println("cheguei no dao ");
+	
+	public ArrayList<PedidoVenda> ListarPedidos(Cliente cliente) {
 	    ArrayList<PedidoVenda> listaDePedidos = new ArrayList<>();
-	    String read = "SELECT " +
-	        "ven_id, " +
-	        "vend_id_cliente, " +
-	        "ven_status, " +
-	        "ven_data, " +
-	        "ven_valor " +
-	        "FROM pedido_venda";
+
+	    // Consulta SQL para obter os detalhes dos pedidos e seus itens associados
+	    String sql = "SELECT pv.ven_id, pv.vend_id_cliente, pv.ven_status, pv.ven_data, pv.ven_valor, " +
+	             "pi.ped_item_prod_id, pi.ped_item_prod_desc, pi.ped_item_prod_quantidade, pi.ped_item_prod_valor, pi.ped_item_prod_valor_total, pi.ped_item_status_troca, " +
+	             "p.pro_img " +
+	             "FROM pedido_venda pv " +
+	             "LEFT JOIN pedido_itens pi ON pv.ven_id = pi.ped_item_ven_id " +
+	             "LEFT JOIN produto p ON pi.ped_item_prod_id = p.pro_id " +
+	             "WHERE pv.vend_id_cliente = ?";
+
 	    try {
 	    	Connection con = Conexao.conectar();
-			PreparedStatement pst = con.prepareStatement(read);
-			ResultSet rs = pst.executeQuery();
+
+	        PreparedStatement pstmt = con.prepareStatement(sql);
+
+	        if (cliente.getId() != 0) {
+	            pstmt.setInt(1, cliente.getId());
+	        }
+
+	        ResultSet rs = pstmt.executeQuery();
+
 	        while (rs.next()) {
+	            int idPedido = rs.getInt("ven_id");
 	            PedidoVenda pedido = new PedidoVenda();
-	            pedido.setId(rs.getInt("ven_id"));
-
-	            int clienteId = rs.getInt("vend_id_cliente");
-	            Cliente cliente = new DaoCliente().buscarClientePorId(clienteId); // Chamada para buscar o cliente pelo ID
-	            
-	            cliente.setId(clienteId);
-	            pedido.setCliente(cliente);
-
+	            pedido.setId(idPedido);
+	            pedido.setCliente(new DaoCliente().buscarClientePorId(rs.getInt("vend_id_cliente")));
 	            pedido.setStatus(rs.getString("ven_status"));
 	            pedido.setData(rs.getDate("ven_data"));
 	            pedido.setValor(rs.getDouble("ven_valor"));
 
-	            listaDePedidos.add(pedido);
+	            // Verificar se o pedido já está na lista
+	            PedidoVenda pedidoExistente = listaDePedidos.stream()
+	                    .filter(p -> p.getId() == idPedido)
+	                    .findFirst()
+	                    .orElse(null);
+
+	            if (pedidoExistente == null) {
+	                // Se o pedido ainda não foi adicionado à lista, adicione-o
+	                listaDePedidos.add(pedido);
+	            }
+
+	            // Adicionar o item do pedido, se houver, à lista de itens do pedido
+	            if (rs.getInt("ped_item_prod_id") != 0) {
+	            	Produtos produto = new Produtos(); 
+	            	
+	                PedidoItens item = new PedidoItens();
+	                item.setId(rs.getInt("ped_item_prod_id"));
+	                item.setDescricao(rs.getString("ped_item_prod_desc"));
+	                item.setQuantidade(rs.getInt("ped_item_prod_quantidade"));
+	                item.setPreco((rs.getDouble("ped_item_prod_valor")));  
+	                item.setTotalProduto(rs.getDouble("ped_item_prod_valor_total"));
+	                item.setTipos(TiposStatusItensPedido.values()[rs.getInt("ped_item_status_troca")]);
+	                
+	                
+	                produto.setImg(rs.getString("pro_img"));
+	                item.setProduto(produto);
+	                
+	                if (pedidoExistente == null) {
+	                    // Se o pedido não existir na lista, associe o item ao novo pedido
+	                    pedido.getPedidoItens().add(item);
+	                } else {
+	                    // Se o pedido já existir na lista, associe o item ao pedido existente
+	                    pedidoExistente.getPedidoItens().add(item);
+	                }
+	            }
 	        }
-	        con.close();
-	    } catch (Exception e) {
+        rs.close();
+	    pstmt.close();
+	    con.close();
+		   
+	    } catch (SQLException e) {
 	        System.out.println("Erro ao listar pedidos: " + e);
 	    }
+
 	    return listaDePedidos;
 	}
 	
@@ -67,7 +111,10 @@ public class DAOPedidoVenda {
 			while (rs.next()) {
 				pedidovenda.setStatus(rs.getString(1)); 
 			}
-			con.close();
+		    // Fechar os recursos
+		    rs.close();
+		    pst.close();
+		    con.close();
 		} catch (Exception e) {
 			System.out.println("ERRO AO SELECIONAR" + e);
 		}
@@ -158,4 +205,44 @@ public class DAOPedidoVenda {
 	    pstmtItem.setDouble(6, valorTotal);
 	    pstmtItem.setInt(7, TiposStatusItensPedido.TROCA_NAO_SOLICITADA.ordinal());
 	}
+
+
+	public ArrayList<PedidoVenda> listarPedidosTodosClientes() {
+		System.out.println("cheguei no dao ");
+	    ArrayList<PedidoVenda> listaDePedidos = new ArrayList<>();
+	    String read = "SELECT " +
+	        "ven_id, " +
+	        "vend_id_cliente, " +
+	        "ven_status, " +
+	        "ven_data, " +
+	        "ven_valor " +
+	        "FROM pedido_venda";
+	    try {
+	    	Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			ResultSet rs = pst.executeQuery();
+	        while (rs.next()) {
+	            PedidoVenda pedido = new PedidoVenda();
+	            pedido.setId(rs.getInt("ven_id"));
+
+	            int clienteId = rs.getInt("vend_id_cliente");
+	            Cliente cliente = new DaoCliente().buscarClientePorId(clienteId); // Chamada para buscar o cliente pelo ID
+	            
+	            cliente.setId(clienteId);
+	            pedido.setCliente(cliente);
+
+	            pedido.setStatus(rs.getString("ven_status"));
+	            pedido.setData(rs.getDate("ven_data"));
+	            pedido.setValor(rs.getDouble("ven_valor"));
+
+	            listaDePedidos.add(pedido);
+	        }
+	        con.close();
+	    } catch (Exception e) {
+	        System.out.println("Erro ao listar pedidos: " + e);
+	    }
+	    return listaDePedidos;
+	}
+	
+	
 }

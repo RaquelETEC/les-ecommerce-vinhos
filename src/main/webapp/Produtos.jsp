@@ -30,7 +30,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 			<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3">
 			<div class="navbar-nav ms-auto">
-				<a href="areaCliente/MinhasCompras.html" class="btn btn-light ms-2">MINHAS
+				<a href="areaCliente/MinhasCompras.html?id=20" class="btn btn-light ms-2">MINHAS
 					COMPRAS </a> <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">MEU
 					CARRINHO</a> <a href="areaAdministrador/Login.html"
 					class="btn btn-light ms-2">GERENCIAMENTO</a>
