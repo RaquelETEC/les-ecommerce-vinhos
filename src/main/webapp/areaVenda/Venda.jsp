@@ -28,24 +28,22 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venda</title>
+<title>Pedido de venda</title>
+<link rel="icon" href="imagens/favicon.png">
 <link rel="stylesheet" href="Styles/StyleFinalizaVenda.css">
 <script src="scripts/telaVenda.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+<link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 	<nav class="navbar navbar-expand-sm py-3 sticky-top"
 		style="background: black;">
 		<div class="container-fluid">
-			<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
-				style="width: 200px;" class="mx-3">
+		<a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>	<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
+				style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto"></div>
 		</div>
 	</nav>
@@ -104,7 +102,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 						<div class="row g-0">
 							<div class="col-md-1">
 								<div class="image-container" style="background-color: #f2f2f2;">
-									<img src="<%=itens.get(i).getProduto().getImg()%>"
+									<img src="imagens/produtos/<%=itens.get(i).getProduto().getCodigo_barra() %>.png"
 										alt="Imagem do Produto" class="img-fluid rounded-start"
 										style="max-width: 100px; max-height: 100px;">
 								</div>
@@ -454,8 +452,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção
-								de Endereço</h5>
+							<h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção de cupom promocional</h5>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Fechar">
 								<span aria-hidden="true">&times;</span>
@@ -739,6 +736,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 						</div>
 					</div>
 				</div>
+			</div>
 			</div>
 	</main>
 

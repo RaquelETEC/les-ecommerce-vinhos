@@ -20,12 +20,10 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm py-3 sticky-top"
-		style="background: black;">
+	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
-			<a href="index.html"><img src="../imagens/logo-vinho.PNG"
-				alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
-			<div class="navbar-nav ms-auto"></div>
+		<a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>	<img src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
+				style="width: 200px;" class="mx-3"></a>				
 		</div>
 	</nav>
 

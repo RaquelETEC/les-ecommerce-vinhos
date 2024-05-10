@@ -3,9 +3,8 @@
   <display-name>ecommerce-vinhos</display-name>
   <welcome-file-list>
    <!--aqui informamos qual arquivo html o servidor deve abrir primeiro, no caso é o produtos+ --> 
-    <welcome-file>Produtos.html</welcome-file>
-    <welcome-file>Produtos.jsp</welcome-file>
-    <welcome-file>Produtos.htm</welcome-file>
+    <welcome-file>paginaInical.html</welcome-file>
+    <welcome-file>paginaIncial.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>

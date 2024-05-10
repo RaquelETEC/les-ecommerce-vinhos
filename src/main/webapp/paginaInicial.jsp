@@ -14,7 +14,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 
 <head>
 <meta charset="utf-8">
-<title>Agenda de contatos - Home</title>
+<title>CR WINES</title>
 <link rel="icon" href="imagens/favicon.png">
 <link rel="stylesheet" href="Styles/styleIndexv5.css">
 <link rel="stylesheet"
@@ -27,8 +27,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 	<nav class="navbar navbar-expand-sm py-3 sticky-top"
 		style="background: black;">
 		<div class="container-fluid">
-			<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
-				style="width: 200px;" class="mx-3">
+		<a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>	<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
+				style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 				<a href="areaCliente/MinhasCompras.html?id=20" class="btn btn-light ms-2">MINHAS
 					COMPRAS </a> <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">MEU
@@ -143,7 +143,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					<form name="productForm<%=i%>">
 						<div class="card">
 						 <div class="image-container" style="background-color: #f2f2f2;">
-							<img src="<%=lista.get(i).getImg()%>" alt="Imagem do Produto"
+						
+							<img src="imagens/produtos/<%=lista.get(i).getCodigo_barra()%>.png" alt="Imagem do Produto"
 								class="card-img-top img-fluid rounded-start"
 								style="width: 50%; display: block; margin: 0 auto;">
             			</div>

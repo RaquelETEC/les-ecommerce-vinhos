@@ -21,3 +21,8 @@
 	background-color: #F2F2F2;
 	border-radius: 15px;
 }
+
+.content-carrinho .row{
+	--bs-gutter-x: 0 !important;
+	
+}

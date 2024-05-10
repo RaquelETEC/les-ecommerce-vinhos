@@ -390,7 +390,7 @@ header {
 	/*text-decoration: none !important;*/
 }
 
-.total-pedido {
+.align-item {
     display: inline-block; 
     margin-bottom: 0;
 }
@@ -399,4 +399,8 @@ header {
     margin-left: 10px; 
     color:#ee4d2d;
     font-size: 25px;
+}
+
+.solicitar-troca{
+	 max-width: 18vh !important;
 }

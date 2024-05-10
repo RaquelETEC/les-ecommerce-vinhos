@@ -12,7 +12,8 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 
 <head>
 <meta charset="utf-8">
-<title>Carrinho</title>
+<title>Carrinho de compras</title>
+<link rel="icon" href="imagens/favicon.png">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="Styles/StyleCarrinhoV3.css">
@@ -24,8 +25,8 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 	<nav class="navbar navbar-expand-sm py-3 sticky-top"
 		style="background: black;">
 		<div class="container-fluid">
-			<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
-				style="width: 200px;" class="mx-3">
+		<a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>	<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
+				style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 				<p style="color: white;">
 					Cliente atual:
@@ -35,7 +36,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 	</nav>
 	<div class="page-body">
 
-		<div class="row">
+		<div class="row content-carrinho">
 			<div class="col-8 m-4">
 				<div class="col-12 m-4" style="margin-bottom: 1rem !important;">
 					<h3>Items adicionados ao Carrinho 🛒</h3>
@@ -54,7 +55,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 								<div class="row g-0">
 									<div class="col-md-2">
 									 <div class="image-container" style="background-color: #f2f2f2;">
-										<img src="<%=itens.get(i).getProduto().getImg()%>"
+										<img src="imagens/produtos/<%=itens.get(i).getProduto().getCodigo_barra()%>.png"
 											alt="Imagem do Produto" class="img-fluid rounded-start">
 									</div>
 									</div>
@@ -126,7 +127,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 							<div class="row g-0">
 								<div class="col-md-2">
 								 <div class="image-container" style="background-color: #f2f2f2;">
-									<img src="<%=itensRemovidos.get(i).getProduto().getImg()%>"
+									<img src="imagens/produtos/<%=itensRemovidos.get(i).getProduto().getCodigo_barra()%>.png"
 										alt="Imagem do Produto" class="img-fluid rounded-start">
 								</div>
 								</div>

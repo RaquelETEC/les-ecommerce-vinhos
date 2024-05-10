@@ -13,7 +13,7 @@ public class DAOProdutos {
 		
 		
 		ArrayList<Produtos> listaDeProdutos = new ArrayList<>();
-		String read = "SELECT pro_id, pro_desc, pro_img,pro_preco_compra, pro_preco_venda FROM produto";
+		String read = "SELECT pro_id, pro_desc, pro_img,pro_preco_compra, pro_preco_venda, pro_codigo_barra FROM produto";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
@@ -27,6 +27,7 @@ public class DAOProdutos {
 				produto.setPro_preco_compra(rs.getDouble("pro_preco_compra"));
 				produto.setDesc(rs.getString("pro_desc"));
 				produto.setImg(rs.getString("pro_img"));
+				produto.setCodigo_barra(rs.getString("pro_codigo_barra"));
 				
 				listaDeProdutos.add(produto);
 			}
