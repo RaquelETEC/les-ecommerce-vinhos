@@ -107,6 +107,9 @@
 							    <li class="nav-item" role="presentation">
 							        <button onclick="filterStatus('TROCA')" class="nav-link" id="abaDevolucao-tab" data-bs-toggle="tab" data-bs-target="#abaDevolucao" type="button" role="tab" aria-controls="abaDevolucao" aria-selected="false">Trocas</button>
 							    </li>
+							    <li class="nav-item" role="presentation">
+							        <button onclick="filterStatus('CANCELA')" class="nav-link" id="abaDevolucao-tab" data-bs-toggle="tab" data-bs-target="#abaDevolucao" type="button" role="tab" aria-controls="abaDevolucao" aria-selected="false">Cancelado</button>
+							    </li>
 							</ul>
 					 	</div>
 					 </div>
@@ -126,7 +129,7 @@
 				                <div class="col-4 text-end">
 				                    <h5> <a class="visualizarPedido" href="#">Pedido N°: <%= pedido.getId() %></a></h5>
 				                </div>
-				                <div class="col-2 text-end">
+				                <div class="col-2 text-end" id="statusPedido">
 				                    <p class="text-success"><%= pedido.getStatus() %></p>
 				                </div>
 				            </div>
@@ -137,7 +140,7 @@
 				            <div class="row mt-3">
 				                <div class="col-md-1">
 				                    <div class="image-container">
-				                        <img src="<%=item.getProduto().getImg()%>" class="card-img-top img-fluid rounded-start"
+				                       <img src="../imagens/produtos/<%=item.getProduto().getCodigo_barra() %>.png" class="card-img-top img-fluid rounded-start"
 				                            alt="Imagem do Produto">
 				                    </div>
 				                </div>
@@ -163,7 +166,7 @@
 								                R$ <%=item.getTotalProduto() %>
 								            </p>
 								        </div>
-								        <div class="p-2 bd-highlight">
+								        <div class="p-2 bd-highlight" id="statusPedido">
 								            <% if (pedido.getStatus().equals("ENTREGUE")) { %>
 								                <div class="check_items">
 								                    <input type="checkbox" class="item-troca" data-pedido="<%=pedido.getId()%>" data-item="<%=item.getId()%>">
@@ -187,8 +190,9 @@
 				            </div>
 				       		<div class="row">
 				                <div class="col-12 text-end">
-				                	<% if (pedido.getStatus().equals("ENTREGUE")) { %>
+				                	<% if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("CANCELADO") ) { %>
 				                     	<button class="btn btn-dark mt-2 solicitar-troca" onclick="solicitarTroca(<%=pedido.getId()%>)">Solicitar Troca</button>
+                                        <button class="btn btn-dark mt-2" onclick="cancelarPedido(<%=pedido.getId()%>)">Cancelar</button>
 				                    <% } %>
 				                </div>
 				            </div>

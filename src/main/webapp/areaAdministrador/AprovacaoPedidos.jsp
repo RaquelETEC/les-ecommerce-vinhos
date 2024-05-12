@@ -103,7 +103,6 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 								<th>Opções</th>
 							</tr>
 						</thead>
-						<tbody>
 						    <% 
 						    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 						    for (int i = 0; i < lista.size(); i++) {

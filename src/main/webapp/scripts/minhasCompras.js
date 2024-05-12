@@ -8,7 +8,7 @@ function filterStatus(status) {
     pedidos.forEach(pedido => {
         const pedidoStatus = pedido.className.split("=")[1];
         
-        if (!(status === 'Tudo' || pedidoStatus === status) && pedidoStatus !== 'tabs' ) {
+        if (!(status === 'Tudo' || pedidoStatus.includes(status)) && pedidoStatus !== 'tabs' ) {
 			pedido.style.display = 'none'; // Ocultar o pedido se não corresponder ao status
         }
         else{
@@ -17,20 +17,41 @@ function filterStatus(status) {
     });
 }
 
+function cancelarPedido(idPedido) {
+    const novoStatus = "EM CANCELAMENTO"; 
+    const confirmacao = confirm("Tem certeza de que deseja cancelar este pedido?");
+    if (confirmacao) {
+        
+     const url = `/les-ecommerce-vinhos/areaAdministrador/EditarPedido?id=${idPedido}&PedidoStatus=${novoStatus}`;
+ 
+    fazerRequisicaoAjax(url, function(resposta) {
+		if(resposta > 0){
+        	alert("Cancelamento solicitado" + resposta)
+        }
+        else
+        	alert("Erro ao solicitar cancelamento");
+    }, function() {
+        alert("Erro ao gerenciar troca JS");
+    });
+        
+    }
+    
+    
+       
+}
 
-
-function solicitarTroca(pedidoId) {
-    const checkboxes = document.querySelectorAll('.item-troca:checked');
-    const itensSelecionados = Array.from(checkboxes).map(cb => {
-		cb.getAttribute('data-item')
-		cb.getAttribute('data-pedido')
-		} );
-
-
-    // Aqui você pode implementar a lógica para enviar a solicitação de troca ao servidor
-    alert(`Solicitando troca para os itens: ${itensSelecionados.join(', ')}`);
-    // Exemplo: fazer uma requisição AJAX para solicitar a troca ao servidor
-    // Aqui, `pedidoId` é o ID do pedido para o qual a troca está sendo solicitada
-    // e `itensSelecionados` é um array com os IDs dos itens selecionados
-    // Implemente a lógica de envio da solicitação ao servidor de acordo com sua aplicação
- }
+function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === XMLHttpRequest.DONE) {
+			if (xhr.status === 200) {
+				sucessoCallback(xhr.responseText);
+			} else {
+				erroCallback();
+			}
+		}
+	};
+	xhr.send();
+}

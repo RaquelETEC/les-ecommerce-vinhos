@@ -27,7 +27,7 @@ public class DAOPedidoVenda {
 	    // Consulta SQL para obter os detalhes dos pedidos e seus itens associados
 	    String sql = "SELECT pv.ven_id, pv.vend_id_cliente, pv.ven_status, pv.ven_data, pv.ven_valor, " +
 	             "pi.ped_item_prod_id, pi.ped_item_prod_desc, pi.ped_item_prod_quantidade, pi.ped_item_prod_valor, pi.ped_item_prod_valor_total, pi.ped_item_status_troca, " +
-	             "p.pro_img " +
+	             "p.pro_img, p.pro_codigo_barra " +
 	             "FROM pedido_venda pv " +
 	             "LEFT JOIN pedido_itens pi ON pv.ven_id = pi.ped_item_ven_id " +
 	             "LEFT JOIN produto p ON pi.ped_item_prod_id = p.pro_id " +
@@ -78,7 +78,9 @@ public class DAOPedidoVenda {
 	                
 	                
 	                produto.setImg(rs.getString("pro_img"));
+	                produto.setCodigo_barra(rs.getString("p.pro_codigo_barra"));
 	                item.setProduto(produto);
+	                
 	                
 	                if (pedidoExistente == null) {
 	                    // Se o pedido não existir na lista, associe o item ao novo pedido
@@ -123,7 +125,7 @@ public class DAOPedidoVenda {
 	}
 	
 	
-	public PedidoVenda EditarPedido(PedidoVenda pedidovenda) {
+	public String EditarPedido(PedidoVenda pedidovenda) {
 		String update = "update pedido_venda set " + "ven_status = ? " 
 				+ "WHERE ven_id = ?;";
 		try {
@@ -136,11 +138,11 @@ public class DAOPedidoVenda {
 			con.close();
 			
 			System.err.println("Atualizado o pedido no dao!!" + pedidovenda.getId());
-			return pedidovenda;
+			return "SUCESS";
 
 		} catch (Exception e) {
 			System.out.println("erro ao atualizar o pedido: " + e);
-			return pedidovenda;
+			return "ERROR";
 		}
 	}
 
