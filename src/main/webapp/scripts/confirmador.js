@@ -41,6 +41,9 @@ function confirmarProduto(idPedido, i, ValorCupom, idCliente) {
 		fazerRequisicaoAjax(url, function(resposta) {
 			if (resposta > 0) {
 				alert("Cupom gerado" + resposta)
+
+				window.location.href = "EditarPedido?id=" + idPedido + "&PedidoStatus=" + Status;
+				alert("Status alterado com sucesso");
 			}
 			else
 				alert("Erro ao solicitar cupom");
