@@ -3,7 +3,10 @@ package controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,10 +31,11 @@ import model.entity.PedidoItens;
 import model.entity.PedidoVenda;
 import model.entity.Produtos;
 import model.entity.TiposEndereco;
+import model.entity.TiposStatusItensPedido;
 
 @WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", 
 		"/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra", 
-		"/CadastrarPedidoVenda" , "/areaCliente/MinhasCompras.html"})
+		"/CadastrarPedidoVenda" , "/areaCliente/MinhasCompras.html", "/areaCliente/solicitarTroca.html"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -68,14 +72,45 @@ public class ControllerVenda extends HttpServlet {
 	    else if(action.equals("/areaCliente/MinhasCompras.html")) {
 	    	MinhasComprasPage(request, response);
 	    }
+	    else if (action.equals("/areaCliente/solicitarTroca.html")) {
+	    	editarStatusTrocas(request,response);
+	    }
 		else {
 			System.out.println("erro ao redirecionar " + action);
 			response.sendRedirect("index.html");
 		}
 	}
 
+	private void editarStatusTrocas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    System.out.println("Controller solicitar troca");
+	    PedidoVenda pedido = new PedidoVenda();
 
-	
+	    pedido.setId(Integer.parseInt(request.getParameter("pedido")));
+	    pedido.setStatus(request.getParameter("novoStatusPedido"));
+	    String[] itensSelecionados = request.getParameterValues("itens");
+	    
+        List<PedidoItens> listaItems = Arrays.stream(itensSelecionados)
+                .map(id -> {
+                    try {
+                        int itemId = Integer.parseInt(id);
+                        return new PedidoItens(itemId, pedido, id, null, itemId, null, null, null);
+                    } catch (NumberFormatException e) {
+                        return null; // Ou throw new RuntimeException("Erro ao converter ID para inteiro: " + id);
+                    }
+                })
+                .filter(item -> item != null) 
+                .collect(Collectors.toList()); 
+                	    
+	    
+	    TiposStatusItensPedido tipoSolicitacao = TiposStatusItensPedido.valueOf(request.getParameter("tipoSolicitacao"));
+
+	    String resposta = vendaService.trocaService(pedido,listaItems,tipoSolicitacao);
+	    
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta);
+	}
+
 	private void MinhasComprasPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("Minhas Compras Controller");
@@ -87,7 +122,7 @@ public class ControllerVenda extends HttpServlet {
 		
 		ArrayList<PedidoVenda> listaPedidos = new ArrayList<>();
 		
-		listaPedidos = vendaService.listarPedidoVenda(cliente);
+		listaPedidos = vendaService.listarPedidoVenda(cliente, null,0);
 		
 		request.setAttribute("cliente", cliente);
 		request.setAttribute("listaPedidos", listaPedidos);

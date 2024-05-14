@@ -3,6 +3,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="model.entity.Cliente"%>
 <%@ page import="model.entity.PedidoVenda"%>
+<%@ page import="model.entity.TiposStatusItensPedido "%>
 <%@ page import="model.entity.PedidoItens"%>
 <%@ page import="java.util.ArrayList"%>
 <%
@@ -120,28 +121,32 @@
 				        %>
 				        <div class="custom-container data-status=<%=pedido.getStatus()%>">
 				            <div class="row border-botton">
-				                <div class="col-6">
+				                <div class="col-4">
 				                    <p><%= data %></p>
 				                </div>
-				                <div class="col-4 text-end">
+				                <div class="col-5 text-end">
 				                    <h5> <a class="visualizarPedido" href="#">Pedido N°: <%= pedido.getId() %></a></h5>
 				                </div>
-				                <div class="col-2 text-end">
+				                <div class="col-3 text-end">
 				                    <p class="text-success"><%= pedido.getStatus() %></p>
 				                </div>
 				            </div>
+				            <% if (pedido.getStatus().equals("ENTREGUE")) { %>
+				            <div class="text-end me-2">
+							 	Todos <input type="checkbox" id="selecionarTodos" onChange="handleChecketAll(event,<%= pedido.getId() %>)">
+				            </div>
 				            <!-- Inicio dos itens -->
-				            <% if (pedido.getPedidoItens() != null) {
+				            <%} if (pedido.getPedidoItens() != null) {
 				                for (PedidoItens item : pedido.getPedidoItens()) {
 				            %>
 				            <div class="row mt-3">
 				                <div class="col-md-1">
 				                    <div class="image-container">
-				                        <img src="<%=item.getProduto().getImg()%>" class="card-img-top img-fluid rounded-start"
+				                        <img src="../imagens/produtos/<%=item.getProduto().getCodigo_barra() %>.png" class="card-img-top img-fluid rounded-start"
 				                            alt="Imagem do Produto">
 				                    </div>
 				                </div>
-				                <div class="col-md-9">
+				                <div class="col-md-8 col-sm-12">
 				                    <div class="card-body">
 				                        <h6 class="card-title">
 				                            <%=item.getDescricao() %>
@@ -156,28 +161,60 @@
 				                    </div>
 				                </div>
 				                
-								<div class="col-2 text-end">
+								<div class="col-md-3 col-sm-12 text-end">
 								    <div class="d-flex align-items-center justify-content-end bd-highlight">
 								        <div class="p-2 bd-highlight">
 								            <p class="card-text text-end fs-5">
-								                R$ <%=item.getTotalProduto() %>
-								            </p>
+											    R$ <%= item.getTotalProduto() %>
+											</p>
 								        </div>
+								       
 								        <div class="p-2 bd-highlight">
-								            <% if (pedido.getStatus().equals("ENTREGUE")) { %>
+								            <% if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA") && item.getTipos().ordinal() == 0) { %>
 								                <div class="check_items">
 								                    <input type="checkbox" class="item-troca" data-pedido="<%=pedido.getId()%>" data-item="<%=item.getId()%>">
+								                </div>
+								            <% }else{ %>
+								        		<div class="check_items">
+								                    <input type="checkbox" class="item-troca" disabled>
 								                </div>
 								            <% } %>
 								        </div>
 								    </div>
 								</div>
+								<div class="col-md-12 col-sm-12 text-end">
+								<% TiposStatusItensPedido status = item.getTipos();
+									switch (status) {
+						            case TROCA_NAO_SOLICITADA:
+						                break;
+						            case TROCA_SOLICITADA:
+						                out.println("Troca solicitada");
+						                break;
+						            case TROCA_NAO_ACEITA:
+						                out.println("Troca não aceita");
+						                break;
+						            case ENVIADO_PARA_TROCA:
+						                out.println("Enviado para troca");
+						                break;
+						            case TROCADO:
+						                out.println("Trocado");
+						                break;
+									}
+								%>
+								</div>
 				            </div>
+				            <div class="col-md-12 col-sm-12 text-end">
+							    <% 
+							    if (status == TiposStatusItensPedido.TROCA_ACEITA) { %>
+							        <button class="btn btn-outline-secondary mt-2" onclick="enviarItems(<%= item.getId() %>, <%= pedido.getId() %>, 'EM TROCA', 'ENVIADO_PARA_TROCA')">Enviar item para troca</button>
+							    <% } %>
+							</div>
 				            <% }
 				            } else { 
 				                out.println("<p>Não há itens</p>");
 				            }
 				            %>
+
 				            <div class="row mt-2 border-top">
 				                <div class="col-12 text-end">
 				                    <p class="align-item">
@@ -187,8 +224,8 @@
 				            </div>
 				       		<div class="row">
 				                <div class="col-12 text-end">
-				                	<% if (pedido.getStatus().equals("ENTREGUE")) { %>
-				                     	<button class="btn btn-dark mt-2 solicitar-troca" onclick="solicitarTroca(<%=pedido.getId()%>)">Solicitar Troca</button>
+				                	<% if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA")) { %>
+				                     	<button class="btn btn-dark mt-2 " onclick="solicitarTroca(<%=pedido.getId()%>,'EM TROCA')">Solicitar Troca</button>
 				                    <% } %>
 				                </div>
 				            </div>

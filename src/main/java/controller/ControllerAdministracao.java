@@ -12,9 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import Service.PedidoVendaService;
 import model.entity.PedidoVenda;
+import model.entity.TiposStatusItensPedido;
 import model.entity.Cliente;
+import model.entity.Cupons;
+import model.entity.PedidoItens;
 
-@WebServlet(urlPatterns = { "/areaAdministrador/PedidoVenda.html","/areaAdministrador/EditarPedido"})
+@WebServlet(urlPatterns = { 
+		"/areaAdministrador/PedidoVenda.html",
+		"/areaAdministrador/EditarPedido",
+		"/areaAdministrador/TrocaPedidos.html",
+		"/areaAdministrador/alterarStatusItemPedido.html", 
+		"/gerarCupom.html", 
+		"/VincularCupomAoCliente.html"})
 
 public class ControllerAdministracao extends HttpServlet{
 	
@@ -23,7 +32,7 @@ public class ControllerAdministracao extends HttpServlet{
 	
 	PedidoVenda pedidoVenda = new PedidoVenda();
 	Cliente cliente = new Cliente();
-	PedidoVendaService pedidoVendaservice = new PedidoVendaService();
+	PedidoVendaService pedidoService = new PedidoVendaService();
 	
 	public ControllerAdministracao() {
 		super();
@@ -40,15 +49,23 @@ public class ControllerAdministracao extends HttpServlet{
 			AreaPedidos(request,response);
 		}else if (action.equals("/areaAdministrador/EditarPedido")) {
 			EditarPedido(request, response);
+		}else if (action.equals("/areaAdministrador/TrocaPedidos.html")) {
+			PagePedidoTrocas(request, response);
+		}else if(action.equals("/gerarCupom.html")) {
+			GerarCupom(request, response);
+		}else if(action.equals("/VincularCupomAoCliente.html")) {
+			vincularCupomAoCliente(request, response);
 		}
 	
 	}
+
+	
 	protected void AreaPedidos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		System.out.println("Cheguei no area pedidos");
 		
-		ArrayList<PedidoVenda> lista = pedidoVendaservice.listarPedidoVenda();
+		ArrayList<PedidoVenda> lista = pedidoService.listarPedidoVenda(new Cliente(), null,0);
 		
 		request.setAttribute("listaPedidos", lista);
 	
@@ -64,7 +81,7 @@ public class ControllerAdministracao extends HttpServlet{
 		int idPedido = Integer.parseInt(request.getParameter("idPedido"));
 		pedidoVenda.setId(idPedido);
 		
-		pedidoVenda = pedidoVendaservice.selecionarPedido(pedidoVenda);
+		pedidoVenda = pedidoService.selecionarPedido(pedidoVenda);
 		
 		request.setAttribute("pedidoVenda", pedidoVenda);
 		
@@ -81,10 +98,59 @@ public class ControllerAdministracao extends HttpServlet{
 	
 		pedidoVenda.setStatus(request.getParameter("PedidoStatus"));
 		
-		pedidoVendaservice.editarPedido(pedidoVenda);
+		pedidoService.editarPedido(pedidoVenda);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/PedidoVenda.html");
 		rd.forward(request, response);
+	}
+	
+	private void PagePedidoTrocas(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("trocas");
+		
+		ArrayList<PedidoVenda> listaTrocas = pedidoService.listarPedidoVenda(new Cliente(), "EM TROCA", 1);
+				
+		request.setAttribute("listaPedidos", listaTrocas);
+		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/TrocaPedidos.jsp");
+		rd.forward(request, response);
+	}
+	
+	private void GerarCupom(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("gerar cupom controller");
+		
+		int idPedido = Integer.parseInt(request.getParameter("pedido"));
+		int idProduto = Integer.parseInt(request.getParameter("prodId"));
+		Double ValorCupom = Double.parseDouble(request.getParameter("valorCupom"));
+		String TipoCupom = (request.getParameter("tipoCupom"));
+				
+		
+		String resposta = pedidoService.GerarCupom(TipoCupom,ValorCupom,idPedido,idProduto );
+		
+	    // Enviar resposta para o cliente
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta); 
+	    response.getWriter().flush();
+		
+	}
+	
+	private void vincularCupomAoCliente(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException {
+		
+		Cliente cliente = new Cliente(); 
+		Cupons cupom = new Cupons(); 
+		
+		cliente.setId(Integer.parseInt(request.getParameter("clienteId")));
+		cupom.setId(Integer.parseInt(request.getParameter("cupomId")));
+		
+		String resposta = pedidoService.vincularCupomAoCliente(cupom,cliente);
+
+		 // Enviar resposta para o cliente
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta); 
+	    response.getWriter().flush();
 	}
 	
 }

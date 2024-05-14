@@ -108,7 +108,7 @@ ArrayList<Cupons> lista = (ArrayList<Cupons>) request.getAttribute("listaCupons"
 				            <div class="row">
 				                <!-- Parte esquerda com a imagem do cupom -->
 				                <div class="col-md-3">
-				                    <img src="<%=lista.get(i).getImg()%>" alt="Imagem do Cupom" class="img-fluid">
+				                    <img src=../imagens/assets/<%=lista.get(i).getImg()%> alt="Imagem do Cupom" class="img-fluid">
 				                </div>
 				                <!-- Parte direita com o nome do cupom e a data de vencimento -->
 				                <div class="col-md-9">

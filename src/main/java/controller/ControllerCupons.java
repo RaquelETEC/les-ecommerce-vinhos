@@ -43,12 +43,17 @@ public class ControllerCupons extends HttpServlet {
 
 
 	private void areaMeusCupons(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
 		int id = Integer.parseInt(request.getParameter("id"));
 		cliente.setId(id);
-
+ 
 		System.out.println("o id que chegou aqui nos cartoes:" + cliente.getId());
-
+ 
 		ArrayList<Cupons> lista = cupomService.listarCupom(cliente);
+		
+		request.setAttribute("listaCupons", lista);
+		request.setAttribute("id", id);
+ 
+		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/PerfilMeusCupons.jsp");
+		rd.forward(request, response);
 	}
 }

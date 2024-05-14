@@ -8,29 +8,92 @@ function filterStatus(status) {
     pedidos.forEach(pedido => {
         const pedidoStatus = pedido.className.split("=")[1];
         
-        if (!(status === 'Tudo' || pedidoStatus === status) && pedidoStatus !== 'tabs' ) {
+        if (!(status === 'Tudo' || pedidoStatus.includes(status)) && pedidoStatus !== 'tabs' ) {
 			pedido.style.display = 'none'; // Ocultar o pedido se não corresponder ao status
         }
-        else{
+		else {
 			pedido.style.display = 'block'; // Exibir o pedido
 		}
+		
     });
 }
 
 
 
-function solicitarTroca(pedidoId) {
-    const checkboxes = document.querySelectorAll('.item-troca:checked');
-    const itensSelecionados = Array.from(checkboxes).map(cb => {
-		cb.getAttribute('data-item')
-		cb.getAttribute('data-pedido')
-		} );
+function solicitarTroca(pedidoId,novoStatusPedido) {
+	debugger
+    const checkboxes = document.querySelectorAll('.item-troca[data-pedido="' + pedidoId + '"]:checked');
 
+    const itensSelecionados = Array.from(checkboxes).map(cb => cb.getAttribute('data-item'));
 
-    // Aqui você pode implementar a lógica para enviar a solicitação de troca ao servidor
-    alert(`Solicitando troca para os itens: ${itensSelecionados.join(', ')}`);
-    // Exemplo: fazer uma requisição AJAX para solicitar a troca ao servidor
-    // Aqui, `pedidoId` é o ID do pedido para o qual a troca está sendo solicitada
-    // e `itensSelecionados` é um array com os IDs dos itens selecionados
-    // Implemente a lógica de envio da solicitação ao servidor de acordo com sua aplicação
+    if (itensSelecionados.length === 0) {
+        alert('Selecione pelo menos um item para troca.');
+        return;
+    }
+
+    const url = `/les-ecommerce-vinhos/areaCliente/solicitarTroca.html?pedido=${pedidoId}&novoStatusPedido=${novoStatusPedido}&tipoSolicitacao=TROCA_SOLICITADA&itens=${itensSelecionados.join(',')}`;
+
+    fazerRequisicaoAjax(url, function(resposta) {
+		if(resposta.includes("error")){
+        	alert("Erro ao solicitar Troca");
+        }
+        else 
+        	alert("Troca dos itens: "+itensSelecionados.join(',')+ " solicitada")
+        	window.location.href = window.location;
+    }, function() {
+        alert("Erro ao gerenciar troca JS");
+    });
+}
+ 
+ //da para transformar em uma so função
+ function enviarItems(idItem ="",pedidoId="",novoStatus="",novoStatusItem=""){
+	debugger;
+	const itens = [idItem];
+	var dados = `&itens=${itens.join(',')}&pedido=${pedidoId}&novoStatusPedido=${novoStatus}&tipoSolicitacao=${novoStatusItem}`;
+	var url = "/les-ecommerce-vinhos/areaCliente/solicitarTroca.html?" + dados;
+	fazerRequisicaoAjax(url, function(resposta) {
+		if (resposta.includes("erro")) {
+			alert(resposta);
+		}
+		else {
+			alert("Status alterado com sucesso");
+			window.location.href = window.location;
+		}
+	}, function() {
+		alert("Erro ao cadastrar pedido JS");
+	});
  }
+ 
+ 
+function handleChecketAll(event, pedidoId) {
+    if (event.target.checked) {
+        // Selecionar todos os checkboxes associados ao pedido
+        var checkboxes = document.querySelectorAll('.item-troca[data-pedido="' + pedidoId + '"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = true;
+        });
+    } else {
+        // Desmarcar todos os checkboxes associados ao pedido
+        var checkboxes = document.querySelectorAll('.item-troca[data-pedido="' + pedidoId + '"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = false;
+        });
+    }
+}
+
+
+function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === XMLHttpRequest.DONE) {
+			if (xhr.status === 200) {
+				sucessoCallback(xhr.responseText);
+			} else {
+				erroCallback();
+			}
+		}
+	};
+	xhr.send();
+}
