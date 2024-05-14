@@ -140,7 +140,7 @@ public class DAOPedidoVenda {
 	}
 	
 	
-	public PedidoVenda EditarPedido(PedidoVenda pedidovenda) {
+	public String EditarPedido(PedidoVenda pedidovenda) {
 		String update = "update pedido_venda set " + "ven_status = ? " 
 				+ "WHERE ven_id = ?;";
 		try {
@@ -153,11 +153,13 @@ public class DAOPedidoVenda {
 			con.close();
 			
 			System.err.println("Atualizado o pedido no dao!!" + pedidovenda.getId());
-			return pedidovenda;
+			return "SUCESS";
 
 		} catch (Exception e) {
+
 			System.out.println("error ao atualizar o pedido: " + e);
 			return pedidovenda;
+
 		}
 	}
 

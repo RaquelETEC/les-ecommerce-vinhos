@@ -108,6 +108,9 @@
 							    <li class="nav-item" role="presentation">
 							        <button onclick="filterStatus('TROCA')" class="nav-link" id="abaDevolucao-tab" data-bs-toggle="tab" data-bs-target="#abaDevolucao" type="button" role="tab" aria-controls="abaDevolucao" aria-selected="false">Trocas</button>
 							    </li>
+							    <li class="nav-item" role="presentation">
+							        <button onclick="filterStatus('CANCELA')" class="nav-link" id="abaDevolucao-tab" data-bs-toggle="tab" data-bs-target="#abaDevolucao" type="button" role="tab" aria-controls="abaDevolucao" aria-selected="false">Cancelado</button>
+							    </li>
 							</ul>
 					 	</div>
 					 </div>
@@ -167,10 +170,10 @@
 								            <p class="card-text text-end fs-5">
 											    R$ <%= item.getTotalProduto() %>
 											</p>
-								        </div>
-								       
+								        </div>								       
 								        <div class="p-2 bd-highlight">
 								            <% if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA") && item.getTipos().ordinal() == 0) { %>
+
 								                <div class="check_items">
 								                    <input type="checkbox" class="item-troca" data-pedido="<%=pedido.getId()%>" data-item="<%=item.getId()%>">
 								                </div>
@@ -224,8 +227,9 @@
 				            </div>
 				       		<div class="row">
 				                <div class="col-12 text-end">
-				                	<% if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA")) { %>
-				                     	<button class="btn btn-dark mt-2 " onclick="solicitarTroca(<%=pedido.getId()%>,'EM TROCA')">Solicitar Troca</button>
+				                	<% if (pedido.getStatus().equals("ENTREGUE") ||  pedido.getStatus().contains("TROCA")) || pedido.getStatus().contains("CANCELADO") ) { %>
+										<button class="btn btn-dark mt-2 " onclick="solicitarTroca(<%=pedido.getId()%>,'EM TROCA')">Solicitar Troca</button>
+                                        <button class="btn btn-dark mt-2" onclick="cancelarPedido(<%=pedido.getId()%>)">Cancelar</button>
 				                    <% } %>
 				                </div>
 				            </div>

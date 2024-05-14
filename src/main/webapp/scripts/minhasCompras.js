@@ -18,7 +18,25 @@ function filterStatus(status) {
     });
 }
 
-
+function cancelarPedido(idPedido) {
+    const novoStatus = "EM CANCELAMENTO"; 
+    const confirmacao = confirm("Tem certeza de que deseja cancelar este pedido?");
+    if (confirmacao) {
+        
+     const url = `/les-ecommerce-vinhos/areaAdministrador/EditarPedido?id=${idPedido}&PedidoStatus=${novoStatus}`;
+ 
+    fazerRequisicaoAjax(url, function(resposta) {
+		if(resposta > 0){
+        	alert("Erro ao solicitar cancelamento");
+        }
+        else
+        	alert("Cancelamento solicitado" + resposta)
+    }, function() {
+        alert("Erro ao gerenciar troca JS");
+    });
+        
+    }
+}
 
 function solicitarTroca(pedidoId,novoStatusPedido) {
 	debugger
@@ -80,8 +98,6 @@ function handleChecketAll(event, pedidoId) {
         });
     }
 }
-
-
 function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url);

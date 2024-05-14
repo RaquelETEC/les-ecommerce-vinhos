@@ -16,6 +16,12 @@ public class CupomService {
 	public ArrayList<Cupons> listarCupom(Cliente cliente) {
 		return daoCupom.ListarCupons(cliente);
 	}
+	
+	public int adicionarCupomTroca(Cliente cliente, Cupons cupom) {
+		System.out.println("Cheguei no adicionarCupomTroca Service");
+
+		return daoCupom.inserirCuponsTroca(cliente, cupom);
+	}
 
 
 
