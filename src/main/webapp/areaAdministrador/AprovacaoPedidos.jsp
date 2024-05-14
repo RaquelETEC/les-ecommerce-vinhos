@@ -122,6 +122,9 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						            case "EM TRANSPORTE":
 						                opcoesStatus = new String[]{"ENTREGUE"};
 						                break;
+						            case "EM CANCELAMENTO":
+						                opcoesStatus = new String[]{"CANCELADO"};
+						                break;    
 						            default:
 						                // Outros casos não definidos
 						                opcoesStatus = new String[]{statusAtual};
