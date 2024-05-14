@@ -75,7 +75,7 @@ function capturarDadosConfirmarRecebimento(btn) {
 }
 
 function processarConfirmacao(confirmacao) {
-	//confirmarTroca (itemId,pedidoId,novoStatus,novoStatusItem)
+	confirmarTroca (itemId,pedidoId,novoStatus,novoStatusItem)
    	gerarCupomTroca(pedidoId,prodId,total,clienteId);
    	
     if (confirmacao)
