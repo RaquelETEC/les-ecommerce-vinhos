@@ -148,7 +148,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						        
 						        <td>
 						            <div class="option-button">
-						                <a class="Botao1" href="javascript: confirmarProduto(<%= pedido.getId() %>, <%= i %>)">Editar</a>
+						                <a class="Botao1" href="javascript: confirmarProduto(<%= pedido.getId() %>, <%= i %>, <%= pedido.getValor() %>,<%= pedido.getCliente().getId()%>)">Editar</a>
 						            </div>
 						        </td>
 						    </tr>
