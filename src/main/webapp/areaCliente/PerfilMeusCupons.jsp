@@ -113,6 +113,7 @@ ArrayList<Cupons> lista = (ArrayList<Cupons>) request.getAttribute("listaCupons"
 				                <!-- Parte direita com o nome do cupom e a data de vencimento -->
 				                <div class="col-md-9">
 				                    <h5 class="card-title"><%=lista.get(i).getDesc()%></h5>
+				                  	<h5 class="card-title">Valor do Cupom: <%=lista.get(i).getValor()%></h5>
 				                    <p class="card-text">Data de vencimento: <%=lista.get(i).getValidade()%></p>
 				                </div>
 				            </div>

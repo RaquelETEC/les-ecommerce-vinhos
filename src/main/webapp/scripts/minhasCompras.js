@@ -26,10 +26,10 @@ function cancelarPedido(idPedido) {
  
     fazerRequisicaoAjax(url, function(resposta) {
 		if(resposta > 0){
-        	alert("Cancelamento solicitado" + resposta)
+        	alert("Erro ao solicitar cancelamento");
         }
         else
-        	alert("Erro ao solicitar cancelamento");
+        	alert("Cancelamento solicitado" + resposta)
     }, function() {
         alert("Erro ao gerenciar troca JS");
     });

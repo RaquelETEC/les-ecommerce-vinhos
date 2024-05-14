@@ -29,7 +29,7 @@ public class PedidoVendaService {
 		return daoPedidoVenda.selecionarPedidos(pedidovenda);
 	}
 	
-	public PedidoVenda editarPedido(PedidoVenda pedidovenda){
+	public String editarPedido(PedidoVenda pedidovenda){
 		return daoPedidoVenda.EditarPedido(pedidovenda);
 	}
 

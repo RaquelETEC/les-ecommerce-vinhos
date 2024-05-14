@@ -88,7 +88,6 @@ public class ControllerAdministracao extends HttpServlet {
 		response.getWriter().write(resposta);
 		response.getWriter().flush();
 		
-		System.out.println("Estou no editar pedido");
 	}
 
 }
