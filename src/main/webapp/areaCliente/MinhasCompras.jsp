@@ -173,7 +173,6 @@
 								        </div>								       
 								        <div class="p-2 bd-highlight">
 								            <% if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA") && item.getTipos().ordinal() == 0) { %>
-
 								                <div class="check_items">
 								                    <input type="checkbox" class="item-troca" data-pedido="<%=pedido.getId()%>" data-item="<%=item.getId()%>">
 								                </div>
@@ -227,7 +226,7 @@
 				            </div>
 				       		<div class="row">
 				                <div class="col-12 text-end">
-				                	<% if (pedido.getStatus().equals("ENTREGUE") ||  pedido.getStatus().contains("TROCA")) || pedido.getStatus().contains("CANCELADO") ) { %>
+				                	<% if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA") || pedido.getStatus().contains("CANCELADO")) { %>
 										<button class="btn btn-dark mt-2 " onclick="solicitarTroca(<%=pedido.getId()%>,'EM TROCA')">Solicitar Troca</button>
                                         <button class="btn btn-dark mt-2" onclick="cancelarPedido(<%=pedido.getId()%>)">Cancelar</button>
 				                    <% } %>

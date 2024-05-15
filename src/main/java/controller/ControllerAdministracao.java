@@ -94,7 +94,7 @@ public class ControllerAdministracao extends HttpServlet {
 		
 		pedidoService.editarPedido(pedidoVenda);
 
-		String resposta = pedidoVendaservice.editarPedido(pedidoVenda);
+		String resposta = pedidoService.editarPedido(pedidoVenda);
 
 		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");

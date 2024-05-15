@@ -158,7 +158,7 @@ public class DAOPedidoVenda {
 		} catch (Exception e) {
 
 			System.out.println("error ao atualizar o pedido: " + e);
-			return pedidovenda;
+			return e + "";
 
 		}
 	}

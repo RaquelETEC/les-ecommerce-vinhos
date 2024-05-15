@@ -13,7 +13,7 @@ import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Cupons;
 
-public class DAOCupons {
+public class DaoCupons {
 
 	public ArrayList<Cupons> ListarCupons(Cliente cliente) {
 		ArrayList<Cupons> listaDeCupons = new ArrayList<>();
@@ -65,7 +65,7 @@ public class DAOCupons {
 	        stmt1.setString(4, cupom.getTipo());
 	        stmt1.setDouble(5, cupom.getValor());
 	        stmt1.setDate(6, new java.sql.Date(cupom.getValidade().getTime()));
-	        stmt1.setBoolean(7, false); // Definir como não utilizado por padrão
+	        stmt1.setBoolean(7, false); // Definir como nï¿½o utilizado por padrï¿½o
 	        int rowsAffected = stmt1.executeUpdate();
 	        
 	        if (rowsAffected == 1) { // Se o cupom foi inserido com sucesso

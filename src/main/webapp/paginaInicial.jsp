@@ -30,8 +30,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 		<a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>	<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
-				<a href="areaCliente/MinhasCompras.html?id=17" class="btn btn-light ms-2">MINHAS
-					COMPRAS </a> <a href="ExibirCarrinho?id=17" class="btn btn-light ms-2">MEU
+				<a href="areaCliente/MinhasCompras.html?id=20" class="btn btn-light ms-2">MINHAS
+					COMPRAS </a> <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">MEU
 					CARRINHO</a> <a href="areaAdministrador/Login.html"
 					class="btn btn-light ms-2">GERENCIAMENTO</a>
 			</div>
@@ -153,7 +153,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 								<div class="box-label">
 									<label for="typeId">Id</label>
 								</div>
-								<input type="text" name="Id" id="Id" value=17> <input
+								<input type="text" name="Id" id="Id" value=20> <input
 									type="text" name="idProd" id="idProd"
 									class="input-form input-width-1"
 									value="<%=lista.get(i).getId()%>">
@@ -175,7 +175,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 								</div>
 								<button type="button"
 									class="btn btn-lg add-to-cart-btn text-center add_carrinho"
-									onclick="AdicionarAoCarrinho(17, <%=lista.get(i).getId()%>, document.getElementById('quantity<%=i%>').textContent)">
+									onclick="AdicionarAoCarrinho(20, <%=lista.get(i).getId()%>, document.getElementById('quantity<%=i%>').textContent)">
 									AdicionarAoCarrinho</button>
 							</div>
 						</div>
