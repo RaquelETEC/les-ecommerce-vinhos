@@ -64,7 +64,8 @@ public class ControllerAdministracao extends HttpServlet {
 		System.out.println("Cheguei no area pedidos");
 		
 		ArrayList<PedidoVenda> lista = pedidoService.listarPedidoVenda(new Cliente(), null,0);
-	
+		request.setAttribute("listaPedidos", lista);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/AprovacaoPedidos.jsp");
 		rd.forward(request, response);
 

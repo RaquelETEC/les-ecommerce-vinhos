@@ -22,6 +22,7 @@ function salvarEndereco() {
 
 		// Feche o modal de seleção de endereço, se necessário
 		$('#modalSelecaoEndereco').modal('hide');
+		
 
 	} else {
 		// Se nenhum radio button estiver selecionado, exiba uma mensagem de erro

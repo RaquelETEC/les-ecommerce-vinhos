@@ -49,13 +49,13 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 	</nav>
 
 	<main class="main">
-		<div class="col-8 m-3 ">
+		<div class="col-9 m-3 ">
 			<div class="row">
 				<h2>Finalizar Pedido</h2>
 				<hr>
 				<BR>
 			</div>
-
+			<div class="content-tab">
 			<p class="card-text">Endereço de Entrega</p>
 			<div class="Endereco-Container1">
 				<div class="card mt-3 styleCards">
@@ -104,7 +104,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 								<div class="image-container" style="background-color: #f2f2f2;">
 									<img src="imagens/produtos/<%=itens.get(i).getProduto().getCodigo_barra() %>.png"
 										alt="Imagem do Produto" class="img-fluid rounded-start"
-										style="max-width: 100px; max-height: 100px;">
+										style="max-width: 70px; max-height: 70px;">
 								</div>
 							</div>
 							<div class="col-md-9">
@@ -113,7 +113,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 									<div class="card-options">
 										<div class="card-text">
 											<div
-												class="d-flex justify-content-between align-items-center mb-3">
+												class="d-flex justify-content-between align-items-center">
 												<span id="quantity<%=i%>" class="quantity">x<%=itens.get(i).getQuantProd()%></span>
 											</div>
 										</div>
@@ -122,7 +122,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							</div>
 							<div class="col-md-2">
 								<div class="card-body text-end">
-									<p class="card-text fs-4">
+									<p class="card-text fs-5">
 										R$
 										<%=itens.get(i).getProduto().getPro_preco_venda()%></p>
 								</div>
@@ -257,71 +257,72 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 			<!-- ------------------------------------- Fim da tela  ---------------------------------- -->
 			<!-- Sessão de modals -->
 			
-			<div class="modal fade" id="modalSelecaoEndereco" tabindex="-1"
-				aria-labelledby="modalSelecaoEnderecoLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção
-								de Endereço</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Fechar">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<%
-							for (int i = 0; i < listaEntrega.size(); i++) {
-								Endereco endereco = listaEntrega.get(i); // Crie um novo objeto Endereco
-							%>
-							<div class="card mt-3">
-								<div class="card-body">
-									<div class="row">
-										<div
-											class="col-md-2 d-flex align-items-center justify-content-center">
-											<!-- Adicionando classes para alinhar vertical e horizontalmente -->
-											<div class="custom-radio">
-												<!-- Adicione um ID exclusivo para cada radio button -->
-												<input type="radio" id="endereco<%=i%>"
-													name="enderecoSelecionado" value="<%=endereco.getId()%>">
-												<!-- Adicione o rótulo associado ao radio button -->
-												<label for="endereco<%=i%>"></label>
+				<div class="modal fade" id="modalSelecaoEndereco" tabindex="-1"
+					aria-labelledby="modalSelecaoEnderecoLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção
+									de Endereço</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Fechar">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<%
+								for (int i = 0; i < listaEntrega.size(); i++) {
+									Endereco endereco = listaEntrega.get(i); // Crie um novo objeto Endereco
+								%>
+								<div class="card mt-3">
+									<div class="card-body">
+										<div class="row">
+											<div
+												class="col-md-2 d-flex align-items-center justify-content-center">
+												<!-- Adicionando classes para alinhar vertical e horizontalmente -->
+												<div class="custom-radio">
+													<!-- Adicione um ID exclusivo para cada radio button -->
+													<input type="radio" id="endereco<%=i%>"
+														name="enderecoSelecionado" value="<%=endereco.getId()%>">
+													<!-- Adicione o rótulo associado ao radio button -->
+													<label for="endereco<%=i%>"></label>
+												</div>
 											</div>
-										</div>
-										<div class="col-md-10">
-											<p id="Nome<%=endereco.getId()%>" class="card-title ">
-												<strong><%=endereco.getNome()%> </strong>
-											</p>
-											<p class="card-text">
-												<span id="Logradouro<%=endereco.getId()%>"><%=endereco.getLogradouro()%></span>,
-												<span id="Numero<%=endereco.getId()%>"><%=endereco.getNumero()%></span>,
-												<span id="Bairro<%=endereco.getId()%>"><%=endereco.getBairro()%></span>,
-												<span id="Cidade<%=endereco.getId()%>"><%=endereco.getCidade()%></span>,
-												<span id="Estado<%=endereco.getId()%>"><%=endereco.getEstado()%></span>
-												- <span id="Cep<%=endereco.getId()%>"><%=endereco.getCep()%></span>,
-												<span id="Pais<%=endereco.getId()%>"><%=endereco.getPais()%></span>
-											</p>
+											<div class="col-md-10">
+												<p id="Nome<%=endereco.getId()%>" class="card-title ">
+													<strong><%=endereco.getNome()%> </strong>
+												</p>
+												<p class="card-text">
+													<span id="Logradouro<%=endereco.getId()%>"><%=endereco.getLogradouro()%></span>,
+													<span id="Numero<%=endereco.getId()%>"><%=endereco.getNumero()%></span>,
+													<span id="Bairro<%=endereco.getId()%>"><%=endereco.getBairro()%></span>,
+													<span id="Cidade<%=endereco.getId()%>"><%=endereco.getCidade()%></span>,
+													<span id="Estado<%=endereco.getId()%>"><%=endereco.getEstado()%></span>
+													- <span id="Cep<%=endereco.getId()%>"><%=endereco.getCep()%></span>,
+													<span id="Pais<%=endereco.getId()%>"><%=endereco.getPais()%></span>
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>
+								<%
+								}
+								%>
+								<hr>
+								<p>Não encontrou o endereço desejado?</p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" data-toggle="modal"
+									data-target="#modalCadastroEndereco">Adicionar endereço</button>
+	
 							</div>
-							<%
-							}
-							%>
-							<hr>
-							<p>Não encontrou o endereço desejado?</p>
-							<button type="button" class="btn btn-primary"
-								data-dismiss="modal" data-toggle="modal"
-								data-target="#modalCadastroEndereco">Adicionar endereço</button>
-
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="salvarEndereco()">Salvar</button>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" data-toggle="modal" 
+									onclick="salvarEndereco()">Salvar</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			<!-- cadastrar endereco -->
 
 			<div class="modal fade" id="modalCadastroEndereco" tabindex="-1"
@@ -478,7 +479,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 										<div
 											class="col-md-2 d-flex align-items-center justify-content-center">
 											<img id="imagemCupom<%=cupom.getId()%>"
-												src="<%=cupom.getImg()%>" alt="Imagem do Cupom"
+												src="imagens/assets/<%=cupom.getImg()%>" alt="Imagem do Cupom"
 												class="img-fluid">
 										</div>
 										<div class="col-md-8">
@@ -736,6 +737,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 						</div>
 					</div>
 				</div>
+			</div>
 			</div>
 			</div>
 	</main>
