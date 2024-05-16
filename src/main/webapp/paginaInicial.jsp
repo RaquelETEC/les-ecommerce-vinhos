@@ -20,24 +20,29 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 <script src="scripts/PagInicialv1.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-sm py-3 sticky-top"
-		style="background: black;">
-		<div class="container-fluid">
-		<a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>	<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
-				style="width: 200px;" class="mx-3"></a>
-			<div class="navbar-nav ms-auto">
-				<a href="areaCliente/MinhasCompras.html?id=20" class="btn btn-light ms-2">MINHAS
-					COMPRAS </a> <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">MEU
-					CARRINHO</a> <a href="areaAdministrador/Login.html"
-					class="btn btn-light ms-2">GERENCIAMENTO</a>
-			</div>
-		</div>
-	</nav>
-
+	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
+	    <div class="container-fluid">
+	        <a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>
+	            <img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3">
+	        </a>
+	        <div class="navbar-nav ms-auto">
+	            <a href="areaCliente/MinhasCompras.html?id=20" class="btn btn-light ms-2">
+	                <i class="fas fa-shopping-bag"></i> MINHAS COMPRAS
+	            </a>
+	            <a href="ExibirCarrinho?id=20" class="btn btn-light ms-2">
+	                <i class="fas fa-shopping-cart"></i> MEU CARRINHO
+	            </a>
+	            <a href="areaAdministrador/Login.html" class="btn btn-light ms-2">
+	                <i class="fas fa-user-cog"></i> GERENCIAMENTO
+	            </a>
+	        </div>
+	    </div>
+	 </nav>
 	<main class="main">
 		<div class="col-2 m-5 filter">
 
@@ -47,11 +52,11 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 						placeholder="Texto para Busca..." aria-label="Pesquisa"
 						aria-describedby="basic-addon1">
 					<hr>
-					<div class="list-group-item text-center">PreÃ§o</div>
-					<label for="minPrice" class="form-label">MÃ­nimo:</label> <input
+					<div class="list-group-item text-center">Preço</div>
+					<label for="minPrice" class="form-label">Mínimo:</label> <input
 						type="number" class="form-control" id="minPrice" placeholder="R$">
 
-					<label for="maxPrice" class="form-label">MÃ¡ximo:</label> <input
+					<label for="maxPrice" class="form-label">Máximo:</label> <input
 						type="number" class="form-control" id="maxPrice" placeholder="R$">
 
 					<hr>
@@ -75,10 +80,10 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					<div class="list-group-item">
 						<input class="form-check-input me-1" type="checkbox"
 							name="swtTipoRose" id="swtTipoRose"> <label
-							class="form-check-label stretched-link" for="swtTipoRose">RosÃ©</label>
+							class="form-check-label stretched-link" for="swtTipoRose">Rosé</label>
 					</div>
 					<hr>
-					<div class="list-group-item text-center">PaÃ­s</div>
+					<div class="list-group-item text-center">Pais</div>
 					<hr>
 					<div class="list-group-item">
 						<input class="form-check-input me-1" type="checkbox"
@@ -92,7 +97,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 							class="form-check-label stretched-link" for="swtPaisEspanha">Espanha</label>
 						<br> <input class="form-check-input me-1" type="checkbox"
 							name="swtPaiItalia" id="swtPaiItalia"> <label
-							class="form-check-label stretched-link" for="swtPaiItalia">ItÃ¡lia</label>
+							class="form-check-label stretched-link" for="swtPaiItalia">Itália</label>
 						<br> <input class="form-check-input me-1" type="checkbox"
 							name="swtPaisPortugaal" id="swtPaisPortugaal"> <label
 							class="form-check-label stretched-link" for="swtPaisPortugaal">Portugal</label>
