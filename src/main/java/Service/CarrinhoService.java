@@ -57,17 +57,12 @@ public class CarrinhoService {
 
 
 	public String AdicionarAoCarrinhoService(Cliente cliente, Produtos produto, int quant) {
-		
 		CarrinhoDeCompras carrinho = daoCarrinho.SelecionarCarrinho(cliente);
-		
 		return (String) daoCarrinho.adicionarAoCarrinho(carrinho,produto,quant);
-		
 	}
 
-
-	public String removerItem(CarrinhoDeCompras carrinho, Produtos produto) {
-		// TODO Auto-generated method stub
-		return (String) daoCarrinho.removerItem(carrinho,produto);
+	public String removerItem(CarrinhoDeCompras carrinho, Produtos produto, String motivo, int produtoRemovido) {
+		return daoCarrinho.alterarStatusCarrinho(carrinho,produto, motivo, produtoRemovido);
 	}
 
 	public ArrayList<CarrinhoItens> listarItensAtivos(CarrinhoDeCompras carrinho) {

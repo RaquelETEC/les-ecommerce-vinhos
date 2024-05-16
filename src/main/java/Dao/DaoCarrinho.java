@@ -101,26 +101,42 @@ public class DaoCarrinho {
 		}
 	
 	public String adicionarAoCarrinho(CarrinhoDeCompras carrinho, Produtos produto, int quantidade) {
-	    String selectQuery = "SELECT car_itens_prod_quant FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ? and car_itens_removido = 0" ;
-	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ? WHERE car_itens_car_id = ? AND car_itens_prod_id = ? ";
+	    String selectQuery = "SELECT car_itens_prod_quant, car_itens_removido FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ?, car_itens_removido = 0 WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
 	    String insertQuery = "INSERT INTO carrinho_itens (car_itens_car_id, car_itens_prod_id, car_itens_prod_quant, car_itens_removido) VALUES (?, ?, ?, 0)";
-	    
+
 	    try (Connection con = Conexao.conectar();
 	         PreparedStatement selectPst = con.prepareStatement(selectQuery);
 	         PreparedStatement updatePst = con.prepareStatement(updateQuery);
 	         PreparedStatement insertPst = con.prepareStatement(insertQuery)) {
-	    	
+	        
 	        selectPst.setInt(1, carrinho.getId());
 	        selectPst.setInt(2, produto.getId());
 	        ResultSet rs = selectPst.executeQuery();
 	        
 	        if (rs.next()) {
-	            // Se o produto já existe no carrinho, atualize a quantidade
-	            int novaQuantidade = rs.getInt("car_itens_prod_quant") + quantidade;
+	            // Se o produto já existe no carrinho, verificar se está removido
+	            int quantidadeAtual = rs.getInt("car_itens_prod_quant");
+	            boolean removido = rs.getBoolean("car_itens_removido");
+	            int novaQuantidade = quantidadeAtual + quantidade;
+	            
+	            // Atualizar a quantidade e o status do produto
 	            updatePst.setInt(1, novaQuantidade);
 	            updatePst.setInt(2, carrinho.getId());
 	            updatePst.setInt(3, produto.getId());
 	            updatePst.executeUpdate();
+	            
+	            if (removido) {
+	                // Se estava removido, atualizar o status
+	                String updateStatusQuery = "UPDATE carrinho_itens SET car_itens_removido = 0, car_itens_prod_quant = ? WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	                try (PreparedStatement updateStatusPst = con.prepareStatement(updateStatusQuery)) {
+	                    updateStatusPst.setInt(1, novaQuantidade);
+	                    updateStatusPst.setInt(2, carrinho.getId());
+	                    updateStatusPst.setInt(3, produto.getId());
+	                    updateStatusPst.executeUpdate();
+	                }
+	            }
+	            
 	            return "Quantidade atualizada no carrinho com sucesso!";
 	        } else {
 	            // Se o produto não existe no carrinho, insira um novo registro
@@ -135,23 +151,31 @@ public class DaoCarrinho {
 	        return "Erro ao adicionar ao carrinho: " + e;
 	    }
 	}
-	public String removerItem(CarrinhoDeCompras carrinho, Produtos produto) {
-		String read = "UPDATE  carrinho_itens SET " 
-		        + "car_itens_removido = 1 ,"
-		        + "car_itens_motivo = 'Removido pelo usuario' " +
-		         "WHERE car_itens_car_id = ? "+ 
-		         "AND  car_itens_prod_id = ? ";
+
+	public String alterarStatusCarrinho(CarrinhoDeCompras carrinho, Produtos produto, String motivo, int produtoRemovido) {
+		String read = 
+				"UPDATE  carrinho_itens SET " 
+		        +"car_itens_removido = ? ,"
+				+"car_itens_prod_quant = ?, "		
+		        +"car_itens_motivo = ? " 
+		        + "WHERE car_itens_car_id = ? "
+		        + "and car_itens_prod_id = ? ";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
 			
-			pst.setInt(1, carrinho.getId());
-			pst.setInt(2, produto.getId());
+			pst.setInt(1, produtoRemovido);
+			pst.setInt(2, carrinho.getQuantItems());
+			pst.setString(3, motivo);
+			pst.setInt(4, carrinho.getId());
+			pst.setInt(5, produto.getId());
 	
 			pst.executeUpdate();
 			con.close();
-            return "Item removido do carrinho com sucesso!";
-
+			
+			
+			return (produtoRemovido == 1) ? "Item removido do carrinho com sucesso!" : "Item adicionado do carrinho novamento com sucesso!";
+			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			    return "Erro ao remover item do carrinho: " + e;

@@ -1,8 +1,10 @@
 function decrementarQuantidade(idItem, i) {
     const btnDecrementar = document.getElementById('btn-decrementar-' + i);
     const btnIncrementar = document.getElementById('btn-incrementar-' + i);
-    const quantidade = parseInt(document.getElementById(`quantity${i}`).innerText);
-	const quantidadeAtualizar = quantidade -1;
+    const quantidadeSpan = document.getElementById(`quantity${i}`).innerText.replace("x ", "");
+
+    const quantidade = parseInt(quantidadeSpan);
+    const quantidadeAtualizar = quantidade -1;
     // Desabilita o botão enquanto a requisição AJAX está em andamento
     btnIncrementar.disabled = true;
     btnIncrementar.classList.add('btn-disabled'); // Adiciona a classe CSS
@@ -19,13 +21,15 @@ function decrementarQuantidade(idItem, i) {
 	        btnDecrementar.disabled = false;
 	        btnIncrementar.disabled = false;
 	    });
-    }, 1500); // 2 segundos em milissegundos
+    }, 100); // 2 segundos em milissegundos
 }
 
 function incrementarQuantidade(idItem, i) {
     const btnDecrementar = document.getElementById('btn-decrementar-' + i);
     const btnIncrementar = document.getElementById('btn-incrementar-' + i);
-    const quantidade = parseInt(document.getElementById(`quantity${i}`).innerText);
+    const quantidadeSpan = document.getElementById(`quantity${i}`).innerText.replace("x ", "");
+
+    const quantidade = parseInt(quantidadeSpan);
 	const quantidadeAtualizar = quantidade +1;
 
     // Desabilita o botão enquanto a requisição AJAX está em andamento
@@ -46,12 +50,19 @@ function incrementarQuantidade(idItem, i) {
 	        btnDecrementar.disabled = false;
 	        btnIncrementar.disabled = false;
 	    });
-	 }, 1500); // 2 segundos em milissegundos
+	 }, 100); // 2 segundos em milissegundos
 
 }
 
-function removerProduto(carrinhoId, produtoId) {
-    var url = "/les-ecommerce-vinhos/RemoverProdutoCarrinho?carrinhoId=" + carrinhoId + "&produtoId=" + produtoId;
+function alterarStatusItem(carrinhoId, produtoId, quantidade, motivo , itemRemovido) {
+	debugger
+    var url = "/les-ecommerce-vinhos/RemoverProdutoCarrinho?"
+    + "carrinhoId=" + carrinhoId 
+    + "&produtoId=" + produtoId 
+    + "&quantidade="+ quantidade
+    + "&motivo=" + motivo
+    + "&itemRemovido="+itemRemovido;
+    
     fazerRequisicaoAjax(url, function(resposta) {
         alert(resposta);
         // Após remover o produto com sucesso, redirecione para a URL atual para recarregar os produtos

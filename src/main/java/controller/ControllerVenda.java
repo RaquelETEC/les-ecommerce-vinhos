@@ -269,17 +269,21 @@ public class ControllerVenda extends HttpServlet {
 	    
 	    // Obter parâmetros da requisição
 	    int carrinhoId = Integer.parseInt(request.getParameter("carrinhoId"));
+	    int quantidadeItem = Integer.parseInt(request.getParameter("quantidade"));
 	    int prodId = Integer.parseInt(request.getParameter("produtoId"));
-	    
+	    int itemRemovido = Integer.parseInt(request.getParameter("itemRemovido"));
+	    String motivo = request.getParameter("motivo");
+
 	    // Criar objetos para o carrinho e produto
 	    CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
 	    carrinho.setId(carrinhoId);
+	    carrinho.setQuantItems(quantidadeItem);
 	    
 	    Produtos produto = new Produtos();
 	    produto.setId(prodId);
 	    
 	    // Chamar o serviço para remover o item do carrinho
-	    String resposta = carrinhoService.removerItem(carrinho, produto);
+	    String resposta = carrinhoService.removerItem(carrinho, produto, motivo, itemRemovido);
 	    System.out.println(resposta);
 	    
 	    // Enviar resposta para o cliente
