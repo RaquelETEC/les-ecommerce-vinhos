@@ -36,6 +36,8 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 
 <body>
@@ -86,7 +88,6 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 			<br>
 			<p>Produtos</p>
 			<div class="Produtos-Container1">
-				<div class="col-12">
 					<hr>
 					<%
 					double total = 0.0;
@@ -133,9 +134,22 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 					<%
 					}
 					%>
-				</div>
+					<hr> 
+					<div class="row">
+						<div class="col-md-8">
+        				<p><i class="fas fa-truck"></i> Envio padrão</p>
+        					<p id="id-receba-em">Receba entre DATADE HOJE + 4 e DATADE HOJE + 8 e de MES DE HOJE + 8 DIAS</p>
+						</div>
+						<div class="col-md-4 text-end fs-5">
+							<p id="id-valor-entrega" class="card-text fs-5">R$00.00</p>
+						</div>
+					</div>
+					<hr>
+					<div class="text-end me-1">
+					    <p class="fs-5">SubTotal: R$ <%= total %></p>
+					</div>
+					<hr>
 				<!-- fim do produto no carrinho -->
-				<br>
 				<p>Cupom Promocional</p>
 				<hr>
 				<div class="cupom-promocional-container">
@@ -341,105 +355,89 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							style="max-height: 70vh; overflow-y: auto;">
 							<!-- Seu formulário de cadastro aqui -->
 							<form name="frmcliente">
-								<fieldset>
-									<input type="text" name="id" id="id" style="display: none" />
-									<div class="row">
-										<div class="col-md-12 mb-4">
-											<label class="form-label" for="nome">Nome*</label> <input
-												type="text" name="nome" id="nome"
-												class="form-control form-control-lg" required />
-
-										</div>
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="tipoResidencia">Tipo
-												de Residência *</label> <select class="form-select form-select-lg"
-												name="typeTipoResidencia" id="typeTipoResidencia" required>
-												<option value="" disabled selected></option>
-												<option value="casa">Casa</option>
-												<option value="apartamento">Apartamento</option>
-												<option value="condominio">Condomínio</option>
-											</select>
-										</div>
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="tipoLogradouro">Tipo
-												Logradouro*</label> <select class="form-select form-select-lg"
-												name="typeTipoLogradouro" id="typeTipoLogradouro" required>
-												<option value="" disabled selected></option>
-												<option value="Rua">Rua</option>
-												<option value="Estrada">Estrada</option>
-												<option value="Avenida">Avenida</option>
-												<option value="Praça">Praça</option>
-												<option value="Corredor">Corredor</option>
-												<option value="Alameda">Alameda</option>
-												<option value="Distrito">Distrito</option>
-											</select>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="logradouro">Logradouro
-												*</label> <input type="text" name="typeLogradouro"
-												id="typeLogradouro" class="form-control form-control-lg"
-												required />
-										</div>
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="numero">N° *</label> <input
-												type="text" name="typeNumero" id="typeNumero"
-												class="form-control form-control-lg" required />
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="typeBairro">Bairro*</label> <input
-												type="text" name="typeBairro" id="typeBairro"
-												class="form-control form-control-lg" required />
-										</div>
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="typeCidade">Cidade*</label> <input
-												type="text" name="typeCidade" id="typeCidade"
-												class="form-control form-control-lg" required />
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="typeEstado">Estado*</label> <input
-												type="text" name="typeEstado" id="typeEstado"
-												class="form-control form-control-lg" required />
-										</div>
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="typeCep">CEP*</label> <input
-												type="text" name="typeCep" id="typeCep"
-												class="form-control form-control-lg" required />
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="typePais">País*</label> <input
-												type="text" name="typePais" id="typePais"
-												class="form-control form-control-lg" required />
-										</div>
-										<div class="col-md-6 mb-4">
-											<label class="form-label" for="observacoes">Observações</label>
-											<input type="text" name="observacoes" id="observacoes"
-												class="form-control form-control-lg" />
-										</div>
-									</div>
-									<label class="form-label" for="cadastrarEndNopPerfil">Incluir
-										endereço ao perfil?</label> 
-										<select class="form-select form-select-lg"
-										name="cadastrarEndNopPerfil" id="cadastrarEndNopPerfil"
-										required>
-										<option value="Sim">Sim</option>
-										<option value="Não">Não</option>
-									</select> <input type="hidden" name="tipoEndereco" value="ENTREGA">
-
-									<br>
-								</fieldset>
+							    <fieldset>
+							        <input type="text" name="id" id="id" style="display: none" />
+							        <div class="row">
+							            <div class="col-md-12 mb-4">
+							                <label class="form-label" for="nome">Nome*</label>
+							                <input type="text" name="nome" id="nome" class="form-control form-control-lg" required />
+							            </div>
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="tipoResidencia">Tipo de Residência *</label>
+							                <select class="form-select form-select-lg" name="typeTipoResidencia" id="typeTipoResidencia" required>
+							                    <option value="" disabled selected></option>
+							                    <option value="casa">Casa</option>
+							                    <option value="apartamento">Apartamento</option>
+							                    <option value="condominio">Condomínio</option>
+							                </select>
+							            </div>
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="tipoLogradouro">Tipo Logradouro*</label>
+							                <select class="form-select form-select-lg" name="typeTipoLogradouro" id="typeTipoLogradouro" required>
+							                    <option value="" disabled selected></option>
+							                    <option value="Rua">Rua</option>
+							                    <option value="Estrada">Estrada</option>
+							                    <option value="Avenida">Avenida</option>
+							                    <option value="Praça">Praça</option>
+							                    <option value="Corredor">Corredor</option>
+							                    <option value="Alameda">Alameda</option>
+							                    <option value="Distrito">Distrito</option>
+							                </select>
+							            </div>
+							        </div>
+							        <div class="row">
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="logradouro">Logradouro *</label>
+							                <input type="text" name="typeLogradouro" id="typeLogradouro" class="form-control form-control-lg" required />
+							            </div>
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="numero">N° *</label>
+							                <input type="text" name="typeNumero" id="typeNumero" class="form-control form-control-lg" required />
+							            </div>
+							        </div>
+							        <div class="row">
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="typeBairro">Bairro*</label>
+							                <input type="text" name="typeBairro" id="typeBairro" class="form-control form-control-lg" required />
+							            </div>
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="typeCidade">Cidade*</label>
+							                <input type="text" name="typeCidade" id="typeCidade" class="form-control form-control-lg" required />
+							            </div>
+							        </div>
+							        <div class="row">
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="typeEstado">Estado*</label>
+							                <input type="text" name="typeEstado" id="typeEstado" class="form-control form-control-lg" required />
+							            </div>
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="typeCep">CEP*</label>
+							                <input type="text" name="typeCep" id="typeCep" class="form-control form-control-lg" required />
+							            </div>
+							        </div>
+							        <div class="row">
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="typePais">País*</label>
+							                <input type="text" name="typePais" id="typePais" class="form-control form-control-lg" required />
+							            </div>
+							            <div class="col-md-6 mb-4">
+							                <label class="form-label" for="observacoes">Observações</label>
+							                <input type="text" name="observacoes" id="observacoes" class="form-control form-control-lg" />
+							            </div>
+							        </div>
+							        <label class="form-label" for="cadastrarEndNopPerfil">Incluir endereço ao perfil?</label>
+							        <select class="form-select form-select-lg" name="cadastrarEndNopPerfil" id="cadastrarEndNopPerfil" required>
+							            <option value="Sim">Sim</option>
+							            <option value="Não">Não</option>
+							        </select>
+							        <input type="hidden" name="tipoEndereco" value="ENTREGA">
+							        <br>
+							    </fieldset>
 							</form>
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-primary btn-lg btn-block"
-								id="BotaoCadastrar" type="button"
+								id="BotaoCadastrar" type="button" 
 								onClick="AdicionarNovoEndereco(<%=request.getParameter("idCliente")%>)">Cadastrar</button>
 						</div>
 					</div>

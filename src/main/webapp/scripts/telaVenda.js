@@ -2,6 +2,29 @@ var idCupomTroca = 0;
 var idCupomCardTrocaSelecionado = '';
 var idCartaoCardSelecionado = '';
 
+  // Espera o DOM ser carregado
+    document.addEventListener("DOMContentLoaded", function() {
+        function calculaData(dias, formato) {
+            var hoje = new Date();
+            var dataEntrega = new Date(hoje);
+            dataEntrega.setDate(dataEntrega.getDate() + dias);
+
+            if (formato === "MMM") {
+                var meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                return meses[dataEntrega.getMonth()];
+            } else {
+                return dataEntrega.toLocaleDateString();
+            }
+        }
+
+        // Chamada da função para atualizar o elemento HTML
+        var recebimento = `Receba entre ${calculaData(4)} e ${calculaData(8)} - ${calculaData(8, "MMM")}`;
+        var elementoRecebimento = document.getElementById('id-receba-em');
+        if (elementoRecebimento) {
+            elementoRecebimento.textContent = recebimento;
+        }
+    });
+    
 function salvarEndereco() {
 	// Obtenha o radio button selecionado
 	var enderecoSelecionado = document.querySelector('input[name="enderecoSelecionado"]:checked');
@@ -23,60 +46,121 @@ function salvarEndereco() {
 		// Feche o modal de seleção de endereço, se necessário
 		$('#modalSelecaoEndereco').modal('hide');
 		
+		calcularFrete(document.getElementById(`Cidade${enderecoId}`).textContent); 
+
 
 	} else {
 		// Se nenhum radio button estiver selecionado, exiba uma mensagem de erro
 		console.log("Selecione um endereço ou cadastre!");
 	}
+	
+
 }
+
 function AdicionarNovoEndereco(id) {
-	// Obtenha os valores dos campos do formulário
-	// Obtenha uma referência ao formulário pelo seu nome
-	var formulario = document.forms["frmcliente"];
+    // Obtenha uma referência ao formulário pelo seu nome
+    var formulario = document.forms["frmcliente"];
 
-	// Obtenha os valores dos campos individualmente
-	var nome = formulario["nome"].value;
-	var tipoResidencia = formulario["typeTipoResidencia"].value;
-	var tipoLogradouro = formulario["typeTipoLogradouro"].value;
-	var logradouro = formulario["typeLogradouro"].value;
-	var numero = formulario["typeNumero"].value;
-	var bairro = formulario["typeBairro"].value;
-	var cidade = formulario["typeCidade"].value;
-	var estado = formulario["typeEstado"].value;
-	var cep = formulario["typeCep"].value;
-	var pais = formulario["typePais"].value;
-	var observacoes = formulario["observacoes"].value;
-	var cadastrarEndNopPerfil = formulario["cadastrarEndNopPerfil"].value;
-	var tipoEndereco = "ENTREGA";
+    // Verifique se todos os campos obrigatórios estão preenchidos
+    var camposObrigatorios = formulario.querySelectorAll('[required]');
+    for (var i = 0; i < camposObrigatorios.length; i++) {
+        if (!camposObrigatorios[i].value) {
+            alert("Por favor, preencha todos os campos obrigatórios.");
+            return; // Pare a execução se algum campo obrigatório estiver vazio
+        }
+    }
 
-	if (cadastrarEndNopPerfil == "Sim") {
-		var dados = "id=" + id + "&nome=" + nome + "&typeTipoResidencia=" + tipoResidencia + "&typeTipoLogradouro=" + tipoLogradouro +
-			"&typeLogradouro=" + logradouro + "&typeNumero=" + numero + "&typeBairro=" + bairro + "&typeCidade=" + cidade +
-			"&typeEstado=" + estado + "&typeCep=" + cep + "&typePais=" + pais + "&observacoes=" + observacoes +
-			"&tipoEndereco=" + tipoEndereco + "&venda=" + cadastrarEndNopPerfil;
+    // Obtenha os valores dos campos do formulário
+    var nome = formulario["nome"].value;
+    var tipoResidencia = formulario["typeTipoResidencia"].value;
+    var tipoLogradouro = formulario["typeTipoLogradouro"].value;
+    var logradouro = formulario["typeLogradouro"].value;
+    var numero = formulario["typeNumero"].value;
+    var bairro = formulario["typeBairro"].value;
+    var cidade = formulario["typeCidade"].value;
+    var estado = formulario["typeEstado"].value;
+    var cep = formulario["typeCep"].value;
+    var pais = formulario["typePais"].value;
+    var observacoes = formulario["observacoes"].value;
+    var cadastrarEndNopPerfil = formulario["cadastrarEndNopPerfil"].value;
+    var tipoEndereco = "ENTREGA";
 
-		var url = "/les-ecommerce-vinhos/inserirEndereco?" + dados;
-		fazerRequisicaoAjax(url, function(resposta) {
+    if (cadastrarEndNopPerfil == "Sim") {
+        var dados = "id=" + id + "&nome=" + nome + "&typeTipoResidencia=" + tipoResidencia + "&typeTipoLogradouro=" + tipoLogradouro +
+            "&typeLogradouro=" + logradouro + "&typeNumero=" + numero + "&typeBairro=" + bairro + "&typeCidade=" + cidade +
+            "&typeEstado=" + estado + "&typeCep=" + cep + "&typePais=" + pais + "&observacoes=" + observacoes +
+            "&tipoEndereco=" + tipoEndereco + "&venda=" + cadastrarEndNopPerfil;
 
-			alert(resposta);
-		}, function() {
-			alert("Erro ao cadastrar endereço");
-		});
-	}
+        var url = "/les-ecommerce-vinhos/inserirEndereco?" + dados;
+        fazerRequisicaoAjax(url, function(resposta) {
+            alert(resposta);
+            $('#modalCadastroEndereco').modal('hide');
+        }, function() {
+            alert("Erro ao cadastrar endereço");
+        });
+    }
 
-	// Atualize os spans com os valores dos campos do endereço
-	document.getElementById('Logradouro').textContent = nome;
-	document.getElementById('Numero').textContent = numero;
-	document.getElementById('Bairro').textContent = bairro;
-	document.getElementById('Cidade').textContent = cidade;
-	document.getElementById('Estado').textContent = estado;
-	document.getElementById('Cep').textContent = cep;
-	document.getElementById('Pais').textContent = pais;
-	document.getElementById('Nome').textContent = observacoes;
+    // Atualize os spans com os valores dos campos do endereço
+    document.getElementById('Logradouro').textContent = logradouro;
+    document.getElementById('Numero').textContent = numero;
+    document.getElementById('Bairro').textContent = bairro;
+    document.getElementById('Cidade').textContent = cidade;
+    document.getElementById('Estado').textContent = estado;
+    document.getElementById('Cep').textContent = cep;
+    document.getElementById('Pais').textContent = pais;
+    document.getElementById('Nome').textContent = nome;
 
+    // Calcula o frete
+    calcularFrete(cidade);
+}
+
+var TotalFrete = "";
+
+function calcularFrete(cidade) {
+    // Converte a cidade para minúsculas para facilitar a comparação
+    cidade = cidade.toUpperCase();
+    var recebimento;
+    var TotalFrete;
+
+    // Verifica a cidade de destino e define o custo de entrega
+    if (cidade.includes('MOGI DAS CRUZES')) {
+        TotalFrete = 'R$ 0,00';
+        recebimento = `Receba entre ${calculaData(1)} e ${calculaData(2)} - ${calculaData(2, "MMM")}`;
+
+    } else if (cidade.includes('ITAQUAQUECETUBA')) {
+        TotalFrete = 'R$ 6,50';
+        recebimento = `Receba entre ${calculaData(2)} e ${calculaData(4)} - ${calculaData(4, "MMM")}`;
+
+    } else if (cidade.includes('SAO PAULO')) {
+        TotalFrete = 'R$ 20,00';
+        recebimento = `Receba entre ${calculaData(4)} e ${calculaData(8)} - ${calculaData(8, "MMM")}`;
+
+    } else if (cidade.includes('RIO DE JANEIRO')) {
+        TotalFrete = 'R$ 80,00';
+        recebimento = `Receba entre ${calculaData(16)} e ${calculaData(24)} - ${calculaData(24, "MMM")}`;
+
+    } else {
+        TotalFrete = 'R$ 50,00';
+    }
+
+    document.getElementById('id-receba-em').textContent = recebimento;
+    document.getElementById("id-valor-entrega").textContent = TotalFrete;
 }
 
 
+ function calculaData(dias, formato) {
+        var hoje = new Date();
+        var dataEntrega = new Date(hoje);
+        dataEntrega.setDate(dataEntrega.getDate() + dias);
+
+        if (formato === "MMM") {
+            var meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+            return meses[dataEntrega.getMonth()];
+        } else {
+            return dataEntrega.toLocaleDateString();
+        }
+    }
+    
 function addCupomTroca() {
 	idCupomTroca++;
 	// Cria um novo elemento div para representar o card de cupom
