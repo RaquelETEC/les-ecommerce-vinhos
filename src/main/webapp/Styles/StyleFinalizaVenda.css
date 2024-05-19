@@ -124,3 +124,26 @@ button {
 	border: 1px solid #ddd;
 	padding: 10px;
 }
+
+.card{
+	border-radius: .55rem !important;
+	background-color: #f0f0f0 !important;
+	
+}
+.txt-total{
+	color: #EE603D !important; 
+	font-weight: 500;
+	
+	
+}
+.tableStyle {
+	background-color: #f0f0f0;
+    border-style: hidden;
+
+}
+.Produtos-Container1{
+	border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+    border-bottom: white;
+}
+

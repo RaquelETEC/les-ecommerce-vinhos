@@ -324,19 +324,6 @@ public class ControllerVenda extends HttpServlet {
 		
 		ArrayList<Cupons> listaCupons = cupomService.listarCupom(cliente);
 		
-		ArrayList<Cupons> listaCuponsPromocional = new ArrayList<>();
-		ArrayList<Cupons> listaCuponsTroca = new ArrayList<>();
-
-		//Separa a lista de cupons promocionais e cupons de troca para exibir na tela
-		for (Cupons cupomItem : listaCupons) {
-			if (cupomItem.getTipo().contains("P")) {
-				listaCuponsPromocional.add(cupomItem);
-			} 
-			else if (cupomItem.getTipo().contains("T")) {
-				listaCuponsTroca.add(cupomItem);
-			}
-		} 
-		
 		//listagem de cartões
 		CartoesService cartaoService = new CartoesService();
 		ArrayList<CartaoDeCredito> listaCartoes = cartaoService.listarCartoes(cliente);
@@ -345,8 +332,7 @@ public class ControllerVenda extends HttpServlet {
 		request.setAttribute("listaEnderecosEntrega", listaEntrega);
 	
 		//Lista de cupom
-		request.setAttribute("listaCuponsPromocional", listaCuponsPromocional);
-		request.setAttribute("listaCuponsTroca", listaCuponsTroca);
+		request.setAttribute("listaCupons", listaCupons);
 		
 		//Lista de cartao
 		request.setAttribute("listaCartoes", listaCartoes);		

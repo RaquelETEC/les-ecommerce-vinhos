@@ -1,6 +1,10 @@
-var idCupomTroca = 0;
-var idCupomCardTrocaSelecionado = '';
-var idCartaoCardSelecionado = '';
+let totalDesconto = 0.00;
+let totalPagamento = 0.00;
+let totalPedido = 0.00;
+let totalFrete = 0.00;
+let totalSaldo= 0.00;
+
+let idCupom = 0;
 
   // Espera o DOM ser carregado
     document.addEventListener("DOMContentLoaded", function() {
@@ -18,6 +22,7 @@ var idCartaoCardSelecionado = '';
         }
 
         // Chamada da função para atualizar o elemento HTML
+        calcularTotais();
         var recebimento = `Receba entre ${calculaData(4)} e ${calculaData(8)} - ${calculaData(8, "MMM")}`;
         var elementoRecebimento = document.getElementById('id-receba-em');
         if (elementoRecebimento) {
@@ -30,10 +35,12 @@ function salvarEndereco() {
 	var enderecoSelecionado = document.querySelector('input[name="enderecoSelecionado"]:checked');
 	// Verifique se algum radio button está selecionado
 	if (enderecoSelecionado) {
+		debugger;
 		// Obtenha o valor do atributo value do radio button selecionado
 		var enderecoId = enderecoSelecionado.value;
-
+		
 		// Atualize os spans com os valores dos campos do endereço
+		document.getElementById('Logradouro').textContent = document.getElementById(`Logradouro${enderecoId}`).textContent;
 		document.getElementById('Logradouro').textContent = document.getElementById(`Logradouro${enderecoId}`).textContent;
 		document.getElementById('Numero').textContent = document.getElementById(`Numero${enderecoId}`).textContent;
 		document.getElementById('Bairro').textContent = document.getElementById(`Bairro${enderecoId}`).textContent;
@@ -42,12 +49,13 @@ function salvarEndereco() {
 		document.getElementById('Cep').textContent = document.getElementById(`Cep${enderecoId}`).textContent;
 		document.getElementById('Pais').textContent = document.getElementById(`Pais${enderecoId}`).textContent;
 		document.getElementById('Nome').textContent = document.getElementById(`Nome${enderecoId}`).textContent;
+		document.getElementById('idEndereco').textContent = document.getElementById(`enderecoIdModal${enderecoId}`).textContent;
 
 		// Feche o modal de seleção de endereço, se necessário
 		$('#modalSelecaoEndereco').modal('hide');
 		
 		calcularFrete(document.getElementById(`Cidade${enderecoId}`).textContent); 
-
+ 
 
 	} else {
 		// Se nenhum radio button estiver selecionado, exiba uma mensagem de erro
@@ -93,6 +101,7 @@ function AdicionarNovoEndereco(id) {
 
         var url = "/les-ecommerce-vinhos/inserirEndereco?" + dados;
         fazerRequisicaoAjax(url, function(resposta) {
+			debugger;
             alert(resposta);
             $('#modalCadastroEndereco').modal('hide');
         }, function() {
@@ -114,8 +123,6 @@ function AdicionarNovoEndereco(id) {
     calcularFrete(cidade);
 }
 
-var TotalFrete = "";
-
 function calcularFrete(cidade) {
     // Converte a cidade para minúsculas para facilitar a comparação
     cidade = cidade.toUpperCase();
@@ -124,27 +131,32 @@ function calcularFrete(cidade) {
 
     // Verifica a cidade de destino e define o custo de entrega
     if (cidade.includes('MOGI DAS CRUZES')) {
-        TotalFrete = 'R$ 0,00';
+        TotalFrete = '0';
         recebimento = `Receba entre ${calculaData(1)} e ${calculaData(2)} - ${calculaData(2, "MMM")}`;
 
     } else if (cidade.includes('ITAQUAQUECETUBA')) {
-        TotalFrete = 'R$ 6,50';
+        TotalFrete = '6.50';
         recebimento = `Receba entre ${calculaData(2)} e ${calculaData(4)} - ${calculaData(4, "MMM")}`;
 
     } else if (cidade.includes('SAO PAULO')) {
-        TotalFrete = 'R$ 20,00';
+        TotalFrete = '20';
         recebimento = `Receba entre ${calculaData(4)} e ${calculaData(8)} - ${calculaData(8, "MMM")}`;
 
     } else if (cidade.includes('RIO DE JANEIRO')) {
-        TotalFrete = 'R$ 80,00';
+        TotalFrete = '80';
         recebimento = `Receba entre ${calculaData(16)} e ${calculaData(24)} - ${calculaData(24, "MMM")}`;
 
     } else {
-        TotalFrete = 'R$ 50,00';
+        TotalFrete = '50';
     }
 
     document.getElementById('id-receba-em').textContent = recebimento;
-    document.getElementById("id-valor-entrega").textContent = TotalFrete;
+    document.getElementById("id-valor-entrega").textContent = `R$ ${TotalFrete}`;
+
+	totalFrete = parseFloat(TotalFrete);
+	
+	calcularTotais();
+
 }
 
 
@@ -161,83 +173,126 @@ function calcularFrete(cidade) {
         }
     }
     
-function addCupomTroca() {
-	idCupomTroca++;
-	// Cria um novo elemento div para representar o card de cupom
-	var novoCard = document.createElement("div");
-	novoCard.classList.add("card", "mt-3", "styleCards");
+    
+function verificarEnderecoAntesDeAbrirModal() {
+    var enderecoInserido = document.getElementById('idEndereco').textContent;
 
-	// Cria um identificador exclusivo para o card de cupom
-	var cardId = "cupomCard_" + idCupomTroca; // Adicione um número único ou o ID do cupom como parte do identificador
+    if (!enderecoInserido) {
+        alert("Por favor, insira um endereço primeiro.");
+    } else {
+        $('#modalCupomT').modal('show'); // Abrir a modal de cupons
+    }
 
-	// Conteúdo do card de cupom
+    $('#modalCupomT').modal('hide'); // Fechar a modal de cupons
+}
+
+function verificarEnderecoPagamento() {
+	debugger;
+    var enderecoInserido = document.getElementById('idEndereco').textContent;
+
+    if (!enderecoInserido) {
+        alert("Por favor, insira um endereço primeiro.");
+    } else {
+        $('#modalCartoes').modal('show'); // Abrir a modal de cupons
+    }
+
+    $('#modalCartoes').modal('hide'); // Fechar a modal de cupons
+}
+
+function listarOpcoesSelecionadas() {
+	debugger
+	totalDesconto = 0;
+    var cuponsSelecionados = document.querySelectorAll('input[name="cupomsSelecionadoT[]"]:checked');
+    limparListagemCupons();
+    cuponsSelecionados.forEach(function(cupomSelecionado) {
+        var cupomId = cupomSelecionado.value;
+        var cupomDescricao = document.getElementById(`NomeCupomT${cupomId}`).innerText;
+        var cupomImagem = document.getElementById(`imagemCupomT${cupomId}`).src;
+        var cupomValor = document.getElementById(`ValorCupomT${cupomId}`).innerText;
+        var cupomCodigo = document.getElementById(`CodCupomT${cupomId}`).innerText;
+        var cupomTipo= document.getElementById(`CupomTipo${cupomId}`).innerText;
+
+        addCupom(cupomDescricao, cupomImagem, cupomValor, cupomId,cupomCodigo,cupomTipo);
+    });
+    
+    calcularTotais();
+
+}
+
+function addCupom(descricao, imagem, valor, cupomId,cupomCodigo,tipo) {
+    idCupom++;
+    var novoCard = document.createElement("div");
+    novoCard.classList.add("card", "mt-3");
+    var cardId = "cupomCard_" + idCupom;
+
 	novoCard.innerHTML = `
-        <div id="${cardId}" class="card-body">
-            <div class="row">
-                <!-- Parte esquerda com a imagem do cupom -->
-                <div class="col-md-1">
-                    <img id="imagemCupom_${cardId}" src="imagens/assets/CupomFrete.png" alt="Imagem do Cupom"
-                    class="img-fluid rounded-start" style="max-width: 70px; max-height: 70px;">
-                </div>
-                <!-- Parte direita com o nome do cupom e a data de vencimento -->
-                <div class="col-md-8">
-                    <h5 id="NomeCupom_${cardId}" class="card-title"></h5>
-                    <p id="ValorCupom_${cardId}" class="card-text"></p>
-                </div>
-                <div class="col-md-3 text-end">
-                    <button onClick='atualizaCupomIdSelecionado(${idCupomTroca})' type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCupomT">Selecionar Cupom de Troca</button>
-                </div>
-            </div>
-        </div> 
-    `;
+	    <div id="${cardId}" class="lineCupom" style="padding: 10px;">
+	        <div class="row">
+	            <div class="col-md-10">
+	                <p class="fs-6">${cupomCodigo} - ${descricao}</p>
+	            </div>
+	            <div class="col-md-2 text-end">
+                    <button onClick='removerCupom(this)' type="button" class="btn btn-dark" data-cupom-id="${cupomId}" data-valor-cupom="${valor}" data-tipo-cupom="${tipo}">
+	                    <i class="fas fa-trash-alt"></i> 
+	                </button>
+	            </div>
+	        </div>
+	    </div>`;
+	    
+    document.getElementById("cupomContainer").appendChild(novoCard);
+    $('#modalCupomT').modal('hide'); // Fechar a modal de cupons
 
-	// Adiciona o novo card ao container de cupons
-	document.getElementById("cupomContainer").appendChild(novoCard);
+	calcularTotaisCupom(valor,tipo);
 };
+
+function calcularTotaisCupom(valor,tipo){
+debugger;
+
+    valor = parseFloat(valor.replace(/[^0-9.-]/g, ''));
+
+    if (tipo === 'P') {
+        // Calcula o desconto como uma porcentagem do total do pedido
+        const desconto = (valor * totalPedido )/100;
+        totalDesconto += desconto;
+    } else if (tipo === 'T') {
+        // Adiciona o valor total do desconto ao totalDesconto
+        totalDesconto += valor;
+    }    
+}
+
+function limparListagemCupons() {
+    var cupomContainer = document.getElementById("cupomContainer");
+    cupomContainer.innerHTML = ""; 
+}
+
+function removerCupom(botao) {
+    // Remove o card de cupom pai do botão clicado
+    var cardCupom = botao.closest('.lineCupom');
+    cardCupom.remove();
+
+    // Obtém os valores dos atributos de dados do botão
+    var valorRemovido = parseFloat(botao.dataset.valorCupom.replace(/[^0-9.-]/g, ''));
+
+    var tipoRemovido = botao.dataset.tipoCupom;
+
+    // Subtrai o valor do desconto removido do totalDesconto
+    if (tipoRemovido === 'P') {
+        totalDesconto -= (valorRemovido / 100) * totalPedido;
+    } else if (tipoRemovido === 'T') {
+        totalDesconto -= valorRemovido;
+    }
+
+    calcularTotais();
+
+}
 
 function atualizaCupomIdSelecionado(idCupomTroca) {
 	idCupomCardTrocaSelecionado = idCupomTroca;
 }
 
-function salvarCupom(name, modal) {
-	var cupomSelecionado = document.querySelector(`input[name="${name}"]:checked`);
-
-	var valorCupomPTotal = 0;
-	var valorCupomTTotal = 0;
-
-
-	if (cupomSelecionado) {
-		var cupomId = cupomSelecionado.value;
-		if (name == "cupomsSelecionadoP") {
-
-			let valorCupomPTotal = parseFloat(document.getElementById(`ValorCupom${cupomId}`).textContent);
-
-			document.getElementById('idCupomSrc').textContent = document.getElementById(`imagemCupom${cupomId}`);
-			document.getElementById('idCupomDesc').textContent = document.getElementById(`NomeCupom${cupomId}`).textContent;
-			document.getElementById('idCupomValor').textContent = document.getElementById(`ValorCupom${cupomId}`).textContent;
-
-			calcularTotais(valorCupomPTotal, valorCupomTTotal)
-		} else {
-			valorCupomTTotal = parseFloat(document.getElementById(`ValorCupomT${cupomId}`).textContent);
-
-			document.getElementById(`imagemCupom_cupomCard_${idCupomCardTrocaSelecionado}`).textContent = document.getElementById(`imagemCupomT${cupomId}`);
-			document.getElementById(`NomeCupom_cupomCard_${idCupomCardTrocaSelecionado}`).textContent = document.getElementById(`NomeCupomT${cupomId}`).textContent;
-			document.getElementById(`ValorCupom_cupomCard_${idCupomCardTrocaSelecionado}`).textContent = document.getElementById(`ValorCupomT${cupomId}`).textContent;
-
-			calcularTotais(valorCupomPTotal, valorCupomTTotal)
-		}
-
-
-		$(`#${modal}`).modal('hide');
-
-	} else {
-		console.log("Selecione um cupom ou vincule um novo!");
-	}
-}
-
-
 
 function addCartaoCard() {
+	debugger;
 	// Recupera o elemento do cartão selecionado
 	var cartaoSelecionado = document.querySelector('input[name="cartaoSelecionado"]:checked').value;
 
@@ -249,9 +304,7 @@ function addCartaoCard() {
 	var valorCartao = parseFloat(document.getElementById('valorCartao').value);
 
 	// Verifica se a soma de todos os cupons é equivalente a 90% do total do pedido
-	var totalCupons = totalCupomPromocional + totalCupomTroca;
-	var totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
-	var percentualCupons = (totalCupons * 100) / totalPedido;
+	var percentualCupons = (totalDesconto * 100) / totalPedido;
 
 	if (percentualCupons >= 85) {
 		// Permite adicionar um cartão com valor de R$ 10,00
@@ -353,67 +406,53 @@ function removerCartao(botao) {
 	cardPagamento.remove();
 }
 
-
-function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", url);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === XMLHttpRequest.DONE) {
-			if (xhr.status === 200) {
-				sucessoCallback(xhr.responseText);
-			} else {
-				erroCallback();
-			}
-		}
-	};
-	xhr.send();
-}
-
-let totalCupomPromocional = 0.00;
-let totalCupomTroca = 0.00;
-let totalCartoes = 0.00;
-let totalPedido = 0.00;
-function calcularTotais(valorCupomPerc = 0, valorCupomT = 0, valorCartoes = 0) {
+function calcularTotais() {
+	debugger;
 	let TotalProduto = parseFloat(document.getElementById("idTotalProduto").textContent.replace('R$', '').trim());
-
 	// Somando os valores aos totais
-	totalCupomPromocional += parseFloat(valorCupomPerc);
-	totalCupomTroca += parseFloat(valorCupomT);
-	totalCartoes += parseFloat(valorCartoes); // Basta adicionar o valor dos cartões
+	//totalCupomPromocional += parseFloat(valorCupomPerc);
+	//totalCupomTroca += parseFloat(valorCupomT);
+	//totalCartoes += parseFloat(valorCartoes); // Basta adicionar o valor dos cartões
 
-	let totalCupomPValor = TotalProduto - (totalCupomPromocional > 0 ? (totalCupomPromocional * 100) / TotalProduto : 0);
+	//let totalCupomPValor = TotalProduto - (totalCupomPromocional > 0 ? (totalCupomPromocional * 100) / TotalProduto : 0);
 
-	totalPedido = TotalProduto - totalCupomPValor - totalCupomTroca;
-	totalAPagar = totalPedido - totalCartoes;
-
+	totalPedido = TotalProduto + totalFrete
+	//totalAPagar = totalPedido - totalCartoes;
+	totalSaldo = totalPedido - totalDesconto;
 
 	// Arredondando os totais para duas casas decimais
-	totalCupomPValor = parseFloat(totalCupomPValor.toFixed(2));
-	totalCupomTroca = parseFloat(totalCupomTroca.toFixed(2)); // Convertendo para número e arredondando
-	total = parseFloat(totalPedido.toFixed(2));
-	totalCartoes = parseFloat(totalCartoes.toFixed(2)); // Convertendo para número e arredondando
-	totalAPagar = parseFloat(totalAPagar.toFixed(2)); // Convertendo para número e arredondando
+	
+	totalFrete = parseFloat(totalFrete.toFixed(2));
 
-	document.getElementById(`idTotalCupomP`).textContent = `R$ ${totalCupomPValor}`;
-	document.getElementById(`idTotalCupomT`).textContent = `R$ ${totalCupomTroca}`;
-	document.getElementById(`idTotalPagamento`).textContent = `R$ ${totalCartoes}`;
-	document.getElementById(`idTotalApagar`).textContent = `R$ ${totalAPagar}`;
+	
+	//totalCupomPValor = parseFloat(totalCupomPValor.toFixed(2));
+	//totalCupomTroca = parseFloat(totalCupomTroca.toFixed(2)); // Convertendo para número e arredondando
+	//total = parseFloat(totalPedido.toFixed(2));
+	//totalCartoes = parseFloat(totalCartoes.toFixed(2)); // Convertendo para número e arredondando
+	//totalAPagar = parseFloat(totalAPagar.toFixed(2)); // Convertendo para número e arredondando
+
+	document.getElementById(`id-valor-total-Entrega`).textContent = `R$ ${totalFrete}`;
+	document.getElementById(`id-valor-entrega`).textContent = `R$ ${totalFrete}`;
+	document.getElementById(`idTotalPedido`).textContent = `R$ ${totalPedido}`;
+	document.getElementById(`idTotalPedidoS`).textContent = `R$ ${totalPedido}`;
+	document.getElementById(`idTotalSaldo`).textContent = `R$ ${totalSaldo}`;
+	document.getElementById(`idTotalCupom`).textContent = `R$ ${totalDesconto}`;
+
+	//document.getElementById(`idTotalCupom`).textContent = `R$ ${totalCupomPValor}`;
+	//document.getElementById(`idTotalPagamento`).textContent = `R$ ${totalCartoes}`;
+	//document.getElementById(`idTotalApagar`).textContent = `R$ ${totalAPagar}`;
 
 }
+
 function validarPedido(idCliente) {
-	debugger
-    let totalCupomPromocional = parseFloat(document.getElementById(`idTotalCupomP`).textContent.replace('R$', '').trim())
-	let totalCupomTroca = parseFloat(document.getElementById(`idTotalCupomT`).textContent.replace('R$', '').trim())
+	debugger	
+	var enderecoInserido = document.getElementById('idEndereco').textContent;
+	var saldoVerifica = parseFloat(document.getElementById(`idTotalSaldo`).textContent.replace('R$', '').trim());
 
-	let totalCupons =  totalCupomPromocional + totalCupomTroca;
-
-	totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
-	totalPagamento = parseFloat(document.getElementById("idTotalPagamento").textContent.replace('R$', '').trim());
-	
-	
-	if (totalCartoes > totalPedido) {
-		alert('O valor do pagamento ultrapassou o total a se pagar');
+    if (!enderecoInserido) {
+        alert("Por favor, insira um endereço primeiro.");
+    } else if (saldoVerifica > 0) {
+		alert('O saldo de pagamento esta acima de R$0,00 , revise os dados de pagamento.');
 	} 
 	else {
 		cadastrarPedidoVenda(idCliente);
@@ -439,6 +478,23 @@ function cadastrarPedidoVenda(idCliente) {
 	}, function() {
 		alert("Erro ao cadastrar pedido JS");
 	});
+}
+
+
+function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === XMLHttpRequest.DONE) {
+			if (xhr.status === 200) {
+				sucessoCallback(xhr.responseText);
+			} else {
+				erroCallback();
+			}
+		}
+	};
+	xhr.send();
 }
 
 
