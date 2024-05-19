@@ -1,5 +1,10 @@
 package controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +37,7 @@ import model.entity.PedidoVenda;
 import model.entity.Produtos;
 import model.entity.TiposEndereco;
 import model.entity.TiposStatusItensPedido;
+import dto.PedidoVendaDTO;
 
 @WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", 
 		"/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra", 
@@ -43,8 +49,19 @@ public class ControllerVenda extends HttpServlet {
 	PedidoVendaService vendaService = new PedidoVendaService(); 
 	ClienteService clienteService = new ClienteService();
 	
+	
 	public ControllerVenda() {
 		super();
+	}
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+	    String action = request.getServletPath();
+	    
+	    if(action.equals("/CadastrarPedidoVenda")) {
+	    	CadastrarPedidoVenda(request, response);
+	    }
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -65,9 +82,6 @@ public class ControllerVenda extends HttpServlet {
 	    }
 	    else if(action.equals("/FinalizarCompra")) {
 	    	FinalizarCompraTela(request, response);
-	    }
-	    else if(action.equals("/CadastrarPedidoVenda")) {
-	    	CadastrarPedidoVenda(request, response);
 	    }
 	    else if(action.equals("/areaCliente/MinhasCompras.html")) {
 	    	MinhasComprasPage(request, response);
@@ -133,44 +147,53 @@ public class ControllerVenda extends HttpServlet {
 		
 	}
 
-	private void CadastrarPedidoVenda(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-	    System.out.println("controller cadastrar pedido venda");
-		Cliente cliente = new Cliente(); 
-
-		cliente.setId(Integer.parseInt(request.getParameter("idCliente")));
-	    Double valorPedido = Double.parseDouble(request.getParameter("totalPedido"));
-	   
+	private void CadastrarPedidoVenda(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {	    System.out.println("controller cadastrar pedido venda");
+	    
+	    PedidoVenda pedido = new PedidoVenda();
+	    Cliente cliente = new Cliente(); 
+	    Endereco endereco = new Endereco();
 		CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
-	    carrinho = carrinhoService.SelecionarCarrinho(cliente);
-	    
-	    //listagem de itens do carrinho 
-	    ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItensAtivos(carrinho);
-	    
-	    
-	    Date dataAtual = new Date();
 
+        // Instancie um ObjectMapper para converter o JSON em objetos Java
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Desserialize o JSON recebido no objeto PedidoVendaDTO
+        PedidoVendaDTO pedidoVendaDTO = mapper.readValue(request.getReader(), PedidoVendaDTO.class);
+        
+        Date dataAtual = new Date();
+	    
 	    try {
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	        String dataFormatada = dateFormat.format(dataAtual);
-	        System.out.println("Data atual formatada: " + dataFormatada);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    
-	    PedidoVenda pedido = new PedidoVenda();
+        endereco.setId(pedidoVendaDTO.getIdEndereco());
+        cliente.setId(pedidoVendaDTO.getIdCliente());
+        
+        carrinho = carrinhoService.SelecionarCarrinho(cliente);
+	    ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItensAtivos(carrinho);
+	    	
+        ArrayList<CartaoDeCredito> listaCartoes = (ArrayList<CartaoDeCredito>) pedidoVendaDTO.getCartoes();
+        ArrayList<Cupons> listaCupons = (ArrayList<Cupons>) pedidoVendaDTO.getCupons();
 	    
-	    pedido.setCliente(cliente);
-	    pedido.setData(dataAtual);
+        pedido.setCliente(cliente);
+        pedido.setValor(pedidoVendaDTO.getTotalPedido());
+        pedido.setData(dataAtual);
+        pedido.setEndereco(endereco);
 	    pedido.setStatus("EM PROCESSAMENTO");
-	    pedido.setValor(valorPedido);
+        pedido.setCupons(listaCupons);
+        pedido.setCartoes(listaCartoes);
+        
+        String resposta = vendaService.CadastrarPedido(pedido,listaItens, listaCupons,listaCartoes );
 	    
 	    
-	    String resposta = vendaService.CadastrarPedido(pedido,listaItens);
-	    
-	    	response.setContentType("text/plain");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(resposta); 
-		    response.getWriter().flush();
+    	response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta); 
+	    response.getWriter().flush();
+	   
    
 	}
 

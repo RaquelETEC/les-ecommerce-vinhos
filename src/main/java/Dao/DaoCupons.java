@@ -4,8 +4,10 @@ package Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 import Dao.Conexao;
 import model.entity.BandeiraCartao;
@@ -19,7 +21,7 @@ public class DaoCupons {
 		ArrayList<Cupons> listaDeCupons = new ArrayList<>();
 		String read = "SELECT " + "cup_id, " + "cup_codigo, " + "cup_desc, " + "cup_img, " + "cup_tipo, "
 				+ "cup_valor, " + "cup_validade " + "FROM cupons c "
-				+ "INNER JOIN rel_cup_cli cr ON c.cup_id = cr.rcc_cup_id " + "WHERE cr.rcc_cli_id = ?";
+				+ "INNER JOIN cliente_cupom_relacionamento cr ON c.cup_id = cr.cupom_id " + "WHERE cr.cliente_id = ?";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
@@ -46,57 +48,64 @@ public class DaoCupons {
 		return listaDeCupons;
 	}
 
-	public int inserirCuponsTroca(Cliente cliente, Cupons cupom) {
+    public String gerarCupom(String codigo, String descricao, String img, String tipoCupom, Double valorCupom,
+            Date validade, int usado) {
+			String insert = "INSERT INTO cupons (cup_codigo, cup_desc, cup_img, cup_tipo, cup_valor, cup_validade, cup_usado) " +
+			      "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			
+			int idCupomGerado = -1; // Valor padrão para indicar que nenhum cupom foi gerado
+			
+			try (Connection con = Conexao.conectar();
+				  PreparedStatement pst = con.prepareStatement(insert, PreparedStatement.RETURN_GENERATED_KEYS)) {
+				
+				  pst.setString(1, codigo);
+				  pst.setString(2, descricao);
+				  pst.setString(3, img);
+				  pst.setString(4, tipoCupom);
+				  pst.setDouble(5, valorCupom);
+				  pst.setDate(6, new java.sql.Date(validade.getTime())); // Convertendo a data para o tipo SQL
+				  pst.setInt(7, usado);
+				
+				  int linhasAfetadas = pst.executeUpdate();
+				
+				  if (linhasAfetadas > 0) {
+				      ResultSet rs = pst.getGeneratedKeys();
+				      if (rs.next()) {
+				          idCupomGerado = rs.getInt(1); // Obtém o ID gerado
+				      }
+				  }
+				  con.close();
+				  
+			} catch (SQLException e) {
+			  e.printStackTrace();
+			  return "error: " + e;
+			}
+			
+			return "" + idCupomGerado;
+		}
 
-	    String createCupom = "INSERT INTO cupons (cup_codigo, cup_desc, cup_img, cup_tipo, cup_valor, cup_validade, cup_usado) "
-	                         + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-	    
-	    String createRelacionamento = "INSERT INTO rel_cup_cli (rcc_cup_id, rcc_cli_id) "
-	                                 + "VALUES (?, ?)";
 
-	    try {
-	        Connection conn = Conexao.conectar();
-	        
-	        // Inserir o cupom na tabela 'cupons'
-	        PreparedStatement stmt1 = conn.prepareStatement(createCupom, Statement.RETURN_GENERATED_KEYS);
-	        stmt1.setString(1, cupom.getCodigo());
-	        stmt1.setString(2, cupom.getDesc());
-	        stmt1.setString(3, cupom.getImg());
-	        stmt1.setString(4, cupom.getTipo());
-	        stmt1.setDouble(5, cupom.getValor());
-	        stmt1.setDate(6, new java.sql.Date(cupom.getValidade().getTime()));
-	        stmt1.setBoolean(7, false); // Definir como n�o utilizado por padr�o
-	        int rowsAffected = stmt1.executeUpdate();
-	        
-	        if (rowsAffected == 1) { // Se o cupom foi inserido com sucesso
-	            ResultSet generatedKeys = stmt1.getGeneratedKeys();
-	            int cupomId = -1;
-	            if (generatedKeys.next()) {
-	                cupomId = generatedKeys.getInt(1); // Obtendo o ID gerado do cupom
-	            }
-	            
-	            // Inserir o relacionamento na tabela 'rel_cup_cli'
-	            PreparedStatement stmt2 = conn.prepareStatement(createRelacionamento);
-	            stmt2.setInt(1, cupomId);
-	            stmt2.setInt(2, cliente.getId());
-	            rowsAffected = stmt2.executeUpdate();
-	            
-	            if (rowsAffected == 1) { // Se o relacionamento foi inserido com sucesso
-	                conn.close();
-	                return cupomId;
-	            } else {
-	                conn.rollback();
-	                conn.close();
-	                return -1; // Retornar um valor de erro
-	            }
-	        } else {
-	            conn.rollback();
-	            conn.close();
-	            return -1; // Retornar um valor de erro
-	        }
-	    } catch (Exception e) {
-	        System.out.println("Erro ao inserir cupom: " + e);
-	        return -1; // Retornar um valor de erro
-	    }
+	public String vincularCupomAoCliente(Cupons cupom, Cliente cliente) {
+		String insert = "INSERT INTO cliente_cupom_relacionamento (cupom_id, cliente_id) " +
+		      "VALUES (?, ?)";
+		String resposta = "";
+		
+		try (Connection con = Conexao.conectar();
+			 PreparedStatement pst = con.prepareStatement(insert)) {	
+			
+			  pst.setInt(1, cupom.getId());
+			  pst.setInt(2, cliente.getId());
+			 
+			  con.close();		
+			  resposta = "sucess";
+			
+		} catch (SQLException e) {
+		  e.printStackTrace();
+		  resposta= "error: " + e;
+		}
+		
+		return resposta;
 	}
+
+
 }

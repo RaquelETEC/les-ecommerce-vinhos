@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Service.CupomService;
 import Service.PedidoVendaService;
 import model.entity.PedidoVenda;
 import model.entity.TiposStatusItensPedido;
@@ -22,8 +23,7 @@ import model.entity.PedidoItens;
 		"/areaAdministrador/EditarPedido",
 		"/areaAdministrador/TrocaPedidos.html",
 		"/areaAdministrador/alterarStatusItemPedido.html", 
-		"/gerarCupom.html", 
-		"/VincularCupomAoCliente.html"})
+		})
 public class ControllerAdministracao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -32,6 +32,7 @@ public class ControllerAdministracao extends HttpServlet {
 	PedidoVenda pedidoVenda = new PedidoVenda();
 	Cliente cliente = new Cliente();
 	PedidoVendaService pedidoService = new PedidoVendaService();
+	CupomService cupomService = new CupomService();
 
 
 	public ControllerAdministracao() {
@@ -50,10 +51,6 @@ public class ControllerAdministracao extends HttpServlet {
 			EditarPedido(request, response);
 		}else if (action.equals("/areaAdministrador/TrocaPedidos.html")) {
 			PagePedidoTrocas(request, response);
-		}else if(action.equals("/gerarCupom.html")) {
-			GerarCupom(request, response);
-		}else if(action.equals("/VincularCupomAoCliente.html")) {
-			vincularCupomAoCliente(request, response);
 		}
 
 	}
@@ -115,42 +112,6 @@ public class ControllerAdministracao extends HttpServlet {
 		rd.forward(request, response);
 	}
 	
-	private void GerarCupom(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		System.out.println("gerar cupom controller");
-		
-		int idPedido = Integer.parseInt(request.getParameter("pedido"));
-		int idProduto = Integer.parseInt(request.getParameter("prodId"));
-		Double ValorCupom = Double.parseDouble(request.getParameter("valorCupom"));
-		String TipoCupom = (request.getParameter("tipoCupom"));
-				
-		
-		String resposta = pedidoService.GerarCupom(TipoCupom,ValorCupom,idPedido,idProduto );
-		
-	    // Enviar resposta para o cliente
-	    response.setContentType("text/plain");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(resposta); 
-	    response.getWriter().flush();
-		
-	}
 	
-	private void vincularCupomAoCliente(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		
-		Cliente cliente = new Cliente(); 
-		Cupons cupom = new Cupons(); 
-		
-		cliente.setId(Integer.parseInt(request.getParameter("clienteId")));
-		cupom.setId(Integer.parseInt(request.getParameter("cupomId")));
-		
-		String resposta = pedidoService.vincularCupomAoCliente(cupom,cliente);
-
-		 // Enviar resposta para o cliente
-	    response.setContentType("text/plain");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(resposta); 
-	    response.getWriter().flush();
-	}
 	
 }

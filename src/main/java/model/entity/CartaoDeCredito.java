@@ -8,6 +8,7 @@ public class CartaoDeCredito {
 	private String padrao;
 	private BandeiraCartao bandeira;
 	private int codigoSeguranca;
+	private Double valor;
 
 	public CartaoDeCredito() {
 		super();
@@ -15,7 +16,7 @@ public class CartaoDeCredito {
 	}
 
 	public CartaoDeCredito(int id, Cliente cliente, String numero, String nome, String padrao, BandeiraCartao bandeira,
-			int codigoSeguranca) {
+			int codigoSeguranca, Double valor) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
@@ -24,6 +25,16 @@ public class CartaoDeCredito {
 		this.padrao = padrao;
 		this.bandeira = bandeira;
 		this.codigoSeguranca = codigoSeguranca;
+		this.valor = valor;
+	}
+
+	
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
 	public Cliente getCliente() {

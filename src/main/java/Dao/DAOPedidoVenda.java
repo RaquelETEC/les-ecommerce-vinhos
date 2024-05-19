@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 import model.entity.CarrinhoItens;
+import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Cupons;
 import model.entity.PedidoItens;
@@ -163,23 +164,27 @@ public class DAOPedidoVenda {
 		}
 	}
 
-
-	public String CadastrarPedidoDao(PedidoVenda pedido, ArrayList<CarrinhoItens> itens) {
+	public String CadastrarPedidoDao(PedidoVenda pedido, ArrayList<CarrinhoItens> itens, ArrayList<Cupons> listaCupons, ArrayList<CartaoDeCredito> listaCartoes) {
 	    System.out.println("Dao cadastrar pedido");
-	    String sqlPedido = "INSERT INTO pedido_venda (vend_id_cliente, ven_status, ven_data, ven_valor) VALUES (?, ?, ?, ?)";
+	    String sqlPedido = "INSERT INTO pedido_venda (vend_id_cliente, ven_end_id , ven_status, ven_data, ven_valor) VALUES (?, ?, ?, ?, ?)";
 	    String sqlItem = "INSERT INTO pedido_itens (ped_item_ven_id, ped_item_prod_id, ped_item_prod_desc, ped_item_prod_quantidade, ped_item_prod_valor, ped_item_prod_valor_total, ped_item_status_troca) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	    String sqlCuponsPedido = "INSERT INTO pedido_cupons (pedido_id, cupom_id) VALUES (?, ?)";
+	    String sqlCartoesPedido = "INSERT INTO pedido_cartoes (pedido_id, cartao_id, valor) VALUES (?, ?, ?)";
 
 	    try (Connection con = Conexao.conectar();
 	         PreparedStatement pstmtPedido = con.prepareStatement(sqlPedido, PreparedStatement.RETURN_GENERATED_KEYS);
-	         PreparedStatement pstmtItem = con.prepareStatement(sqlItem)) {
+	         PreparedStatement pstmtItem = con.prepareStatement(sqlItem);
+	         PreparedStatement pstmtCuponsPedido = con.prepareStatement(sqlCuponsPedido);
+	         PreparedStatement pstmtCartoesPedido = con.prepareStatement(sqlCartoesPedido)) {
 
 	        con.setAutoCommit(false);
 
 	        // Inserir o pedido
 	        pstmtPedido.setInt(1, pedido.getCliente().getId());
-	        pstmtPedido.setString(2, pedido.getStatus());
-	        pstmtPedido.setDate(3, new java.sql.Date(pedido.getData().getTime()));
-	        pstmtPedido.setDouble(4, pedido.getValor());
+	        pstmtPedido.setInt(2, pedido.getEndereco().getId());
+	        pstmtPedido.setString(3, pedido.getStatus());
+	        pstmtPedido.setDate(4, new java.sql.Date(pedido.getData().getTime()));
+	        pstmtPedido.setDouble(5, pedido.getValor());
 	        pstmtPedido.executeUpdate();
 
 	        // Obter o ID do pedido gerado
@@ -194,11 +199,23 @@ public class DAOPedidoVenda {
 	        if (idPedidoGerado != -1) {
 	            for (CarrinhoItens item : itens) {
 	                setParametrosItemPedido(pstmtItem, idPedidoGerado, item);
-	                pstmtItem.addBatch(); // Adicionar a instruÃ§Ã£o ao batch
+	                pstmtItem.addBatch(); // Adicionar a instrução ao batch
 	            }
-
-	            // Executar o batch de inserÃ§Ã£o
 	            pstmtItem.executeBatch();
+
+	            // Inserir os cupons do pedido
+	            for (Cupons cupom : listaCupons) {
+	                setParametrosCuponsPedido(pstmtCuponsPedido, idPedidoGerado, cupom);
+	                pstmtCuponsPedido.addBatch(); 
+	            }
+	            pstmtCuponsPedido.executeBatch();
+
+	            // Inserir os cartões do pedido
+	            for (CartaoDeCredito cartao : listaCartoes) {
+	                setParametrosCartoesPedido(pstmtCartoesPedido, idPedidoGerado, cartao);
+	                pstmtCartoesPedido.addBatch();
+	            }
+	            pstmtCartoesPedido.executeBatch();
 	        }
 
 	        con.commit();
@@ -212,7 +229,7 @@ public class DAOPedidoVenda {
 	}
 
 	private void setParametrosItemPedido(PreparedStatement pstmtItem, int idPedido, CarrinhoItens item) throws SQLException {
-	    System.out.println("Configurando parÃ¢metros do item do pedido");
+	    System.out.println("Configurando parâmetros do item do pedido");
 
 	    double valorTotal = item.getProduto().getPro_preco_venda() * item.getQuantProd();
 
@@ -225,45 +242,20 @@ public class DAOPedidoVenda {
 	    pstmtItem.setInt(7, TiposStatusItensPedido.TROCA_NAO_SOLICITADA.ordinal());
 	}
 
-
-	/*public ArrayList<PedidoVenda> listarPedidosTodosClientes() {
-		System.out.println("cheguei no dao ");
-	    ArrayList<PedidoVenda> listaDePedidos = new ArrayList<>();
-	    String read = "SELECT " +
-	        "ven_id, " +
-	        "vend_id_cliente, " +
-	        "ven_status, " +
-	        "ven_data, " +
-	        "ven_valor " +
-	        "FROM pedido_venda";
-	    try {
-	    	Connection con = Conexao.conectar();
-			PreparedStatement pst = con.prepareStatement(read);
-			ResultSet rs = pst.executeQuery();
-	        while (rs.next()) {
-	            PedidoVenda pedido = new PedidoVenda();
-	            pedido.setId(rs.getInt("ven_id"));
-
-	            int clienteId = rs.getInt("vend_id_cliente");
-	            Cliente cliente = new DaoCliente().buscarClientePorId(clienteId); // Chamada para buscar o cliente pelo ID
-	            
-	            cliente.setId(clienteId);
-	            pedido.setCliente(cliente);
-
-	            pedido.setStatus(rs.getString("ven_status"));
-	            pedido.setData(rs.getDate("ven_data"));
-	            pedido.setValor(rs.getDouble("ven_valor"));
-
-	            listaDePedidos.add(pedido);
-	        }
-	        con.close();
-	    } catch (Exception e) {
-	        System.out.println("Erro ao listar pedidos: " + e);
-	    }
-	    return listaDePedidos;
+	private void setParametrosCuponsPedido(PreparedStatement pstm, int idPedido, Cupons cupom) throws SQLException {
+	    System.out.println("Configurando parametros do cupom do pedido");
+	    pstm.setInt(1, idPedido);
+	    pstm.setInt(2, cupom.getId());
 	}
-	*/
-	
+
+	private void setParametrosCartoesPedido(PreparedStatement pstm, int idPedido, CartaoDeCredito cartao) throws SQLException {
+	    System.out.println("Configurando parametros do cartao do pedido");
+	    pstm.setInt(1, idPedido);
+	    pstm.setInt(2, cartao.getId());
+	    pstm.setDouble(3, cartao.getValor());
+	}
+
+
 	 public String editarStatusItem(PedidoItens item, TiposStatusItensPedido novoStatus) {
         String update = "UPDATE pedido_itens SET ped_item_status_troca = ? WHERE ped_item_id = ?";
         String retorno = "";
@@ -285,65 +277,6 @@ public class DAOPedidoVenda {
 
 		return retorno;
 	 	}
-
-	    public String gerarCupom(String codigo, String descricao, String img, String tipoCupom, Double valorCupom,
-                Date validade, int usado) {
-				String insert = "INSERT INTO cupons (cup_codigo, cup_desc, cup_img, cup_tipo, cup_valor, cup_validade, cup_usado) " +
-				      "VALUES (?, ?, ?, ?, ?, ?, ?)";
-				
-				int idCupomGerado = -1; // Valor padrão para indicar que nenhum cupom foi gerado
-				
-				try (Connection con = Conexao.conectar();
-					  PreparedStatement pst = con.prepareStatement(insert, PreparedStatement.RETURN_GENERATED_KEYS)) {
-					
-					  pst.setString(1, codigo);
-					  pst.setString(2, descricao);
-					  pst.setString(3, img);
-					  pst.setString(4, tipoCupom);
-					  pst.setDouble(5, valorCupom);
-					  pst.setDate(6, new java.sql.Date(validade.getTime())); // Convertendo a data para o tipo SQL
-					  pst.setInt(7, usado);
-					
-					  int linhasAfetadas = pst.executeUpdate();
-					
-					  if (linhasAfetadas > 0) {
-					      ResultSet rs = pst.getGeneratedKeys();
-					      if (rs.next()) {
-					          idCupomGerado = rs.getInt(1); // Obtém o ID gerado
-					      }
-					  }
-					  con.close();
-					  
-				} catch (SQLException e) {
-				  e.printStackTrace();
-				  return "error: " + e;
-				}
-				
-				return "" + idCupomGerado;
-			}
-
-
-		public String vincularCupomAoCliente(Cupons cupom, Cliente cliente) {
-			String insert = "INSERT INTO rel_cup_cli (rcc_cup_id, rcc_cli_id) " +
-			      "VALUES (?, ?)";
-			String resposta = "";
-			
-			try (Connection con = Conexao.conectar();
-				 PreparedStatement pst = con.prepareStatement(insert)) {	
-				
-				  pst.setInt(1, cupom.getId());
-				  pst.setInt(2, cliente.getId());
-				 
-				  con.close();		
-				  resposta = "sucess";
-				
-			} catch (SQLException e) {
-			  e.printStackTrace();
-			  resposta= "error: " + e;
-			}
-			
-			return resposta;
-		}
 
 
 }

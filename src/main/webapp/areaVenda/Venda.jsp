@@ -247,7 +247,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 				
 					<div class="modal fade" id="modalSelecaoEndereco" tabindex="-1"
 						aria-labelledby="modalSelecaoEnderecoLabel" aria-hidden="true">
-						<div class="modal-dialog">
+						<div class="modal-dialog modal-md">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção
@@ -257,13 +257,13 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								<div class="modal-body">
+								<div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
 									<%
 									for (int i = 0; i < listaEntrega.size(); i++) {
 										Endereco endereco = listaEntrega.get(i); // Crie um novo objeto Endereco
 									%>
 									<div class="card mt-3">
-										<div class="card-body">
+										<div class="card-body" >
 											<div class="row">
 												<div
 													class="col-md-2 d-flex align-items-center justify-content-center">
@@ -436,7 +436,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 				                    <span aria-hidden="true">&times;</span>
 				                </button>
 				            </div>
-				            <div class="modal-body">
+				            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
 				                <% for (int i = 0; i < listaCupons.size(); i++) {
 				                    Cupons cupom = listaCupons.get(i); %>
 				                    <div class="card mt-3">
@@ -444,11 +444,11 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 				                            <div class="row">
 				                                <div class="col-md-1 d-flex align-items-center justify-content-center">
 				                                    <div class="custom-checkbox">
-				                                        <input type="checkbox" id="cupomTselect<%=cupom.getId()%>" name="cupomsSelecionadoT[]" value="<%=cupom.getId()%>">
+				                                        <input type="checkbox" onClick="verificaCupomSelecionado('<%=cupom.getTipo()%>',<%=cupom.getId()%>,this.checked)"  id="cupomTselect<%=cupom.getId()%>" name="cupomsSelecionadoT[]" value="<%=cupom.getId()%>">
 				                                        <label for="cupomTselect<%=cupom.getId()%>"></label>
 				                                    </div>
 				                                </div>
-				                                <div class="col-md-2 d-flex align-items-center justify-content-center">
+				                                <div class="col-md-2 d-flex align-items-center justify-content-csenter">
 				                                    <img id="imagemCupomT<%=cupom.getId()%>" src="imagens/assets/<%=cupom.getImg()%>" alt="Imagem do Cupom" class="img-fluid">
 				                                </div>
 				                                <div class="col-md-9">
@@ -499,7 +499,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body">
+							<div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
 								<%
 								for (int i = 0; i < listaCartoesCredito.size(); i++) {
 									CartaoDeCredito cartao = listaCartoesCredito.get(i); // Crie um novo objeto Endereco

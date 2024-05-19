@@ -336,19 +336,6 @@ INSERT INTO cupons (cup_codigo, cup_desc, cup_img, cup_tipo, cup_valor, cup_vali
 ('TROCA#2204', 'Desconto de R$10 na troca do pedido 1', '../imagens/assets/descontoCupom.png', 'T', 10.00, '2024-04-30',0),
 ('TROCA#2001', 'Desconto de R$200 na troca do pedido 2', '../imagens/assets/descontoCupom.png', 'T', 200.00, '2024-04-30',0);
 
-CREATE TABLE `cliente_cupom_relacionamento`(
-  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `cupom_id` int NOT NULL,
-  `cliente_id` int NOT NULL,
-  FOREIGN KEY (`cliente_id`) REFERENCES cliente(`cli_id`),
-  FOREIGN KEY (`cupom_id`) REFERENCES cupons(`cup_id`)
-);
-INSERT INTO cliente_cupom_relacionamento (cupom_id, cliente_id) VALUES
- (1, 20),
- (2, 20),
- (3, 20),
- (4, 20),
- (5, 20);
 
 create table harmonizacao(
 `HAR_ID` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -488,9 +475,11 @@ CREATE TABLE `carrinho_de_compras` (
   `car_prod_quant` int NOT NULL,
   `car_removido` boolean NOT NULL,
   `car_motivo` varchar(100),
+  `vendido` boolean NOT NULL,
   FOREIGN KEY (`car_cli_id`) REFERENCES cliente(`cli_id`),
   FOREIGN KEY (`car_prod_id`) REFERENCES produto(`pro_id`)
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 CREATE TABLE `cupons`(
   `cup_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -511,17 +500,17 @@ INSERT INTO `cupons` (`cup_id`,`cup_codigo`,`cup_desc`,`cup_img`,`cup_tipo`,`cup
 (4,'TROCA#2204','Desconto de R$10 na troca do pedido 1','imagens/assets/descontoCupom.png','T',10,'2024-04-30',0),
 (5,'TROCA#2001','Desconto de R$200 na troca do pedido 2','imagens/assets/descontoCupom.png','T',200,'2024-04-30',0);
 
-CREATE TABLE `rel_cup_cli`(
-  `rcc_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `rcc_cup_id` int NOT NULL,
-  `rcc_cli_id` int NOT NULL,
-  FOREIGN KEY (`rcc_cli_id`) REFERENCES cliente(`cli_id`),
-  FOREIGN KEY (`rcc_cup_id`) REFERENCES cupons(`cup_id`)
+CREATE TABLE `cliente_cupom_relacionamento`(
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `cupom_id` int NOT NULL,
+  `cliente_id` int NOT NULL,
+  FOREIGN KEY (`cliente_id`) REFERENCES cliente(`cli_id`),
+  FOREIGN KEY (`cupom_id`) REFERENCES cupons(`cup_id`)
 );
 
-INSERT INTO `ecommerce`.`rel_cup_cli` (`rcc_cup_id`, `rcc_cli_id`) VALUES ('1', '20');
-INSERT INTO `ecommerce`.`rel_cup_cli` (`rcc_cup_id`, `rcc_cli_id`) VALUES ('2', '20');
-INSERT INTO `ecommerce`.`rel_cup_cli` (`rcc_cup_id`, `rcc_cli_id`) VALUES ('3', '20');
+INSERT INTO `ecommerce`.`cliente_cupom_relacionamento` (`cupom_id`, `cliente_id`) VALUES ('1', '20');
+INSERT INTO `ecommerce`.`cliente_cupom_relacionamento` (`cupom_id`, `cliente_id`) VALUES ('2', '20');
+INSERT INTO `ecommerce`.`cliente_cupom_relacionamento` (`cupom_id`, `cliente_id`) VALUES ('3', '20');
 
 create table pedido_venda(
     `ven_id` int NOT NULL AUTO_INCREMENT primary KEY,
@@ -555,20 +544,21 @@ FOREIGN KEY (`ped_item_prod_id`) REFERENCES produto(`pro_id`),
 FOREIGN KEY (`ped_item_ven_id`) REFERENCES pedido_venda(`ven_id`)
 );
  
-create table rel_cupom_venda(
-`REL_CUPVE_ID` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`REL_CUP_ID` int NOT NULL,
-`REL_VEN_ID` int NOT NULL,
-FOREIGN KEY (`REL_CUP_ID`) REFERENCES cupons(`cup_id`),
-FOREIGN KEY (`REL_VEN_ID`) REFERENCES pedido_venda(`ven_id`)
+create table pedido_cupons(
+`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`cupom_id` int NOT NULL,
+`pedido_id` int NOT NULL,
+FOREIGN KEY (`cupom_id`) REFERENCES cupons(`cup_id`),
+FOREIGN KEY (`pedido_id`) REFERENCES pedido_venda(`ven_id`)
  );
  
- create table rel_cartao_venda(
-`REL_CARVE_ID` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`REL_CAR_ID` int NOT NULL,
-`REL_VEN_ID` int NOT NULL,
-FOREIGN KEY (`REL_CAR_ID`) REFERENCES cartao_de_credito(`cart_id`),
-FOREIGN KEY (`REL_VEN_ID`) REFERENCES pedido_venda(`ven_id`)
+ create table pedido_cartoes(
+`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`cartao_id` int NOT NULL,
+`pedido_id` int NOT NULL,
+`valor` Double NOT NULL,
+FOREIGN KEY (`cartao_id`) REFERENCES cartao_de_credito(`cart_id`),
+FOREIGN KEY (`pedido_id`) REFERENCES pedido_venda(`ven_id`)
  );
  
 

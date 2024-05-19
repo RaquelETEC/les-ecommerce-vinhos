@@ -3,6 +3,9 @@ let totalPagamento = 0.00;
 let totalPedido = 0.00;
 let totalFrete = 0.00;
 let totalSaldo= 0.00;
+let elementoCartaoParaAlteracao=""; 
+var listaCartoes = [];
+var listaCupons = [];
 
 let idCupom = 0;
 
@@ -30,12 +33,12 @@ let idCupom = 0;
         }
     });
     
+    
 function salvarEndereco() {
 	// Obtenha o radio button selecionado
 	var enderecoSelecionado = document.querySelector('input[name="enderecoSelecionado"]:checked');
 	// Verifique se algum radio button está selecionado
 	if (enderecoSelecionado) {
-		debugger;
 		// Obtenha o valor do atributo value do radio button selecionado
 		var enderecoId = enderecoSelecionado.value;
 		
@@ -187,7 +190,6 @@ function verificarEnderecoAntesDeAbrirModal() {
 }
 
 function verificarEnderecoPagamento() {
-	debugger;
     var enderecoInserido = document.getElementById('idEndereco').textContent;
 
     if (!enderecoInserido) {
@@ -211,7 +213,9 @@ function listarOpcoesSelecionadas() {
         var cupomValor = document.getElementById(`ValorCupomT${cupomId}`).innerText;
         var cupomCodigo = document.getElementById(`CodCupomT${cupomId}`).innerText;
         var cupomTipo= document.getElementById(`CupomTipo${cupomId}`).innerText;
-
+		
+		adicionarCupomLista(cupomId, cupomCodigo, cupomDescricao, cupomValor, cupomTipo)
+		
         addCupom(cupomDescricao, cupomImagem, cupomValor, cupomId,cupomCodigo,cupomTipo);
     });
     
@@ -245,9 +249,34 @@ function addCupom(descricao, imagem, valor, cupomId,cupomCodigo,tipo) {
 	calcularTotaisCupom(valor,tipo);
 };
 
-function calcularTotaisCupom(valor,tipo){
-debugger;
+function adicionarCupomLista(cupomId, cupomCodigo, cupomDescricao, cupomValor, cupomTipo) {
+	cupomValor = parseFloat(cupomValor.replace(/[^0-9.-]/g, ''));
+    listaCupons.push({ id: cupomId, codigo: cupomCodigo, desc: cupomDescricao, valor: cupomValor, tipo: cupomTipo });
+}
 
+let quantTipoP = 0; 
+function verificaCupomSelecionado(tipo, cupomId, checked) {
+    debugger;
+
+    if (tipo === 'P') {
+        if (checked) {
+            // Incrementa quantTipoP apenas se a opção for marcada
+            quantTipoP += 1; 
+        } else {
+            // Decrementa quantTipoP apenas se a opção for desmarcada
+            quantTipoP -= 1; 
+        }
+    }
+    
+    if (quantTipoP >= 2) {
+        alert('Você não pode selecionar mais do que 1 cupom promocional!');
+        var checkboxId = "cupomTselect" + cupomId;
+        document.getElementById(checkboxId).checked = false;
+        quantTipoP -= 1;
+    }
+}
+
+function calcularTotaisCupom(valor,tipo){
     valor = parseFloat(valor.replace(/[^0-9.-]/g, ''));
 
     if (tipo === 'P') {
@@ -266,6 +295,7 @@ function limparListagemCupons() {
 }
 
 function removerCupom(botao) {
+	debugger;
     // Remove o card de cupom pai do botão clicado
     var cardCupom = botao.closest('.lineCupom');
     cardCupom.remove();
@@ -277,11 +307,16 @@ function removerCupom(botao) {
 
     // Subtrai o valor do desconto removido do totalDesconto
     if (tipoRemovido === 'P') {
-        totalDesconto -= (valorRemovido / 100) * totalPedido;
+        totalDesconto -= (valorRemovido * totalPedido )/100;
     } else if (tipoRemovido === 'T') {
         totalDesconto -= valorRemovido;
     }
 
+  	var cupomId = botao.dataset.cupomId;
+    var checkboxId = "cupomTselect" + cupomId;
+    document.getElementById(checkboxId).checked = false;
+    
+    totalDesconto = parseFloat(totalDesconto.toFixed(2));
     calcularTotais();
 
 }
@@ -292,34 +327,46 @@ function atualizaCupomIdSelecionado(idCupomTroca) {
 
 
 function addCartaoCard() {
-	debugger;
-	// Recupera o elemento do cartão selecionado
-	var cartaoSelecionado = document.querySelector('input[name="cartaoSelecionado"]:checked').value;
+    var cartaoSelecionado = document.querySelector('input[name="cartaoSelecionado"]:checked');
 
-	// Obtém os valores dos atributos de dados
-	var nomeCartao = document.getElementById(`nomeCartao${cartaoSelecionado}`).textContent.trim();
-	var numeroCartao = document.getElementById(`numeroCartao${cartaoSelecionado}`).textContent;
-	var imagemBandeira = document.getElementById(`imagemBandeira${cartaoSelecionado}`);
-	var codigoCartao = document.getElementById(`codSeguranca${cartaoSelecionado}`).textContent;
-	var valorCartao = parseFloat(document.getElementById('valorCartao').value);
+    if (!cartaoSelecionado) {
+        alert('Selecione ou cadastre um cartão de crédito!');
+    } else {
+        var nomeCartao = document.getElementById(`nomeCartao${cartaoSelecionado.value}`).textContent.trim();
+        var numeroCartao = document.getElementById(`numeroCartao${cartaoSelecionado.value}`).textContent;
+        var imagemBandeira = document.getElementById(`imagemBandeira${cartaoSelecionado.value}`);
+        var codigoCartao = document.getElementById(`codSeguranca${cartaoSelecionado.value}`).textContent;
+        var valorCartao = parseFloat(document.getElementById('valorCartao').value);
+        var idCartao = cartaoSelecionado.value;
+        
+        // Verifica se a soma de todos os cupons é equivalente a 90% do total do pedido
+        var percentualCupons = (totalDesconto * 100) / totalPedido;
+        
+        if (percentualCupons >= 85 || valorCartao >= 10) {
+            if (elementoCartaoParaAlteracao != "") {
+                // Remova o registro atual
+                removerCartao(elementoCartaoParaAlteracao);
+                elementoCartaoParaAlteracao = "";
+            }
+            
+            // Insira um novo cartão
+            insertCardCartao(idCartao, nomeCartao, numeroCartao, imagemBandeira.src, codigoCartao, valorCartao);
+            totalPagamento += parseFloat(valorCartao.toFixed(2));
+           
+            adicionarCartaoLista(idCartao, nomeCartao, numeroCartao, imagemBandeira.src, codigoCartao, valorCartao);
 
-	// Verifica se a soma de todos os cupons é equivalente a 90% do total do pedido
-	var percentualCupons = (totalDesconto * 100) / totalPedido;
-
-	if (percentualCupons >= 85) {
-		// Permite adicionar um cartão com valor de R$ 10,00
-		insertCardCartao(nomeCartao, numeroCartao, imagemBandeira.src, codigoCartao, valorCartao);
-		calcularTotais(0, 0, parseFloat(valorCartao));
-	} else {
-		// O mínimo é R$ 10,00 por cartão
-		if (valorCartao >= 10) {
-			insertCardCartao(nomeCartao, numeroCartao, imagemBandeira.src, codigoCartao, valorCartao);
-			calcularTotais(0, 0, parseFloat(valorCartao));
-		} else {
-			alert("O valor mínimo para o cartão é de R$ 10,00.");
-		}
-	}
+            
+            calcularTotais();
+            $('#modalCartoes').modal('hide'); // Fechar a modal de cupons
+        } else if (!valorCartao) {
+            alert("Informe o valor do pagamento para este cartão!");
+        } else {
+            alert("Só possível adicionar o valor abaixo de R$ 10,00 caso o total dos cupons corresponda a 85% do pedido");
+        }
+    }
 }
+
+
 
 function AdicionarNovoCartao(idCliente) {
     var totalCupons = totalCupomPromocional + totalCupomTroca;
@@ -358,13 +405,15 @@ function AdicionarNovoCartao(idCliente) {
             });
         } else {
              insertCardCartao(nomeCartao, numeroCartao, imagemBandeira, codigoCartao, valorCartao)
-             calcularTotais(0, 0, parseFloat(valorCartao));
+             calcularTotais();
         }
     } else {
         alert("O valor mínimo para o cartão deve ser R$ 10,00.");
     }
 }
-function insertCardCartao(nomeCartao, numeroCartao, imagemBandeira, codigoCartao, valorCartao) {
+
+
+function insertCardCartao(idCartao, nomeCartao, numeroCartao, imagemBandeira, codigoCartao, valorCartao) {
 	// Cria um novo elemento div para representar o card de forma de pagamento
 	var novoPagamento = document.createElement("div");
 	novoPagamento.classList.add("CartoesSection");
@@ -388,21 +437,61 @@ function insertCardCartao(nomeCartao, numeroCartao, imagemBandeira, codigoCartao
                 <p class="text-center">${valorCartao}</p>
             </div>
             <div class="col-3">
-             	<button class="Botao2" onClick="Editar(this)">Editar</button>
-                <button class="Botao1" onClick="removerCartao(this)">Excluir</button>
+             	<button class="Botao2" onClick="EditarCartao(this)" data-id-cartao="${idCartao}" data-valor-cartao="${valorCartao}">Editar</button>
+                <button class="Botao1" onClick="removerCartao(this)" data-id-cartao="${idCartao}" data-valor-cartao="${valorCartao}">Excluir</button>
             </div>
         </div>
     `;
 
 	// Adiciona o novo card de forma de pagamento ao container de formas de pagamento
 	document.getElementById("pagamentoContainer").appendChild(novoPagamento);
+	
+	
+	 var radios = document.querySelectorAll('input[name="cartaoSelecionado"]');
+    radios.forEach(function(radio) {
+        radio.checked = false;
+    });
+    document.getElementById('valorCartao').value = null;
+    $('#modalCartoes').modal('hide'); 
+
 }
 
+function adicionarCartaoLista(id, nome, numero, bandeira, codigo, valor) {
+    listaCartoes.push({ id: id, nome: nome, numero: numero, codigoSeguranca: codigo, valor: valor });
+}
 
+function EditarCartao(elemento) {
+	debugger;
+	elementoCartaoParaAlteracao = elemento;
+	
+    var valorCartao = elemento.getAttribute('data-valor-cartao');
+    var idCartao = elemento.getAttribute('data-id-cartao');
+
+    // Desmarque a opção selecionada
+    var radios = document.querySelectorAll('input[name="cartaoSelecionado"]');
+    radios.forEach(function(radio) {
+        radio.checked = false;
+    });
+
+    // Selecione a opção desejada
+    var radioId = "cartaoselect" + idCartao;
+    document.getElementById(radioId).checked = true;
+
+    // Passe o valor do cartão selecionado para a modal de edição
+    document.getElementById('valorCartao').value = valorCartao;
+
+    // Abra a modal de edição
+    $('#modalCartoes').modal('show');
+}
 
 function removerCartao(botao) {
 	// Remove o card de forma de pagamento pai do botão clicado
 	var cardPagamento = botao.closest('.lineCart');
+	var valorRemovido = parseFloat(botao.dataset.valorCartao.replace(/[^0-9.-]/g, ''));
+	
+	totalPagamento -= valorRemovido; 
+	calcularTotais();
+	
 	cardPagamento.remove();
 }
 
@@ -418,12 +507,14 @@ function calcularTotais() {
 
 	totalPedido = TotalProduto + totalFrete
 	//totalAPagar = totalPedido - totalCartoes;
-	totalSaldo = totalPedido - totalDesconto;
+	totalSaldo = totalPedido - totalDesconto - totalPagamento;
 
 	// Arredondando os totais para duas casas decimais
 	
 	totalFrete = parseFloat(totalFrete.toFixed(2));
-
+	totalPagamento = parseFloat(totalPagamento.toFixed(2));
+	totalPedido =  parseFloat(totalPedido.toFixed(2));
+	totalSaldo = parseFloat(totalSaldo.toFixed(2));
 	
 	//totalCupomPValor = parseFloat(totalCupomPValor.toFixed(2));
 	//totalCupomTroca = parseFloat(totalCupomTroca.toFixed(2)); // Convertendo para número e arredondando
@@ -437,6 +528,8 @@ function calcularTotais() {
 	document.getElementById(`idTotalPedidoS`).textContent = `R$ ${totalPedido}`;
 	document.getElementById(`idTotalSaldo`).textContent = `R$ ${totalSaldo}`;
 	document.getElementById(`idTotalCupom`).textContent = `R$ ${totalDesconto}`;
+	document.getElementById(`idTotalPagamento`).textContent = `R$ ${totalPagamento}`;
+
 
 	//document.getElementById(`idTotalCupom`).textContent = `R$ ${totalCupomPValor}`;
 	//document.getElementById(`idTotalPagamento`).textContent = `R$ ${totalCartoes}`;
@@ -462,39 +555,49 @@ function validarPedido(idCliente) {
 
 
 function cadastrarPedidoVenda(idCliente) {
-	debugger
-	totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
+    debugger;
+    totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
+	var idEndereco = document.getElementById('idEndereco').textContent;
 
-	var dados = "idCliente=" + idCliente + "&totalPedido=" + totalPedido;
+    var dados = {
+        idCliente: idCliente,
+        totalPedido: totalPedido,
+        totalDesconto: totalDesconto,
+        totalPagamento: totalPagamento, 
+        totalFrete: totalFrete,
+        idEndereco: idEndereco,
+        cartoes: listaCartoes,
+        cupons: listaCupons
 
-	var url = "/les-ecommerce-vinhos/CadastrarPedidoVenda?" + dados;
+    };
+
+	var url = "/les-ecommerce-vinhos/CadastrarPedidoVenda";
+	
 	fazerRequisicaoAjax(url, function(resposta) {
-		if (resposta.includes("erro")) {
-			alert(resposta);
-		}
-		else {
-			window.location.href = "/les-ecommerce-vinhos/areaVenda/VendaFinalizada.html" + resposta;
-		}
+	    if (resposta.includes("erro")) {
+	        alert(resposta);
+	    } else {
+	        window.location.href = "/les-ecommerce-vinhos/areaVenda/VendaFinalizada.html" + resposta;
+	    }
 	}, function() {
-		alert("Erro ao cadastrar pedido JS");
-	});
+	    alert("Erro ao cadastrar pedido JS");
+	}, 'POST', JSON.stringify(dados), 'application/json');
 }
 
-
-function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", url);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === XMLHttpRequest.DONE) {
-			if (xhr.status === 200) {
-				sucessoCallback(xhr.responseText);
-			} else {
-				erroCallback();
-			}
-		}
-	};
-	xhr.send();
+function fazerRequisicaoAjax(url, sucessoCallback, erroCallback, metodo='GET', dados, tipoConteudo) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(metodo, url);
+    xhr.setRequestHeader("Content-Type", tipoConteudo);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                sucessoCallback(xhr.responseText);
+            } else {
+                erroCallback();
+            }
+        }
+    };
+    xhr.send(dados);
 }
 
 
