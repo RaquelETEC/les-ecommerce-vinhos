@@ -2,11 +2,13 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="model.entity.CartaoDeCredito"%>
 <%@ page import="model.entity.Cliente"%>
-
 <%@ page import="java.util.ArrayList"%>
 <%
 @SuppressWarnings("unchecked")
 ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttribute("listaCartoes");
+%>
+<%
+Cliente cliente = (Cliente) request.getAttribute("cliente");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -29,7 +31,7 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 	<nav class="navbar navbar-expand-sm py-3 sticky-top"
 		style="background: black;">
 		<div class="container-fluid">
-			<a href="/les-ecommerce-vinhos/index.html"><img
+			<a href="http://localhost:8080/les-ecommerce-vinhos/paginaInical.html"><img
 				src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3"></a>
 
@@ -63,14 +65,15 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 							onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
 						<button
 							onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
-						<button onclick="window.location.href='PerfilTrocarSenha.jsp';">Trocar
+						<button
+							onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/TrocarSenha.html?id=<%=request.getAttribute("id")%>';">Trocar
 							Senha</button>
 					</div>
 
 					<button class="button-dados-perfil">
 						<img src="../imagens/assets/icons-left-perfil-2.png" alt=""
 							class="img-icons-perfil"> <span
-							onclick="window.location.href='MinhasCompras.html';">Minhas
+							onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=<%=request.getAttribute("id")%>';">Minhas
 							Compras</span>
 					</button>
 
@@ -85,7 +88,7 @@ ArrayList<CartaoDeCredito> lista = (ArrayList<CartaoDeCredito>) request.getAttri
 					<button class="button-dados-perfil">
 						<img src="../imagens/assets/icons-left-perfil-4.png" alt=""
 							class="img-icons-perfil"> <span
-							onclick="window.location.href='PerfilMeusCupons.jsp';">Meus
+							onclick="window.location.href='MeusCupons.html?id=<%=request.getAttribute("id")%>';">Meus
 							Cupons</span>
 					</button>
 

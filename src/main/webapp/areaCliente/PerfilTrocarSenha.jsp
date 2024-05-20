@@ -24,7 +24,7 @@
  
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
-            <a href="'index.html'"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a href="http://localhost:8080/les-ecommerce-vinhos/paginaInical.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 			</div>
 		</div>
@@ -48,29 +48,32 @@
                         <span>Minha Conta</span>
                     </button>
                     <div class="box-exibir-opcoes">
-                        <button onclick="window.location.href=>'Perfil.html?id=<%=cliente.getId() %>';">Perfil</button>
+                        <button onclick="window.location.href='Perfil.html?id=<%=cliente.getId()%>';">Perfil</button>
                    		<button class = "cartoes" onclick="window.location.href='MeusCartoes.html?id=<%=cliente.getId()%>';">Cartões</button>
                         <button class = "enderecos" onclick="window.location.href='MeusEnderecos.html?id=<%=cliente.getId()%>';">Endereços</button>
                          <button class="ativo">Trocar Senha</button>
                     </div>
 
-                    <button class="button-dados-perfil">
-                        <img src="../imagens/assets/icons-left-perfil-2.png" alt="" class="img-icons-perfil">
-                        <span>Minhas Compras</span>
-                    </button>
-                   
+					<button class="button-dados-perfil">
+						<img src="../imagens/assets/icons-left-perfil-2.png" alt=""
+							class="img-icons-perfil"> <span
+							onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=<%=cliente.getId()%>';">Minhas
+							Compras</span>
+					</button>
 
-                    <button class="button-dados-perfil">
-                        <img src="../imagens/assets/icons-left-perfil-3.png" alt="" class="img-icons-perfil">
+					<button class="button-dados-perfil">
+						<img src="../imagens/assets/icons-left-perfil-3.png" alt=""
+							class="img-icons-perfil"> <span
+							onclick="window.location.href='Notificações.jsp';">Notificacoes</span>
+					</button>
 
-                        <span>Notificacoes</span>
-                    </button>
-                    
 
-                    <button class="button-dados-perfil">
-                        <img src="../imagens/assets/icons-left-perfil-4.png" alt="" class="img-icons-perfil">
-                        <span>Meus Cupons</span>
-                    </button>
+					<button class="button-dados-perfil">
+						<img src="../imagens/assets/icons-left-perfil-4.png" alt=""
+							class="img-icons-perfil"> <span
+							onclick="window.location.href='MeusCupons.html?id=<%=cliente.getId()%>';">Meus
+							Cupons</span>
+					</button>
                     
                 </div>
 

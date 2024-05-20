@@ -181,7 +181,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 								<button type="button"
 									class="btn btn-lg add-to-cart-btn text-center add_carrinho"
 									onclick="AdicionarAoCarrinho(20, <%=lista.get(i).getId()%>, document.getElementById('quantity<%=i%>').textContent)">
-									AdicionarAoCarrinho</button>
+									Adicionar ao carrinho</button>
 							</div>
 						</div>
 					</form>
