@@ -545,10 +545,13 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							<div class="modal-footer" style="display: flex;">
 								<div class="row w-100">
 									<div class="col-6">
-										<button onclick="CadastrarCartao() type="button" class="btn btn-success"
-										data-dismiss="modal" data-toggle="modal"
-										data-target="#modalCadastroCartao">Adicionar Cartão</button>
-									</div>
+									<button 
+										onclick="abrirCadastroCartao()" 
+										type="button" 
+										class="btn btn-success">
+										Adicionar Cartão
+       								</button>
+        							</div>
 									<div class="col-6 text-end">
 										<button onClick="addCartaoCard()" type="button" class="btn btn-primary">Salvar</button>
 									</div>

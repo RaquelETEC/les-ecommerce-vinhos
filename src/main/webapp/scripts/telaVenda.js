@@ -337,18 +337,17 @@ function addCartaoCard() {
         var imagemBandeira = document.getElementById(`imagemBandeira${cartaoSelecionado.value}`);
         var codigoCartao = document.getElementById(`codSeguranca${cartaoSelecionado.value}`).textContent;
         var valorCartao = parseFloat(document.getElementById('valorCartao').value);
-        var idCartao = cartaoSelecionado.value;
-        
+        var idCartao = parseInt(cartaoSelecionado.value, 10);
         // Verifica se a soma de todos os cupons é equivalente a 90% do total do pedido
         var percentualCupons = (totalDesconto * 100) / totalPedido;
-        
-        if (percentualCupons >= 85 || valorCartao >= 10) {
+        if( valorCartao > totalSaldo ){
+			alert("O valor a pagar é de: R$" +totalSaldo)
+		} else if (percentualCupons >= 85 || valorCartao >= 10) {
             if (elementoCartaoParaAlteracao != "") {
                 // Remova o registro atual
                 removerCartao(elementoCartaoParaAlteracao);
                 elementoCartaoParaAlteracao = "";
             }
-            
             // Insira um novo cartão
             insertCardCartao(idCartao, nomeCartao, numeroCartao, imagemBandeira.src, codigoCartao, valorCartao);
             totalPagamento += parseFloat(valorCartao.toFixed(2));
@@ -367,22 +366,29 @@ function addCartaoCard() {
 }
 
 
+function abrirCadastroCartao() {
+    $('#modalCartoes').modal('hide'); // Fecha a modal atual
+    $('#modalCadastroCartao').modal('show'); // Abre a nova modal
+}
 
 function AdicionarNovoCartao(idCliente) {
     var totalCupons = totalCupomPromocional + totalCupomTroca;
     var totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
     var percentualCupons = (totalCupons * 100) / totalPedido;
 
-    if (percentualCupons >= 85 || valorCartao === 10) {
-        var formulario = document.forms["frmCartao"];
-        var nome = formulario["CartaoNome"].value;
-        var bandeira = formulario["tipoBandeira"].value;
-        var numero = formulario["CartaoNumero"].value;
-        var codigo = formulario["CartaoCodigo"].value;
-        var cadastrarNoPerfil = formulario["cadastrarCartNoPerfil"].value;
-        var valorCartao = formulario["valorCartaoCad"].value;
-        var cartaoPadrao = 'NÃO';
-        var imagemBandeira = bandeira == 1 ? 'imagens/assets/CartaoMaster.png' : 'imagens/assets/CartaoVisa.png';
+    var formulario = document.forms["frmCartao"];
+    var nome = formulario["CartaoNome"].value;
+    var bandeira = formulario["tipoBandeira"].value;
+    var numero = formulario["CartaoNumero"].value;
+    var codigo = formulario["CartaoCodigo"].value;
+    var cadastrarNoPerfil = formulario["cadastrarCartNoPerfil"].value;
+    var valorCartao = formulario["valorCartaoCad"].value;
+    var cartaoPadrao = 'NÃO';
+    var imagemBandeira = bandeira == 1 ? 'imagens/assets/CartaoMaster.png' : 'imagens/assets/CartaoVisa.png';
+
+	if( valorCartao > totalSaldo ){
+		alert("O valor a pagar é de: R$" +totalSaldo)
+	}else if (percentualCupons >= 85 || valorCartao === 10) {
 
         if (cadastrarNoPerfil == "Sim") {
             var dados =
@@ -482,17 +488,28 @@ function EditarCartao(elemento) {
 
     // Abra a modal de edição
     $('#modalCartoes').modal('show');
+    
+    
 }
 
 function removerCartao(botao) {
 	// Remove o card de forma de pagamento pai do botão clicado
+	debugger;
 	var cardPagamento = botao.closest('.lineCart');
 	var valorRemovido = parseFloat(botao.dataset.valorCartao.replace(/[^0-9.-]/g, ''));
-	
+	var idCartao = botao.dataset.idCartao;
+
 	totalPagamento -= valorRemovido; 
 	calcularTotais();
 	
 	cardPagamento.remove();
+	
+	removerCartaoLista(idCartao); 
+}
+
+//remover cartao da lista que é enviada para o banco de dados
+function removerCartaoLista(id) {
+    listaCartoes = listaCartoes.filter(cartao => cartao.id != id);
 }
 
 function calcularTotais() {
