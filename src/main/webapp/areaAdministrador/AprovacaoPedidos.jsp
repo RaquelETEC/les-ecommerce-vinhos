@@ -114,7 +114,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						        String statusAtual = pedido.getStatus();
 						        switch (statusAtual) {
 						            case "EM PROCESSAMENTO":
-						                opcoesStatus = new String[]{"PAGAMENTO REALIZADO", "PAGAMENTO RECUSADO", "PEDIDO CANCELADO"};
+						                opcoesStatus = new String[]{"PAGAMENTO REALIZADO", "PAGAMENTO RECUSADO"};
 						                break;
 						            case "PAGAMENTO REALIZADO":
 						                opcoesStatus = new String[]{"EM TRANSPORTE"};
@@ -122,6 +122,10 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						            case "EM TRANSPORTE":
 						                opcoesStatus = new String[]{"ENTREGUE"};
 						                break;
+						            case "EM CANCELAMENTO":
+						                opcoesStatus = new String[]{"RECEBER PRODUTOS"};
+						                break;   
+						              
 						            default:
 						                // Outros casos não definidos
 						                opcoesStatus = new String[]{statusAtual};
@@ -145,7 +149,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						        
 						        <td>
 						            <div class="option-button">
-						                <a class="Botao1" href="javascript: confirmarProduto(<%= pedido.getId() %>, <%= i %>, <%= pedido.getValor()%>, <%= pedido.getCliente().getId()%>)">Editar</a>
+						                <a class="Botao1" href="javascript: confirmarPedido(<%= pedido.getId() %>, <%= i %>, <%= pedido.getValor()%>, <%= pedido.getCliente().getId()%>)">Editar</a>
 						            </div>
 						        </td>
 						    </tr>
@@ -160,7 +164,6 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 	<footer class="p-4 text-light text-center" style="background: black;">
 		Desenvolvido por Caynan e Raquel </footer>
 	<script src="../scripts/confirmador.js"></script>
-	<script src="scripts/confirmador.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

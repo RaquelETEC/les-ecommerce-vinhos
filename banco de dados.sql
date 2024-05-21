@@ -89,7 +89,7 @@ drop table cupons;
 
 CREATE TABLE `cupons`(
   `cup_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-  `cup_codigo` varchar(10)  NOT NULL ,
+  `cup_codigo` varchar(15)  NOT NULL ,
   `cup_desc` varchar(100) NOT NULL,
   `cup_img`   varchar(50) NOT NULL,
   `cup_tipo` varchar(1) NOT NULL,

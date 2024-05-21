@@ -80,7 +80,7 @@ public class DaoCupons {
 			  e.printStackTrace();
 			  return "error: " + e;
 			}
-			
+			System.out.println("cupom gerado:"+idCupomGerado);
 			return "" + idCupomGerado;
 		}
 
@@ -96,8 +96,13 @@ public class DaoCupons {
 			  pst.setInt(1, cupom.getId());
 			  pst.setInt(2, cliente.getId());
 			 
+		       int linhasAfetadas = pst.executeUpdate();
 			  con.close();		
-			  resposta = "sucess";
+			   if (linhasAfetadas > 0) {
+		            resposta = "success";
+		        } else {
+		            resposta = "error: Nenhuma linha afetada";
+		        }
 			
 		} catch (SQLException e) {
 		  e.printStackTrace();

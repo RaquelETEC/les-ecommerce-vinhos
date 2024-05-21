@@ -294,8 +294,7 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 							<div class="row">
 								<div class="col-12 text-end">
 									<%
-									if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA")
-											|| pedido.getStatus().contains("CANCELADO")) {
+									if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA")) {
 									%>
 									<button class="btn btn-dark mt-2 "
 										onclick="solicitarTroca(<%=pedido.getId()%>,'EM TROCA')">Solicitar

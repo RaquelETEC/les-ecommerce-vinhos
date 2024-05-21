@@ -171,14 +171,15 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 								<div class="quant-carrinho">
 									<div
 										class="d-flex justify-content-between align-items-center mb-3">
-										<button type="button" class="btn btn-sm btn-outline-secondary"
+										<button id="btn-decrementar-<%=lista.get(i).getId()%>" type="button" class="btn btn-sm btn-outline-secondary"
 											onclick="decrementarQuant(<%=i%>)">-</button>
 										<span id="quantity<%=i%>" class="quantity">1</span>
-										<button type="button" class="btn btn-sm btn-outline-secondary"
+										<button id="btn-incrementar-<%=lista.get(i).getId()%>" type="button" class="btn btn-sm btn-outline-secondary"
 											onclick="incrementarQuant(<%=i%>)">+</button>
 									</div>
 								</div>
 								<button type="button"
+									id="btn-add-carrinho-<%=lista.get(i).getId()%>"
 									class="btn btn-lg add-to-cart-btn text-center add_carrinho"
 									onclick="AdicionarAoCarrinho(20, <%=lista.get(i).getId()%>, document.getElementById('quantity<%=i%>').textContent)">
 									Adicionar ao carrinho</button>

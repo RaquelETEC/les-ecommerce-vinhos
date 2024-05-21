@@ -24,8 +24,8 @@ public class CupomService {
             return "TIPO CUPOM É OBRIGATÓRIO!";
         } else if (valorCupom == null || valorCupom <= 0) {
             return "VALOR DO CUPOM É OBRIGATÓRIO!";
-        } else if (tipoCupom.equals("T") && (idPedido == 0 || idProduto == 0)) {
-            return "PARA CUPONS DE TROCA É OBRIGATÓRIO O ID DO PEDIDO E ID PRODUTO";
+        } else if (tipoCupom.equals("T") && (idPedido == 0 )) {
+            return "PARA CUPONS DE TROCA É OBRIGATÓRIO O ID DO PEDIDO";
         } else {
             String codigo;
             String descricao;
@@ -35,16 +35,18 @@ public class CupomService {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date dataAtual = new Date();
 
-            if (tipoCupom.equals("T")) { 
+            
+           if(tipoCupom.equals("T") &&  idProduto == 0 ) {
+				codigo = "CANCELADO#" + idPedido;
+				descricao = "Desconto de R$" + valorCupom + ", pelo cancelamento do pedido " + idPedido;
+				img = "trocaCupom.png";
+				validade = adicionarMeses(dataAtual, 12);         
+            }else if (tipoCupom.equals("T")) { 
                 codigo = "TROCA#" + idPedido;
                 descricao = "Desconto de R$" + valorCupom + " pela troca do item " + idProduto + " no pedido " + idPedido;
                 img = "trocaCupom.png";
                 validade = adicionarMeses(dataAtual, 12);
-            }else if(tipoCupom.equals("T") &&  idProduto == 0 ) {
-            	 codigo = "CANCELAMENTO#" + idPedido;
-                 descricao = "Desconto de R$" + valorCupom + " pelo cancelamento do peido " + idPedido;
-                 img = "trocaCupom.png";
-                 validade = adicionarMeses(dataAtual, 12);
+          
             }
             else { 
                 codigo = "PROMO#"; 

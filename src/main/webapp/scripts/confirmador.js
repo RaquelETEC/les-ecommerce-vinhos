@@ -1,8 +1,7 @@
 /**
- * Confirmar a exclusao de um contato
+ * Confirmar
  * 
- * @author Professor Jose de Assis
- * @param idcon
+ * @author Raquel e caynan
  */
 
 function confirmar(idcon) {
@@ -29,33 +28,46 @@ function confirmarExcluirEndereco(idEnd, id) {
 }
 
 
+function confirmarPedido(idPedido, i, ValorCupom, idCliente) {
+    const Status = document.getElementById('statusPedido' + i).value;
+    let url = "";
 
-function confirmarProduto(idPedido, i, ValorCupom, idCliente) {
-	debugger
-	const Status = document.getElementById('statusPedido' + i).value;
+    if (Status == "RECEBER PRODUTOS") {
+        url = "EditarPedido?id=" + idPedido + "&PedidoStatus=" + 'PEDIDO CANCELADO';
 
-	if (Status == "CANCELADO") {
+        fazerRequisicaoAjax(url, async function(resposta) {
+            if (resposta === "SUCESS") {
+                alert("Status alterado com sucesso");
 
-		const url = `/les-ecommerce-vinhos/areaCliente/InserirCupomTroca?idPedido=${idPedido}&ValorCupom=${ValorCupom}&idCliente=${idCliente}`;
+                try {
+                    await gerarCupomTroca(idPedido, 0, ValorCupom, idCliente);
+                } catch (erro) {
+                    alert("Erro ao gerar cupom de troca: " + erro);
+                }
 
-		fazerRequisicaoAjax(url, function(resposta) {
-			if (resposta > 0) {
-				alert("Cupom gerado" + resposta)
-			}
-			else
-				alert("Erro ao solicitar cupom");
-		}, function() {
-			alert("Erro ao gerenciar troca JS");
-		});
+            } else {
+                alert("Erro ao alterar status");
+                window.location.href = window.location.href;
+            }
+        }, function(erro) {
+            alert("Erro ao alterar status: " + erro);
+        });
 
-	} else {
+    } else {
+        url = "EditarPedido?id=" + idPedido + "&PedidoStatus=" + Status;
 
-		window.location.href = "EditarPedido?id=" + idPedido + "&PedidoStatus=" + Status;
-		alert("Status alterado com sucesso");
-	}
-
-
-
+        fazerRequisicaoAjax(url, function(resposta) {
+            if (resposta === "SUCESS") {
+                alert("Status alterado com sucesso");
+                window.location.href = window.location.href;
+            } else {
+                alert("Erro ao alterar status");
+                window.location.href = window.location.href;
+            }
+        }, function(erro) {
+            alert("Erro ao alterar status: " + erro);
+        });
+    }
 }
 
 function confirmarTroca (idItem ="",pedidoId="",novoStatus="",novoStatusItem=""){
@@ -113,8 +125,7 @@ function movimentarEstoque(itemId, pedidoId, quant){
 	alert("voce movimentou o estoque")
 }
 	
-function gerarCupomTroca(pedidoId, prodId,total,clienteId)	{
-	debugger;
+async function gerarCupomTroca(pedidoId, prodId,total,clienteId)	{
 	var dados = `&pedido=${pedidoId}&prodId=${prodId}&valorCupom=${total}&tipoCupom=T`;
    
 	var url = "http://localhost:8080/les-ecommerce-vinhos/gerarCupom.html?" + dados;
@@ -133,13 +144,13 @@ function gerarCupomTroca(pedidoId, prodId,total,clienteId)	{
 	
 	
 function vincularCupomAoCliente(cupomId, clienteID){
-	debugger;
 	var dados = `&cupomId=${cupomId}&clienteId=${clienteID}`;
    
 	var url = "http://localhost:8080/les-ecommerce-vinhos/VincularCupomAoCliente.html?" + dados;
 	fazerRequisicaoAjax(url, function(resposta) {
 		if (resposta.includes("erro")) {
 			alert(resposta);
+			 window.location.href = window.location.href;
 		}
 		else {
 			alert("Cupom vinculado ao cliente com sucesso!");
