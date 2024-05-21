@@ -164,7 +164,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							<div class="div-adicionar">
 								<div class="col-md-8">Cupom de desconto</div>
 								<div class="col-md-4 text-end ">
-									<button type="button"
+									<button id="SelecionarCupons" type="button"
 									    class="btn btn-success"
 										onClick="verificarEnderecoAntesDeAbrirModal()">
 										Selecionar Cupons
@@ -240,7 +240,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
     </div>
 </div>
 				<br>
-				<button class="btn btn-success" onClick="validarPedido(<%=request.getParameter("idCliente")%>)">Finalizar Compra</button>
+				<button id="FinalizarCompra"class="btn btn-success" onClick="validarPedido(<%=request.getParameter("idCliente")%>)">Finalizar Compra</button>
 
 				<!-- ------------------------------------- Fim da tela  ---------------------------------- -->
 				<!-- Sessão de modals -->
@@ -306,7 +306,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 		
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-primary"
+									<button id="SalvarEndereco" type="button" class="btn btn-primary"
 										data-dismiss="modal" data-toggle="modal" 
 										onclick="salvarEndereco()">Salvar</button>
 								</div>

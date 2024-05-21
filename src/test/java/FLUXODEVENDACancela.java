@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.openqa.selenium.JavascriptExecutor;
 
-public class FLUXODEVENDATest {
+public class FLUXODEVENDACancela {
 	private WebDriver driver;
 	private Map<String, Object> vars;
 	JavascriptExecutor js;
@@ -43,14 +43,9 @@ public class FLUXODEVENDATest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("btn-add-carrinho-1")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.switchTo().alert().accept();
-		driver.findElement(By.id("btn-add-carrinho-3")).click();
+
+		driver.findElement(By.id("btn-incrementar-5")).click();
+		driver.findElement(By.id("btn-add-carrinho-5")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -60,71 +55,92 @@ public class FLUXODEVENDATest {
 		driver.findElement(By.linkText("MEU CARRINHO")).click();
 		driver.findElement(By.cssSelector(".btn-primary")).click();
 		driver.findElement(By.cssSelector(".col-md-3 > .btn")).click();
-		{
-			WebElement element = driver.findElement(By.cssSelector(".col-md-3 > .btn"));
-			Actions builder = new Actions(driver);
-			builder.moveToElement(element).perform();
-		}
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		{
-			WebElement element = driver.findElement(By.tagName("body"));
-			Actions builder = new Actions(driver);
-			builder.moveToElement(element, 0, 0).perform();
-		}
-		driver.findElement(By.cssSelector("#modalSelecaoEndereco .card:nth-child(1) label")).click();
-		driver.findElement(By.cssSelector(".modal-md .modal-footer > .btn")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector(".col-md-3 > .btn")).click();
-		{
-			WebElement element = driver.findElement(By.cssSelector(".col-md-3 > .btn"));
-			Actions builder = new Actions(driver);
-			builder.moveToElement(element).perform();
-		}
-		{
-			WebElement element = driver.findElement(By.tagName("body"));
-			Actions builder = new Actions(driver);
-			builder.moveToElement(element, 0, 0).perform();
-		}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector("#modalSelecaoEndereco .card:nth-child(2) label")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector(".modal-md .modal-footer > .btn")).click();
-
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
+		driver.findElement(By.cssSelector(".card:nth-child(2) .col-md-2 label")).click();
+		driver.findElement(By.id("SalvarEndereco")).click();
 		driver.findElement(By.id("SelecionarCupons")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("cupomTselect19")).click();
+		{
+			WebElement element = driver.findElement(By.id("SelecionarCupons"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).perform();
+		}
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		{
+			WebElement element = driver.findElement(By.tagName("body"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element, 0, 0).perform();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		driver.findElement(By.id("cupomTselect19")).click();
 		driver.findElement(By.cssSelector("#modalCupomT .btn")).click();
+		{
+			WebElement element = driver.findElement(By.cssSelector("#modalCupomT .btn"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).perform();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		{
+			WebElement element = driver.findElement(By.tagName("body"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element, 0, 0).perform();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		{
+			WebElement element = driver.findElement(By.cssSelector(".col-2 > .text-center"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).clickAndHold().perform();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		{
+			WebElement element = driver.findElement(By.cssSelector(".col-2 > .text-center"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).perform();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		{
+			WebElement element = driver.findElement(By.cssSelector(".col-2 > .text-center"));
+			Actions builder = new Actions(driver);
+			builder.moveToElement(element).release().perform();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		driver.findElement(By.cssSelector(".mt-4")).click();
 		driver.findElement(By.cssSelector(".col-md-5 > .btn")).click();
 		try {
 			Thread.sleep(2000);
@@ -132,18 +148,16 @@ public class FLUXODEVENDATest {
 			e.printStackTrace();
 		}
 		driver.findElement(By.cssSelector("#modalCartoes .card label")).click();
-		driver.findElement(By.cssSelector("#modalCartoes .modal-body")).click();
+		driver.findElement(By.id("valorCartao")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("valorCartao")).click();
-		driver.findElement(By.id("valorCartao")).sendKeys("139.23");
+		driver.findElement(By.id("valorCartao")).sendKeys("441.58");
 		driver.findElement(By.cssSelector(".col-6 > .btn-primary")).click();
-
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -159,21 +173,16 @@ public class FLUXODEVENDATest {
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=20");
 
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/PedidoVenda.html");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.id("statusPedido3")).click();
 
+		driver.findElement(By.id("statusPedido4")).click();
 		{
-			WebElement dropdown = driver.findElement(By.id("statusPedido3"));
+			WebElement dropdown = driver.findElement(By.id("statusPedido4"));
 			dropdown.findElement(By.xpath("//option[. = 'PAGAMENTO REALIZADO']")).click();
 		}
 		try {
@@ -181,42 +190,33 @@ public class FLUXODEVENDATest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		driver.findElement(By.cssSelector("tr:nth-child(4) .Botao1")).click();
+		driver.findElement(By.cssSelector("tr:nth-child(5) .Botao1")).click();
 		driver.switchTo().alert().accept();
-
-		driver.findElement(By.id("statusPedido3")).click();
+		driver.findElement(By.id("statusPedido4")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		{
-			WebElement dropdown = driver.findElement(By.id("statusPedido3"));
+			WebElement dropdown = driver.findElement(By.id("statusPedido4"));
 			dropdown.findElement(By.xpath("//option[. = 'EM TRANSPORTE']")).click();
 		}
-
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.cssSelector("tr:nth-child(4) .Botao1")).click();
+		driver.findElement(By.cssSelector("tr:nth-child(5) .Botao1")).click();
 		driver.switchTo().alert().accept();
+		driver.findElement(By.id("statusPedido4")).click();
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("statusPedido3")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		{
-			WebElement dropdown = driver.findElement(By.id("statusPedido3"));
+			WebElement dropdown = driver.findElement(By.id("statusPedido4"));
 			dropdown.findElement(By.xpath("//option[. = 'ENTREGUE']")).click();
 		}
 		try {
@@ -224,30 +224,15 @@ public class FLUXODEVENDATest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		driver.findElement(By.cssSelector("tr:nth-child(4) .Botao1")).click();
+		driver.findElement(By.cssSelector("tr:nth-child(5) .Botao1")).click();
 		driver.switchTo().alert().accept();
+		driver.findElement(By.id("statusPedido4")).click();
 
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=20");
 
 		driver.findElement(By.id("abaEntregue-tab")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector(".row:nth-child(3) .item-troca")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector(".row:nth-child(8) .btn:nth-child(1)")).click();
+		driver.findElement(By.cssSelector(".row:nth-child(6) .btn:nth-child(2)")).click();
+		driver.switchTo().alert().accept();
 		driver.switchTo().alert().accept();
 
 		try {
@@ -255,9 +240,29 @@ public class FLUXODEVENDATest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/TrocaPedidos.html");
-		driver.findElement(By.cssSelector(".btn-secondary:nth-child(1)")).click();
+
+		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/PedidoVenda.html");
+		driver.findElement(By.id("statusPedido4")).click();
+		{
+			WebElement dropdown = driver.findElement(By.id("statusPedido4"));
+			dropdown.findElement(By.xpath("//option[. = 'RECEBER PRODUTOS']")).click();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		driver.findElement(By.cssSelector("tr:nth-child(5) .Botao1")).click();
 		driver.switchTo().alert().accept();
+		driver.switchTo().alert().accept();
+		driver.findElement(By.id("statusPedido4")).click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/PedidoVenda.html");
 
 		try {
 			Thread.sleep(2000);
@@ -266,43 +271,17 @@ public class FLUXODEVENDATest {
 		}
 
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=20");
-		driver.findElement(By.id("abaDevolucao-tab")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.cssSelector(".btn-outline-secondary")).click();
-		driver.switchTo().alert().accept();
+		driver.findElement(By.cssSelector(".nav-item:nth-child(6) > #abaDevolucao-tab")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/TrocaPedidos.html");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.id("confirmarRecebimentoBtn")).click();
-		driver.findElement(By.cssSelector(".modal-footer > .btn-primary")).click();
-		driver.switchTo().alert().accept();
-		
-		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=20");
-		driver.findElement(By.id("abaDevolucao-tab")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MeusCupons.html?id=20");
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }
