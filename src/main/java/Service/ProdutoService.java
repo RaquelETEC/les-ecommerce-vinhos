@@ -20,6 +20,11 @@ public class ProdutoService {
 		return daoProdutos.ListarProdutos();
 	}
 	
+	
+	public ArrayList<Produtos> listarProdutosAreaADM() {
+		return daoProdutos.ListarProdutosAreaADM();
+	}
+	
 
 
 }

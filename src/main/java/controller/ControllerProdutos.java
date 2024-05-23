@@ -14,7 +14,7 @@ import Service.ProdutoService;
 import model.entity.Produtos;
 
 
-@WebServlet(urlPatterns = { "/paginaInical.html"})
+@WebServlet(urlPatterns = { "/paginaInical.html", "/areaAdministrador/Produtos.html"})
 
 public class ControllerProdutos extends HttpServlet{
 	
@@ -39,7 +39,9 @@ public class ControllerProdutos extends HttpServlet{
 		if (action.equals("/paginaInical.html")) {
 			AreaProdutos(request,response);
 		} 
-
+		else if (action.equals("/areaAdministrador/Produtos.html")) {
+			AreaProdutosAreaADM(request,response);
+		} 
 	}
 	
 	protected void AreaProdutos(HttpServletRequest request, HttpServletResponse response)
@@ -56,6 +58,19 @@ public class ControllerProdutos extends HttpServlet{
 	
 	}
 	
+	protected void AreaProdutosAreaADM(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		System.out.println("Cheguei no area produtos do ADM");
+		
+		ArrayList<Produtos> lista = produtoservice.listarProdutosAreaADM();
+		
+		request.setAttribute("listaProdutosADM", lista);
+	
+		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/Produtos.jsp");
+		rd.forward(request, response);
+	
+	}
 	
 	
 }
