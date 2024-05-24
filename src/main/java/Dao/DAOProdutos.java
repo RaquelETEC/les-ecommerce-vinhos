@@ -84,6 +84,49 @@ public class DAOProdutos {
 		}
 		return listaDeProdutosADM;
 	}
+	
+	
+	public Produtos selecionarProduto(Produtos produto, Precificacao precificacao, Categoria categoria) {
+		String read2 = "select *  from produto where pro_id = ?";
+		
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read2);
+			pst.setInt(1, produto.getId());
+			ResultSet rs = pst.executeQuery();
+			while(rs.next()) {
+
+				
+				produto.setId(rs.getInt(1));
+				categoria.setStatus(rs.getString(2));
+				precificacao.setDesc(rs.getString(3));
+				produto.setPro_preco_venda(rs.getDouble(4));
+				produto.setPro_preco_compra(rs.getDouble(5));
+				produto.setJustificativa(rs.getString(6));
+				produto.setCodigo_barra(rs.getString(7));
+				produto.setVinicola(rs.getString(8));
+				produto.setPais(rs.getString(9));
+				produto.setRegiao(rs.getString(10));
+				produto.setSafra(rs.getString(11));
+				produto.setDesc(rs.getString(12));
+				produto.setTipo(rs.getString(13));
+				produto.setUva(rs.getString(14));
+				produto.setAlcool(rs.getString(15));
+				produto.setAltura(rs.getString(16));
+				produto.setLargura(rs.getString(17));
+				produto.setPeso(rs.getString(18));
+				produto.setProfundidade(rs.getString(19));
+			}
+
+		}catch(Exception e) {
+			System.out.println("ERRO AO SELECIONAR PRODUTOS" + e);
+
+		}
+		return produto;
+	}
+	
+	
+	
 
 	public Produtos buscarProdutoPorId(int id) {
 		Produtos produto = null;

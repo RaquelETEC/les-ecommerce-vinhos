@@ -13,6 +13,7 @@ response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 @SuppressWarnings("unchecked")
 ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaProdutosADM");
 %>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -122,7 +123,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 									<td><%=produto.getPro_preco_compra()%></td>
 									<td><%=produto.getPrecificacao().getDesc()%></td>
 									<td><%=produto.getCategoria().getStatus()%></td>
-									<td><a href="ProdutosEditar.html" class="Botao1">Editar</a></td>
+									<td><a onclick="window.location.href='EditarProdutos.html?idProduto=<%=produto.getId()%>&PrecificacaoDesc=<%=produto.getPrecificacao().getDesc()%>&CategoriaStatus=<%=produto.getCategoria().getStatus()%>';" class="Botao1">Editar</a></td>
 								</tr>
 								<%
 								}
