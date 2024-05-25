@@ -48,9 +48,11 @@ body {
 							onsubmit="return validarCadastro()">
 							<fieldset>
 								<input value="<%=request.getAttribute("id")%>" type="text"
-									name="id" id="id" style="display: none" /> <input
+									name="id" id="id" style="display: none" /> 
+									<input
 									value="<%=request.getAttribute("idCartao")%>" type="text"
-									name="idCartao" id="idCartao" style="display: none" /> <input
+									name="idCartao" id="idCartao" style="display: none" /> 
+									<input
 									value="<%=request.getAttribute("idBandeira")%>" type="text"
 									name="idBandeira" id="idBandeira" style="display: none" />
 

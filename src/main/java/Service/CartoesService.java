@@ -22,7 +22,7 @@ public class CartoesService {
 	}
 
 	public CartaoDeCredito selecionarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
-		System.out.println("Cheguei no selecionarEndereco Service");
+		System.out.println("Cheguei no selecionarCartao Service");
 
 		// Chamada ao DAO para inserir o endere�o
 		return daoCartoes.selecionarCartao(cliente, cartao, bandeira);

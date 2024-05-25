@@ -4,14 +4,14 @@ public class Categoria {
 	
 	private int id;
 	private String desc;
-	private int status;
+	private String status;
 	
 	public Categoria() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
 
-	public Categoria(int id, String desc, int status) {
+	public Categoria(int id, String desc, String status) {
 		super();
 		this.id = id;
 		this.desc = desc;
@@ -34,11 +34,11 @@ public class Categoria {
 		this.desc = desc;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	
