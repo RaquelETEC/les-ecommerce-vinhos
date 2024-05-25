@@ -93,37 +93,42 @@ function AdicionarNovoEndereco(id) {
     var cep = formulario["typeCep"].value;
     var pais = formulario["typePais"].value;
     var observacoes = formulario["observacoes"].value;
-    var cadastrarEndNopPerfil = formulario["cadastrarEndNopPerfil"].value;
-    var tipoEndereco = "ENTREGA";
-
-    if (cadastrarEndNopPerfil == "Sim") {
-        var dados = "id=" + id + "&nome=" + nome + "&typeTipoResidencia=" + tipoResidencia + "&typeTipoLogradouro=" + tipoLogradouro +
+    var cadastrarEndNoPerfil = formulario["cadastrarEndNopPerfil"].value;
+    var tipoEndereco =  (cadastrarEndNoPerfil == "Sim" ?  "ENTREGA" : "NAO_SE_APLICA");
+    
+    var dados =  "id=" + id + "&nome=" + nome + "&typeTipoResidencia=" + tipoResidencia + "&typeTipoLogradouro=" + tipoLogradouro +
             "&typeLogradouro=" + logradouro + "&typeNumero=" + numero + "&typeBairro=" + bairro + "&typeCidade=" + cidade +
             "&typeEstado=" + estado + "&typeCep=" + cep + "&typePais=" + pais + "&observacoes=" + observacoes +
-            "&tipoEndereco=" + tipoEndereco + "&venda=" + cadastrarEndNopPerfil;
+            "&tipoEndereco=" + tipoEndereco + "&venda=" + cadastrarEndNoPerfil;
+	
+    var url = "/les-ecommerce-vinhos/inserirEndereco?" + dados;
+        
+	fazerRequisicaoAjax(url, function(resposta) {
+	    if (resposta.toUpperCase().includes('SUCESS')) {
+	        alert('Novo endereço salvo!');
+	        const idGerado = resposta.split('=')[1]; // Corrigido o erro de sintaxe aqui
+	        
+		    // Atualize os spans com os valores dos campos do endereço
+		    document.getElementById('idEndereco').textContent = idGerado;
+		    document.getElementById('Logradouro').textContent = logradouro;
+		    document.getElementById('Numero').textContent = numero;
+		    document.getElementById('Bairro').textContent = bairro;
+		    document.getElementById('Cidade').textContent = cidade;
+		    document.getElementById('Estado').textContent = estado;
+		    document.getElementById('Cep').textContent = cep;
+		    document.getElementById('Pais').textContent = pais;
+		    document.getElementById('Nome').textContent = nome;
+		
+		    // Calcula o frete
+		    calcularFrete(cidade);
+	    } else {
+	        alert(resposta);
+	    }
+	    $('#modalCadastroEndereco').modal('hide');
+	}, function() {
+	    alert("Erro ao cadastrar endereço");
+	});
 
-        var url = "/les-ecommerce-vinhos/inserirEndereco?" + dados;
-        fazerRequisicaoAjax(url, function(resposta) {
-			debugger;
-            alert(resposta);
-            $('#modalCadastroEndereco').modal('hide');
-        }, function() {
-            alert("Erro ao cadastrar endereço");
-        });
-    }
-
-    // Atualize os spans com os valores dos campos do endereço
-    document.getElementById('Logradouro').textContent = logradouro;
-    document.getElementById('Numero').textContent = numero;
-    document.getElementById('Bairro').textContent = bairro;
-    document.getElementById('Cidade').textContent = cidade;
-    document.getElementById('Estado').textContent = estado;
-    document.getElementById('Cep').textContent = cep;
-    document.getElementById('Pais').textContent = pais;
-    document.getElementById('Nome').textContent = nome;
-
-    // Calcula o frete
-    calcularFrete(cidade);
 }
 
 function calcularFrete(cidade) {
@@ -340,8 +345,13 @@ function addCartaoCard() {
         var idCartao = parseInt(cartaoSelecionado.value, 10);
         // Verifica se a soma de todos os cupons é equivalente a 90% do total do pedido
         var percentualCupons = (totalDesconto * 100) / totalPedido;
-        if( valorCartao > totalSaldo ){
-			alert("O valor a pagar é de: R$" +totalSaldo)
+        
+        debugger;
+        var valorCartaoAlteracao = elementoCartaoParaAlteracao ? elementoCartaoParaAlteracao.getAttribute('data-valor-cartao') : 0;
+        
+        if( valorCartao > parseFloat(totalSaldo) + parseFloat(valorCartaoAlteracao)){
+			alert("O valor máximo a pagar é de: R$" +parseFloat(totalSaldo) + parseFloat(valorCartaoAlteracao))
+			
 		} else if (percentualCupons >= 85 || valorCartao >= 10) {
             if (elementoCartaoParaAlteracao != "") {
                 // Remova o registro atual
@@ -351,10 +361,7 @@ function addCartaoCard() {
             // Insira um novo cartão
             insertCardCartao(idCartao, nomeCartao, numeroCartao, imagemBandeira.src, codigoCartao, valorCartao);
             totalPagamento += parseFloat(valorCartao.toFixed(2));
-           
             adicionarCartaoLista(idCartao, nomeCartao, numeroCartao, imagemBandeira.src, codigoCartao, valorCartao);
-
-            
             calcularTotais();
             $('#modalCartoes').modal('hide'); // Fechar a modal de cupons
         } else if (!valorCartao) {
@@ -372,9 +379,8 @@ function abrirCadastroCartao() {
 }
 
 function AdicionarNovoCartao(idCliente) {
-    var totalCupons = totalCupomPromocional + totalCupomTroca;
-    var totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
-    var percentualCupons = (totalCupons * 100) / totalPedido;
+	debugger;
+     var percentualCupons = (totalDesconto * 100) / totalPedido;
 
     var formulario = document.forms["frmCartao"];
     var nome = formulario["CartaoNome"].value;
@@ -382,39 +388,48 @@ function AdicionarNovoCartao(idCliente) {
     var numero = formulario["CartaoNumero"].value;
     var codigo = formulario["CartaoCodigo"].value;
     var cadastrarNoPerfil = formulario["cadastrarCartNoPerfil"].value;
-    var valorCartao = formulario["valorCartaoCad"].value;
+    var valorCartao = parseFloat(formulario["valorCartaoCad"].value);
     var cartaoPadrao = 'NÃO';
     var imagemBandeira = bandeira == 1 ? 'imagens/assets/CartaoMaster.png' : 'imagens/assets/CartaoVisa.png';
 
 	if( valorCartao > totalSaldo ){
-		alert("O valor a pagar é de: R$" +totalSaldo)
-	}else if (percentualCupons >= 85 || valorCartao === 10) {
-
-        if (cadastrarNoPerfil == "Sim") {
+		alert("O valor máximo a pagar é de: R$" + totalSaldo)
+	}else if (percentualCupons >= 85 || valorCartao >= 10) {
             var dados =
                 "typeId=" + idCliente +
                 "&CartaoNumero=" + numero +
                 "&CartaoNome=" + nome +
                 "&CartaoPadrao=" + cartaoPadrao +
                 "&CartaoCodigo=" + codigo +
-                "&tipoBandeira=" + bandeira +
-                "&tipoSolicitacao=" + 'venda';
-
+                "&tipoBandeira=" + bandeira+
+                "&CadastrarNoPerfil=" + cadastrarNoPerfil+
+                "&tipoSolicitacao="+cadastrarNoPerfil;
+                
             var url = "/les-ecommerce-vinhos/areaCliente/inserirCartao?" + dados;
 
             fazerRequisicaoAjax(url, function(resposta) {
-                alert(resposta);
-                insertCardCartao(nome, numero, imagemBandeira, codigo, valorCartao);
-                calcularTotais(0, 0, parseFloat(valorCartao));
+			    if (resposta.toUpperCase().includes('SUCESS')) {
+			        alert('Novo cartão salvo!');
+			        const idCartao = resposta.split('=')[1]; // Corrigido o erro de sintaxe aqui
+				
+		 			insertCardCartao(idCartao, nome, numero, imagemBandeira, codigo, valorCartao);
+		            totalPagamento += parseFloat(valorCartao.toFixed(2));
+		            adicionarCartaoLista(idCartao, nome, numero, imagemBandeira, codigo, valorCartao);
+		            adicionarNovoCartaoAoHTML(idCartao, nome, numero, imagemBandeira, codigo);
+
+		            calcularTotais();
+		            $('#modalCadastroCartao').modal('hide');
+
+               }
             }, function() {
                 alert("Erro ao cadastrar Cartão");
             });
-        } else {
-             insertCardCartao(nomeCartao, numeroCartao, imagemBandeira, codigoCartao, valorCartao)
-             calcularTotais();
-        }
-    } else {
-        alert("O valor mínimo para o cartão deve ser R$ 10,00.");
+
+     } else if (!valorCartao) {
+            alert("Informe o valor do pagamento para este cartão!");
+     }else {
+         alert("Só possível adicionar o valor abaixo de R$ 10,00 caso o total dos cupons corresponda a 85% do pedido");
+
     }
 }
 
@@ -460,6 +475,43 @@ function insertCardCartao(idCartao, nomeCartao, numeroCartao, imagemBandeira, co
     document.getElementById('valorCartao').value = null;
     $('#modalCartoes').modal('hide'); 
 
+}
+
+// Função para adicionar um novo cartão à lista na página
+function adicionarNovoCartaoAoHTML(id, nome, numero, imagemBandeira, codigo) {
+	debugger;
+    var modalBody = document.querySelector('.modal-body');
+    
+    var novoCartaoHTML = `
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class=" col-md-2 d-flex align-items-center justify-content-center">
+                        <!-- Adicionando classes para alinhar vertical e horizontalmente -->
+                        <div class="custom-radio">
+                            <input type="radio" id="cartaoselect${id}" name="cartaoSelecionado" value="${id}">
+                            <label for="cartaoselect${id}"></label>
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-center justify-content-center">
+                        <img id="imagemBandeira${id}" src="${imagemBandeira}" alt="Imagem da Bandeira" class="img-fluid">
+                    </div>
+                    <div class="col-md-8">
+                        <p id="nomeCartao${id}" class="card-title">
+                            <strong>${nome}</strong>
+                        </p>
+                        <p class="card-text">
+                            <span id="numeroCartao${id}">${numero}</span>
+                            <span id="codSeguranca${id}">${codigo}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Adiciona o HTML do novo cartão à lista de cartões na página
+    modalBody.innerHTML += novoCartaoHTML;
 }
 
 function adicionarCartaoLista(id, nome, numero, bandeira, codigo, valor) {
@@ -557,12 +609,11 @@ function calcularTotais() {
 function validarPedido(idCliente) {
 	debugger	
 	var enderecoInserido = document.getElementById('idEndereco').textContent;
-	var saldoVerifica = parseFloat(document.getElementById(`idTotalSaldo`).textContent.replace('R$', '').trim());
 
     if (!enderecoInserido) {
         alert("Por favor, insira um endereço primeiro.");
-    } else if (saldoVerifica > 0) {
-		alert('O saldo de pagamento esta acima de R$0,00 , revise os dados de pagamento.');
+    } else if (totalSaldo > 0) {
+		alert('Valor restante a ser pago é de R$:'+totalSaldo+'. \nRevise os dados de pagamento.');
 	} 
 	else {
 		cadastrarPedidoVenda(idCliente);
@@ -582,6 +633,7 @@ function cadastrarPedidoVenda(idCliente) {
         totalDesconto: totalDesconto,
         totalPagamento: totalPagamento, 
         totalFrete: totalFrete,
+        totalSaldo: totalSaldo,
         idEndereco: idEndereco,
         cartoes: listaCartoes,
         cupons: listaCupons
@@ -591,7 +643,7 @@ function cadastrarPedidoVenda(idCliente) {
 	var url = "/les-ecommerce-vinhos/CadastrarPedidoVenda";
 	
 	fazerRequisicaoAjax(url, function(resposta) {
-	    if (resposta.includes("erro")) {
+	    if (resposta.toUpperCase().includes("ERRO")) {
 	        alert(resposta);
 	    } else {
 	        window.location.href = "/les-ecommerce-vinhos/areaVenda/VendaFinalizada.html" + resposta;

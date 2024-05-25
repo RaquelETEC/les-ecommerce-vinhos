@@ -1,4 +1,4 @@
-package Dao;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -67,7 +67,7 @@ public class DAOPedidoVenda {
 	            pedido.setCliente(new DaoCliente().buscarClientePorId(rs.getInt("vend_id_cliente")));
 	            pedido.setStatus(rs.getString("ven_status"));
 	            pedido.setData(rs.getDate("ven_data"));
-	            pedido.setValor(rs.getDouble("ven_valor"));
+	            pedido.setTotalPagamento((rs.getDouble("ven_valor"))); 
 
 	            // Verificar se o pedido jÃ¡ estÃ¡ na lista
 	            PedidoVenda pedidoExistente = listaDePedidos.stream()
@@ -166,7 +166,7 @@ public class DAOPedidoVenda {
 
 	public String CadastrarPedidoDao(PedidoVenda pedido, ArrayList<CarrinhoItens> itens, ArrayList<Cupons> listaCupons, ArrayList<CartaoDeCredito> listaCartoes) {
 	    System.out.println("Dao cadastrar pedido");
-	    String sqlPedido = "INSERT INTO pedido_venda (vend_id_cliente, ven_end_id , ven_status, ven_data, ven_valor) VALUES (?, ?, ?, ?, ?)";
+	    String sqlPedido = "INSERT INTO pedido_venda (vend_id_cliente, ven_end_id , ven_status, ven_data,ven_total_pedido,ven_total_desconto,ven_total_frete,ven_total_pagamento, ven_saldo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	    String sqlItem = "INSERT INTO pedido_itens (ped_item_ven_id, ped_item_prod_id, ped_item_prod_desc, ped_item_prod_quantidade, ped_item_prod_valor, ped_item_prod_valor_total, ped_item_status_troca) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	    String sqlCuponsPedido = "INSERT INTO pedido_cupons (pedido_id, cupom_id) VALUES (?, ?)";
 	    String sqlCartoesPedido = "INSERT INTO pedido_cartoes (pedido_id, cartao_id, valor) VALUES (?, ?, ?)";
@@ -184,7 +184,12 @@ public class DAOPedidoVenda {
 	        pstmtPedido.setInt(2, pedido.getEndereco().getId());
 	        pstmtPedido.setString(3, pedido.getStatus());
 	        pstmtPedido.setDate(4, new java.sql.Date(pedido.getData().getTime()));
-	        pstmtPedido.setDouble(5, pedido.getValor());
+	        pstmtPedido.setDouble(5, pedido.getTotalPedido());
+	        pstmtPedido.setDouble(6, pedido.getTotalDesconto());
+	        pstmtPedido.setDouble(7,pedido.getTotalFrete());
+	        pstmtPedido.setDouble(8,pedido.getTotalPagamento());
+	        pstmtPedido.setDouble(9,pedido.getTotalSaldo());
+
 	        pstmtPedido.executeUpdate();
 
 	        // Obter o ID do pedido gerado

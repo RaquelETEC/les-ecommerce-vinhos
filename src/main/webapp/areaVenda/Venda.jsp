@@ -224,7 +224,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
                         <p id="id-receba-em" class="fs-6 mb-1">Total Pedido:</p>
                         <p id="id-receba-em" class="fs-6 mb-1">Total Desconto:</p>
                         <p id="id-receba-em" class="fs-6 mb-1">Total Pagamento:</p>
-                        <p id="id-receba-em" class="fs-6 mb-1">Saldo:</p>
+                        <p id="id-receba-em" class="fs-6 mb-1">Valor restante a ser pago:</p>
                     </div>
                 </div>
                 <div class="col-md-2"> <!-- Adicionando classe text-end para alinhar à direita -->
@@ -252,7 +252,9 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 								<div class="modal-header">
 									<h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção
 										de Endereço</h5>
-									<button type="button" class="close" data-dismiss="modal"
+									<button type="button" 
+										class="close" 
+										data-dismiss="modal"
 										aria-label="Fechar">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -300,7 +302,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 									%>
 									<hr>
 									<p>Não encontrou o endereço desejado?</p>
-									<button type="button" class="btn btn-primary"
+									<button id="NovoEndereco" type="button" class="btn btn-primary"
 										data-dismiss="modal" data-toggle="modal"
 										data-target="#modalCadastroEndereco">Adicionar endereço</button>
 		
@@ -432,9 +434,12 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 				        <div class="modal-content">
 				            <div class="modal-header">
 				                <h5 class="modal-title" id="modalSelecaoCupomLabel">Seleção de Cupom</h5>
-				                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-				                    <span aria-hidden="true">&times;</span>
-				                </button>
+								<button type="button" 
+									class="close" 
+									data-dismiss="modal"
+									aria-label="Fechar">
+									<span aria-hidden="true">&times;</span>
+								</button>
 				            </div>
 				            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
 				                <% for (int i = 0; i < listaCupons.size(); i++) {
@@ -479,7 +484,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 				                <input type="text">Adicionar</input>
 				            </div>
 				            <div class="modal-footer">
-				                <button type="button" class="btn btn-primary" onclick="listarOpcoesSelecionadas()">Salvar</button>
+				                <button id="SalvarCupom" type="button" class="btn btn-primary" onclick="listarOpcoesSelecionadas()">Salvar</button>
 				            </div>
 				        </div>
 				    </div>
@@ -494,7 +499,9 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							<div class="modal-header">
 								<h5 class="modal-title" id="modalSelecaoCartaoLabel">Seleção
 									de Cartão de Crédito</h5>
-								<button type="button" class="close" data-dismiss="modal"
+								<button type="button" 
+									class="close" 
+									data-dismiss="modal"
 									aria-label="Fechar">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -569,7 +576,9 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="modalSelecaoCartaoLabel">Cadastrar cartão de Crédito</h5>
-								<button type="button" class="close" data-dismiss="modal"
+								<button type="button" 
+									class="close" 
+									data-dismiss="modal"
 									aria-label="Fechar">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -625,8 +634,8 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 										<div class="col-6 mb-4">
 											<label class="form-label" for="cadastrarCartNoPerfil">Salvar no perfil?</label>
 											<select class="form-select " name="cadastrarCartNpPerfil" id="cadastrarCartNoPerfil" required>
-												<option value="Sim">Sim</option>
-												<option value="Não">Não</option>
+												<option value="SIM">SIM</option>
+												<option value="NAO">NÃO</option>
 											</select>
 										</div>
 										<div class="col-6 mb-4">
@@ -649,9 +658,6 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 		</div>
 	</main>
 
-
-	<footer class="p-4 text-light text-center footer">
-		Desenvolvido por Caynan e Raquel </footer>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>

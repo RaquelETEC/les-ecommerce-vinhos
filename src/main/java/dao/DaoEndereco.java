@@ -1,8 +1,9 @@
-package Dao;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.entity.Cliente;
@@ -21,7 +22,7 @@ public class DaoEndereco {
 		try {
 			Connection con = Conexao.conectar();
 			System.out.println("chegou no try no inserirEndereco" + cliente.getId());
-			PreparedStatement pst = con.prepareStatement(create);
+			PreparedStatement pst = con.prepareStatement(create,Statement.RETURN_GENERATED_KEYS);
 			pst.setInt(1, cliente.getId());
 			pst.setString(2, endereco.getTipoResidencia());
 			pst.setString(3, endereco.getTipoLogradouro());
@@ -36,15 +37,23 @@ public class DaoEndereco {
 			pst.setString(12, endereco.getObservacao());
 			pst.setString(13, endereco.getNome());
 			pst.setString(14, endereco.getTipos().name());
-
-			pst.executeUpdate();
-			System.err.println("inserido endereco no dao!!");
-			con.close();
-			return "Sucesso";
+			
+			int rowsAffected = pst.executeUpdate();
+		    if (rowsAffected > 0) {
+		        ResultSet generatedKeys = pst.getGeneratedKeys();
+		        if (generatedKeys.next()) {
+		            int enderecoId = generatedKeys.getInt(1); 
+		            System.err.println("ID gerado: " + enderecoId);
+		            con.close();
+		            return "Sucesso,ID=: " + enderecoId; 
+		        }
+		    }
+		    con.close();
+		    return "Erro ao inserir o endereço.";
 
 		} catch (Exception e) {
 			System.out.println("erro ao inserir Endereco: " + e);
-			return "Erro";
+			return "Erro: "+e;
 		}
 	}
 

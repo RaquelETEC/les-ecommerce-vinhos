@@ -203,6 +203,7 @@ public class ControllerClient extends HttpServlet {
 		cartao.setNumero(request.getParameter("CartaoNumero"));
 		cartao.setNome(request.getParameter("CartaoNome"));
 		cartao.setPadrao("SIM");
+		cartao.setCartaoNoPerfil(true);
 
 		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
 		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);

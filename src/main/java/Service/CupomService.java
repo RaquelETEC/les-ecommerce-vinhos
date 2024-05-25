@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Dao.DaoCupons;
+import dao.DaoCupons;
 import model.entity.Cliente;
 import model.entity.Cupons;
 

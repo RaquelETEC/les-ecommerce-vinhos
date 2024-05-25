@@ -13,6 +13,7 @@ public class PedidoVendaDTO {
 	    private double totalDesconto;
 	    private double totalPagamento;
 	    private double totalFrete;
+	    private double totalSaldo;
 	    private int idEndereco;
 	    private List<CartaoDeCredito> cartoes;
 	    private List<Cupons> cupons;
@@ -67,6 +68,13 @@ public class PedidoVendaDTO {
 			this.totalFrete = totalFrete;
 		}
 
+		public Double getTotalSaldo() {
+			return totalSaldo;
+		}
+
+		public void setTotalSaldo(Double totalSaldo) {
+			this.totalSaldo = totalSaldo;
+		}
 
 		public int getIdEndereco() {
 			return idEndereco;

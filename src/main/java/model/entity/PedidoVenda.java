@@ -2,7 +2,6 @@ package model.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class PedidoVenda {
 		
@@ -11,7 +10,11 @@ public class PedidoVenda {
 	Endereco endereco;
 	private String status;
 	private Date data;
-	private Double valor;
+	private Double totalPedido;
+	private Double totalDesconto;
+	private Double totalFrete;
+	private Double totalPagamento;
+	private Double totalSaldo;
 	private ArrayList<PedidoItens> PedidoItens = new ArrayList<>();
 	private ArrayList<CartaoDeCredito> cartoes = new ArrayList<>();
 	private ArrayList<Cupons> cupons = new ArrayList<>();
@@ -20,7 +23,8 @@ public class PedidoVenda {
 		super();
 	}
 	
-	public PedidoVenda(int id, Cliente cliente, Endereco endereco, String status, Date data, Double valor,
+	public PedidoVenda(int id, Cliente cliente, Endereco endereco, String status, Date data, Double totalPedido,
+			Double totalDesconto, Double totalFrete, Double totalPagamento, Double totalSaldo,
 			ArrayList<model.entity.PedidoItens> pedidoItens, ArrayList<CartaoDeCredito> cartoes,
 			ArrayList<Cupons> cupons) {
 		super();
@@ -29,12 +33,15 @@ public class PedidoVenda {
 		this.endereco = endereco;
 		this.status = status;
 		this.data = data;
-		this.valor = valor;
+		this.totalPedido = totalPedido;
+		this.totalDesconto = totalDesconto;
+		this.totalFrete = totalFrete;
+		this.totalPagamento = totalPagamento;
+		this.totalSaldo = totalSaldo;
 		PedidoItens = pedidoItens;
 		this.cartoes = cartoes;
 		this.cupons = cupons;
 	}
-
 
 	public int getId() {
 		return id;
@@ -76,14 +83,46 @@ public class PedidoVenda {
 		this.data = data;
 	}
 
-	public Double getValor() {
-		return valor;
+	public Double getTotalPedido() {
+		return totalPedido;
 	}
 
-	public void setValor(Double valor) {
-		this.valor = valor;
+	public void setTotalPedido(Double totalPedido) {
+		this.totalPedido = totalPedido;
 	}
 
+	public Double getTotalDesconto() {
+		return totalDesconto;
+	}
+
+	public void setTotalDesconto(Double totalDesconto) {
+		this.totalDesconto = totalDesconto;
+	}
+
+	public Double getTotalFrete() {
+		return totalFrete;
+	}
+
+	public void setTotalFrete(Double totalFrete) {
+		this.totalFrete = totalFrete;
+	}
+
+	public Double getTotalPagamento() {
+		return totalPagamento;
+	}
+
+	public void setTotalPagamento(Double totalPagamento) {
+		this.totalPagamento = totalPagamento;
+	}
+	
+	public Double getTotalSaldo() {
+		return totalSaldo;
+	}
+
+	public void setTotalSaldo(Double totalSaldo) {
+		this.totalSaldo = totalSaldo;
+	}
+	
 	public ArrayList<PedidoItens> getPedidoItens() {
 		return PedidoItens;
 	}
@@ -107,6 +146,8 @@ public class PedidoVenda {
 	public void setCupons(ArrayList<Cupons> cupons) {
 		this.cupons = cupons;
 	}
+	
+	
 
 	
 	

@@ -2,7 +2,7 @@ package Service;
 
 import java.util.ArrayList;
 
-import Dao.DaoCartoes;
+import dao.DaoCartoes;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Endereco;
@@ -17,10 +17,7 @@ public class CartoesService {
 	}
 
 	public String adicionarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
-		// Valida��o dos dados se necess�rio
-		System.out.println("Cheguei no adicionarCartao Service");
-
-		// Chamada ao DAO para inserir o endere�o
+		System.out.println("adicionarCartao Service");
 		return daoCartoes.inserirCartao(cliente, cartao, bandeira);
 	}
 
@@ -38,5 +35,10 @@ public class CartoesService {
 	public CartaoDeCredito editarCartao(Cliente cliente, CartaoDeCredito cartao, BandeiraCartao bandeira) {
 
 		return daoCartoes.EditarCartao(cliente, cartao, bandeira);
+	}
+
+	public Object deletarCartao(CartaoDeCredito cartao) {
+		return daoCartoes.deletarCartao(cartao);
+		
 	}
 }

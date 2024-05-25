@@ -118,14 +118,14 @@ public class FLUXODEVENDATest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("cupomTselect19")).click();
+		driver.findElement(By.id("cupomTselect1")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		driver.findElement(By.cssSelector("#modalCupomT .btn")).click();
-		driver.findElement(By.cssSelector(".col-md-5 > .btn")).click();
+		driver.findElement(By.id	("SalvarCupom")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {

@@ -3,7 +3,7 @@ package Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import Dao.DAOPedidoVenda;
+import dao.DAOPedidoVenda;
 import model.entity.CarrinhoItens;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
@@ -38,10 +38,15 @@ public class PedidoVendaService {
         if (pedido.getEndereco() == null || pedido.getEndereco().getId() == null) {
             return "Erro: Endereço não inserido.";
         }
-        for (CarrinhoItens item : itens) {
-            if (item.getQuantProd() <= 0 || item.getProduto().getPro_preco_venda() <= 0) {
-                return "Erro: Existem itens de produto com quantidade ou valor inválido.";
-            }
+        if (itens.size() == 0) {
+        	return "Erro: Não há itens no pedido!.";
+        }
+        else {
+	        for (CarrinhoItens item : itens) {
+	            if (item.getQuantProd() <= 0 || item.getProduto().getPro_preco_venda() <= 0) {
+	                return "Erro: Existem itens de produto com quantidade ou valor inválido.";
+	            }
+	        }
         }
 
         // Calcular o total de descontos
@@ -49,7 +54,7 @@ public class PedidoVendaService {
         for (Cupons cupom : listaCupons) {
             if ("P".equals(cupom.getTipo())) {
                 // Calcula o desconto como uma porcentagem do total do pedido
-                totalDesconto += (cupom.getValor() * pedido.getValor()) / 100;
+                totalDesconto += (cupom.getValor() * pedido.getTotalPedido()) / 100;
             } else if ("T".equals(cupom.getTipo())) {
                 // Adiciona o valor total do desconto ao totalDesconto
                 totalDesconto += cupom.getValor();
@@ -61,7 +66,7 @@ public class PedidoVendaService {
 
         // Verificação: A soma dos valores dos cartões e dos descontos deve ser igual ao total do pedido
         double totalPagamento = totalCartoes + totalDesconto;
-        double saldo =  pedido.getValor() - totalPagamento;
+        double saldo =  pedido.getTotalPedido() - totalPagamento;
 
         if (saldo > 0) {
             return "Erro: A soma dos valores dos cartões e dos descontos não é igual ao total do pedido.";

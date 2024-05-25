@@ -87,6 +87,7 @@ body {
 											<option value="NAO">NAO</option>
 										</select>
 									</div>
+								<input type="text" name="CadastrarNoPerfil" value= "SIM" required  style="display: none;"/>
 								</div>
 
 							</fieldset>

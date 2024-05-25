@@ -3,7 +3,7 @@ package Service;
 import model.entity.Cliente;
 import model.entity.Endereco;
 import java.util.ArrayList;
-import Dao.DaoEndereco;
+import dao.DaoEndereco;
 
 public class EnderecoService {
 

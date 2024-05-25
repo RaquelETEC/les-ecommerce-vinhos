@@ -287,7 +287,7 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 							<div class="row mt-2 border-top">
 								<div class="col-12 text-end">
 									<p class="align-item">
-										Total Pedido: <span class="valor-pedido">R$ <%=pedido.getValor()%></span>
+										Total Pedido: <span class="valor-pedido">R$ <%=pedido.getTotalPedido()%></span>
 									</p>
 								</div>
 							</div>

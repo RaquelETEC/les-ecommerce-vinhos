@@ -17,7 +17,6 @@ public class FLUXODEVENDACancela {
 	private WebDriver driver;
 	private Map<String, Object> vars;
 	JavascriptExecutor js;
-
 	@Before
 	public void setUp() {
 		String driverPath = "src/main/resources/drivers/msedgedriver.exe";

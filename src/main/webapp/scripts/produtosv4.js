@@ -1,3 +1,13 @@
+document.addEventListener("DOMContentLoaded", function() {
+    var totalElement = document.getElementById('totalCarriho');
+        var finalizarCompraBtn = document.getElementById('btn-finalizar-compra'); 
+    var total = parseFloat(totalElement.innerText.replace('R$', '').trim()); // Obtém o valor total e converte para número
+
+    if (total === 0) {
+        finalizarCompraBtn.disabled = true; // Desativa o botão se o total for zero
+    }
+});
+
 function decrementarQuantidade(idItem, i) {
     const btnDecrementar = document.getElementById('btn-decrementar-' + i);
     const btnIncrementar = document.getElementById('btn-incrementar-' + i);
@@ -53,6 +63,11 @@ function incrementarQuantidade(idItem, i) {
 	 }, 100); // 2 segundos em milissegundos
 
 }
+
+  function redirecionarParaFinalizarCompra(idCliente) {
+        var url = "/les-ecommerce-vinhos/FinalizarCompra?idCliente=" + idCliente;
+        window.location.href = url;
+    }
 
 function alterarStatusItem(carrinhoId, produtoId, quantidade, motivo , itemRemovido) {
 	debugger

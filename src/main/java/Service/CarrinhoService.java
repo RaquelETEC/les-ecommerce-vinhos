@@ -2,8 +2,8 @@ package Service;
 
 import java.util.ArrayList;
 
-import Dao.DAOProdutos;
-import Dao.DaoCarrinho;
+import dao.DAOProdutos;
+import dao.DaoCarrinho;
 import model.entity.CarrinhoDeCompras;
 import model.entity.CarrinhoItens;
 import model.entity.Cliente;

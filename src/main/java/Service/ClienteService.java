@@ -2,7 +2,7 @@ package Service;
 
 import java.util.ArrayList;
 
-import Dao.DaoCliente;
+import dao.DaoCliente;
 import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;

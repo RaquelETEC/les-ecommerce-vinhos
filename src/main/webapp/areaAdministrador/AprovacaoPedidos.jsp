@@ -136,7 +136,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						        <td><%= pedido.getCliente().getId() %></td>
 						        <td><%= pedido.getCliente().getNome() %></td>
 						        <td><%= data %></td>
-						        <td><%= pedido.getValor() %></td>
+						        <td><%= pedido.getTotalPedido() %></td>
 						        <!-- Renderizar o select com base nas opções disponíveis -->
 						        <td>
 						            <select class="form-select" id="statusPedido<%= i %>">
@@ -149,7 +149,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 						        
 						        <td>
 						            <div class="option-button">
-						                <a class="Botao1" href="javascript: confirmarPedido(<%= pedido.getId() %>, <%= i %>, <%= pedido.getValor()%>, <%= pedido.getCliente().getId()%>)">Editar</a>
+						                <a class="Botao1" href="javascript: confirmarPedido(<%= pedido.getId() %>, <%= i %>, <%= pedido.getTotalPedido()%>, <%= pedido.getCliente().getId()%>)">Editar</a>
 						            </div>
 						        </td>
 						    </tr>

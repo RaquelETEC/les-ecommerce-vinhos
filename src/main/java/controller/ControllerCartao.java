@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Dao.DaoCartoes;
 import Service.CartoesService;
 import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
@@ -18,22 +17,25 @@ import model.entity.Cliente;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/inserirCartao","/areaCliente/EditarCartao", "/areaCliente/MeusCartoes.html",
-		"/areaCliente/LoginCartao.html", "/areaCliente/EditarCartao.html", "/areaCliente/deleteCartao" })
+@WebServlet(urlPatterns = { 
+		"/areaCliente/inserirCartao", 
+		"/inserirCartao",
+		"/areaCliente/EditarCartao", 
+		"/areaCliente/MeusCartoes.html",
+		"/areaCliente/LoginCartao.html", 
+		"/areaCliente/EditarCartao.html", 
+		"/areaCliente/deleteCartao" 
+		})
 public class ControllerCartao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	Cliente cliente = new Cliente();
-
 	CartaoDeCredito cartao = new CartaoDeCredito();
-
 	BandeiraCartao tipoBandeira = new BandeiraCartao();
-
 	CartoesService cartaoService = new CartoesService();
 
-	DaoCartoes daocartao = new DaoCartoes();
 
 	public ControllerCartao() {
 		super();
@@ -81,7 +83,10 @@ public class ControllerCartao extends HttpServlet {
 		String padrao = request.getParameter("CartaoPadrao");
 		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
 		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);
-
+		String cadPerfil = request.getParameter("CadastrarNoPerfil");
+		
+		boolean cadastrarNoPerfil = cadPerfil.toUpperCase() == "SIM" ? true : false; 
+		
 		tipoBandeira.setId(Codigobandeira);
 
 		cartao.setCliente(cliente);
@@ -90,6 +95,7 @@ public class ControllerCartao extends HttpServlet {
 		cartao.setNome(nome);
 		cartao.setPadrao(padrao);
 		cartao.setCodigoSeguranca(codigoSeguranca);
+		cartao.setCartaoNoPerfil(cadastrarNoPerfil);
 
 		String resposta = cartaoService.adicionarCartao(cliente, cartao, tipoBandeira);
 		 
@@ -202,9 +208,9 @@ public class ControllerCartao extends HttpServlet {
 
 		cartao.setId(Integer.parseInt(request.getParameter("idCartao")));
 
-		daocartao.deletarCartao(cartao);
+		cartaoService.deletarCartao(cartao);
 
-		System.out.println("ID que chegou aqui" + cartao.getId());
+		System.out.println("ID" + cartao.getId());
 		System.out.println("ID do cliente no excluir cartao" + cliente.getId());
 
 		response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id=" + id);

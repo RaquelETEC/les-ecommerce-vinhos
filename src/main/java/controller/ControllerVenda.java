@@ -179,7 +179,11 @@ public class ControllerVenda extends HttpServlet {
         ArrayList<Cupons> listaCupons = (ArrayList<Cupons>) pedidoVendaDTO.getCupons();
 	    
         pedido.setCliente(cliente);
-        pedido.setValor(pedidoVendaDTO.getTotalPedido());
+        pedido.setTotalPedido(pedidoVendaDTO.getTotalPedido());
+        pedido.setTotalDesconto(pedidoVendaDTO.getTotalDesconto());
+        pedido.setTotalPagamento(pedidoVendaDTO.getTotalPagamento());
+        pedido.setTotalFrete(pedidoVendaDTO.getTotalFrete());
+        pedido.setTotalSaldo(pedidoVendaDTO.getTotalSaldo());
         pedido.setData(dataAtual);
         pedido.setEndereco(endereco);
 	    pedido.setStatus("EM PROCESSAMENTO");

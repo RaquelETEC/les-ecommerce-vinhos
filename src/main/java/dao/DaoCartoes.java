@@ -1,4 +1,4 @@
-package Dao;
+package dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,8 +19,8 @@ public class DaoCartoes {
 
 		System.out.println("DAO : id do cliente para o cart�o:" + cliente.getId());
 
-		String create = "INSERT INTO cartao_de_credito (cart_id_cli, cart_numero, cart_nome, cart_padrao, cart_id_bandeira, cart_cod_seguranca) "
-				+ "VALUES (?, ?, ?, ?, ?,?)";
+		String create = "INSERT INTO cartao_de_credito (cart_id_cli, cart_numero, cart_nome, cart_padrao, cart_id_bandeira, cart_cod_seguranca,cart_in_perfil) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			Connection con = Conexao.conectar();
@@ -35,11 +35,20 @@ public class DaoCartoes {
 			pst.setString(4, cartao.getPadrao());
 			pst.setInt(5, idBandeira);
 			pst.setInt(6, cartao.getCodigoSeguranca());
+			pst.setBoolean(7, cartao.isCartaoNoPerfil());
 
-			pst.executeUpdate();
-			System.err.println("inserido cartao no dao!!");
-			con.close();
-			return "Cartão cadastrado sucesso no perfil!";
+			int rowsAffected = pst.executeUpdate();
+			    if (rowsAffected > 0) {
+			        ResultSet generatedKeys = pst.getGeneratedKeys();
+			        if (generatedKeys.next()) {
+			            int cartaoId = generatedKeys.getInt(1);
+			            System.err.println("ID gerado do cartão: " + cartaoId);
+			            con.close();
+			            return "SUCESS! Cartão cadastrado com sucesso no perfil! ID do cartão=" + cartaoId;
+			        }
+			    }
+		    con.close();
+		    return "Erro ao cadastrar o cartão no perfil.";
 
 		} catch (Exception e) {
 			System.out.println("erro ao inserir cartao: " + e);
@@ -51,7 +60,7 @@ public class DaoCartoes {
 		ArrayList<CartaoDeCredito> listaDeCartoes = new ArrayList<>();
 		String read = "SELECT " + "cart_id, " + "cart_numero, " + "cart_nome, " + "cart_padrao, " + "band_id, "
 				+ "band_desc, " + "band_img, " + "cart_cod_seguranca " + "FROM cartao_de_credito "
-				+ "join bandeiras_cartao on cart_id_bandeira = band_id " + "WHERE cart_id_cli = ?";
+				+ "join bandeiras_cartao on cart_id_bandeira = band_id " + "WHERE cart_id_cli = ? AND cart_in_perfil = 1 ";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
@@ -134,7 +143,7 @@ public class DaoCartoes {
 		}
 	}
 
-	public void deletarCartao(CartaoDeCredito cartao) {
+	public Object deletarCartao(CartaoDeCredito cartao) {
 		String delete = "delete from cartao_de_credito where cart_id=?";
 
 		System.out.println("eu cheguei aqui " + cartao.getId());
@@ -144,8 +153,10 @@ public class DaoCartoes {
 			pst.setInt(1, cartao.getId());
 			pst.executeUpdate();
 			con.close();
+			return "sucess";
 		} catch (Exception e) {
 			System.out.println(e);
+			return "error "+e;
 		}
 	}
 

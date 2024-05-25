@@ -101,11 +101,15 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 			<div class="col-3 m-4 subtotal">
 				<div class="Content">
 					<h2>Sub Total</h2>
-					<br> <span style="font-size: 24px; color: orange;"><strong>R$
+					<br> <span id="totalCarriho" style="font-size: 24px; color: orange;"><strong>R$
 							<%=total%></strong></span> <br> 
-					 <a href="/les-ecommerce-vinhos/FinalizarCompra?idCliente=<%=request.getParameter("id")%>">
-						<button class="btn btn-primary">Finalizar Compra</button>
-					</a>
+					<button 
+						id="btn-finalizar-compra" 
+						class="btn btn-primary" 
+						onclick="redirecionarParaFinalizarCompra(<%=request.getParameter("id")%>)">
+							Finalizar Compra
+					</button>
+
 				</div>
 			</div>
 		</div>
@@ -174,8 +178,9 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 			</div>
 		</div>
 	</div>
-	<footer class="p-4 text-light text-center " style="background: black;">
-		Desenvolvido por Caynan e Raquel </footer>
+  <footer class="p-4 text-light text-center footer fixed-bottom" style="background: black;">
+			Desenvolvido por Caynan e Raquel 
+		</footer>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>

@@ -2,7 +2,7 @@ package Service;
 
 import java.util.ArrayList;
 
-import Dao.DAOProdutos;
+import dao.DAOProdutos;
 import model.entity.Produtos;
 
 
