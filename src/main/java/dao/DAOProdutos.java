@@ -124,6 +124,43 @@ public class DAOProdutos {
 		return produto;
 	}
 	
+	public Produtos atualizarProduto(Produtos produto) {
+	    String updateQuery = "UPDATE produto SET pro_preco_venda = ?, pro_preco_compra = ?, pro_justificativa = ?, "
+	            + "pro_vinicola = ?, pro_pais = ?, pro_regiao = ?, pro_safra = ?, pro_desc = ?, pro_tipo = ?, "
+	            + "pro_uva = ?, pro_alcool = ?, pro_altura = ?, pro_largura = ?, pro_peso = ?, pro_profundidade = ?, "
+	            + "pro_img = ? WHERE pro_id = ?";
+	    
+	    try (Connection conn = Conexao.conectar();
+	         PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+	        
+	        stmt.setDouble(1, produto.getPro_preco_venda());
+	        stmt.setDouble(2, produto.getPro_preco_compra());
+	        stmt.setString(3, produto.getJustificativa());
+	        stmt.setString(4, produto.getVinicola());
+	        stmt.setString(5, produto.getPais());
+	        stmt.setString(6, produto.getRegiao());
+	        stmt.setString(7, produto.getSafra());
+	        stmt.setString(8, produto.getDesc());
+	        stmt.setString(9, produto.getTipo());
+	        stmt.setString(10, produto.getUva());
+	        stmt.setString(11, produto.getAlcool());
+	        stmt.setString(12, produto.getAltura());
+	        stmt.setString(13, produto.getLargura());
+	        stmt.setString(14, produto.getPeso());
+	        stmt.setString(15, produto.getProfundidade());
+	        stmt.setString(16, produto.getImg());
+	        stmt.setInt(17, produto.getId());
+	        
+	        stmt.executeUpdate();
+	        conn.close();
+	        
+	        return produto;
+	        
+	    } catch (SQLException e) {
+	        System.err.println("Erro ao atualizar produto: " + e.getMessage());
+	        return produto;
+	    }
+	}
 	
 	
 
