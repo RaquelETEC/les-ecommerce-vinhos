@@ -16,7 +16,7 @@ import model.entity.Precificacao;
 import model.entity.Produtos;
 
 
-@WebServlet(urlPatterns = { "/paginaInical.html", "/areaAdministrador/Produtos.html", "/areaAdministrador/EditarProdutos.html"})
+@WebServlet(urlPatterns = { "/paginaInical.html", "/areaAdministrador/Produtos.html", "/areaAdministrador/EditarProdutos.html", "/areaAdministrador/EditarProdutos"})
 
 public class ControllerProdutos extends HttpServlet{
 	
@@ -49,8 +49,13 @@ public class ControllerProdutos extends HttpServlet{
 		else if (action.equals("/areaAdministrador/EditarProdutos.html")) {
 			TelaEditarProduto(request,response);
 		} 
+		else if (action.equals("/areaAdministrador/EditarProdutos")) {
+		    EditarProduto(request,response);
+		} 
 	}
 	
+
+
 	protected void AreaProdutos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -91,6 +96,40 @@ public class ControllerProdutos extends HttpServlet{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/ProdutosEditar.jsp");
 		rd.forward(request, response);
+	}
+	
+	
+	private void EditarProduto(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("voce conseguiu chegar aqui no EditarProduto:)");
+		
+		int idProduto = Integer.parseInt(request.getParameter("idProduto"));
+		String PrecificacaoDesc = request.getParameter("PrecificacaoDesc");
+		String CategoriaStatus = request.getParameter("CategoriaStatus");
+		
+		produtos.setId(idProduto);
+		precificacao.setDesc(PrecificacaoDesc);
+		categoria.setStatus(CategoriaStatus);
+		
+		produtos.setCodigo_barra(request.getParameter("codigoBarras"));
+		produtos.setDesc(request.getParameter("descricao"));
+		produtos.setPro_preco_venda(Double.parseDouble(request.getParameter("preco")));
+		produtos.setVinicola(request.getParameter("vinicola"));
+		produtos.setPais(request.getParameter("pais"));
+		produtos.setRegiao(request.getParameter("regiao"));
+		produtos.setSafra(request.getParameter("safra"));
+		produtos.setTipo(request.getParameter("tipo"));
+		produtos.setUva(request.getParameter("uva"));
+		produtos.setAltura(request.getParameter("Altura"));
+		produtos.setLargura(request.getParameter("Largura"));
+		produtos.setPeso(request.getParameter("Peso"));
+		produtos.setProfundidade(request.getParameter("Profundidade"));
+		produtos.setAlcool(request.getParameter("alcool"));
+		
+
+		produtoservice.EditarProduto(produtos, precificacao, categoria);
+		
+		response.sendRedirect(request.getContextPath() + "/areaAdministrador/Produtos.html");
+			
 	}
 	
 	

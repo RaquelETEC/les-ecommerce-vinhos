@@ -124,41 +124,97 @@ public class DAOProdutos {
 		return produto;
 	}
 	
-	public Produtos atualizarProduto(Produtos produto) {
-	    String updateQuery = "UPDATE produto SET pro_preco_venda = ?, pro_preco_compra = ?, pro_justificativa = ?, "
+	public boolean atualizarProdutoEAssociados(Produtos produto, Precificacao precificacao, Categoria categoria) {
+	    String updateProdutoQuery = "UPDATE produto SET pro_preco_venda = ?, pro_preco_compra = ?, pro_justificativa = ?, "
 	            + "pro_vinicola = ?, pro_pais = ?, pro_regiao = ?, pro_safra = ?, pro_desc = ?, pro_tipo = ?, "
 	            + "pro_uva = ?, pro_alcool = ?, pro_altura = ?, pro_largura = ?, pro_peso = ?, pro_profundidade = ?, "
 	            + "pro_img = ? WHERE pro_id = ?";
 	    
-	    try (Connection conn = Conexao.conectar();
-	         PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+	    String updatePrecificacaoQuery = "UPDATE precificacao SET GRUP_DESC = ? WHERE GRUP_ID = ?";
+	    String updateCategoriaQuery = "UPDATE categoria SET CAT_STATUS = ? WHERE CAT_ID = ?";
+	    
+	    Connection conn = null;
+	    PreparedStatement produtoStmt = null;
+	    PreparedStatement precificacaoStmt = null;
+	    PreparedStatement categoriaStmt = null;
+	    
+	    try {
+	        conn = Conexao.conectar();
+	        conn.setAutoCommit(false); 	        
+	        produtoStmt = conn.prepareStatement(updateProdutoQuery);
+	        produtoStmt.setDouble(1, produto.getPro_preco_venda());
+	        produtoStmt.setDouble(2, produto.getPro_preco_compra());
+	        produtoStmt.setString(3, produto.getJustificativa());
+	        produtoStmt.setString(4, produto.getVinicola());
+	        produtoStmt.setString(5, produto.getPais());
+	        produtoStmt.setString(6, produto.getRegiao());
+	        produtoStmt.setString(7, produto.getSafra());
+	        produtoStmt.setString(8, produto.getDesc());
+	        produtoStmt.setString(9, produto.getTipo());
+	        produtoStmt.setString(10, produto.getUva());
+	        produtoStmt.setString(11, produto.getAlcool());
+	        produtoStmt.setString(12, produto.getAltura());
+	        produtoStmt.setString(13, produto.getLargura());
+	        produtoStmt.setString(14, produto.getPeso());
+	        produtoStmt.setString(15, produto.getProfundidade());
+	        produtoStmt.setString(16, produto.getImg());
+	        produtoStmt.setInt(17, produto.getId());
+	        produtoStmt.executeUpdate();
 	        
-	        stmt.setDouble(1, produto.getPro_preco_venda());
-	        stmt.setDouble(2, produto.getPro_preco_compra());
-	        stmt.setString(3, produto.getJustificativa());
-	        stmt.setString(4, produto.getVinicola());
-	        stmt.setString(5, produto.getPais());
-	        stmt.setString(6, produto.getRegiao());
-	        stmt.setString(7, produto.getSafra());
-	        stmt.setString(8, produto.getDesc());
-	        stmt.setString(9, produto.getTipo());
-	        stmt.setString(10, produto.getUva());
-	        stmt.setString(11, produto.getAlcool());
-	        stmt.setString(12, produto.getAltura());
-	        stmt.setString(13, produto.getLargura());
-	        stmt.setString(14, produto.getPeso());
-	        stmt.setString(15, produto.getProfundidade());
-	        stmt.setString(16, produto.getImg());
-	        stmt.setInt(17, produto.getId());
+	        precificacaoStmt = conn.prepareStatement(updatePrecificacaoQuery);
+	        precificacaoStmt.setString(1, produto.getPrecificacao().getDesc());
+	        precificacaoStmt.setInt(2, produto.getPrecificacao().getId());
+	        precificacaoStmt.executeUpdate();
 	        
-	        stmt.executeUpdate();
-	        conn.close();
+	        categoriaStmt = conn.prepareStatement(updateCategoriaQuery);
+	        categoriaStmt.setString(1, produto.getCategoria().getStatus());
+	        categoriaStmt.setInt(2, produto.getCategoria().getId());
+	        categoriaStmt.executeUpdate();
 	        
-	        return produto;
+	        conn.commit(); // Confirma a transação
+	        
+	        return true;
 	        
 	    } catch (SQLException e) {
-	        System.err.println("Erro ao atualizar produto: " + e.getMessage());
-	        return produto;
+	        if (conn != null) {
+	            try {
+	                conn.rollback(); // Reverte a transação em caso de erro
+	            } catch (SQLException ex) {
+	                System.err.println("Erro ao reverter a transação: " + ex.getMessage());
+	            }
+	        }
+	        System.err.println("Erro ao atualizar produto e associados: " + e.getMessage());
+	        return false;
+	        
+	    } finally {
+	        if (produtoStmt != null) {
+	            try {
+	                produtoStmt.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar produtoStmt: " + e.getMessage());
+	            }
+	        }
+	        if (precificacaoStmt != null) {
+	            try {
+	                precificacaoStmt.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar precificacaoStmt: " + e.getMessage());
+	            }
+	        }
+	        if (categoriaStmt != null) {
+	            try {
+	                categoriaStmt.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar categoriaStmt: " + e.getMessage());
+	            }
+	        }
+	        if (conn != null) {
+	            try {
+	                conn.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar conexão: " + e.getMessage());
+	            }
+	        }
 	    }
 	}
 	

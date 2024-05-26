@@ -62,7 +62,7 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 				<div class="container mt-4">
 					<h2 class="text-center mb-4">Produtos</h2>
 					<!-- Formulário de filtro -->
-					<form class="mb-4">
+					<form class="mb-4" action="EditarProdutos">
 
 						<div class="row">
 							<div class="col-md-3">
@@ -170,8 +170,13 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 										<%="INATIVO".equals(request.getAttribute("CategoriaStatus")) ? "selected" : ""%>>INATIVO</option>
 								</select>
 							</div>
-						</div>
 
+						</div>
+						<div class="text-center">
+							<input id="BotaoAlterar" class="btn btn-primary"
+								type="submit" value="Atualizar">
+							<hr class="my-3">
+						</div>
 					</form>
 				</div>
 

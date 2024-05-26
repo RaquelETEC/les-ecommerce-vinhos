@@ -2,7 +2,7 @@ package Service;
 
 import java.util.ArrayList;
 
-import Dao.DAOProdutos;
+import dao.DAOProdutos;
 import model.entity.Categoria;
 import model.entity.Precificacao;
 import model.entity.Produtos;
@@ -31,6 +31,14 @@ public class ProdutoService {
 		System.out.println("Cheguei no selecionarProduto Service");
 		
 		return daoProdutos.selecionarProduto(produto, precificacao, categoria);
+		
+	}
+	
+	
+	public boolean EditarProduto(Produtos produto, Precificacao precificacao, Categoria categoria) {
+		System.out.println("Cheguei no EditarProduto Service");
+		
+		return daoProdutos.atualizarProdutoEAssociados(produto, precificacao, categoria);
 		
 	}
 	
