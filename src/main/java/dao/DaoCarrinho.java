@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import model.entity.CarrinhoItens;
 import model.entity.Cliente;
 import model.entity.Produtos;
+import model.entity.StatusCarrinhoItens;
 import model.entity.CarrinhoDeCompras;
 
 public class DaoCarrinho {
@@ -36,50 +37,53 @@ public class DaoCarrinho {
 	    }
 	    return carrinho;
 	}
-	public ArrayList<CarrinhoItens> ListarCarrinho(CarrinhoDeCompras carrinho) {
+	
+	public ArrayList<CarrinhoItens> listarCarrinho(CarrinhoDeCompras carrinho) {
+	    System.out.println("Acesso ao Dao ListarCarrinho");
 
-		System.out.println("Acesso ao Dao ListarCarrinho");
+	    ArrayList<CarrinhoItens> listaCarrinhoItens = new ArrayList<>();
+	    String read = "SELECT car_itens_id, " + 
+	                  "car_itens_car_id, " + 
+	                  "car_itens_prod_id, " + 
+	                  "car_itens_prod_quant, " +
+	                  "car_itens_status, " + 
+	                  "car_itens_motivo " + 
+	                  "FROM carrinho_itens " + 
+	                  "WHERE car_itens_car_id = ?";
+	    try {
+	        Connection con = Conexao.conectar();
+	        PreparedStatement pst = con.prepareStatement(read);
+	        pst.setInt(1, carrinho.getId());
+	        ResultSet rs = pst.executeQuery();
 
-		ArrayList<CarrinhoItens> ArrayListcarrinhoItems = new ArrayList<>();
-		String read = "SELECT car_itens_id, " + 
-	              "car_itens_car_id, " + 
-	              "car_itens_prod_id, " + 
-	              "car_itens_prod_quant, " +
-	              "car_itens_removido, " + 
-	              "car_itens_motivo " + 
-	              "FROM carrinho_itens " + 
-	              "WHERE car_itens_car_id = ?";
-		try {
-			Connection con = Conexao.conectar();
-			PreparedStatement pst = con.prepareStatement(read);
-			pst.setInt(1, carrinho.getId());
-			ResultSet rs = pst.executeQuery();
+	        while (rs.next()) {
+	            Produtos produto = new Produtos();
+	            CarrinhoItens item = new CarrinhoItens();
 
-			while (rs.next()) {
-				Produtos produto = new Produtos();
-				CarrinhoItens itens = new CarrinhoItens();
+	            produto.setId(rs.getInt(3));
+	            carrinho.setId(rs.getInt(2));
+	            
+	            // Usando ordinal() para mapear o valor do banco de dados para o enum
+	            int statusDBIndex = rs.getInt(5);
+	            StatusCarrinhoItens status = StatusCarrinhoItens.values()[statusDBIndex];
+	            
+	            item.setCarrinho(carrinho);
+	            item.setId(rs.getInt(1));
+	            item.setProduto(produto);
+	            item.setQuantProd(rs.getInt(4));
+	            item.setStatus(status); // Atribuindo o status ao objeto CarrinhoItens
+	            item.setMotivoRemocao(rs.getString(6));
 
-				produto.setId(rs.getInt(3));
-
-				carrinho.setId(rs.getInt(2));
-
-				itens.setCarrinho(carrinho);
-				itens.setId(rs.getInt(1));
-				itens.setProduto(produto);
-				itens.setQuantProd(rs.getInt(4));
-				itens.setRemovido(rs.getBoolean(5));
-				itens.setMotivoRemocao(rs.getString(6));
-
-				ArrayListcarrinhoItems.add(itens);
-			}
-			con.close();
-			return ArrayListcarrinhoItems;
-		} catch (Exception e) {
-			System.out.println("ERRO AO LISTAR" + e);
-			return null;
-		}
-
+	            listaCarrinhoItens.add(item);
+	        }
+	        con.close();
+	    } catch (SQLException e) {
+	        System.out.println("ERRO AO LISTAR" + e);
+	        // Lidar com exceções de banco de dados aqui
+	    }
+	    return listaCarrinhoItens;
 	}
+	
 	public String AlterarQuantidade(CarrinhoItens carrinhoItem, int quantidade) {
 		String read = "UPDATE  carrinho_itens SET " + 
 					"car_itens_prod_quant = ? " +
@@ -101,9 +105,9 @@ public class DaoCarrinho {
 		}
 	
 	public String adicionarAoCarrinho(CarrinhoDeCompras carrinho, Produtos produto, int quantidade) {
-	    String selectQuery = "SELECT car_itens_prod_quant, car_itens_removido FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
-	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ?, car_itens_removido = 0 WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
-	    String insertQuery = "INSERT INTO carrinho_itens (car_itens_car_id, car_itens_prod_id, car_itens_prod_quant, car_itens_removido) VALUES (?, ?, ?, 0)";
+	    String selectQuery = "SELECT car_itens_prod_quant, car_itens_status FROM carrinho_itens WHERE car_itens_car_id = ? AND car_itens_prod_id = ? and car_itens_status <> 2";
+	    String updateQuery = "UPDATE carrinho_itens SET car_itens_prod_quant = ?, car_itens_status = 0 WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	    String insertQuery = "INSERT INTO carrinho_itens (car_itens_car_id, car_itens_prod_id, car_itens_prod_quant, car_itens_status) VALUES (?, ?, ?, 0)";
 
 	    try (Connection con = Conexao.conectar();
 	         PreparedStatement selectPst = con.prepareStatement(selectQuery);
@@ -117,7 +121,8 @@ public class DaoCarrinho {
 	        if (rs.next()) {
 	            // Se o produto já existe no carrinho, verificar se está removido
 	            int quantidadeAtual = rs.getInt("car_itens_prod_quant");
-	            boolean removido = rs.getBoolean("car_itens_removido");
+	            int statusDBIndex = rs.getInt("car_itens_status");
+	            StatusCarrinhoItens status = StatusCarrinhoItens.values()[statusDBIndex];
 	            int novaQuantidade = quantidadeAtual + quantidade;
 	            
 	            // Atualizar a quantidade e o status do produto
@@ -126,13 +131,12 @@ public class DaoCarrinho {
 	            updatePst.setInt(3, produto.getId());
 	            updatePst.executeUpdate();
 	            
-	            if (removido) {
-	                // Se estava removido, atualizar o status
-	                String updateStatusQuery = "UPDATE carrinho_itens SET car_itens_removido = 0, car_itens_prod_quant = ? WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
+	            if (status.ordinal() != 0) { // Se o status não for 0 (não adicionado)
+	                // Se não foi adicionado anteriormente, atualizar o status para 0 (adicionado)
+	                String updateStatusQuery = "UPDATE carrinho_itens SET car_itens_status = 0 WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
 	                try (PreparedStatement updateStatusPst = con.prepareStatement(updateStatusQuery)) {
-	                    updateStatusPst.setInt(1, novaQuantidade);
-	                    updateStatusPst.setInt(2, carrinho.getId());
-	                    updateStatusPst.setInt(3, produto.getId());
+	                    updateStatusPst.setInt(1, carrinho.getId());
+	                    updateStatusPst.setInt(2, produto.getId());
 	                    updateStatusPst.executeUpdate();
 	                }
 	            }
@@ -152,77 +156,80 @@ public class DaoCarrinho {
 	    }
 	}
 
-	public String alterarStatusCarrinho(CarrinhoDeCompras carrinho, Produtos produto, String motivo, int produtoRemovido) {
-		String read = 
-				"UPDATE  carrinho_itens SET " 
-		        +"car_itens_removido = ? ,"
-				+"car_itens_prod_quant = ?, "		
-		        +"car_itens_motivo = ? " 
-		        + "WHERE car_itens_car_id = ? "
-		        + "and car_itens_prod_id = ? ";
-		try {
-			Connection con = Conexao.conectar();
-			PreparedStatement pst = con.prepareStatement(read);
-			
-			pst.setInt(1, produtoRemovido);
-			pst.setInt(2, carrinho.getQuantItems());
-			pst.setString(3, motivo);
-			pst.setInt(4, carrinho.getId());
-			pst.setInt(5, produto.getId());
-	
-			pst.executeUpdate();
-			con.close();
-			
-			
-			return (produtoRemovido == 1) ? "Item removido do carrinho com sucesso!" : "Item adicionado do carrinho novamento com sucesso!";
-			
-			} catch (SQLException e) {
-				e.printStackTrace();
-			    return "Erro ao remover item do carrinho: " + e;
-			}			
+	public String alterarStatusCarrinho(CarrinhoItens carrinhoItens) {
+	    String read = "UPDATE carrinho_itens SET " 
+	                + "car_itens_status = ?, "
+	                + "car_itens_prod_quant = ?, "      
+	                + "car_itens_motivo = ? " 
+	                + "WHERE car_itens_car_id = ? "
+	                + "and car_itens_prod_id = ? ";
+	    try {
+	        Connection con = Conexao.conectar();
+	        PreparedStatement pst = con.prepareStatement(read);
+	        
+	        pst.setInt(1, carrinhoItens.getStatus().ordinal());
+	        pst.setInt(2, carrinhoItens.getQuantProd());
+	        pst.setString(3, carrinhoItens.getMotivoRemocao());
+	        pst.setInt(4, carrinhoItens.getCarrinho().getId());
+	        pst.setInt(5, carrinhoItens.getProduto().getId());
+
+	        pst.executeUpdate();
+	        con.close();
+	        
+	        return (carrinhoItens.getStatus() == StatusCarrinhoItens.REMOVIDO) ? "Item removido do carrinho com sucesso!" 
+	        	    : (carrinhoItens.getStatus() == StatusCarrinhoItens.ADICIONADO) ? "Item adicionado do carrinho com sucesso!"
+	        	    : "Status do item atualizado com sucesso!";	        
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return "Erro ao alterar status item do carrinho: " + e;
+	    }           
 	}
 	
-	public ArrayList<CarrinhoItens> ListarItensAtivos(CarrinhoDeCompras carrinho) {
-		System.out.println("Acesso ao Dao ListarItensAtivos");
+	public ArrayList<CarrinhoItens> listarItensAtivos(CarrinhoDeCompras carrinho) {
+	    System.out.println("Acesso ao Dao ListarItensAtivos");
 
-		ArrayList<CarrinhoItens> ArrayListcarrinhoItems = new ArrayList<>();
-		String read = "SELECT car_itens_id, " + 
-	              "car_itens_car_id, " + 
-	              "car_itens_prod_id, " + 
-	              "car_itens_prod_quant, " +
-	              "car_itens_removido, " + 
-	              "car_itens_motivo " + 
-	              "FROM carrinho_itens " + 
-	              "WHERE car_itens_car_id = ? AND car_itens_removido = 0";
-		try {
-			Connection con = Conexao.conectar();
-			PreparedStatement pst = con.prepareStatement(read);
-			pst.setInt(1, carrinho.getId());
-			ResultSet rs = pst.executeQuery();
+	    ArrayList<CarrinhoItens> listaCarrinhoItens = new ArrayList<>();
+	    String read = "SELECT car_itens_id, " + 
+	                  "car_itens_car_id, " + 
+	                  "car_itens_prod_id, " + 
+	                  "car_itens_prod_quant, " +
+	                  "car_itens_status, " + 
+	                  "car_itens_motivo " + 
+	                  "FROM carrinho_itens " + 
+	                  "WHERE car_itens_car_id = ? AND car_itens_status = 0";
+	    try {
+	        Connection con = Conexao.conectar();
+	        PreparedStatement pst = con.prepareStatement(read);
+	        pst.setInt(1, carrinho.getId());
+	        ResultSet rs = pst.executeQuery();
 
-			while (rs.next()) {
-				Produtos produto = new Produtos();
-				CarrinhoItens itens = new CarrinhoItens();
+	        while (rs.next()) {
+	            Produtos produto = new Produtos();
+	            CarrinhoItens item = new CarrinhoItens();
 
-				produto.setId(rs.getInt(3));
+	            produto.setId(rs.getInt(3));
+	            carrinho.setId(rs.getInt(2));
+	            
+	            // Usando ordinal() para mapear o valor do banco de dados para o enum
+	            int statusDBIndex = rs.getInt(5);
+	            StatusCarrinhoItens status = StatusCarrinhoItens.values()[statusDBIndex];
+	            
+	            item.setCarrinho(carrinho);
+	            item.setId(rs.getInt(1));
+	            item.setProduto(produto);
+	            item.setQuantProd(rs.getInt(4));
+	            item.setStatus(status); // Atribuindo o status ao objeto CarrinhoItens
+	            item.setMotivoRemocao(rs.getString(6));
 
-				carrinho.setId(rs.getInt(2));
-
-				itens.setCarrinho(carrinho);
-				itens.setId(rs.getInt(1));
-				itens.setProduto(produto);
-				itens.setQuantProd(rs.getInt(4));
-				itens.setRemovido(rs.getBoolean(5));
-				itens.setMotivoRemocao(rs.getString(6));
-
-				ArrayListcarrinhoItems.add(itens);
-			}
-			con.close();
-			return ArrayListcarrinhoItems;
-		} catch (Exception e) {
-			System.out.println("ERRO AO LISTAR" + e);
-			return null;
-		}
+	            listaCarrinhoItens.add(item);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        // Lidar com exceções de banco de dados aqui
+	    } finally {
+	        // Fechar recursos como conexão, instrução e conjunto de resultados
+	    }
+	    return listaCarrinhoItens;
 	}
-
 }

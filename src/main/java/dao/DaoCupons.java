@@ -13,6 +13,7 @@ import model.entity.BandeiraCartao;
 import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Cupons;
+import model.entity.Notificacoes;
 
 public class DaoCupons {
 
@@ -95,13 +96,9 @@ public class DaoCupons {
 			  pst.setInt(1, cupom.getId());
 			  pst.setInt(2, cliente.getId());
 			 
-		       int linhasAfetadas = pst.executeUpdate();
+		      int linhasAfetadas = pst.executeUpdate();
 			  con.close();		
-			   if (linhasAfetadas > 0) {
-		            resposta = "success";
-		        } else {
-		            resposta = "error: Nenhuma linha afetada";
-		        }
+			  resposta = (linhasAfetadas > 0) ? "success" : "error: Nenhuma linha afetada"; 
 			
 		} catch (SQLException e) {
 		  e.printStackTrace();
@@ -109,6 +106,35 @@ public class DaoCupons {
 		}
 		
 		return resposta;
+	}
+
+	public String gerarNotificacao(Notificacoes notificacao) {
+		String insert = "INSERT INTO notificacoes (titulo, descricao, data) " +
+		      "VALUES (?, ?, ?)";
+		String resposta = "";
+		
+		try (Connection con = Conexao.conectar();
+			 PreparedStatement pst = con.prepareStatement(insert)) {	
+			
+			  pst.setString(1, notificacao.getTitulo());
+			  pst.setString(2, notificacao.getDescricao());
+			  pst.setDate(3, notificacao.getData());
+			 
+		      int linhasAfetadas
+		      = pst.executeUpdate();
+			  con.close();	
+			  
+			  resposta = (linhasAfetadas > 0) ? "success" : "error: Nenhuma linha afetada"; 
+			  
+
+			
+		} catch (SQLException e) {
+		  e.printStackTrace();
+		  resposta= "error: " + e;
+		}
+		
+		return resposta;
+		
 	}
 
 

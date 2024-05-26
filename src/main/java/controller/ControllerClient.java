@@ -19,7 +19,7 @@ import model.entity.CartaoDeCredito;
 import model.entity.Cliente;
 import model.entity.Endereco;
 import model.entity.TiposEndereco;
-import Service.ClienteService;
+import service.ClienteService;
 
 // TODO: Auto-generated Javadoc
 

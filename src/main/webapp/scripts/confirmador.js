@@ -160,18 +160,15 @@ function vincularCupomAoCliente(cupomId, clienteID){
 	});
 }
 
-function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
-	var xhr = new XMLHttpRequest();
-	xhr.open("GET", url);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === XMLHttpRequest.DONE) {
-			if (xhr.status === 200) {
-				sucessoCallback(xhr.responseText);
-			} else {
-				erroCallback();
-			}
-		}
-	};
-	xhr.send();
+async function fazerRequisicaoAjax(url, sucessoCallback, erroCallback) {
+    try {
+        const resposta = await fetch(url);
+        if (resposta.ok) {
+            sucessoCallback(await resposta.text());
+        } else {
+            throw new Error('Erro na requisição: ' + resposta.status);
+        }
+    } catch (erro) {
+        erroCallback(erro);
+    }
 }

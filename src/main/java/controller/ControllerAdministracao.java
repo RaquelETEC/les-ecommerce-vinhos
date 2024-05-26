@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Service.CupomService;
-import Service.PedidoVendaService;
 import model.entity.PedidoVenda;
 import model.entity.TiposStatusItensPedido;
+import service.CupomService;
+import service.PedidoVendaService;
 import model.entity.Cliente;
 import model.entity.Cupons;
 import model.entity.PedidoItens;

@@ -1,4 +1,4 @@
-package Service;
+package service;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,7 @@ import model.entity.CarrinhoDeCompras;
 import model.entity.CarrinhoItens;
 import model.entity.Cliente;
 import model.entity.Produtos;
+import model.entity.StatusCarrinhoItens;
 
 public class CarrinhoService {
 
@@ -22,11 +23,6 @@ public class CarrinhoService {
 		this.daoCarrinho = new DaoCarrinho();
 	}
 	
-	
-	public String adicionarCarrinho() {
-		return "eba"; 
-	}
-	
 	public CarrinhoDeCompras SelecionarCarrinho(Cliente cliente) {
 		return daoCarrinho.SelecionarCarrinho(cliente);
 	}
@@ -34,7 +30,7 @@ public class CarrinhoService {
 	public ArrayList<CarrinhoItens> listarItems(CarrinhoDeCompras carrinho) {
 		Produtos produto = new Produtos();
 		
-		itemsCarrinho = daoCarrinho.ListarCarrinho(carrinho);
+		itemsCarrinho = daoCarrinho.listarCarrinho(carrinho);
 		
 	  for (CarrinhoItens item : itemsCarrinho) {
 	        produto = daoprod.buscarProdutoPorId(item.getProduto().getId());
@@ -55,20 +51,19 @@ public class CarrinhoService {
 		}
 	}
 
-
 	public String AdicionarAoCarrinhoService(Cliente cliente, Produtos produto, int quant) {
 		CarrinhoDeCompras carrinho = daoCarrinho.SelecionarCarrinho(cliente);
 		return (String) daoCarrinho.adicionarAoCarrinho(carrinho,produto,quant);
 	}
 
-	public String removerItem(CarrinhoDeCompras carrinho, Produtos produto, String motivo, int produtoRemovido) {
-		return daoCarrinho.alterarStatusCarrinho(carrinho,produto, motivo, produtoRemovido);
+	public String alterarStatusCarrinhoItem(CarrinhoItens carrinhoItens) {
+		return daoCarrinho.alterarStatusCarrinho(carrinhoItens);
 	}
 
 	public ArrayList<CarrinhoItens> listarItensAtivos(CarrinhoDeCompras carrinho) {
 		Produtos produto = new Produtos();
 		
-		itemsCarrinho = daoCarrinho.ListarItensAtivos(carrinho);
+		itemsCarrinho = daoCarrinho.listarItensAtivos(carrinho);
 		
 	  for (CarrinhoItens item : itemsCarrinho) {
 	        produto = daoprod.buscarProdutoPorId(item.getProduto().getId());

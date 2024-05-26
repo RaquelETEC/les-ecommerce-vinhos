@@ -327,5 +327,10 @@ FOREIGN KEY (`pedido_id`) REFERENCES pedido_venda(`ven_id`)
  );
  
 
-
+CREATE TABLE `ecommerce`.`notificacoes` (
+  `id` INT NOT NULL,
+  `titulo` VARCHAR(45) NOT NULL,
+  `descricao` VARCHAR(200) NOT NULL,
+  `data` DATE NOT NULL,
+  PRIMARY KEY (`id`));
 

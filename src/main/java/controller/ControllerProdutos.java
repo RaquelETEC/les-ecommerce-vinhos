@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Service.ProdutoService;
 import model.entity.Categoria;
 import model.entity.Precificacao;
 import model.entity.Produtos;
+import service.ProdutoService;
 
 
 @WebServlet(urlPatterns = { "/paginaInical.html", "/areaAdministrador/Produtos.html", "/areaAdministrador/EditarProdutos.html"})

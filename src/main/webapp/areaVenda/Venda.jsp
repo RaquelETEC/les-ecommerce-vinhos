@@ -449,7 +449,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 				                            <div class="row">
 				                                <div class="col-md-1 d-flex align-items-center justify-content-center">
 				                                    <div class="custom-checkbox">
-				                                        <input type="checkbox" onClick="verificaCupomSelecionado('<%=cupom.getTipo()%>',<%=cupom.getId()%>,this.checked)"  id="cupomTselect<%=cupom.getId()%>" name="cupomsSelecionadoT[]" value="<%=cupom.getId()%>">
+				                                        <input type="checkbox" onClick="verificaCupomSelecionado('<%=cupom.getTipo()%>',<%=cupom.getId()%>,this.checked,<%=cupom.getValor()%>)"  id="cupomTselect<%=cupom.getId()%>" name="cupomsSelecionadoT[]" value="<%=cupom.getId()%>">
 				                                        <label for="cupomTselect<%=cupom.getId()%>"></label>
 				                                    </div>
 				                                </div>
@@ -547,7 +547,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 								<hr>
 								<hr>
 								<label class="form-label text-center" for="nome">Valor</label> 
-								<input type="number" name="valorCartao" id="valorCartao"class="form-control form-control-lg" pattern="^\d*(\.\d{0,2})?$" placeholder="0.00" required>
+								<input type="number" name="valorCartao" id="valorCartao"class="form-control form-control-lg" pattern="^\d*(\.\d{0,2})?$" placeholder="0.00" value=0 required>
 							</div>
 							<div class="modal-footer" style="display: flex;">
 								<div class="row w-100">

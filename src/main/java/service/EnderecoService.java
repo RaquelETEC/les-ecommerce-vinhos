@@ -1,4 +1,4 @@
-package Service;
+package service;
 
 import model.entity.Cliente;
 import model.entity.Endereco;

@@ -9,10 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Service.EnderecoService;
+
 import model.entity.Cliente;
 import model.entity.Endereco;
 import model.entity.TiposEndereco;
+import service.EnderecoService;
 
 // TODO: Auto-generated Javadoc
 

@@ -219,8 +219,7 @@ function listarOpcoesSelecionadas() {
         var cupomCodigo = document.getElementById(`CodCupomT${cupomId}`).innerText;
         var cupomTipo= document.getElementById(`CupomTipo${cupomId}`).innerText;
 		
-		adicionarCupomLista(cupomId, cupomCodigo, cupomDescricao, cupomValor, cupomTipo)
-		
+		adicionarCupomLista(cupomId, cupomCodigo, cupomDescricao, cupomValor, cupomTipo);
         addCupom(cupomDescricao, cupomImagem, cupomValor, cupomId,cupomCodigo,cupomTipo);
     });
     
@@ -259,40 +258,60 @@ function adicionarCupomLista(cupomId, cupomCodigo, cupomDescricao, cupomValor, c
     listaCupons.push({ id: cupomId, codigo: cupomCodigo, desc: cupomDescricao, valor: cupomValor, tipo: cupomTipo });
 }
 
-let quantTipoP = 0; 
-function verificaCupomSelecionado(tipo, cupomId, checked) {
+let subtotalDesconto = 0;
+let quantTipoP = 0;
+
+function verificaCupomSelecionado(tipo, cupomId, checked, valor) {
     debugger;
 
-    if (tipo === 'P') {
-        if (checked) {
-            // Incrementa quantTipoP apenas se a opção for marcada
-            quantTipoP += 1; 
-        } else {
-            // Decrementa quantTipoP apenas se a opção for desmarcada
-            quantTipoP -= 1; 
-        }
+    let subtotalAnterior = subtotalDesconto; // Armazena o subtotal anterior antes de fazer alterações
+
+    // Calcula o subtotal do desconto
+    if (tipo === 'P' && checked) {
+        subtotalDesconto += parseFloat(((valor * totalPedido) / 100).toFixed(2));
+        quantTipoP += 1; 
+    } else if (tipo === 'T' && checked) {
+        subtotalDesconto += parseFloat(valor);
+    } else if (tipo === 'P' && !checked) {
+        subtotalDesconto -= parseFloat(((valor * totalPedido) / 100).toFixed(2));
+        quantTipoP -= 1; 
+    } else if (tipo === 'T' && !checked) {
+        subtotalDesconto -= parseFloat(valor.toFixed(2));
     }
-    
+
+    // Verificações de alerta usando o subtotalDesconto atualizado
     if (quantTipoP >= 2) {
         alert('Você não pode selecionar mais do que 1 cupom promocional!');
         var checkboxId = "cupomTselect" + cupomId;
         document.getElementById(checkboxId).checked = false;
         quantTipoP -= 1;
+    } else if (totalSaldo <= 0 && checked) {
+        
+        alert('Você não pode adicionar mais cupons!\n O restante a ser pago já foi totalmente coberto pelos cupons adicionados.');
+        var checkboxId = "cupomTselect" + cupomId;
+        document.getElementById(checkboxId).checked = false;
+        subtotalDesconto = subtotalAnterior;
+        
+    } else if (subtotalAnterior >  (totalPedido - totalPagamento) && checked) {
+        
+        alert('Você não pode adicionar mais cupons!\n O restante a ser pago já foi totalmente coberto pelos cupons adicionados.');
+        var checkboxId = "cupomTselect" + cupomId;
+        document.getElementById(checkboxId).checked = false;
+        subtotalDesconto = subtotalAnterior;
     }
 }
-
-function calcularTotaisCupom(valor,tipo){
-    valor = parseFloat(valor.replace(/[^0-9.-]/g, ''));
-
+function calcularTotaisCupom(valor, tipo) {
+    // Remove qualquer caractere não numérico do valor e o transforma em um número com duas casas decimais
+    var valor = parseFloat(valor.replace(/[^0-9.-]/g, ''));
+    
     if (tipo === 'P') {
         // Calcula o desconto como uma porcentagem do total do pedido
-        const desconto = (valor * totalPedido )/100;
-        totalDesconto += desconto;
+        totalDesconto += parseFloat(((valor * totalPedido) / 100).toFixed(2))
     } else if (tipo === 'T') {
         // Adiciona o valor total do desconto ao totalDesconto
         totalDesconto += valor;
-    }    
-}
+    }
+ }
 
 function limparListagemCupons() {
     var cupomContainer = document.getElementById("cupomContainer");
@@ -300,30 +319,38 @@ function limparListagemCupons() {
 }
 
 function removerCupom(botao) {
-	debugger;
     // Remove o card de cupom pai do botão clicado
     var cardCupom = botao.closest('.lineCupom');
     cardCupom.remove();
-
-    // Obtém os valores dos atributos de dados do botão
+    
+    // Captura o valor removido e o ID do cupom
     var valorRemovido = parseFloat(botao.dataset.valorCupom.replace(/[^0-9.-]/g, ''));
+    var idCupom = botao.dataset.cupomId;
 
     var tipoRemovido = botao.dataset.tipoCupom;
 
-    // Subtrai o valor do desconto removido do totalDesconto
     if (tipoRemovido === 'P') {
-        totalDesconto -= (valorRemovido * totalPedido )/100;
+        // Remove o desconto percentual do totalDesconto
+        totalDesconto -= parseFloat(((valorRemovido * totalPedido) / 100).toFixed(2));
+        quantTipoP--; // Reduz a quantidade de cupons percentuais removidos
     } else if (tipoRemovido === 'T') {
+        // Remove o desconto fixo do totalDesconto
         totalDesconto -= valorRemovido;
     }
+    subtotalDesconto = totalDesconto;
 
-  	var cupomId = botao.dataset.cupomId;
-    var checkboxId = "cupomTselect" + cupomId;
+    // Desmarca a caixa de seleção associada ao cupom removido
+    var checkboxId = "cupomTselect" + idCupom;
     document.getElementById(checkboxId).checked = false;
     
-    totalDesconto = parseFloat(totalDesconto.toFixed(2));
-    calcularTotais();
+    // Remove o cupom da lista de cupons enviada para o banco de dados
+    listaCupons = listaCupons.filter(cupom => cupom.id != idCupom);
 
+    // Atualiza o valor total do desconto
+    totalDesconto = parseFloat(totalDesconto.toFixed(2));
+
+    // Recalcula os totais
+    calcularTotais();
 }
 
 function atualizaCupomIdSelecionado(idCupomTroca) {
@@ -584,6 +611,7 @@ function calcularTotais() {
 	totalPagamento = parseFloat(totalPagamento.toFixed(2));
 	totalPedido =  parseFloat(totalPedido.toFixed(2));
 	totalSaldo = parseFloat(totalSaldo.toFixed(2));
+	totalDesconto = parseFloat(totalDesconto).toFixed(2);
 	
 	//totalCupomPValor = parseFloat(totalCupomPValor.toFixed(2));
 	//totalCupomTroca = parseFloat(totalCupomTroca.toFixed(2)); // Convertendo para número e arredondando

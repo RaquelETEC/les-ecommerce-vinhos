@@ -1,12 +1,12 @@
-package Service;
+package service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import dao.DaoCupons;
 import model.entity.Cliente;
 import model.entity.Cupons;
+import model.entity.Notificacoes;
 
 public class CupomService {
 	private DaoCupons daoCupom;
@@ -31,7 +31,10 @@ public class CupomService {
             String descricao;
             String img;
             Date validade;
-
+            
+            String tituloNotificao = "";
+        	String descricaoNotificacao =""; 
+        	
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date dataAtual = new Date();
 
@@ -41,22 +44,55 @@ public class CupomService {
 				descricao = "Desconto de R$" + valorCupom + ", pelo cancelamento do pedido " + idPedido;
 				img = "trocaCupom.png";
 				validade = adicionarMeses(dataAtual, 12);         
+				
+				tituloNotificao = "PEDIDO "+idPedido+" CENCELADO ❌" ; 
+				descricaoNotificacao = "Seu cupom e desconto no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
+				
             }else if (tipoCupom.equals("T")) { 
                 codigo = "TROCA#" + idPedido;
                 descricao = "Desconto de R$" + valorCupom + " pela troca do item " + idProduto + " no pedido " + idPedido;
                 img = "trocaCupom.png";
                 validade = adicionarMeses(dataAtual, 12);
+                
+				tituloNotificao = "PEDIDO "+idPedido+" TROCADO 🔄" ; 
+				descricaoNotificacao = "Seu cupom e desconto no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
+				
           
+            }else if(tipoCupom.equals("SALDO")) {
+        	  codigo = "DESCONTO#" + idPedido;
+              descricao = "Desconto de R$" + valorCupom + " pela saldo restante do pedido" + idPedido;
+              img = "descontoSaldoCupom.png";
+              validade = adicionarMeses(dataAtual, 12);
+              
+				tituloNotificao = "CUPOM DE SALDO GERADO! 💲" ; 
+				descricaoNotificacao = "Seu cupom com o saldo restante do pedido "+idPedido +", no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
+				
             }
             else { 
                 codigo = "PROMO#"; 
                 descricao = "Cupom promocional de desconto de R$" + valorCupom;
                 img = "trocaCupom.png";
-                validade = adicionarMeses(dataAtual, 6); //validade de 6 meses
+                validade = adicionarMeses(dataAtual, 6); 
             }
 
             // Retornando o resultado
-            return ""+daoCupom.gerarCupom(codigo, descricao, img, tipoCupom, valorCupom, validade, 0);
+            String retorno = daoCupom.gerarCupom(codigo, descricao, img, tipoCupom, valorCupom, validade, 0);
+
+            if(!retorno.contains("erro")) {
+
+            	Notificacoes notificacao = new Notificacoes();
+            	
+            	notificacao.setData(dataAtual); 
+            	notificacao.setTitulo(tituloNotificao);
+            	notificacao.setDescricao(descricaoNotificacao);
+           
+            	NotificacaoService.gerarNotificacao(notificacao);
+            	
+            }
+            
+            
+            return retorno;
+        
         }
     }
 

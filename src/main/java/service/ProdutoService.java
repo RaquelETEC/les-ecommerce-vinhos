@@ -1,8 +1,8 @@
-package Service;
+package service;
 
 import java.util.ArrayList;
 
-import Dao.DAOProdutos;
+import dao.DAOProdutos;
 import model.entity.Categoria;
 import model.entity.Precificacao;
 import model.entity.Produtos;

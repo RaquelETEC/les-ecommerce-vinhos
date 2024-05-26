@@ -20,12 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Service.CarrinhoService;
-import Service.CartoesService;
-import Service.ClienteService;
-import Service.CupomService;
-import Service.EnderecoService;
-import Service.PedidoVendaService;
 import model.entity.CarrinhoDeCompras;
 import model.entity.CarrinhoItens;
 import model.entity.CartaoDeCredito;
@@ -35,12 +29,19 @@ import model.entity.Endereco;
 import model.entity.PedidoItens;
 import model.entity.PedidoVenda;
 import model.entity.Produtos;
+import model.entity.StatusCarrinhoItens;
 import model.entity.TiposEndereco;
 import model.entity.TiposStatusItensPedido;
+import service.CarrinhoService;
+import service.CartoesService;
+import service.ClienteService;
+import service.CupomService;
+import service.EnderecoService;
+import service.PedidoVendaService;
 import dto.PedidoVendaDTO;
 
 @WebServlet(urlPatterns = { "/AdicionarAoCarrinho", "/ExibirCarrinho", 
-		"/AlterarQuantCarrinho", "/RemoverProdutoCarrinho" , "/FinalizarCompra", 
+		"/AlterarQuantCarrinho", "/AlterarStatusItemCarriho" , "/FinalizarCompra", 
 		"/CadastrarPedidoVenda" , "/areaCliente/MinhasCompras.html", "/areaCliente/solicitarTroca.html"})
 public class ControllerVenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -77,8 +78,8 @@ public class ControllerVenda extends HttpServlet {
 	    }else if(action.equals("/AlterarQuantCarrinho")) {
 			AlterarQuantCarrinho(request, response);
 		}	
-	    else if(action.equals("/RemoverProdutoCarrinho")) {
-			RemoverProduto(request, response);
+	    else if(action.equals("/AlterarStatusItemCarriho")) {
+	    	alterarStatusItemCarrihoController(request, response);
 	    }
 	    else if(action.equals("/FinalizarCompra")) {
 	    	FinalizarCompraTela(request, response);
@@ -190,8 +191,8 @@ public class ControllerVenda extends HttpServlet {
         pedido.setCupons(listaCupons);
         pedido.setCartoes(listaCartoes);
         
-        String resposta = vendaService.CadastrarPedido(pedido,listaItens, listaCupons,listaCartoes );
-	    
+        String resposta = vendaService.cadastrarPedido(pedido,listaItens, listaCupons,listaCartoes );
+
 	    
     	response.setContentType("text/plain");
 	    response.setCharacterEncoding("UTF-8");
@@ -238,27 +239,13 @@ public class ControllerVenda extends HttpServlet {
         carrinho = carrinhoService.SelecionarCarrinho(cliente);
     
         ArrayList<CarrinhoItens> listaItens = carrinhoService.listarItems(carrinho);
-        
-       
-        //itens não removidos do carrinho 
         ArrayList<CarrinhoItens> lista = new ArrayList<>();
-        //itens removidos do carrinho
         ArrayList<CarrinhoItens> listaRemovidos = new ArrayList<>();
         
         for (CarrinhoItens item : listaItens) {
-            if (item.isRemovido()) {
-           //	System.out.println("-----------------------");
-           	// 	System.out.println(item.getProduto().getDesc()+" Produto removido");
-           	//	System.out.println(item.getQuantProd());
-           	//	System.out.println(item.getProduto().getPro_preco_venda());
-           	//	System.out.println(item.getProduto().getJustificativa());
-
+            if (item.getStatus().ordinal() == StatusCarrinhoItens.REMOVIDO.ordinal()) {
                 listaRemovidos.add(item);
-            } else {
-            	//	System.out.println("-----------------------");
-            	//	System.out.println(item.getProduto().getDesc()+" Produto no carrinho");
-            	//	System.out.println(item.getQuantProd());
-            	//	System.out.println(item.getProduto().getPro_preco_venda());
+            } else if(item.getStatus().ordinal() == StatusCarrinhoItens.ADICIONADO.ordinal()) {
             	lista.add(item);
             }
         }
@@ -291,34 +278,39 @@ public class ControllerVenda extends HttpServlet {
 	    response.getWriter().write(resposta); 
 	    response.getWriter().flush();
 	}
-	private void RemoverProduto(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	    System.out.println("RemoverProduto");
+	private void alterarStatusItemCarrihoController(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    System.out.println("RemoverProduto carrinho controller");
 	    
-	    // Obter parâmetros da requisição
 	    int carrinhoId = Integer.parseInt(request.getParameter("carrinhoId"));
 	    int quantidadeItem = Integer.parseInt(request.getParameter("quantidade"));
 	    int prodId = Integer.parseInt(request.getParameter("produtoId"));
-	    int itemRemovido = Integer.parseInt(request.getParameter("itemRemovido"));
+	    int statusOrdinal = Integer.parseInt(request.getParameter("idStatus"));
 	    String motivo = request.getParameter("motivo");
-
-	    // Criar objetos para o carrinho e produto
+	    
+	    StatusCarrinhoItens status = StatusCarrinhoItens.values()[statusOrdinal];
+	    
 	    CarrinhoDeCompras carrinho = new CarrinhoDeCompras();
 	    carrinho.setId(carrinhoId);
-	    carrinho.setQuantItems(quantidadeItem);
 	    
 	    Produtos produto = new Produtos();
 	    produto.setId(prodId);
+
+	    CarrinhoItens carrinhoItens = new CarrinhoItens(); 
+	    carrinhoItens.setQuantProd(quantidadeItem);
+	    carrinhoItens.setMotivoRemocao(motivo);
+	    carrinhoItens.setStatus(status);
+	    carrinhoItens.setProduto(produto);
+
+	    String resposta = carrinhoService.alterarStatusCarrinhoItem(carrinhoItens);
 	    
-	    // Chamar o serviço para remover o item do carrinho
-	    String resposta = carrinhoService.removerItem(carrinho, produto, motivo, itemRemovido);
 	    System.out.println(resposta);
 	    
-	    // Enviar resposta para o cliente
 	    response.setContentType("text/plain");
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(resposta); 
 	    response.getWriter().flush();
 	}
+	
 	private void FinalizarCompraTela(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Service.CupomService;
 import model.entity.Cliente;
 import model.entity.Cupons;
 import model.entity.PedidoVenda;
 import model.entity.TiposEndereco;
+import service.CupomService;
 
 @WebServlet(urlPatterns = { 
 		"/areaCliente/MeusCupons.html",

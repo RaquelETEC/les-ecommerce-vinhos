@@ -28,10 +28,21 @@ public class DAOPedidoVenda {
 	    ArrayList<PedidoVenda> listaDePedidos = new ArrayList<>();
 
 	    // Consulta SQL inicial sem a cláusula AND opcional
-	    String sql = "SELECT pv.ven_id, pv.vend_id_cliente, pv.ven_status, pv.ven_data, pv.ven_valor, " +
-	                 "pi.ped_item_id, pi.ped_item_prod_id, pi.ped_item_prod_desc, pi.ped_item_prod_quantidade, pi.ped_item_prod_valor, pi.ped_item_prod_valor_total, pi.ped_item_status_troca, " +
-	                 "p.pro_img, p.pro_codigo_barra " +
-	                 "FROM pedido_venda pv " +
+	    String sql = "SELECT "
+	    		+ "pv.ven_id, "
+	    		+ "pv.vend_id_cliente,"
+	    		+ "pv.ven_status, "
+	    		+ "pv.ven_data, "
+	    		+ "pv.ven_total_pedido, " 
+	    		+ "pi.ped_item_id, "
+	    		+ "pi.ped_item_prod_id, "
+	    		+ "pi.ped_item_prod_desc, "
+	    		+ "pi.ped_item_prod_quantidade, "
+	    		+ "pi.ped_item_prod_valor, "
+	    		+ "pi.ped_item_prod_valor_total, "
+	    		+ "pi.ped_item_status_troca, " 
+	    		+"p.pro_img, p.pro_codigo_barra " 
+	    		+"FROM pedido_venda pv " +
 	                 "LEFT JOIN pedido_itens pi ON pv.ven_id = pi.ped_item_ven_id " +
 	                 "LEFT JOIN produto p ON pi.ped_item_prod_id = p.pro_id " +
 	                 "WHERE 1=1";
@@ -67,9 +78,9 @@ public class DAOPedidoVenda {
 	            pedido.setCliente(new DaoCliente().buscarClientePorId(rs.getInt("vend_id_cliente")));
 	            pedido.setStatus(rs.getString("ven_status"));
 	            pedido.setData(rs.getDate("ven_data"));
-	            pedido.setTotalPagamento((rs.getDouble("ven_valor"))); 
+	            pedido.setTotalPedido(rs.getDouble("ven_total_pedido"));
 
-	            // Verificar se o pedido jÃ¡ estÃ¡ na lista
+	            // Verificar se o pedido não esta na lista
 	            PedidoVenda pedidoExistente = listaDePedidos.stream()
 	                    .filter(p -> p.getId() == idPedido)
 	                    .findFirst()
@@ -120,7 +131,7 @@ public class DAOPedidoVenda {
 	
 	
 	public PedidoVenda selecionarPedidos(PedidoVenda pedidovenda) {
-		String read2 = "select ven_valor,ven_status from pedido_venda where ven_id = ?";
+		String read2 = "select ven_total_pedido,ven_status from pedido_venda where ven_id = ?";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read2);
@@ -266,22 +277,16 @@ public class DAOPedidoVenda {
         String retorno = "";
         try (Connection con = Conexao.conectar();
              PreparedStatement pst = con.prepareStatement(update)) {
-            
         	pst.setInt(1, novoStatus.ordinal());
             pst.setInt(2, item.getId());
-
             pst.executeUpdate();
-            
             con.close();
             retorno = "sucess";
-            
-
         } catch (Exception e) {
             retorno = "error" + e;
         }
 
 		return retorno;
-	 	}
-
+	 }
 
 }

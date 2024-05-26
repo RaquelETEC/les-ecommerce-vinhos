@@ -69,14 +69,14 @@ function incrementarQuantidade(idItem, i) {
         window.location.href = url;
     }
 
-function alterarStatusItem(carrinhoId, produtoId, quantidade, motivo , itemRemovido) {
+function alterarStatusItem(carrinhoId, produtoId, quantidade, motivo , idstatuts) {
 	debugger
-    var url = "/les-ecommerce-vinhos/RemoverProdutoCarrinho?"
+    var url = "/les-ecommerce-vinhos/AlterarStatusItemCarriho?"
     + "carrinhoId=" + carrinhoId 
     + "&produtoId=" + produtoId 
     + "&quantidade="+ quantidade
     + "&motivo=" + motivo
-    + "&itemRemovido="+itemRemovido;
+    + "&idStatus="+idstatuts;
     
     fazerRequisicaoAjax(url, function(resposta) {
         alert(resposta);

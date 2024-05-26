@@ -5,7 +5,7 @@ public class CarrinhoItens {
 	private CarrinhoDeCompras carrinho;
 	private Produtos produto;
 	private int quantProd;
-	private boolean removido;
+	private StatusCarrinhoItens status;
 	private String motivoRemocao;
 
 	public CarrinhoItens() {
@@ -13,14 +13,14 @@ public class CarrinhoItens {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CarrinhoItens(int id, CarrinhoDeCompras carrinho, Produtos produto, int quantProd, boolean removido,
+	public CarrinhoItens(int id, CarrinhoDeCompras carrinho, Produtos produto, int quantProd, StatusCarrinhoItens status,
 			String motivoRemocao) {
 		super();
 		this.id = id;
 		this.carrinho = carrinho;
 		this.produto = produto;
 		this.quantProd = quantProd;
-		this.removido = removido;
+		this.status = status;
 		this.motivoRemocao = motivoRemocao;
 	}
 
@@ -56,12 +56,12 @@ public class CarrinhoItens {
 		this.quantProd = quantProd;
 	}
 
-	public boolean isRemovido() {
-		return removido;
+	public StatusCarrinhoItens getStatus() {
+		return status;
 	}
 
-	public void setRemovido(boolean removido) {
-		this.removido = removido;
+	public void setStatus(StatusCarrinhoItens status) {
+		this.status = status;
 	}
 
 	public String getMotivoRemocao() {
