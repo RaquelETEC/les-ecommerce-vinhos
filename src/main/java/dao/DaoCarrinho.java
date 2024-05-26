@@ -162,7 +162,8 @@ public class DaoCarrinho {
 	                + "car_itens_prod_quant = ?, "      
 	                + "car_itens_motivo = ? " 
 	                + "WHERE car_itens_car_id = ? "
-	                + "and car_itens_prod_id = ? ";
+	                + "and car_itens_prod_id = ? "
+	                +"and car_itens_id = ? ";
 	    try {
 	        Connection con = Conexao.conectar();
 	        PreparedStatement pst = con.prepareStatement(read);
@@ -172,6 +173,8 @@ public class DaoCarrinho {
 	        pst.setString(3, carrinhoItens.getMotivoRemocao());
 	        pst.setInt(4, carrinhoItens.getCarrinho().getId());
 	        pst.setInt(5, carrinhoItens.getProduto().getId());
+	        pst.setInt(6, carrinhoItens.getId());
+
 
 	        pst.executeUpdate();
 	        con.close();

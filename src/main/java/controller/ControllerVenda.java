@@ -286,6 +286,7 @@ public class ControllerVenda extends HttpServlet {
 	    int prodId = Integer.parseInt(request.getParameter("produtoId"));
 	    int statusOrdinal = Integer.parseInt(request.getParameter("idStatus"));
 	    String motivo = request.getParameter("motivo");
+	    int itemCarrinhoId = Integer.parseInt(request.getParameter("itemCarrinhoId"));
 	    
 	    StatusCarrinhoItens status = StatusCarrinhoItens.values()[statusOrdinal];
 	    
@@ -296,10 +297,12 @@ public class ControllerVenda extends HttpServlet {
 	    produto.setId(prodId);
 
 	    CarrinhoItens carrinhoItens = new CarrinhoItens(); 
+	    carrinhoItens.setId(itemCarrinhoId);
 	    carrinhoItens.setQuantProd(quantidadeItem);
 	    carrinhoItens.setMotivoRemocao(motivo);
 	    carrinhoItens.setStatus(status);
 	    carrinhoItens.setProduto(produto);
+	    carrinhoItens.setCarrinho(carrinho);
 
 	    String resposta = carrinhoService.alterarStatusCarrinhoItem(carrinhoItens);
 	    

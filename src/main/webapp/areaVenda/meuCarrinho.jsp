@@ -75,7 +75,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 												<!-- Botão Remover -->
 												<div class="d-grid">
 													<button class="btn btn-sm btn-outline-danger"
-														onclick="alterarStatusItem(<%=itens.get(i).getCarrinho().getId()%>, <%=itens.get(i).getProduto().getId()%>, <%=itens.get(i).getQuantProd()%>,'Removido pelo usuario',1)">Remover</button>
+														onclick="alterarStatusItem(<%=itens.get(i).getCarrinho().getId()%>, <%=itens.get(i).getProduto().getId()%>, <%=itens.get(i).getQuantProd()%>,'Removido pelo usuario',1,'<%=itens.get(i).getId()%>')">Remover</button>
 												</div>
 											</div>
 										</div>
@@ -147,12 +147,13 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 												<div
 													class="d-flex justify-content-between align-items-center mb-3 ">
 													<span id="quantity1" class="quantity"><%=itensRemovidos.get(i).getMotivoRemocao()%></span>
+													<%=itensRemovidos.get(i).getId() %>
 												</div>
 											</div>
 											<!-- Botão Remover -->
 											<div class="d-grid">
 												<button class="btn btn-sm btn-outline-primary"
-													onclick="alterarStatusItem(<%=itensRemovidos.get(i).getCarrinho().getId()%>, <%=itensRemovidos.get(i).getProduto().getId()%>, <%=itensRemovidos.get(i).getQuantProd()%>,' ',0)">
+													onclick="alterarStatusItem(<%=itensRemovidos.get(i).getCarrinho().getId()%>, <%=itensRemovidos.get(i).getProduto().getId()%>, <%=itensRemovidos.get(i).getQuantProd()%>,' ',0,'<%=itensRemovidos.get(i).getId() %>')">
 													Voltar ao Carrinho
 												</button>
 													
