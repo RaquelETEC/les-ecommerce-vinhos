@@ -180,7 +180,8 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 								<div class="col-md-7">Formas de Pagamento</div>
 								<div class="col-md-5 text-end ">
 									<button type="button" 
-									class="btn btn-success" 
+									class="btn btn-success"
+									id="SelecionarPagamento" 
 									onClick="verificarEnderecoPagamento()">
 									Selecionar Pagamento
 									</button>
@@ -324,7 +325,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							<div class="modal-header">
 								<h5 class="modal-title" id="modalSelecaoEnderecoLabel">Seleção
 									de Endereço</h5>
-								<button type="button" class="close" data-dismiss="modal"
+								<button  id="fechar" type="button" class="close" data-dismiss="modal"
 									aria-label="Fechar">
 									<span aria-hidden="true">&times;</span>
 								</button>
