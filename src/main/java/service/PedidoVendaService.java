@@ -15,19 +15,23 @@ import model.entity.StatusCarrinhoItens;
 import model.entity.TiposStatusItensPedido;
 import service.CarrinhoService;
 import service.CupomService;
-
+import dao.TrocaDAO;
 import java.util.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 public class PedidoVendaService {
 	
-	private DAOPedidoVenda daoPedidoVenda;
+    private DAOPedidoVenda daoPedidoVenda;
+    private TrocaDAO trocaDAO;
+	
 	Cliente cliente = new Cliente();
 	CupomService cupomService = new CupomService();
-	
-	public PedidoVendaService() {
-		this.daoPedidoVenda = new DAOPedidoVenda();
-	}
+    public PedidoVendaService() {
+    	
+        this.daoPedidoVenda = new DAOPedidoVenda();
+        this.trocaDAO = new TrocaDAO();
+    }
 	
 	public ArrayList<PedidoVenda> listarPedidoVenda(Cliente cliente, String status, int statusItem) {
 	    return daoPedidoVenda.ListarPedidos(cliente,status,statusItem);
@@ -82,6 +86,8 @@ public class PedidoVendaService {
                 totalDesconto += cupom.getValor();
             }
         }
+        // Arredonde o totalDesconto para duas casas decimais
+        totalDesconto = Math.round(totalDesconto * 100.0) / 100.0;
 
         // Calcular o total dos valores dos cartões
         double totalCartoes = listaCartoes.stream().mapToDouble(CartaoDeCredito::getValor).sum();
@@ -113,22 +119,34 @@ public class PedidoVendaService {
 		return resposta;
 	}
 
-	public String trocaService(PedidoVenda pedido, List<PedidoItens> itensSelecionados,TiposStatusItensPedido novoStatus) {
-		System.out.println("service trocas");
-		String resposta = ""; 
+	public String trocaService(PedidoVenda pedido, List<PedidoItens> itensSelecionados, TiposStatusItensPedido statusItem) {
+	    System.out.println("Service trocas");
+	    String resposta = "";
+
 	    for (PedidoItens item : itensSelecionados) {
 	        try {
-	            resposta += daoPedidoVenda.editarStatusItem(item, novoStatus);
-	        } catch (NumberFormatException e) {
-	            resposta = "" + e;
+	            // Verifica se o status é TROCA_SOLICITADA
+	            if (statusItem == TiposStatusItensPedido.TROCA_SOLICITADA) {
+	                // Se sim, chama o método de solicitar troca do DAO
+	                resposta += trocaDAO.solicitarTroca(item, item.getQuantidadeSolicitadaTroca(), statusItem);
+	            } else {
+	                // Se não, chama o método de alterar status do DAO
+	                resposta += trocaDAO.alterarStatusTroca(item, statusItem);
+	            }
+		    	    // Após processar todos os itens, atualiza o pedido
+		    	    resposta += this.editarPedido(pedido);
+	        } catch (Exception e) {
+	            // Trata qualquer exceção que possa ocorrer
+	            resposta += "Error: " + e.getMessage();
 	        }
 	    }
-	    
-	    if (!resposta.contains("error")){
-		    resposta += this.editarPedido(pedido); 
-	    }
-	    
-		return resposta;
+
+	    return resposta;
+	}
+
+	public ArrayList<PedidoVenda> listarPedidoTroca(Cliente cliente2, String string, int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

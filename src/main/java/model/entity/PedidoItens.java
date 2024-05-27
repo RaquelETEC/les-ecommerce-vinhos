@@ -10,7 +10,8 @@ public class PedidoItens {
 	private Double preco; 
 	private Double totalProduto; 
 	private TiposStatusItensPedido tipos;
-	
+	private int quantidadeTrocada; 
+	private int quantidadeSolicitadaTroca; 
 	public PedidoItens() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -92,6 +93,24 @@ public class PedidoItens {
 	public void setTipos(TiposStatusItensPedido tipos) {
 		this.tipos = tipos;
 	}
+
+	public int getQuantidadeTrocada() {
+		return quantidadeTrocada;
+	}
+
+	public void setQuantidadeTrocada(int quantidadeTrocada) {
+		this.quantidadeTrocada = quantidadeTrocada;
+	}
+
+	public int getQuantidadeSolicitadaTroca() {
+		return quantidadeSolicitadaTroca;
+	}
+
+	public void setQuantidadeSolicitadaTroca(int quantidadeSolicitadaTroca) {
+		this.quantidadeSolicitadaTroca = quantidadeSolicitadaTroca;
+	}
+
+
 	
 	
 }

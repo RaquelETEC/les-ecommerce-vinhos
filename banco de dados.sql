@@ -297,7 +297,7 @@ create table pedido_venda(
 );
 
 
-create table itens_venda(
+create table pedido_itens(
 `ped_item_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `ped_item_prod_id` int not null, 
 `ped_item_ven_id` int not null, 
@@ -305,6 +305,8 @@ create table itens_venda(
 `ped_item_prod_valor` Double not null, 
 `ped_item_prod_valor_total` Double not null, 
 `ped_item_prod_quantidade` int not null, 
+`ped_item_status_troca` int not null, 
+`ped_item_quant_troca` int , 
 FOREIGN KEY (`ped_item_prod_id`) REFERENCES produto(`pro_id`),
 FOREIGN KEY (`ped_item_ven_id`) REFERENCES pedido_venda(`ven_id`)
 );

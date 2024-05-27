@@ -96,35 +96,7 @@ public class ControllerVenda extends HttpServlet {
 		}
 	}
 
-	private void editarStatusTrocas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    System.out.println("Controller solicitar troca");
-	    PedidoVenda pedido = new PedidoVenda();
-
-	    pedido.setId(Integer.parseInt(request.getParameter("pedido")));
-	    pedido.setStatus(request.getParameter("novoStatusPedido"));
-	    String[] itensSelecionados = request.getParameterValues("itens");
-	    
-        List<PedidoItens> listaItems = Arrays.stream(itensSelecionados)
-                .map(id -> {
-                    try {
-                        int itemId = Integer.parseInt(id);
-                        return new PedidoItens(itemId, pedido, id, null, itemId, null, null, null);
-                    } catch (NumberFormatException e) {
-                        return null; // Ou throw new RuntimeException("Erro ao converter ID para inteiro: " + id);
-                    }
-                })
-                .filter(item -> item != null) 
-                .collect(Collectors.toList()); 
-                	    
-	    
-	    TiposStatusItensPedido tipoSolicitacao = TiposStatusItensPedido.valueOf(request.getParameter("tipoSolicitacao"));
-
-	    String resposta = vendaService.trocaService(pedido,listaItems,tipoSolicitacao);
-	    
-	    response.setContentType("text/plain");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(resposta);
-	}
+	
 
 	private void MinhasComprasPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -364,6 +336,45 @@ public class ControllerVenda extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/areaVenda/Venda.jsp");
 		rd.forward(request, response);
 		
+	}
+	private void editarStatusTrocas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    System.out.println("Controller solicitar troca");
+	    PedidoVenda pedido = new PedidoVenda();
+
+	    pedido.setId(Integer.parseInt(request.getParameter("pedido")));
+	    pedido.setStatus(request.getParameter("novoStatusPedido"));
+	    String itensSelecionadosStr = request.getParameter("itens");
+	    String quantidadesSelecionadasStr = request.getParameter("quantidades");
+	    String quantidadesTrocadasStr = request.getParameter("quantidadesTrocadas"); // Adicionado
+
+	    // Dividir os itens selecionados e as quantidades selecionadas em arrays
+	    String[] itensSelecionados = itensSelecionadosStr.split(",");
+	    String[] quantidadesSelecionadas = quantidadesSelecionadasStr.split(",");
+	    String[] quantidadesTrocadas = quantidadesTrocadasStr.split(","); // Adicionado
+
+	    List<PedidoItens> listaItems = new ArrayList<>();
+
+	    // Processar cada item selecionado
+	    for (int i = 0; i < itensSelecionados.length; i++) {
+	        int id = Integer.parseInt(itensSelecionados[i].trim());
+	        int quantidade = Integer.parseInt(quantidadesSelecionadas[i].trim());
+	        int quantidadeTrocada = Integer.parseInt(quantidadesTrocadas[i].trim()); // Adicionado
+	        
+	        // Criar o PedidoItens com as quantidades
+	        PedidoItens item = new PedidoItens();
+	        item.setId(id);
+	        item.setQuantidadeSolicitadaTroca(quantidade); // Define a quantidade do item original
+	        item.setQuantidadeTrocada(quantidadeTrocada); // Define a quantidade trocada
+	        listaItems.add(item);
+	    }
+
+	    TiposStatusItensPedido tipoSolicitacao = TiposStatusItensPedido.valueOf(request.getParameter("tipoSolicitacao"));
+
+	    String resposta = vendaService.trocaService(pedido, listaItems, tipoSolicitacao);
+
+	    response.setContentType("text/plain");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(resposta);
 	}
 
 }

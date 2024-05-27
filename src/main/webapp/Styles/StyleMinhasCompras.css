@@ -400,5 +400,7 @@ header {
     color:#ee4d2d;
     font-size: 25px;
 }
-
+.total-produto {
+    padding-right: 0 !important;
+}
 

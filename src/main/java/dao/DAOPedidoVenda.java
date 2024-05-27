@@ -41,10 +41,13 @@ public class DAOPedidoVenda {
 	    		+ "pi.ped_item_prod_valor, "
 	    		+ "pi.ped_item_prod_valor_total, "
 	    		+ "pi.ped_item_status_troca, " 
-	    		+"p.pro_img, p.pro_codigo_barra " 
+	    		+ "pi.ped_item_quant_troca, " 
+	    		+ "p.pro_img, p.pro_codigo_barra, "
+	    		+ "t.quantidade_solicitada "
 	    		+"FROM pedido_venda pv " +
 	                 "LEFT JOIN pedido_itens pi ON pv.ven_id = pi.ped_item_ven_id " +
 	                 "LEFT JOIN produto p ON pi.ped_item_prod_id = p.pro_id " +
+	                 "LEFT JOIN trocas t on t.item_id = pi.ped_item_id "+
 	                 "WHERE 1=1";
 
 	    if (statusPedido != null && !statusPedido.isEmpty()) {
@@ -102,6 +105,8 @@ public class DAOPedidoVenda {
 	                item.setPreco((rs.getDouble("ped_item_prod_valor")));  
 	                item.setTotalProduto(rs.getDouble("ped_item_prod_valor_total"));
 	                item.setTipos(TiposStatusItensPedido.values()[rs.getInt("ped_item_status_troca")]);
+	                item.setQuantidadeTrocada(rs.getInt("ped_item_quant_troca"));
+	                item.setQuantidadeSolicitadaTroca(rs.getInt("quantidade_solicitada"));
 	                
 	                produto.setId(rs.getInt("ped_item_prod_id"));
 	                produto.setImg(rs.getString("pro_img"));
@@ -270,23 +275,5 @@ public class DAOPedidoVenda {
 	    pstm.setInt(2, cartao.getId());
 	    pstm.setDouble(3, cartao.getValor());
 	}
-
-
-	 public String editarStatusItem(PedidoItens item, TiposStatusItensPedido novoStatus) {
-        String update = "UPDATE pedido_itens SET ped_item_status_troca = ? WHERE ped_item_id = ?";
-        String retorno = "";
-        try (Connection con = Conexao.conectar();
-             PreparedStatement pst = con.prepareStatement(update)) {
-        	pst.setInt(1, novoStatus.ordinal());
-            pst.setInt(2, item.getId());
-            pst.executeUpdate();
-            con.close();
-            retorno = "sucess";
-        } catch (Exception e) {
-            retorno = "error" + e;
-        }
-
-		return retorno;
-	 }
 
 }

@@ -105,7 +105,7 @@ public class ControllerAdministracao extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("trocas");
 		
-		ArrayList<PedidoVenda> listaTrocas = pedidoService.listarPedidoVenda(new Cliente(), "EM TROCA", 1);
+		ArrayList<PedidoVenda> listaTrocas = pedidoService.listarPedidoTroca(new Cliente(), "EM TROCA", 1);
 				
 		request.setAttribute("listaPedidos", listaTrocas);
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/TrocaPedidos.jsp");

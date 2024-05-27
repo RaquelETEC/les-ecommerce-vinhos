@@ -6,10 +6,17 @@
 <%@ page import="model.entity.TiposStatusItensPedido "%>
 <%@ page import="model.entity.PedidoItens"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.google.gson.GsonBuilder" %>
+
 <%
 Cliente cliente = (Cliente) request.getAttribute("cliente");
 @SuppressWarnings("unchecked")
 ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttribute("listaPedidos");
+%>
+<%
+Gson gson = new GsonBuilder().create();
+String pedidosJson = gson.toJson(listaPedidos);
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,6 +28,9 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 <link rel="icon" href="../imagens/favicon.png">
 <link rel="stylesheet" href="../Styles/StyleMinhasCompras.css">
 <script src="../scripts/minhasCompras.js" defer></script>
+<script>
+  var pedidos = <%= pedidosJson %>;
+</script>
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
@@ -179,17 +189,13 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 							<%
 							if (pedido.getStatus().equals("ENTREGUE")) {
 							%>
-							<div class="text-end me-2">
-								Todos <input type="checkbox" id="selecionarTodos"
-									onChange="handleChecketAll(event,<%=pedido.getId()%>)">
-							</div>
 							<!-- Inicio dos itens -->
 							<%
 							}
 							if (pedido.getPedidoItens() != null) {
 							for (PedidoItens item : pedido.getPedidoItens()) {
 							%>
-							<div class="row mt-3">
+							<div class="row mt-3 " Style="padding-right: 0 !important;">
 								<div class="col-md-1">
 									<div class="image-container">
 										<img
@@ -198,72 +204,56 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 											alt="Imagem do Produto">
 									</div>
 								</div>
-								<div class="col-md-8 col-sm-12">
-									<div class="card-body">
-										<h6 class="card-title">
-											<%=item.getDescricao()%>
-										</h6>
-										<div class="card-options">
-											<div class="card-text">
-												<p>
-													<%=item.getQuantidade()%>
-													x R$<%=item.getPreco()%>
+								<div class="col-md-11 row" Style="padding-right: 0 !important;"">
+									<div class="col-md-8 col-sm-12">
+										<div class="card-body">
+											<h6 class="card-title">
+												<%=item.getDescricao()%>
+											</h6>
+											<div class="card-options">
+												<div class="card-text">
+													<p>
+														<%=item.getQuantidade()%>
+														x R$<%=item.getPreco()%>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-12 text-end" Style="padding-right: 0 !important;">
+										<div
+											class="d-flex align-items-center justify-content-end bd-highlight">
+											<div class="p-2 bd-highlight ">
+												<p class="card-text text-end fs-5">
+													R$
+													<%=item.getTotalProduto()%>
 												</p>
 											</div>
 										</div>
 									</div>
-								</div>
-
-								<div class="col-md-3 col-sm-12 text-end">
-									<div
-										class="d-flex align-items-center justify-content-end bd-highlight">
-										<div class="p-2 bd-highlight">
-											<p class="card-text text-end fs-5">
-												R$
-												<%=item.getTotalProduto()%>
-											</p>
-										</div>
-										<div class="p-2 bd-highlight">
+									<div class="col-md-12 col-sm-12 text-end">
+										<div>
 											<%
-											if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA") && item.getTipos().ordinal() == 0) {
-											%>
-											<div class="check_items">
-												<input type="checkbox" class="item-troca"
-													data-pedido="<%=pedido.getId()%>"
-													data-item="<%=item.getId()%>">
-											</div>
-											<%
-											} else {
-											%>
-											<div class="check_items">
-												<input type="checkbox" class="item-troca" disabled>
-											</div>
-											<%
+											TiposStatusItensPedido status = item.getTipos();
+											switch (status) {
+											case TROCA_NAO_SOLICITADA:
+												break;
+											case TROCA_SOLICITADA:
+												out.println("Troca solicitada para "+item.getQuantidadeTrocada() + " itens");
+												break;
+											case TROCA_NAO_ACEITA:
+												out.println("Troca não aceita");
+												break;
+											case ENVIADO_PARA_TROCA:
+												out.println("Enviado para troca");
+												break;
+											case TROCADO:
+												out.println("Trocado");
+												break;
 											}
 											%>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-12 col-sm-12 text-end">
-									<%
-									TiposStatusItensPedido status = item.getTipos();
-									switch (status) {
-									case TROCA_NAO_SOLICITADA:
-										break;
-									case TROCA_SOLICITADA:
-										out.println("Troca solicitada");
-										break;
-									case TROCA_NAO_ACEITA:
-										out.println("Troca não aceita");
-										break;
-									case ENVIADO_PARA_TROCA:
-										out.println("Enviado para troca");
-										break;
-									case TROCADO:
-										out.println("Trocado");
-										break;
-									}
-									%>
 								</div>
 							</div>
 							<div class="col-md-12 col-sm-12 text-end">
@@ -296,9 +286,8 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 									<%
 									if (pedido.getStatus().equals("ENTREGUE") || pedido.getStatus().contains("TROCA")) {
 									%>
-									<button class="btn btn-dark mt-2 "
-										onclick="solicitarTroca(<%=pedido.getId()%>,'EM TROCA')">Solicitar
-										Troca</button>
+									<button class="btn btn-dark mt-2" onclick="abrirModalTroca(<%=pedido.getId()%>)">Solicitar Troca</button>
+
 									<button class="btn btn-dark mt-2"
 										onclick="cancelarPedido(<%=pedido.getId()%>)">Cancelar</button>
 									<%
@@ -316,6 +305,27 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 			</div>
 		</div>
 	</main>
+	
+	<!-- Modal -->
+<div class="modal fade" id="trocaModal" tabindex="-1" aria-labelledby="trocaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="trocaModalLabel">Solicitar Troca</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="trocaForm">
+          <!-- Itens do pedido para troca serão inseridos aqui dinamicamente -->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button id="enviarTrocaBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="enviarTroca()">Enviar Troca</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

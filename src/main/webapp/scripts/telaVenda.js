@@ -653,7 +653,7 @@ function validarPedido(idCliente) {
 function cadastrarPedidoVenda(idCliente) {
     debugger;
     totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
-	var idEndereco = document.getElementById('idEndereco').textContent;
+	var idEndereco = parseFloat(document.getElementById('idEndereco').textContent.replace(/[^0-9.-]/g, ''));
 
     var dados = {
         idCliente: idCliente,

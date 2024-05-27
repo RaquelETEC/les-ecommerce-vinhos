@@ -111,11 +111,11 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 						<thead>
 							<tr>
 								<th>Pedido</th>
-								<th>Nome</th>
+								<th>Cliente</th>
 								<th>Data</th>
 								<th></th>
 								<th>Produto</th>
-								<th>Quant.</th>
+								<th>Solicitada</th>
 								<th>Total</th>
 								<th>Status</th>
 								<th>Opções</th>
@@ -139,7 +139,7 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 						            alt="Imagem do Produto">
 					            </td>
 					            <td><%= item.getDescricao() %></td>
-					            <td>x<%= item.getQuantidade() %></td>
+					            <td><%= item.getQuantidadeSolicitadaTroca() %></td>
 					            <td>R$<%= item.getTotalProduto() %></td>		
 					            <td>
 						            <% TiposStatusItensPedido status = item.getTipos();
