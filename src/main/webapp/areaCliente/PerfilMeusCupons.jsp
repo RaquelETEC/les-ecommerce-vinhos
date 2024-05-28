@@ -3,7 +3,8 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="model.entity.Cupons"%>
 <%@ page import="model.entity.Cliente"%>
-
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="java.util.ArrayList"%>
 <%
 @SuppressWarnings("unchecked")
@@ -122,32 +123,32 @@ ArrayList<Cupons> lista = (ArrayList<Cupons>) request.getAttribute("listaCupons"
 					<!-- conteudo que voce pode trocar, no caso eh o conteudo da parte branca, lado direito maior -->
 					<%
 					for (int i = 0; i < lista.size(); i++) {
+						Date validade = lista.get(i).getValidade();
+					    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					    String validadeFormatada = sdf.format(validade);
 					%>
-					<div class="card mt-3"
-						style="background-color: #F0F0F0; width: 50rem;">
+					<div class="card mt-3" style="background-color: #F0F0F0; ">
 						<div class="card-body">
 							<div class="row">
 								<!-- Parte esquerda com a imagem do cupom -->
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<img src="../imagens/assets/<%=lista.get(i).getImg()%>"
-										alt="Imagem do Cupom" class="img-fluid">
+										alt="Imagem do Cupom" class="img-fluid"  style="width: 50%; display: block;">
 								</div>
 								<!-- Parte direita com o nome do cupom e a data de vencimento -->
-								<div class="col-md-9">
-									<h5 class="card-title"><%=lista.get(i).getDesc()%></h5>
-									<h5 class="card-title">
-										Valor do Cupom:
-										<%=lista.get(i).getValor()%></h5>
+								<div class="col-md-10">
+									<h6 class="card-title"><%=lista.get(i).getDesc()%></h6>
 									<p class="card-text">
-										Data de vencimento:
-										<%=lista.get(i).getValidade()%></p>
+										Vencimento: <%= validadeFormatada %>
+									</p>
 								</div>
 							</div>
 						</div>
+					</div>
+						
 						<%
 						}
 						%>
-					</div>
 
 
 					<!-- Adicione mais cards conforme necessário -->

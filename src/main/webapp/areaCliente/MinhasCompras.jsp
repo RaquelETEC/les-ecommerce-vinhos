@@ -239,7 +239,7 @@ String pedidosJson = gson.toJson(listaPedidos);
 											case TROCA_NAO_SOLICITADA:
 												break;
 											case TROCA_SOLICITADA:
-												out.println("Troca solicitada para "+item.getQuantidadeTrocada() + " itens");
+												out.println("Troca solicitada para "+item.getTroca().getQuantidadeSolicitada() + " itens");
 												break;
 											case TROCA_NAO_ACEITA:
 												out.println("Troca não aceita");
@@ -261,7 +261,7 @@ String pedidosJson = gson.toJson(listaPedidos);
 								if (status == TiposStatusItensPedido.TROCA_ACEITA) {
 								%>
 								<button class="btn btn-outline-secondary mt-2"
-									onclick="enviarItems(<%=item.getId()%>, <%=pedido.getId()%>, 'EM TROCA', 'ENVIADO_PARA_TROCA')">Enviar
+									onclick="enviarItems(<%=item.getId()%>,<%=item.getTroca().getId() %>, 0,0, <%=pedido.getId()%>, 'EM TROCA', 'ENVIADO_PARA_TROCA')">Enviar
 									item para troca</button>
 								<%
 								}

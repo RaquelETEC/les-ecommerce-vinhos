@@ -139,10 +139,10 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 						            alt="Imagem do Produto">
 					            </td>
 					            <td><%= item.getDescricao() %></td>
-					            <td><%= item.getQuantidadeSolicitadaTroca() %></td>
+					            <td><%= item.getTroca().getQuantidadeSolicitada() %></td>
 					            <td>R$<%= item.getTotalProduto() %></td>		
 					            <td>
-						            <% TiposStatusItensPedido status = item.getTipos();
+						            <% TiposStatusItensPedido status = item.getTroca().getStatus();
 										switch (status) {
 							            case TROCA_NAO_SOLICITADA:
 							                break;
@@ -153,7 +153,7 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 							                out.println("Troca aceita");
 							                break;
 							            case TROCA_NAO_ACEITA:
-							                out.println("Troca aceita");
+							                out.println("Troca não aceita");
 							                break;
 							            case ENVIADO_PARA_TROCA:
 							                out.println("Enviado para troca");
@@ -168,16 +168,17 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
 					            <td>
 						    		 <div class="option-button">
 								    <% if (status == TiposStatusItensPedido.TROCA_SOLICITADA) { %>
-								        <button type="button" class="btn btn-secondary" onClick="confirmarTroca(<%= item.getId() %>, <%= pedido.getId() %>, 'EM TROCA', 'TROCA_ACEITA')">Aceitar</button>
-								        <button type="button" class="btn btn-secondary" onClick="confirmarTroca(<%= item.getId() %>, <%= pedido.getId() %>, 'EM TROCA', 'TROCA_NAO_ACEITA')">Recusar</button>
+								        <button type="button" class="btn btn-secondary" onClick="confirmarTroca(<%= item.getId() %>, <%= item.getTroca().getId() %> , <%= item.getTroca().getQuantidadeSolicitada() %>,<%= item.getQuantidadeTrocada() %>, <%= pedido.getId() %>, 'EM TROCA', 'TROCA_ACEITA')">Aceitar</button>
+								        <button type="button" class="btn btn-secondary" onClick="confirmarTroca(<%= item.getId() %>, <%= item.getTroca().getId() %> , <%= 0 %>,<%= item.getQuantidadeTrocada() %>, <%= pedido.getId() %>, 'EM TROCA', 'TROCA_NAO_ACEITA')">Recusar</button>
 								    <% } else if (status == TiposStatusItensPedido.ENVIADO_PARA_TROCA) { %>
 										<button type="button" class="btn btn-secondary" id="confirmarRecebimentoBtn" 
 										    data-item-id="<%= item.getId() %>" 
+										    data-item-troca-id="<%= item.getTroca().getId() %>" 
 										    data-prod-id="<%= item.getProduto().getId() %>"
 										    data-prod-valor="<%= item.getTotalProduto() %>"
 										    data-pedido-id="<%= pedido.getId() %>"
 										    data-cliente-id="<%= pedido.getCliente().getId() %>"
-										    data-quant-item="<%= item.getQuantidade() %>"
+										    data-quant-item="<%= item.getTroca().getQuantidadeSolicitada() %>"
 										    data-novo-status="TROCADO"
 										    data-novo-status-item="TROCADO"
 										    data-bs-toggle="modal" 

@@ -82,11 +82,11 @@ public class CupomService {
 
             	Notificacoes notificacao = new Notificacoes();
             	
-            	notificacao.setData(dataAtual); 
-            	notificacao.setTitulo(tituloNotificao);
-            	notificacao.setDescricao(descricaoNotificacao);
+            	//notificacao.setData(dataAtual); 
+            	//notificacao.setTitulo(tituloNotificao);
+            	//notificacao.setDescricao(descricaoNotificacao);
            
-            	NotificacaoService.gerarNotificacao(notificacao);
+            	//NotificacaoService.gerarNotificacao(notificacao);
             	
             }
             

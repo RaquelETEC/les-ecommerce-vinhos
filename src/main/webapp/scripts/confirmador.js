@@ -29,6 +29,7 @@ function confirmarExcluirEndereco(idEnd, id) {
 
 
 function confirmarPedido(idPedido, i, ValorCupom, idCliente) {
+	debugger;
     const Status = document.getElementById('statusPedido' + i).value;
     let url = "";
 
@@ -69,8 +70,9 @@ function confirmarPedido(idPedido, i, ValorCupom, idCliente) {
         });
     }
 }
-
+/*
 function confirmarTroca (idItem ="",pedidoId="",novoStatus="",novoStatusItem=""){
+	debugger;
 	const itens = [idItem];
 
 	var dados = `&itens=${itens.join(',')}&pedido=${pedidoId}&novoStatusPedido=${novoStatus}&tipoSolicitacao=${novoStatusItem}`;
@@ -88,14 +90,35 @@ function confirmarTroca (idItem ="",pedidoId="",novoStatus="",novoStatusItem="")
 		alert("Erro ao cadastrar pedido JS");
 	});
 }
-	
+	*/
+function confirmarTroca(idItem ="", idTroca="", quantItem ="", quantTocada ="", pedidoId="",novoStatus="",novoStatusItem="") {
+ debugger;
+  // Extrair os IDs e quantidades dos itens de troca
+  const itensSelecionados = [idItem];
+  const quantidades = [quantItem];
+  const quantidadesTrocadas = [quantTocada]; 
+
+  const url = `/les-ecommerce-vinhos/areaCliente/solicitarTroca.html?idTroca=${idTroca}&pedido=${pedidoId}&novoStatusPedido=${novoStatus}&tipoSolicitacao=${novoStatusItem}&itens=${itensSelecionados.join(',')}&quantidades=${quantidades.join(',')}&quantidadesTrocadas=${quantidadesTrocadas.join(',')}`; // Adicionado
+
+  fazerRequisicaoAjax(url, function(resposta) {
+    if (resposta.includes("error")) {
+      alert("Erro ao gerenciar Troca");
+    } else {
+      alert("Status alterado com sucesso");
+      window.location.href = window.location;
+    }
+  }, function() {
+    alert("Erro ao gerenciar troca JS");
+  });
+}	
 	
 // Variáveis para armazenar os dados do botão "Confirmar Recebimento"
-let itemId, pedidoId, prodId, total, quantidadeItem, novoStatus, novoStatusItem, clienteId;
+let itemId,trocaId, pedidoId, prodId, total, quantidadeItem, novoStatus, novoStatusItem, clienteId;
 
 // Função para capturar os dados do botão "Confirmar Recebimento"
 function capturarDadosConfirmarRecebimento(btn) {
     itemId = btn.getAttribute('data-item-id');
+    trocaId= btn.getAttribute('data-item-troca-id');
     prodId = btn.getAttribute('data-prod-id');
 	total = btn.getAttribute('data-prod-valor');
     pedidoId = btn.getAttribute('data-pedido-id');
@@ -107,12 +130,14 @@ function capturarDadosConfirmarRecebimento(btn) {
 }
 
 function processarConfirmacao(confirmacao) {
-	confirmarTroca (itemId,pedidoId,novoStatus,novoStatusItem)
-   	gerarCupomTroca(pedidoId,prodId,total,clienteId);
+	debugger;
+	let  confirmart = confirmarTroca (itemId,trocaId,quantidadeItem,0, pedidoId, novoStatus,novoStatusItem)
+   	let  confirmarC =  gerarCupomTroca(pedidoId,prodId,total,clienteId);
    	
     if (confirmacao)
+    alert("Estoque movimentado!")
 	//movimentarEstoque(prodId, pedidoId, quant);
-
+	
 
     itemId = null;
     pedidoId = null;
@@ -126,6 +151,7 @@ function movimentarEstoque(itemId, pedidoId, quant){
 }
 	
 async function gerarCupomTroca(pedidoId, prodId,total,clienteId)	{
+	debugger;
 	var dados = `&pedido=${pedidoId}&prodId=${prodId}&valorCupom=${total}&tipoCupom=T`;
    
 	var url = "http://localhost:8080/les-ecommerce-vinhos/gerarCupom.html?" + dados;
@@ -138,12 +164,13 @@ async function gerarCupomTroca(pedidoId, prodId,total,clienteId)	{
 			
 		}
 	}, function() {
-		alert("Erro ao cadastrar pedido JS");
+		alert("Erro ao gerar cupom de troca");
 	});
 }
 	
 	
 function vincularCupomAoCliente(cupomId, clienteID){
+	debugger;
 	var dados = `&cupomId=${cupomId}&clienteId=${clienteID}`;
    
 	var url = "http://localhost:8080/les-ecommerce-vinhos/VincularCupomAoCliente.html?" + dados;
@@ -155,8 +182,8 @@ function vincularCupomAoCliente(cupomId, clienteID){
 		else {
 			alert("Cupom vinculado ao cliente com sucesso!");
 		}
-	}, function() {
-		alert("Erro ao cadastrar pedido JS");
+	}, function(e) {
+		alert("Erro ao vincular cupom com cliente"+e);
 	});
 }
 

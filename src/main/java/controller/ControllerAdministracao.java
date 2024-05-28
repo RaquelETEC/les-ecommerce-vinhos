@@ -22,6 +22,7 @@ import model.entity.PedidoItens;
 		"/areaAdministrador/PedidoVenda.html",
 		"/areaAdministrador/EditarPedido",
 		"/areaAdministrador/TrocaPedidos.html",
+		"/areaAdministrador/AlterarStatusTroca.html",
 		"/areaAdministrador/alterarStatusItemPedido.html", 
 		})
 public class ControllerAdministracao extends HttpServlet {
@@ -105,7 +106,7 @@ public class ControllerAdministracao extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("trocas");
 		
-		ArrayList<PedidoVenda> listaTrocas = pedidoService.listarPedidoTroca(new Cliente(), "EM TROCA", 1);
+		ArrayList<PedidoVenda> listaTrocas = pedidoService.listarItensTroca();
 				
 		request.setAttribute("listaPedidos", listaTrocas);
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/TrocaPedidos.jsp");

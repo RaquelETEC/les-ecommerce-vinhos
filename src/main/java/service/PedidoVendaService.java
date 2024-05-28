@@ -65,6 +65,7 @@ public class PedidoVendaService {
 	        } else {
 	            carrinho = carrinhoService.SelecionarCarrinho(cliente);
 	            
+	            carrinhoItens.setId(item.getId());
 	            carrinhoItens.setCarrinho(carrinho);
 	            carrinhoItens.setMotivoRemocao("Comprado");
 	            carrinhoItens.setProduto(item.getProduto());
@@ -102,15 +103,11 @@ public class PedidoVendaService {
        
 		String resposta = daoPedidoVenda.CadastrarPedidoDao(pedido,itens, listaCupons, listaCartoes); 
 		
-		// Verifica se a resposta contém o idPedido
 		if (resposta != null && resposta.contains("idPedido=")) {
-		    // Encontra a posição do início do idPedido na resposta
 		    int indexIdPedido = resposta.indexOf("idPedido=");
 
-		    // Extrai o idPedido da resposta
 		    int idPedido = Integer.parseInt(resposta.substring(indexIdPedido + 9)); // O 9 representa o comprimento de "idPedido="
 
-		    // Chama a função GerarCupom passando apenas o idPedido
 		    if (saldo < 0) {
 		        //cupomService.GerarCupom("SALDO", saldo, idPedido, 0);
 		    }
@@ -124,19 +121,21 @@ public class PedidoVendaService {
 	    String resposta = "";
 
 	    for (PedidoItens item : itensSelecionados) {
+	    	
+	    	int quantEmTroca = trocaDAO.checkOtherTrocas(item.getId());
+	    	
+	    	if (quantEmTroca > 1 && statusItem == TiposStatusItensPedido.TROCADO)
+            	pedido.setStatus("EM TROCA");
+	    	
 	        try {
-	            // Verifica se o status é TROCA_SOLICITADA
 	            if (statusItem == TiposStatusItensPedido.TROCA_SOLICITADA) {
-	                // Se sim, chama o método de solicitar troca do DAO
 	                resposta += trocaDAO.solicitarTroca(item, item.getQuantidadeSolicitadaTroca(), statusItem);
-	            } else {
-	                // Se não, chama o método de alterar status do DAO
+	            }  
+	            else {
 	                resposta += trocaDAO.alterarStatusTroca(item, statusItem);
 	            }
-		    	    // Após processar todos os itens, atualiza o pedido
 		    	    resposta += this.editarPedido(pedido);
 	        } catch (Exception e) {
-	            // Trata qualquer exceção que possa ocorrer
 	            resposta += "Error: " + e.getMessage();
 	        }
 	    }
@@ -144,9 +143,9 @@ public class PedidoVendaService {
 	    return resposta;
 	}
 
-	public ArrayList<PedidoVenda> listarPedidoTroca(Cliente cliente2, String string, int i) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<PedidoVenda> listarItensTroca() {
+	    return trocaDAO.ListarItensTroca();
+
 	}
 
 

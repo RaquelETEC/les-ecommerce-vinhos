@@ -12,13 +12,15 @@ public class PedidoItens {
 	private TiposStatusItensPedido tipos;
 	private int quantidadeTrocada; 
 	private int quantidadeSolicitadaTroca; 
+	private Troca troca;
+	
 	public PedidoItens() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public PedidoItens(int id, PedidoVenda pedidoVenda, String descricao,Produtos produto, int quantidade, Double preco,
-			Double totalProduto, TiposStatusItensPedido tipos) {
+	public PedidoItens(int id, PedidoVenda pedidoVenda, Produtos produto, String descricao, int quantidade,
+			Double preco, Double totalProduto, TiposStatusItensPedido tipos, int quantidadeTrocada,
+			int quantidadeSolicitadaTroca, Troca troca) {
 		super();
 		this.id = id;
 		this.pedidoVenda = pedidoVenda;
@@ -28,6 +30,9 @@ public class PedidoItens {
 		this.preco = preco;
 		this.totalProduto = totalProduto;
 		this.tipos = tipos;
+		this.quantidadeTrocada = quantidadeTrocada;
+		this.quantidadeSolicitadaTroca = quantidadeSolicitadaTroca;
+		this.troca = troca;
 	}
 
 	public int getId() {
@@ -38,20 +43,20 @@ public class PedidoItens {
 		this.id = id;
 	}
 
-	public Produtos getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produtos produto) {
-		this.produto = produto;
-	}
-	
 	public PedidoVenda getPedidoVenda() {
 		return pedidoVenda;
 	}
 
 	public void setPedidoVenda(PedidoVenda pedidoVenda) {
 		this.pedidoVenda = pedidoVenda;
+	}
+
+	public Produtos getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produtos produto) {
+		this.produto = produto;
 	}
 
 	public String getDescricao() {
@@ -108,6 +113,14 @@ public class PedidoItens {
 
 	public void setQuantidadeSolicitadaTroca(int quantidadeSolicitadaTroca) {
 		this.quantidadeSolicitadaTroca = quantidadeSolicitadaTroca;
+	}
+
+	public Troca getTroca() {
+		return troca;
+	}
+
+	public void setTroca(Troca troca) {
+		this.troca = troca;
 	}
 
 

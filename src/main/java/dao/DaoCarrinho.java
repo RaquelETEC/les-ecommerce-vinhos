@@ -204,6 +204,7 @@ public class DaoCarrinho {
 	    try {
 	        Connection con = Conexao.conectar();
 	        PreparedStatement pst = con.prepareStatement(read);
+	        
 	        pst.setInt(1, carrinho.getId());
 	        ResultSet rs = pst.executeQuery();
 

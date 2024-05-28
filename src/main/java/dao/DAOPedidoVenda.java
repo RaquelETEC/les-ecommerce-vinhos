@@ -20,6 +20,7 @@ import model.entity.PedidoItens;
 import model.entity.PedidoVenda;
 import model.entity.Produtos;
 import model.entity.TiposStatusItensPedido;
+import model.entity.Troca;
 
 
 public class DAOPedidoVenda {
@@ -29,26 +30,24 @@ public class DAOPedidoVenda {
 
 	    // Consulta SQL inicial sem a cláusula AND opcional
 	    String sql = "SELECT "
-	    		+ "pv.ven_id, "
-	    		+ "pv.vend_id_cliente,"
-	    		+ "pv.ven_status, "
-	    		+ "pv.ven_data, "
-	    		+ "pv.ven_total_pedido, " 
-	    		+ "pi.ped_item_id, "
-	    		+ "pi.ped_item_prod_id, "
-	    		+ "pi.ped_item_prod_desc, "
-	    		+ "pi.ped_item_prod_quantidade, "
-	    		+ "pi.ped_item_prod_valor, "
-	    		+ "pi.ped_item_prod_valor_total, "
-	    		+ "pi.ped_item_status_troca, " 
-	    		+ "pi.ped_item_quant_troca, " 
-	    		+ "p.pro_img, p.pro_codigo_barra, "
-	    		+ "t.quantidade_solicitada "
-	    		+"FROM pedido_venda pv " +
-	                 "LEFT JOIN pedido_itens pi ON pv.ven_id = pi.ped_item_ven_id " +
-	                 "LEFT JOIN produto p ON pi.ped_item_prod_id = p.pro_id " +
-	                 "LEFT JOIN trocas t on t.item_id = pi.ped_item_id "+
-	                 "WHERE 1=1";
+	            + "pv.ven_id, "
+	            + "pv.vend_id_cliente, "
+	            + "pv.ven_status, "
+	            + "pv.ven_data, "
+	            + "pv.ven_total_pedido, "
+	            + "pi.ped_item_id, "
+	            + "pi.ped_item_prod_id, "
+	            + "pi.ped_item_prod_desc, "
+	            + "pi.ped_item_prod_quantidade, "
+	            + "pi.ped_item_prod_valor, "
+	            + "pi.ped_item_prod_valor_total, "
+	            + "pi.ped_item_status_troca, "
+	            + "pi.ped_item_quant_troca, "
+	            + "p.pro_img, p.pro_codigo_barra "
+	            + "FROM pedido_venda pv "
+	            + "LEFT JOIN pedido_itens pi ON pv.ven_id = pi.ped_item_ven_id "
+	            + "LEFT JOIN produto p ON pi.ped_item_prod_id = p.pro_id "
+	            + "WHERE 1=1";
 
 	    if (statusPedido != null && !statusPedido.isEmpty()) {
 	        sql += " AND pv.ven_status = ? ";
@@ -56,21 +55,19 @@ public class DAOPedidoVenda {
 	    if (statusItem > 0) {
 	        sql += " AND pi.ped_item_status_troca <> 0 ";
 	    }
-	    if (cliente != null && cliente.getId() != 0) { 
+	    if (cliente != null && cliente.getId() != 0) {
 	        sql += " AND pv.vend_id_cliente = ? ";
 	    }
 	    try {
-	    	Connection con = Conexao.conectar();
-
+	        Connection con = Conexao.conectar();
 	        PreparedStatement pstmt = con.prepareStatement(sql);
 
 	        int paramIndex = 1;
-
 	        if (statusPedido != null && !statusPedido.isEmpty()) {
-	        	pstmt.setString(paramIndex++, statusPedido);
+	            pstmt.setString(paramIndex++, statusPedido);
 	        }
 	        if (cliente != null && cliente.getId() > 0) {
-	        	pstmt.setInt(paramIndex++, cliente.getId());
+	            pstmt.setInt(paramIndex++, cliente.getId());
 	        }
 	        ResultSet rs = pstmt.executeQuery();
 
@@ -83,50 +80,68 @@ public class DAOPedidoVenda {
 	            pedido.setData(rs.getDate("ven_data"));
 	            pedido.setTotalPedido(rs.getDouble("ven_total_pedido"));
 
-	            // Verificar se o pedido não esta na lista
+	            // Verificar se o pedido não está na lista
 	            PedidoVenda pedidoExistente = listaDePedidos.stream()
 	                    .filter(p -> p.getId() == idPedido)
 	                    .findFirst()
 	                    .orElse(null);
 
 	            if (pedidoExistente == null) {
-	                // Se o pedido ainda nÃ£o foi adicionado Ã&nbsp; lista, adicione-o
+	                // Se o pedido ainda não foi adicionado à lista, adicione-o
 	                listaDePedidos.add(pedido);
 	            }
 
-	            // Adicionar o item do pedido, se houver, Ã&nbsp; lista de itens do pedido
+	            // Adicionar o item do pedido, se houver, à lista de itens do pedido
 	            if (rs.getInt("ped_item_prod_id") != 0) {
-	            	Produtos produto = new Produtos(); 
-	            	
+	                // Consulta SQL para obter a troca mais recente para este item
+	                String sqlTrocas = "SELECT troca_id, item_id, quantidade_solicitada, status "
+	                        + "FROM trocas WHERE item_id = ? ORDER BY troca_id DESC LIMIT 1";
+	                PreparedStatement pstmtTrocas = con.prepareStatement(sqlTrocas);
+	                pstmtTrocas.setInt(1, rs.getInt("pi.ped_item_id"));
+	                ResultSet rsTrocas = pstmtTrocas.executeQuery();
+	                
+	                Troca troca = null;
+	                if (rsTrocas.next()) {
+	                    troca = new Troca();
+	                    troca.setId(rsTrocas.getInt("troca_id"));
+	                    troca.setItemId(rsTrocas.getInt("item_id"));
+	                    troca.setQuantidadeSolicitada(rsTrocas.getInt("quantidade_solicitada"));
+	                    troca.setStatus(TiposStatusItensPedido.values()[rsTrocas.getInt("status")]);
+	                }
+
+	                rsTrocas.close();
+	                pstmtTrocas.close();
+
+	                Produtos produto = new Produtos();
 	                PedidoItens item = new PedidoItens();
 	                item.setId(rs.getInt("pi.ped_item_id"));
 	                item.setDescricao(rs.getString("ped_item_prod_desc"));
 	                item.setQuantidade(rs.getInt("ped_item_prod_quantidade"));
-	                item.setPreco((rs.getDouble("ped_item_prod_valor")));  
+	                item.setPreco(rs.getDouble("ped_item_prod_valor"));
 	                item.setTotalProduto(rs.getDouble("ped_item_prod_valor_total"));
 	                item.setTipos(TiposStatusItensPedido.values()[rs.getInt("ped_item_status_troca")]);
 	                item.setQuantidadeTrocada(rs.getInt("ped_item_quant_troca"));
-	                item.setQuantidadeSolicitadaTroca(rs.getInt("quantidade_solicitada"));
-	                
+
 	                produto.setId(rs.getInt("ped_item_prod_id"));
 	                produto.setImg(rs.getString("pro_img"));
 	                produto.setCodigo_barra(rs.getString("p.pro_codigo_barra"));
+
 	                item.setProduto(produto);
-	                
-	                
+	                item.setTroca(troca);
+
 	                if (pedidoExistente == null) {
-	                    // Se o pedido nÃ£o existir na lista, associe o item ao novo pedido
+	                    // Se o pedido não existir na lista, associe o item ao novo pedido
 	                    pedido.getPedidoItens().add(item);
 	                } else {
-	                    // Se o pedido jÃ¡ existir na lista, associe o item ao pedido existente
+	                    // Se o pedido já existir na lista, associe o item ao pedido existente
 	                    pedidoExistente.getPedidoItens().add(item);
 	                }
 	            }
 	        }
-        rs.close();
-	    pstmt.close();
-	    con.close();
-		   
+
+	        rs.close();
+	        pstmt.close();
+	        con.close();
 	    } catch (SQLException e) {
 	        System.out.println("Erro ao listar pedidos: " + e);
 	    }
@@ -275,5 +290,7 @@ public class DAOPedidoVenda {
 	    pstm.setInt(2, cartao.getId());
 	    pstm.setDouble(3, cartao.getValor());
 	}
+
+
 
 }

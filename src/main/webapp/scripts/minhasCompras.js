@@ -41,23 +41,27 @@ function cancelarPedido(idPedido) {
 }
 
  //da para transformar em uma so função
- function enviarItems(idItem ="",pedidoId="",novoStatus="",novoStatusItem=""){
+ function enviarItems(idItem ="",idTroca = "", quantItem="",quantTocada="", pedidoId="",novoStatus="",novoStatusItem=""){
 	debugger;
-	const itens = [idItem];
-	var dados = `&itens=${itens.join(',')}&pedido=${pedidoId}&novoStatusPedido=${novoStatus}&tipoSolicitacao=${novoStatusItem}`;
-	var url = "/les-ecommerce-vinhos/areaCliente/solicitarTroca.html?" + dados;
-	fazerRequisicaoAjax(url, function(resposta) {
-		if (resposta.includes("erro")) {
-			alert(resposta);
-		}
-		else {
-			alert("Status alterado com sucesso");
-			window.location.href = window.location;
-		}
-	}, function() {
-		alert("Erro ao cadastrar pedido JS");
-	});
- }
+ // Extrair os IDs e quantidades dos itens de troca
+  const itensSelecionados = [idItem];
+  const quantidades = [quantItem];
+  const quantidadesTrocadas = [quantTocada]; 
+
+  // Construir a URL com os IDs e quantidades dos itens
+  const url = `/les-ecommerce-vinhos/areaCliente/solicitarTroca.html?idTroca=${idTroca}&pedido=${pedidoId}&novoStatusPedido=${novoStatus}&tipoSolicitacao=${novoStatusItem}&itens=${itensSelecionados.join(',')}&quantidades=${quantidades.join(',')}&quantidadesTrocadas=${quantidadesTrocadas.join(',')}`; // Adicionado
+
+  fazerRequisicaoAjax(url, function(resposta) {
+    if (resposta.includes("error")) {
+      alert("Erro ao enviar items para Troca" + resposta);
+    } else {
+      alert("Item enviado ");
+      window.location.href = window.location;
+    }
+  }, function() {
+    alert("Erro ao enviar items para Troca");
+  });
+}
  
  
 function handleChecketAll(event, pedidoId) {
@@ -191,7 +195,7 @@ function solicitarTroca(pedidoId, novoStatusPedido, trocaItems) {
   const quantidadesTrocadas = trocaItems.map(item => item.quantidadeTrocada); // Adicionado
 
   // Construir a URL com os IDs e quantidades dos itens
-  const url = `/les-ecommerce-vinhos/areaCliente/solicitarTroca.html?pedido=${pedidoId}&novoStatusPedido=${encodeURIComponent(novoStatusPedido)}&tipoSolicitacao=TROCA_SOLICITADA&itens=${itensSelecionados.join(',')}&quantidades=${quantidades.join(',')}&quantidadesTrocadas=${quantidadesTrocadas.join(',')}`; // Adicionado
+  const url = `/les-ecommerce-vinhos/areaCliente/solicitarTroca.html?idTroca=0&pedido=${pedidoId}&novoStatusPedido=${encodeURIComponent(novoStatusPedido)}&tipoSolicitacao=TROCA_SOLICITADA&itens=${itensSelecionados.join(',')}&quantidades=${quantidades.join(',')}&quantidadesTrocadas=${quantidadesTrocadas.join(',')}`; // Adicionado
 
   fazerRequisicaoAjax(url, function(resposta) {
     if (resposta.includes("error")) {
@@ -204,3 +208,4 @@ function solicitarTroca(pedidoId, novoStatusPedido, trocaItems) {
     alert("Erro ao gerenciar troca JS");
   });
 }
+

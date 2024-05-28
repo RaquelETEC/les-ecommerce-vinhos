@@ -32,6 +32,7 @@ import model.entity.Produtos;
 import model.entity.StatusCarrinhoItens;
 import model.entity.TiposEndereco;
 import model.entity.TiposStatusItensPedido;
+import model.entity.Troca;
 import service.CarrinhoService;
 import service.CartoesService;
 import service.ClienteService;
@@ -340,13 +341,16 @@ public class ControllerVenda extends HttpServlet {
 	private void editarStatusTrocas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    System.out.println("Controller solicitar troca");
 	    PedidoVenda pedido = new PedidoVenda();
-
+	    Troca troca = new Troca(); 
+	    
 	    pedido.setId(Integer.parseInt(request.getParameter("pedido")));
 	    pedido.setStatus(request.getParameter("novoStatusPedido"));
 	    String itensSelecionadosStr = request.getParameter("itens");
 	    String quantidadesSelecionadasStr = request.getParameter("quantidades");
 	    String quantidadesTrocadasStr = request.getParameter("quantidadesTrocadas"); // Adicionado
-
+	    troca.setId(Integer.parseInt(request.getParameter("idTroca")));
+	    
+	    
 	    // Dividir os itens selecionados e as quantidades selecionadas em arrays
 	    String[] itensSelecionados = itensSelecionadosStr.split(",");
 	    String[] quantidadesSelecionadas = quantidadesSelecionadasStr.split(",");
@@ -354,6 +358,7 @@ public class ControllerVenda extends HttpServlet {
 
 	    List<PedidoItens> listaItems = new ArrayList<>();
 
+	    
 	    // Processar cada item selecionado
 	    for (int i = 0; i < itensSelecionados.length; i++) {
 	        int id = Integer.parseInt(itensSelecionados[i].trim());
@@ -365,6 +370,7 @@ public class ControllerVenda extends HttpServlet {
 	        item.setId(id);
 	        item.setQuantidadeSolicitadaTroca(quantidade); // Define a quantidade do item original
 	        item.setQuantidadeTrocada(quantidadeTrocada); // Define a quantidade trocada
+	        item.setTroca(troca);
 	        listaItems.add(item);
 	    }
 
