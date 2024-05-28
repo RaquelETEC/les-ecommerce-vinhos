@@ -164,7 +164,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							<div class="div-adicionar">
 								<div class="col-md-8">Cupom de desconto</div>
 								<div class="col-md-4 text-end ">
-									<button id="SelecionarCupons" type="button"
+									<button id="btn-selecionar-cupom" type="button"
 									    class="btn btn-success"
 										onClick="verificarEnderecoAntesDeAbrirModal()">
 										Selecionar Cupons
