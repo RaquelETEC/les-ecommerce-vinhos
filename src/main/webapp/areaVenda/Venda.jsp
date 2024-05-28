@@ -179,7 +179,9 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							<div class="div-adicionar">
 								<div class="col-md-7">Formas de Pagamento</div>
 								<div class="col-md-5 text-end ">
-									<button type="button" 
+									<button 
+									id="btn-selecionar-cartao"
+									type="button" 
 									class="btn btn-success" 
 									onClick="verificarEnderecoPagamento()">
 									Selecionar Pagamento
@@ -240,7 +242,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
     </div>
 </div>
 				<br>
-				<button id="FinalizarCompra"class="btn btn-success" onClick="validarPedido(<%=request.getParameter("idCliente")%>)">Finalizar Compra</button>
+				<button id="btn-finalizar-venda"class="btn btn-success" onClick="validarPedido(<%=request.getParameter("idCliente")%>)">Finalizar Compra</button>
 
 				<!-- ------------------------------------- Fim da tela  ---------------------------------- -->
 				<!-- Sessão de modals -->
@@ -308,7 +310,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 		
 								</div>
 								<div class="modal-footer">
-									<button id="SalvarEndereco" type="button" class="btn btn-primary"
+									<button id="btn-salvar-endereco" type="button" class="btn btn-primary"
 										data-dismiss="modal" data-toggle="modal" 
 										onclick="salvarEndereco()">Salvar</button>
 								</div>
@@ -415,11 +417,12 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 							</div>
 							<div class="modal-footer">
 							<button class="btn btn-primary btn-lg btn-block"
-									id="BotaoCadastrar" type="button" 
+									id="BotaoVoltarEnd" type="button" 
 									data-toggle="modal" data-target="#modalSelecaoEndereco" data-dismiss="modal">Voltar</button>
 									
 								<button class="btn btn-primary btn-lg btn-block"
 									id="BotaoCadastrar" type="button" 
+									data-toggle="modal" data-dismiss="modal"
 									onClick="AdicionarNovoEndereco(<%=request.getParameter("idCliente")%>)">Cadastrar</button>
 							</div>
 						</div>
@@ -547,7 +550,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 								<hr>
 								<hr>
 								<label class="form-label text-center" for="nome">Valor</label> 
-								<input type="number" name="valorCartao" id="valorCartao"class="form-control form-control-lg" pattern="^\d*(\.\d{0,2})?$" placeholder="0.00" value=0 required>
+								<input type="number" name="valorCartao" id="valorCartao"class="form-control form-control-lg" pattern="^\d*(\.\d{0,2})?$" placeholder="0.00"  required>
 							</div>
 							<div class="modal-footer" style="display: flex;">
 								<div class="row w-100">
@@ -560,7 +563,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
        								</button>
         							</div>
 									<div class="col-6 text-end">
-										<button onClick="addCartaoCard()" type="button" class="btn btn-primary">Salvar</button>
+										<button id="btn-salvar-cartao" onClick="addCartaoCard()" type="button" class="btn btn-primary">Salvar</button>
 									</div>
 								</div>
 							</div>
@@ -576,7 +579,7 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="modalSelecaoCartaoLabel">Cadastrar cartão de Crédito</h5>
-								<button type="button" 
+								<button  id="fechar"  type="button" 
 									class="close" 
 									data-dismiss="modal"
 									aria-label="Fechar">

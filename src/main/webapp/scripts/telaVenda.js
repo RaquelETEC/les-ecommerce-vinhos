@@ -131,6 +131,8 @@ function AdicionarNovoEndereco(id) {
 
 }
 
+
+
 function calcularFrete(cidade) {
     // Converte a cidade para minúsculas para facilitar a comparação
     cidade = cidade.toUpperCase();
