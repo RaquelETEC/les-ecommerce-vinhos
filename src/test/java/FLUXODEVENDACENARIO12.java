@@ -83,7 +83,8 @@ public class FLUXODEVENDACENARIO12 {
         driver.findElement(By.id("typeCep")).sendKeys("08559410");
         driver.findElement(By.id("typePais")).sendKeys("Brasil");
         driver.findElement(By.id("observacoes")).sendKeys("nenhuma");        
-        driver.findElement(By.id("BotaoCadastrar")).click();
+		driver.findElement(By.id("BotaoCadastrar")).click();
+
 
         try {
             Thread.sleep(1000);

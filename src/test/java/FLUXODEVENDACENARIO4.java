@@ -8,36 +8,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class FLUXODEVENDACENARIO4 {
 	private WebDriver driver;
-	private Map<String, Object> vars;
-	JavascriptExecutor js;
-
-	@Before
-	public void setUp() {
-		String driverPath = "src/main/resources/drivers/msedgedriver.exe";
-
-		System.setProperty("webdriver.edge.driver", driverPath);
-		driver = new EdgeDriver();
-		driver.manage().window().maximize();
-		vars = new HashMap<>();
-		js = (JavascriptExecutor) driver;
-	}
-
-	@After
-	public void tearDown() {
-		driver.quit();
-	}
 
 	@Test
 	public void fLUXODEVENDA() {
+		// Configura o caminho do driver do Chrome
+		System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
+
+		// Inicializa o WebDriver
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+		// Navega até a página desejada
 		driver.get("http://localhost:8080/les-ecommerce-vinhos/paginaInical.html");
-		driver.manage().window().setSize(new Dimension(1936, 1056));
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -50,7 +42,7 @@ public class FLUXODEVENDACENARIO4 {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.switchTo().alert().accept();		
+		driver.switchTo().alert().accept();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -115,7 +107,7 @@ public class FLUXODEVENDACENARIO4 {
 		driver.findElement(By.id("typePais")).sendKeys("Brasil");
 		driver.findElement(By.id("observacoes")).click();
 		driver.findElement(By.id("observacoes")).sendKeys("nenhuma");
-		driver.findElement(By.xpath("(//button[@id=\'BotaoCadastrar\'])[2]")).click();
+		driver.findElement(By.id("BotaoCadastrar")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -127,76 +119,33 @@ public class FLUXODEVENDACENARIO4 {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("modalCadastroEndereco")).click();
+
+		driver.findElement(By.id("btn-selecionar-cupom")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	    driver.findElement(By.cssSelector("#fechar > span")).click();
+
+		
+	    driver.findElement(By.id("cupomTselect2")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("SelecionarCupons")).click();
+	    driver.findElement(By.id("cupomTselect6")).click();
+	    driver.findElement(By.id("cupomTselect7")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.id("cupomTselect6")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.id("SalvarCupom")).click();
-		driver.findElement(By.id("SelecionarCupons")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector(".card:nth-child(3) .custom-checkbox")).click();
-		driver.findElement(By.id("cupomTselect2")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.id("SalvarCupom")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.id("SelecionarCupons")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.id("cupomTselect7")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector(".card:nth-child(12) .col-md-1")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.cssSelector(".card:nth-child(12) #cupomTselect7")).click();
-		driver.findElement(By.id("SalvarCupom")).click();
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		driver.findElement(By.id("SelecionarPagamento")).click();
+	    driver.findElement(By.cssSelector(".card:nth-child(9) #cupomTselect4")).click();
+	    driver.findElement(By.id("SalvarCupom")).click();
+			
+		
+		driver.findElement(By.id("btn-selecionar-cartao")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -209,23 +158,29 @@ public class FLUXODEVENDACENARIO4 {
 			e.printStackTrace();
 		}
 		driver.findElement(By.id("valorCartao")).click();
-		driver.findElement(By.id("valorCartao")).sendKeys("6");
+		driver.findElement(By.id("valorCartao")).sendKeys("8");
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		driver.findElement(By.cssSelector(".col-6 > .btn-primary")).click();
+        driver.findElement(By.id("btn-salvar-cartao")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		 driver.findElement(By.id("FinalizarCompra")).click();
-	}	
-	
 
+		// Finaliza a compra
+		driver.findElement(By.id("btn-finalizar-venda")).click();
 
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// Fecha o navegador
+		driver.quit();
+	}
 
 }
