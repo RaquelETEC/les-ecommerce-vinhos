@@ -25,15 +25,16 @@ public class SalesDataDao {
 	        try {
 	        	 con = Conexao.conectar();
 	        	 
-	        	String query = "SELECT "
-	        			+ "DATE_FORMAT(p.ven_data, '%Y-%m') AS month_year, "
-	        			+ "SUM(pi.ped_item_prod_quantidade) AS volume "
-	        			+ "FROM pedido_venda p "
-	        			+ "JOIN pedido_itens pi ON pi.ped_item_ven_id = p.ven_id "
-	        			+ "WHERE pi.ped_item_prod_id = ? "
-	        			+ "AND p.ven_data BETWEEN ? AND ? "
-	        			+ "GROUP BY DATE_FORMAT(p.ven_data, '%Y-%m') "
-	        			+ "ORDER BY DATE_FORMAT(p.ven_data, '%Y-%m') ";
+	        	 String query = "SELECT "
+	        		        + "DATE_FORMAT(p.ven_data, '%Y-%m') AS month_year, "
+	        		        + "pi.ped_item_prod_desc AS productName, "
+	        		        + "SUM(pi.ped_item_prod_quantidade) AS volume "
+	        		        + "FROM pedido_venda p "
+	        		        + "JOIN pedido_itens pi ON pi.ped_item_ven_id = p.ven_id "
+	        		        + "WHERE pi.ped_item_prod_id = ? "
+	        		        + "AND p.ven_data BETWEEN ? AND ? "
+	        		        + "GROUP BY 1,2 "
+	        		        + "ORDER BY DATE_FORMAT(p.ven_data, '%Y-%m') ";
 	        	
 	            PreparedStatement statement = con.prepareStatement(query);
 	            statement.setString(1, productId);
@@ -43,8 +44,9 @@ public class SalesDataDao {
 	            while (resultSet.next()) {
 	                String monthYear = resultSet.getString("month_year");
 	                int volume = resultSet.getInt("volume");
+	                String productName = resultSet.getString("productName");
 	                
-	                SalesData data = new SalesData(monthYear, volume);
+	                SalesData data = new SalesData(monthYear, volume, productName);
 	                salesDataList.add(data);
 	            }
 	            con.close();

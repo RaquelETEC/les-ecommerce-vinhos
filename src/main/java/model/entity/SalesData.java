@@ -5,7 +5,7 @@ import java.sql.Date;
 public class SalesData {
 	 private String  date;
      private int volume;
-     
+     private String productName;
      
 	public SalesData() {
 		super();
@@ -13,10 +13,11 @@ public class SalesData {
 	}
 
 
-	public SalesData(String date, int volume) {
+	public SalesData(String date, int volume , String productName) {
 		super();
 		this.date = date;
 		this.volume = volume;
+		this.productName = productName;
 	}
 
 
@@ -37,6 +38,16 @@ public class SalesData {
 
 	public void setVolume(int volume) {
 		this.volume = volume;
+	}
+
+
+	public String getProductName() {
+		return productName;
+	}
+
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	
