@@ -182,6 +182,7 @@ public class DAOPedidoVenda {
 			pst.setString(1, pedidovenda.getStatus());
 			pst.setInt(2, pedidovenda.getId());
 			pst.executeUpdate();
+			pst.close();
 			con.close();
 			
 			System.err.println("Atualizado o pedido no dao!!" + pedidovenda.getId());
@@ -255,7 +256,7 @@ public class DAOPedidoVenda {
 	        }
 
 	        con.commit();
-
+	        con.close();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        return "Erro ao cadastrar pedido: " + e.getMessage();

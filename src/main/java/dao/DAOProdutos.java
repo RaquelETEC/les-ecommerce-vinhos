@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.entity.Categoria;
 import model.entity.Precificacao;
@@ -170,5 +171,22 @@ public class DAOProdutos {
 
 		return produto;
 	}
+	
+    public List<Produtos> fetchAllProducts() {
+        List<Produtos> listProdutos = new ArrayList<>();
+        String query = "SELECT pro_id, pro_desc FROM produto";
 
+		try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Produtos produto = new Produtos();
+                produto.setId(rs.getInt("pro_id"));
+                produto.setDesc(rs.getString("pro_desc"));
+                listProdutos.add(produto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listProdutos;
+    }
 }

@@ -21,11 +21,11 @@ public class CupomService {
 
 	public String GerarCupom(String tipoCupom, Double valorCupom, int idPedido, int idProduto) {
         if (tipoCupom == null || tipoCupom.isEmpty()) {
-            return "TIPO CUPOM É OBRIGATÓRIO!";
+            return "ERRO: TIPO CUPOM É OBRIGATÓRIO!";
         } else if (valorCupom == null || valorCupom <= 0) {
-            return "VALOR DO CUPOM É OBRIGATÓRIO!";
+            return "ERRO: VALOR DO CUPOM É OBRIGATÓRIO!";
         } else if (tipoCupom.equals("T") && (idPedido == 0 )) {
-            return "PARA CUPONS DE TROCA É OBRIGATÓRIO O ID DO PEDIDO";
+            return "ERRO: PARA CUPONS DE TROCA É OBRIGATÓRIO O ID DO PEDIDO";
         } else {
             String codigo;
             String descricao;
@@ -64,9 +64,9 @@ public class CupomService {
               img = "descontoSaldoCupom.png";
               validade = adicionarMeses(dataAtual, 12);
               
-				tituloNotificao = "CUPOM DE SALDO GERADO! 💲" ; 
-				descricaoNotificacao = "Seu cupom com o saldo restante do pedido "+idPedido +", no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
-				
+			tituloNotificao = "CUPOM DE SALDO GERADO! 💲" ; 
+			descricaoNotificacao = "Seu cupom com o saldo restante do pedido "+idPedido +", no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
+			tipoCupom = "T";
             }
             else { 
                 codigo = "PROMO#"; 
@@ -80,13 +80,7 @@ public class CupomService {
 
             if(!retorno.contains("erro")) {
 
-            	Notificacoes notificacao = new Notificacoes();
-            	
-            	//notificacao.setData(dataAtual); 
-            	//notificacao.setTitulo(tituloNotificao);
-            	//notificacao.setDescricao(descricaoNotificacao);
-           
-            	//NotificacaoService.gerarNotificacao(notificacao);
+
             	
             }
             
@@ -109,7 +103,63 @@ public class CupomService {
 	        return "Cupom ou cliente não fornecido";
 	    }
 	   else {
-		return daoCupom.vincularCupomAoCliente(cupom, cliente);
+		   
+		   
+		String retorno =  daoCupom.vincularCupomAoCliente(cupom, cliente);
+		
+		
+    	Notificacoes notificacao = new Notificacoes();
+    	
+    /*	notificacao.setData(new Date();); 
+    	notificacao.setTitulo(tituloNotificao);
+    	notificacao.setDescricao(descricaoNotificacao);
+    	notificacao.setCliente(cliente);
+   
+    
+        
+        if(cupom.getTipo().contains(("T") &&  idProduto == 0 ) {
+				codigo = "CANCELADO#" + idPedido;
+				descricao = "Desconto de R$" + valorCupom + ", pelo cancelamento do pedido " + idPedido;
+				img = "trocaCupom.png";
+				validade = adicionarMeses(dataAtual, 12);         
+				
+				tituloNotificao = "PEDIDO "+idPedido+" CENCELADO ❌" ; 
+				descricaoNotificacao = "Seu cupom e desconto no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
+				
+         }else if (tipoCupom.equals("T")) { 
+             codigo = "TROCA#" + idPedido;
+             descricao = "Desconto de R$" + valorCupom + " pela troca do item " + idProduto + " no pedido " + idPedido;
+             img = "trocaCupom.png";
+             validade = adicionarMeses(dataAtual, 12);
+             
+				tituloNotificao = "PEDIDO "+idPedido+" TROCADO 🔄" ; 
+				descricaoNotificacao = "Seu cupom e desconto no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
+				
+       
+         }else if(tipoCupom.equals("SALDO")) {
+     	  codigo = "DESCONTO#" + idPedido;
+           descricao = "Desconto de R$" + valorCupom + " pela saldo restante do pedido" + idPedido;
+           img = "descontoSaldoCupom.png";
+           validade = adicionarMeses(dataAtual, 12);
+           
+			tituloNotificao = "CUPOM DE SALDO GERADO! 💲" ; 
+			descricaoNotificacao = "Seu cupom com o saldo restante do pedido "+idPedido +", no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
+			tipoCupom = "T";
+         }
+         else { 
+             codigo = "PROMO#"; 
+             descricao = "Cupom promocional de desconto de R$" + valorCupom;
+             img = "trocaCupom.png";
+             validade = adicionarMeses(dataAtual, 6); 
+         }
+
+    	
+    	
+    	
+    	NotificacaoService.gerarNotificacao(notificacao);
+    	
+   */ 	
+    	return retorno;
 	   }
 	}
 

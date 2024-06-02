@@ -131,7 +131,7 @@ public class DaoCarrinho {
 	            updatePst.setInt(3, produto.getId());
 	            updatePst.executeUpdate();
 	            
-	            if (status.ordinal() != 0) { // Se o status não for 0 (não adicionado)
+	            if (status.ordinal() == 1) { // Se o status não for 0 (não adicionado)
 	                // Se não foi adicionado anteriormente, atualizar o status para 0 (adicionado)
 	                String updateStatusQuery = "UPDATE carrinho_itens SET car_itens_status = 0 WHERE car_itens_car_id = ? AND car_itens_prod_id = ?";
 	                try (PreparedStatement updateStatusPst = con.prepareStatement(updateStatusQuery)) {

@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dao.DAOProdutos;
 import model.entity.Categoria;
@@ -22,6 +23,9 @@ public class ProdutoService {
 		return daoProdutos.ListarProdutos();
 	}
 	
+	public List<Produtos> listarProdutosDataAnalysis() {
+		return daoProdutos.fetchAllProducts();
+	}
 	
 	public ArrayList<Produtos> listarProdutosAreaADM() {
 		return daoProdutos.ListarProdutosAreaADM();

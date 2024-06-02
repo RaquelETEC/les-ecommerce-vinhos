@@ -95,7 +95,7 @@ public class PedidoVendaService {
 
         // Verificação: A soma dos valores dos cartões e dos descontos deve ser igual ao total do pedido
         double totalPagamento = totalCartoes + totalDesconto;
-        double saldo =  pedido.getTotalPedido() - totalPagamento;
+        double saldo =  Math.round((pedido.getTotalPedido() - totalPagamento) * 100.0) / 100.0;
 
         if (saldo > 0) {
             return "Erro: A soma dos valores dos cartões e dos descontos não é igual ao total do pedido.";
@@ -109,9 +109,16 @@ public class PedidoVendaService {
 		    int idPedido = Integer.parseInt(resposta.substring(indexIdPedido + 9)); // O 9 representa o comprimento de "idPedido="
 
 		    if (saldo < 0) {
-		        //cupomService.GerarCupom("SALDO", saldo, idPedido, 0);
+		    	String respostaCupom = cupomService.GerarCupom("SALDO", saldo * -1, idPedido, 0); 
+		    	
+			    Cupons cupomGerado = new Cupons();
+			    cupomGerado.setId(Integer.parseInt(respostaCupom));
+		    	respostaCupom = cupomService.vincularCupomAoCliente(cupomGerado,cliente);
+		    	
+		    	resposta = respostaCupom.contains("ERRO") ? respostaCupom : resposta; 
 		    }
 		}
+		
 		
 		return resposta;
 	}

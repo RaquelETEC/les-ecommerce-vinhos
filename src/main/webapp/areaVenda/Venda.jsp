@@ -14,7 +14,7 @@ ArrayList<CarrinhoItens> itens = (ArrayList<CarrinhoItens>) request.getAttribute
 ArrayList<Endereco> listaEntrega = (ArrayList<Endereco>) request.getAttribute("listaEnderecosEntrega");
 
 //listagem de cupons promocionais
-ArrayList<Cupons> listaCupons = (ArrayList<Cupons>) request.getAttribute("listaCupons");
+ArrayList<Cupons> listaCupons = (ArrayList<Cupons>) request.getAttribute("listaCupons");	
 
 //Listagem de cartoes 
 ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) request.getAttribute("listaCartoes");
@@ -104,9 +104,9 @@ ArrayList<CartaoDeCredito> listaCartoesCredito = (ArrayList<CartaoDeCredito>) re
 						            <tr>
 						                <td><img src="imagens/produtos/<%=itens.get(i).getProduto().getCodigo_barra()%>.png" alt="Imagem do Produto" class="img-fluid rounded-start" style="max-width: 70px; max-height: 70px;"></td>
 						                <td><%=itens.get(i).getProduto().getDesc()%></td>
-						                <td>R$ <%=itens.get(i).getProduto().getPro_preco_venda()%></td>
+						                <td>R$ <%=String.format("%.2f",itens.get(i).getProduto().getPro_preco_venda())%></td>
 						                <td><%=itens.get(i).getQuantProd()%></td>
-						                <td class=>R$ <%=itens.get(i).getProduto().getPro_preco_venda() * itens.get(i).getQuantProd()%></td>
+						                <td class=>R$ <%=String.format("%.2f",itens.get(i).getProduto().getPro_preco_venda() * itens.get(i).getQuantProd())%></td>
 						            </tr>
 						            <% 
 						            } 

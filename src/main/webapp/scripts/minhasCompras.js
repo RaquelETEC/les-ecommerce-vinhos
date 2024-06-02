@@ -143,6 +143,8 @@ function abrirModalTroca(pedidoId) {
                 </div>
                 <div class="col-3" style="display: none;">
 			        <input type="number" class="form-control" name="quant-trocada${item.id}" value="${item.quantidadeTrocada}">
+			    	<input type="number" class="form-control" name="quant-item${item.id}" value="${item.quantidade}">
+
 			    </div>
               </div>
             </div>
@@ -175,14 +177,25 @@ function enviarTroca() {
       	let itemId = key.split('-')[1];
 		let quantidadeTrocadaElement = document.querySelector(`input[name="quant-trocada${itemId}"]`);
 		let quantidadeTrocada = quantidadeTrocadaElement ? quantidadeTrocadaElement.value : 0;      // Pegar a quantidade trocada
-      
-      trocaItems.push({ id: itemId, quantidade: value, quantidadeTrocada: quantidadeTrocada });
+		let quantProd = document.querySelector(`input[name="quant-item${itemId}"]`) ? document.querySelector(`input[name="quant-item${itemId}"]`).value : 0;
+
+      trocaItems.push({ id: itemId, quantidade: value, quantidadeTrocada: quantidadeTrocada , quantidadeProduto: quantProd});
     }
   });
 
   if (trocaItems.length === 0) {
     alert('Selecione pelo menos um item e quantidade para troca.');
     return;
+  }
+
+  // Verificar se a quantidade de troca é maior do que a disponível
+  for (let i = 0; i < trocaItems.length; i++) {
+    let item = trocaItems[i];
+    let quantidadeDisponivel = item.quantidadeProduto - item.quantidadeTrocada;
+    if (item.quantidade > quantidadeDisponivel) {
+      alert(`A quantidade selecionada é maior do que a quantidade disponível para troca.`);
+      return;
+    }
   }
 
   solicitarTroca(pedidoId, 'EM TROCA', trocaItems);

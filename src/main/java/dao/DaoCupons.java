@@ -120,13 +120,10 @@ public class DaoCupons {
 			  pst.setString(2, notificacao.getDescricao());
 			  pst.setDate(3, notificacao.getData());
 			 
-		      int linhasAfetadas
-		      = pst.executeUpdate();
+		      int linhasAfetadas  = pst.executeUpdate();
 			  con.close();	
-			  
+			 
 			  resposta = (linhasAfetadas > 0) ? "success" : "error: Nenhuma linha afetada"; 
-			  
-
 			
 		} catch (SQLException e) {
 		  e.printStackTrace();

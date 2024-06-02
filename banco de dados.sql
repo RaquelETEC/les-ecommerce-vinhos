@@ -328,11 +328,14 @@ FOREIGN KEY (`cartao_id`) REFERENCES cartao_de_credito(`cart_id`),
 FOREIGN KEY (`pedido_id`) REFERENCES pedido_venda(`ven_id`)
  );
  
+CREATE TABLE `notificacoes` (
+  `id` int NOT NULL,
+  `titulo` varchar(45) NOT NULL,
+  `descricao` varchar(200) NOT NULL,
+  `data` date NOT NULL,
+  `cliente_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `cliente_id` FOREIGN KEY (`id`) REFERENCES `cliente` (`cli_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `ecommerce`.`notificacoes` (
-  `id` INT NOT NULL,
-  `titulo` VARCHAR(45) NOT NULL,
-  `descricao` VARCHAR(200) NOT NULL,
-  `data` DATE NOT NULL,
-  PRIMARY KEY (`id`));
 
