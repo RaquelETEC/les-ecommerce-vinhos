@@ -120,7 +120,7 @@ Cliente cliente = (Cliente) request.getAttribute("cliente");
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-2">
-									<img src="<%=lista.get(i).getBandeira().getImg()%>"
+									<img src= "../<%=lista.get(i).getBandeira().getImg()%>"
 										alt="Imagem da Bandeira" class="img-fluid-cartao">
 								</div>
 								<div class="col-md-7">

@@ -35,7 +35,7 @@
                             Menu
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/les-ecommerce-vinhos/areaAdministrador/PagInicial.html">
+                            <a class="nav-link" onClick= "window.location.href='PagInicial.jsp'" >
                                 Dashboard
                             </a>
                         </li>

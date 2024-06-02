@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetch('/les-ecommerce-vinhos/data-analysis?action=listProducts')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             const produtoSelect = document.getElementById('produto');
             data.forEach(produto => {
@@ -9,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 option.text = produto.desc;
                 produtoSelect.add(option);
             });
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
         });
 });
 
@@ -18,17 +26,32 @@ function filtrar() {
     const endDate = document.getElementById('dataAte').value;
     
     fetch(`/les-ecommerce-vinhos/data-analysis?action=salesData&productId=${productId}&startDate=${startDate}&endDate=${endDate}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             const labels = data.map(item => item.date);
             const volumes = data.map(item => item.volume);
             renderChart(labels, volumes);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
         });
 }
 
+let myChart = null; // Declare a variável para armazenar a referência do gráfico
+
 function renderChart(labels, data) {
+    // Destruir o gráfico anterior se ele existir
+    if (myChart !== null) {
+        myChart.destroy();
+    }
+    
     const ctx = document.getElementById('salesChart').getContext('2d');
-    new Chart(ctx, {
+    myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
@@ -42,7 +65,7 @@ function renderChart(labels, data) {
         options: {
             scales: {
                 x: {
-                    type: 'category', // Usando tipo 'category' para manter as datas como strings
+                    type: 'category',
                 },
                 y: {
                     beginAtZero: true

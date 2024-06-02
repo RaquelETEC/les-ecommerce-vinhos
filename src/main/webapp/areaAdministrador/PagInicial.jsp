@@ -8,9 +8,8 @@
     <link rel="stylesheet" href="../Styles/styleAdm.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="../scripts/dashboard.js" ></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	
+    <script src="../scripts/dashboard.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
@@ -50,14 +49,15 @@
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                  <div class="container mt-4">
+                <div class="container mt-4">
                     <h2 class="text-center mb-4">Dashboard</h2>
                     
                     <!-- Filtros -->
                     <div class="row">
                         <div class="col-md-4">
                             <label for="produto" class="form-label">Produto:</label>
-                            <select class="form-select" id="produto"></select>
+                            <select class="form-select" id="produto">
+                            </select>
                         </div>
                         <div class="col-md-4">
                             <label for="dataDe" class="form-label">Data de:</label>
@@ -97,7 +97,5 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
-
-
 </body>
 </html>

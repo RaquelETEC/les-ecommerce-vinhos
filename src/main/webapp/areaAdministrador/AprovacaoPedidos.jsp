@@ -35,7 +35,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 					<ul class="nav flex-column">
 						<li class="nav-Title">Menu</li>
 						<li class="nav-item"><a class="nav-link "
-							href="/les-ecommerce-vinhos/areaAdministrador/PagInicial.html">
+							 onClick= "window.location.href='PagInicial.jsp'" >
 								Dashboard </a></li>
 						<li class="nav-item"><a class="nav-link"
 							onclick="window.location.href='Clientes.html';"> Clientes </a></li>

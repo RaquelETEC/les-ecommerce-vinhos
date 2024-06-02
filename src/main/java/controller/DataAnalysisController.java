@@ -21,8 +21,6 @@ public class DataAnalysisController extends HttpServlet {
 
     private ProdutoService produtoService;
     private SalesDataService salesDataService;
-    
-    
 
     @Override
     public void init() throws ServletException {
@@ -34,31 +32,29 @@ public class DataAnalysisController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        
-        switch (action) {
-            case "listProducts":
-                listProducts(response);
-                break;
-            case "salesData":
-			try {
-				getSalesData(request, response);
-			} catch (IOException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not recognized");
-                break;
+
+        try {
+            switch (action) {
+                case "listProducts":
+                    listProducts(response);
+                    break;
+                case "salesData":
+                    getSalesData(request, response);
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action not recognized");
+                    break;
+            }
+        } catch (SQLException e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 
     private void listProducts(HttpServletResponse response) throws IOException {
         List<Produtos> produtos = produtoService.listarProdutosDataAnalysis();
-        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         new Gson().toJson(produtos, out);
         out.close();
@@ -70,7 +66,6 @@ public class DataAnalysisController extends HttpServlet {
         String endDate = request.getParameter("endDate");
 
         List<SalesData> salesData = salesDataService.listarDadosPedido(productId, startDate, endDate);
-        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         new Gson().toJson(salesData, out);
         out.close();

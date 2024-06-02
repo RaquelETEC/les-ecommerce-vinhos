@@ -38,7 +38,7 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 					<ul class="nav flex-column">
 						<li class="nav-Title">Menu</li>
 						<li class="nav-item"><a class="nav-link active"
-							onclick="window.location.href='PagInicial.html';"> Dashboard
+							onClick= "window.location.href='PagInicial.jsp'" > Dashboard
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
 							onclick="window.location.href='Clientes.html';"> Clientes </a></li>

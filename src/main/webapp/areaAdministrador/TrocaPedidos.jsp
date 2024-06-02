@@ -38,7 +38,7 @@ ArrayList<PedidoVenda> listaPedidos = (ArrayList<PedidoVenda>) request.getAttrib
                             Menu
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" onclick="window.location.href='PagInicial.html';">
+                            <a class="nav-link active" onClick= "window.location.href='PagInicial.jsp'" >
                                 Dashboard
                             </a>
                         </li>
