@@ -57,6 +57,7 @@
                         <div class="col-md-4">
                             <label for="produto" class="form-label">Produto:</label>
                             <select class="form-select" id="produto">
+                                <option value="all">Todos os Produtos</option>
                             </select>
                         </div>
                         <div class="col-md-4">

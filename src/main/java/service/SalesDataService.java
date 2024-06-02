@@ -17,5 +17,4 @@ public class SalesDataService {
 	public List<SalesData> listarDadosPedido(String productId, String startDate, String endDate) throws SQLException {
 		return daoSalesData.fetchSalesData(productId, startDate, endDate);
 	}
-	
 }
