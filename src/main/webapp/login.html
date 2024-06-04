@@ -6,13 +6,13 @@
     <title>Login e Cadastro</title>
     <link rel="icon" href="imagens/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
-    <script src="scripts/validadorCadastro.js"></script>
+    <script src="scripts/validadorCadastrov2.js"></script>
     <style>
         .card {
             border-radius: 1rem;
         }
 
-        .body {
+        body {
             background-color: #F2F2F2;
         }
     </style>
@@ -26,41 +26,6 @@
             <div class="navbar-nav ms-auto"></div>
         </div>
     </nav>
-
-    <section id="login" class="vh-100" style="background-color: #F2F2F2;">
-        <div class="container py-5">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card shadow-2-strong">
-                        <div class="card-body p-5 text-left">
-                            <h3 class="mb-5 text-center" >Login</h3>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="typeEmailX-2">Email</label>
-                                <input type="email" id="typeEmailX-2" class="form-control form-control-lg" />
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="typePasswordX-2">Senha</label>
-                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" />
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-primary btn-lg btn-block text-center" type="submit" onclick="validarLogin()">
-                                    Login
-                                </button>
-                                <hr class="my-4">
-                                <div>
-                                </div>
-                                <a href="#cadastro" class="text-black-50 fw-bold cadastre-se-link text-center">Não tem uma conta?
-                                    Cadastre-se</a>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="cadastro" class="px-100 d-none" style="background-color: #F2F2F2">
         <div class="container py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-8">
@@ -68,178 +33,363 @@
                         <div class="card-body p-5 ">
                             <h3 class="mb-4 c text-center">Cadastro de Cliente</h3>
                             <!-- Seu formulário de cadastro aqui -->
-							<form name="frmcliente" action="insertCliente" onsubmit="return validarCadastro()">
-								<fieldset>
-        							<legend>Dados Pessoais</legend>
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
-                                        <label class="form-label" for="typeNome">Nome *</label>
-                                        <input type="text" name="typeNome" id="typeNome" class="form-control form-control-lg" required/>
-                                    </div>
-                                    <div class="col-md-6 mb-4">
-                                        <label class="form-label" for="typeEmail">Email *</label>
-                                        <input type="email" name="typeEmail" id="typeEmail" class="form-control form-control-lg" required/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
-                                        <label class="form-label" for="typeSenha">Senha *</label>
-                                        <input type="password" name="typeSenha" id="typeSenha" class="form-control form-control-lg" required/>
-                                        <div id="senhaAviso" class="text-danger"></div>
-                                        
-                                    </div>
-                                    <div class="col-md-6 mb-4">
-                                        <label class="form-label" for="typeRepitaSenha">Repita a Senha *</label>
-                                        <input type="password" name="typeRepitaSenha" id="typeRepitaSenha" class="form-control form-control-lg" required />
-                                        <div id="senharepAviso" class="text-danger"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
-                                        <label class="form-label" for="typeCPF">CPF *</label>
-                                        <input type="text" name="typeCPF" id="typeCPF" class="form-control form-control-lg" required/>
-                                    </div>
-                                    <div class="col-md-2 mb-4">
-                                        <label class="form-label" for="TypeTipoTelefone">Tipo*</label>
-                                        <select id="TypeTipoTelefone" name="TypeTipoTelefone" class="form-select form-select-lg required">
-                                            <option value="" disabled selected></option>
-                                            <option value="celular">fixo</option>
-                                            <option value="fixo">Celular</option>
-                                            <!-- Adicione outros tipos de telefone conforme necessário -->
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-2">
-                                        <label class="form-label" for="typeNumeroTelefone">Número de Telefone *</label>
-                                        <input type="text" name="typeNumeroTelefone" id="typeNumeroTelefone" class="form-control form-control-lg" required />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-4">
-                                        <label class="form-label" for="typeNascimento">Data de Nascimento *</label>
-                                        <input type="date" name="typeNascimento" id="typeNascimento" class="form-control form-control-lg" required/>
-                                    </div>
-                                    <div class="col-md-6 mb-4">
-                                        <label class="form-label" for="genero">Gênero *</label>
-                                        <select class="form-select form-select-lg" name="typeGenero" id="typeGenero" required>
-                                            <option value="" disabled selected></option>
-                                            <option value="feminino">Feminino</option>
-                                            <option value="masculino">Masculino</option>
-                                            <option value="nao_binario">Não Binario</option>
-                                            <option value="outros">Outros</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                               </fieldset>
-                                <hr class="my-4">
-  									<fieldset>
-        								<legend>Endereço Residencial</legend>
-                              
-	                                <div class="row">
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="tipoResidencia">Tipo de Residência *</label>
-	                                        <select class="form-select form-select-lg" name="typeTipoResidencia" id="typeTipoResidencia" required>
-	                                            <option value="" disabled selected></option>
-	                                            <option value="casa">Casa</option>
-	                                            <option value="apartamento">Apartamento</option>
-	                                            <option value="condominio">Condomínio</option>
-	                                        </select>
-	                                    </div>
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="tipoLogradouro">Tipo Logradouro*</label>
-	                                        <select class="form-select form-select-lg" name="typeTipoLogradouro" id="typeTipoLogradouro" required>
-	                                            <option value="" disabled selected></option>
-	                                            <option value="Rua">Rua</option>
-	                                            <option value="Estrada">Estrada</option>
-	                                            <option value="Avenida">Avenida</option>
-	                                            <option value="Praça">Praça</option>
-	                                            <option value="Corredor">Corredor</option>
-	                                            <option value="Alameda">Alameda</option>
-	                                            <option value="Distrito">Distrito</option>
-	                                        </select>
-	                                    </div>
-	                                </div>
-	                                <div class="row">
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="logradouro">Logradouro *</label>
-	                                        <input type="text" name="typeLogradouro" id="typeLogradouro" class="form-control form-control-lg" required/>
-	                                    </div>
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="numero">N° *</label>
-	                                        <input type="text" name="typeNumero" id="typeNumero" class="form-control form-control-lg" required/>
-	                                    </div>
-	                                </div>
-	                                <div class="row">
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="typeBairro">Bairro*</label>
-	                                        <input type="text" name="typeBairro" id="typeBairro" class="form-control form-control-lg" required/>
-	                                    </div>
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="typeCidade">Cidade*</label>
-	                                        <input type="text" name="typeCidade" id="typeCidade" class="form-control form-control-lg" required />
-	                                    </div>
+                             <form name="frmcliente" action="insertCliente" onsubmit="return validarCadastro()">
+                                <fieldset>
+                                    <legend>Dados Pessoais</legend>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeNome">Nome *</label>
+                                            <input type="text" name="typeNome" id="typeNome" class="form-control form-control-lg" required />          
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeEmail">Email *</label>
+                                            <input type="email" name="typeEmail" id="typeEmail" class="form-control form-control-lg" required/>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="typeEstado">Estado*</label>
-	                                        <input type="text" name="typeEstado" id="typeEstado" class="form-control form-control-lg" required />
-	                                    </div>
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="typeCep">CEP*</label>
-	                                        <input type="text" name="typeCep" id="typeCep" class="form-control form-control-lg" required />
-	                                    </div>
+                                            <label class="form-label" for="typeSenha">Senha *</label>
+                                            <input type="password" name="typeSenha" id="typeSenha" class="form-control form-control-lg" required/>
+                                            <div id="senhaAviso" class="text-danger"></div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeRepitaSenha">Repita a Senha *</label>
+                                            <input type="password" name="typeRepitaSenha" id="typeRepitaSenha" class="form-control form-control-lg" required />
+                                            <div id="senharepAviso" class="text-danger"></div>
+                                        </div>
                                     </div>
                                     <div class="row">
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="typePais">País*</label>
-	                                        <input type="text" name="typePais" id="typePais" class="form-control form-control-lg" required />
-	                                    </div>
-	                                    <div class="col-md-6 mb-4">
-	                                        <label class="form-label" for="observacoes">Observações</label>
-	                                        <input type="text" name="observacoes" id="observacoes" class="form-control form-control-lg"  />
-	                                    </div>
-	                                </div>
-								</fieldset>
-                                  <div class="text-center">
-                                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Cadastrar">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeCPF">CPF *</label>
+                                            <input type="number" name="typeCPF" id="typeCPF" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-2 mb-4">
+                                            <label class="form-label" for="TypeTipoTelefone">Tipo*</label>
+                                            <select id="TypeTipoTelefone" name="TypeTipoTelefone" class="form-select form-select-lg required" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="celular">celular</option>
+                                                <option value="fixo">fixo</option>
+                                                <!-- Adicione outros tipos de telefone conforme necessário -->
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <label class="form-label" for="typeNumeroTelefone">Número de Telefone *</label>
+                                            <input type="text" name="typeNumeroTelefone" id="typeNumeroTelefone" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeNascimento">Data de Nascimento *</label>
+                                            <input type="date" name="typeNascimento" id="typeNascimento" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="genero">Gênero *</label>
+                                            <select class="form-select form-select-lg" name="typeGenero" id="typeGenero" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="Feminino">Feminino</option>
+                                                <option value="Masculino">Masculino</option>
+                                                <option value="Não Binário">Não Binario</option>
+                                                <option value="Outros">Outros</option>
 
-						        <!-- <button class="btn btn-primary btn-lg btn-block" type="submit" onClick="validarCadastro()">
-						            Cadastrar
-						        </button> -->
-						        <hr class="my-4">
-						        <a href="#login" class="text-black-50 fw-bold cadastre-se-link">Já tem uma conta? Faça login</a>
-						    </div>
-						</form>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <hr class="my-4">
+                                <fieldset>
+                                    <legend>Endereço Residencial</legend>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="tipoResidencia">Tipo de Residência *</label>
+                                            <select class="form-select form-select-lg" name="typeTipoResidencia" id="typeTipoResidencia" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="casa">Casa</option>
+                                                <option value="apartamento">Apartamento</option>
+                                                <option value="condominio">Condomínio</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="tipoLogradouro">Tipo Logradouro*</label>
+                                            <select class="form-select form-select-lg" name="typeTipoLogradouro" id="typeTipoLogradouro" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="Rua">Rua</option>
+                                                <option value="Estrada">Estrada</option>
+                                                <option value="Avenida">Avenida</option>
+                                                <option value="Praça">Praça</option>
+                                                <option value="Corredor">Corredor</option>
+                                                <option value="Alameda">Alameda</option>
+                                                <option value="Distrito">Distrito</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="logradouro">Logradouro *</label>
+                                            <input type="text" name="typeLogradouro" id="typeLogradouro" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="numero">N° *</label>
+                                            <input type="text" name="typeNumero" id="typeNumero" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeBairro">Bairro*</label>
+                                            <input type="text" name="typeBairro" id="typeBairro" class="form-control form-control-lg"required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeCidade">Cidade*</label>
+                                            <input type="text" name="typeCidade" id="typeCidade" class="form-control form-control-lg" required />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeEstado">Estado*</label>
+                                            <input type="text" name="typeEstado" id="typeEstado" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeCep">CEP*</label>
+                                            <input type="text" name="typeCep" id="typeCep" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typePais">País*</label>
+                                            <input type="text" name="typePais" id="typePais" class="form-control form-control-lg" required />
+                                        </div>
+                                           <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="TypeNomeEnd">Destinatario*</label>
+                                            <input type="text" name="TypeNomeEnd" id="TypeNomeEnd" class="form-control form-control-lg" required />
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="observacoes">Observações</label>
+                                            <input type="text" name="observacoes" id="observacoes" class="form-control form-control-lg"  />
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="row" style="display:none">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="RESIDENCIAL">Tipo</label>
+                                            <input type="text" name=RESIDENCIAL id="RESIDENCIAL" value="RESIDENCIAL" class="form-control form-control-lg" />
+                                        </div>
+                                    </div>
+                                    
+                                </fieldset>
+                                
+                                <fieldset>
+                                    <legend>Endereço Entrega</legend>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="tipoResidenciaE">Tipo de Residência *</label>
+                                            <select class="form-select form-select-lg" name="typeTipoResidenciaE" id="typeTipoResidenciaE" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="casa">Casa</option>
+                                                <option value="apartamento">Apartamento</option>
+                                                <option value="condominio">Condomínio</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="tipoLogradouroE">Tipo Logradouro*</label>
+                                            <select class="form-select form-select-lg" name="typeTipoLogradouroE" id="typeTipoLogradouroE" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="Rua">Rua</option>
+                                                <option value="Estrada">Estrada</option>
+                                                <option value="Avenida">Avenida</option>
+                                                <option value="Praça">Praça</option>
+                                                <option value="Corredor">Corredor</option>
+                                                <option value="Alameda">Alameda</option>
+                                                <option value="Distrito">Distrito</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="logradouroE">Logradouro *</label>
+                                            <input type="text" name="typeLogradouroE" id="typeLogradouroE" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="numeroE">N° *</label>
+                                            <input type="text" name="typeNumeroE" id="typeNumeroE" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeBairroE">Bairro*</label>
+                                            <input type="text" name="typeBairroE" id="typeBairroE" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeCidadeE">Cidade*</label>
+                                            <input type="text" name="typeCidadeE" id="typeCidadeE" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeEstadoE">Estado*</label>
+                                            <input type="text" name="typeEstadoE" id="typeEstadoE" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeCepE">CEP*</label>
+                                            <input type="text" name="typeCepE" id="typeCepE" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typePaisE">País*</label>
+                                            <input type="text" name="typePaisE" id="typePaisE" class="form-control form-control-lg" required />
+                                        </div>
+                                          <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="TypeNomeEndE">Destinatario*</label>
+                                            <input type="text" name="TypeNomeEndE" id="TypeNomeEndE" class="form-control form-control-lg" required />
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="observacoesE">Observações</label>
+                                            <input type="text" name="observacoesE" id="observacoesE" class="form-control form-control-lg"  />
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="row" style="display:none">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="ENTREGA">Tipo</label>
+                                            <input type="text" name="ENTREGA" id="ENTREGA" value="ENTREGA" class="form-control form-control-lg" />
+                                        </div>
+                                    </div>
+                                    
+                                </fieldset>
+                                
+                                 <fieldset>
+                                    <legend>Endereço Cobrança</legend>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeTipoResidenciaC">Tipo de Residência *</label>
+                                            <select class="form-select form-select-lg" name="typeTipoResidenciaC" id="typeTipoResidenciaC" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="casa">Casa</option>
+                                                <option value="apartamento">Apartamento</option>
+                                                <option value="condominio">Condomínio</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeTipoLogradouroC">Tipo Logradouro*</label>
+                                            <select class="form-select form-select-lg" name="typeTipoLogradouroC" id="typeTipoLogradouroC" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="Rua">Rua</option>
+                                                <option value="Estrada">Estrada</option>
+                                                <option value="Avenida">Avenida</option>
+                                                <option value="Praça">Praça</option>
+                                                <option value="Corredor">Corredor</option>
+                                                <option value="Alameda">Alameda</option>
+                                                <option value="Distrito">Distrito</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeLogradouroC">Logradouro *</label>
+                                            <input type="text" name="typeLogradouroC" id="typeLogradouroC" class="form-control form-control-lg"required />
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeNumeroC">N° *</label>
+                                            <input type="text" name="typeNumeroC" id="typeNumeroC" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeBairroC">Bairro*</label>
+                                            <input type="text" name="typeBairroC" id="typeBairroC" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeCidadeC">Cidade*</label>
+                                            <input type="text" name="typeCidadeC" id="typeCidadeC" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeEstadoC">Estado*</label>
+                                            <input type="text" name="typeEstadoC" id="typeEstadoC" class="form-control form-control-lg" required/>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typeCepC">CEP*</label>
+                                            <input type="text" name="typeCepC" id="typeCepC" class="form-control form-control-lg" required/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="typePaisC">País*</label>
+                                            <input type="text" name="typePaisC" id="typePaisC" class="form-control form-control-lg" required />
+                                        </div>
+                                         <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="TypeNomeEndC">Destinatario*</label>
+                                            <input type="text" name="TypeNomeEndC" id="TypeNomeEndC" class="form-control form-control-lg" required />
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="observacoesC">Observações</label>
+                                            <input type="text" name="observacoesC" id="observacoesC" class="form-control form-control-lg"  />
+                                        </div>
+                                    </div>
+                                    
+                                     <div class="row" style="display:none">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="COBRANCA">Tipo</label>
+                                            <input type="text" name="COBRANCA" id="COBRANCA" value="COBRANCA" class="form-control form-control-lg" />
+                                        </div>
+                                    </div>
+                                    
+                                </fieldset>     
+                                  
+                                
+                                <fieldset>
+                                    <legend>Cartão</legend>
+
+                                    <div class="row">
+                                    	<div class="col-md-6 mb-4">
+                                            <label class="form-label" for="CartaoNome">Nome impresso do cartão</label>
+                                            <input type="text" name="CartaoNome" id="CartaoNome" class="form-control form-control-lg" required/>
+                                        </div>
+                                   
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="tipoBandeira">Bandeira</label>
+                                            <select class="form-select form-select-lg" name="tipoBandeira" id="tipoBandeira" required>
+                                            	<option value="" disabled selected></option>
+                                                <option value="1">Mastercard</option>
+                                                <option value="2">Visa</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="CartaoNumero">N° *</label>
+                                            <input type="text" name="CartaoNumero" id="CartaoNumero" class="form-control form-control-lg" required/>
+                                        </div>
+                                        
+                                          <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="CartaoCodigo">Codigo de Segurança</label>
+                                            <input type="text" name="CartaoCodigo" id="CartaoCodigo" class="form-control form-control-lg"required/>
+                                        </div>
+                                    </div>
+      
+                                </fieldset>
+                                
+                                <div class="text-center">
+                                   	<input class="btn btn-primary btn-lg btn-block" id="BotaoCadastrar" type="submit" value="Cadastrar">
+                                    <hr class="my-4">
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
 
     <footer class="p-4 text-light text-center " style="background: black;">
         Desenvolvido por Caynan e Raquel
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const loginSection = document.getElementById("login");
-            const cadastroSection = document.getElementById("cadastro");
 
-            const cadastreSeLinks = document.querySelectorAll(".cadastre-se-link");
-
-            cadastreSeLinks.forEach(function (link) {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
-
-                    loginSection.classList.toggle("d-none");
-                    cadastroSection.classList.toggle("d-none");
-                });
-            });
-        });
-    </script>
 
 </body>
 

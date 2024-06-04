@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500&display=swap');
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+main {
+    width: 100%;
+
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    height: 5rem;
+
+    background-color: black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    position: fixed;
+}
+
+.title-crnines {
+    color: #EE603D;
+    font-size: 32px;
+    font-weight: 100
+}
+
+.button-header-minha-conta {
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 190px;
+    height: 2.5rem;
+
+    border-radius: 10px;
+}
+
+.container-main {
+    width: 100%;
+    height: auto;
+
+    margin-top: 5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+
+    padding: 1.5rem;
+}
+
+.container-perfil {
+    width: 20%;
+    height: 100vh;
+
+    background-color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    border-radius: 5px;
+
+    gap: 1rem;
+}
+
+.box-name-perfil {
+    height: 4.5rem;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+    border-bottom: 1px solid silver;
+}
+
+.box-name-e-nivel {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.text-name {
+    font-size: 1.3em;
+}
+
+.text-nivel {
+    font-size: 1em;
+    color: #5F5D5D;
+}
+
+.img-name-perfil {
+    height: 4rem;
+}
+
+
+.box-dados-perfil {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.button-dados-perfil {
+    width: 100%;
+    height: auto;
+    font-size: 1.2em;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    align-items: center;
+    gap: 0.5rem;
+    color: black;
+    text-decoration: none
+}
+
+.button-dados-perfil span {
+    width: 10rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.img-icons-perfil {
+    width: 2rem;
+}
+
+
+.box-exibir-opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.box-exibir-opcoes button {
+    background-color: transparent;
+    font-size: 1em;
+    border: none;
+    display: flex;
+    justify-content: flex-start;
+
+    color: #969696;
+}
+
+.MinhaConta {
+    display: none;
+}
+
+.MinhaConta.exibir {
+    display: flex;
+}
+
+.container-register {
+    width: 80%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    padding: 1rem;
+}
+
+.box-top-register {
+    width: 100%;
+    height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+
+    border-bottom: 1px solid silver;
+}
+
+.text-perfil {
+    font-size: 3em;
+    font-weight: 400;
+}
+
+
+.content {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.botaoADDNovoCartao{width: 308px;height: 50px;left: 1090px;top: 132px;background: black;color: white; border-radius: 10px}
+
+.span-nav{text-align: center;padding-left: 100px;font-size: 21px;}
+
+.end-container{margin-top: 20px;background-color: white;width: 1420px;height: 200px;border: 1px solid black;padding-left: 20px;}
+
+.Entrega{font-weight: 700;font-size: 22px;color: #606060;}
+
+.desc{position: absolute;width: 266px;height: 18px;left: 500px;top: 284px;font-weight: 700;font-size: 14px;color: #333333;}
+.desc2{position: absolute;width: 266px;height: 18px;left: 500px;top: 500px;font-weight: 700;font-size: 14px;color: #333333;}
+.desc3{position: absolute;width: 266px;height: 18px;left: 500px;top: 700px;font-weight: 700;font-size: 14px;color: #333333;}
+
+
+.Status{position: absolute;width: 84px;height: 25px;left: 1000px;top: 300px;border-radius: 10px;color: white; background: lightseagreen;text-align: center;}
+
+.BandNome{position: absolute;width: 401px;height: 44px;left: 500px;top: 308px;font-size: 16px;line-height: 16px;color: #6A6A6A;}
+.BandNome2{position: absolute;width: 401px;height: 44px;left: 500px;top: 525px;font-size: 16px;line-height: 16px;color: #6A6A6A;}
+.BandNome3{position: absolute;width: 401px;height: 44px;left: 500px;top: 730px;font-size: 16px;line-height: 16px;color: #6A6A6A;}
+
+.CartaoNumero{font-size: 30px;text-align: right;color: black; margin-left: 80px; margin-bottom: 50px}
+
+.Excluir{position: absolute;left: 1550px;top: 237px;font-style: normal;font-weight: 400;line-height: 17px;color: #B10000;}
+.Salvar{position: absolute;left: 1650px;top: 237px;font-style: normal;font-weight: 400;line-height: 17px;color: #0048B1;}
+.Excluir2{position: absolute;left: 1550px;top: 500px;font-style: normal;font-weight: 400;line-height: 17px;color: #B10000;}
+.Salvar2{position: absolute;left: 1650px;top: 500px;font-style: normal;font-weight: 400;line-height: 17px;color: #0048B1;}
+.Excluir3{position: absolute;left: 1550px;top: 700px;font-style: normal;font-weight: 400;line-height: 17px;color: #B10000;}
+.Salvar3{position: absolute;left: 1650px;top: 700px;font-style: normal;font-weight: 400;line-height: 17px;color: #0048B1;}
+.Preferencial{box-sizing: border-box;position: absolute;width: 222px;height: 39px;left: 1500px;top: 300px;background: #FFFFFF;border: 1px solid #6B6B6B;border-radius: 5px;}
+
+.box-exibir-opcoes button.ativo {
+    color: #ff8000;
+}

@@ -1,0 +1,85 @@
+/* Reset CSS básico */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Estilos para o botão */
+button {
+    cursor: pointer;
+    background-color: #ED5833;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 12px 24px; /* Espaçamento interno para o botão */
+    font-size: 16px;
+}
+
+/* Estilos para o contêiner principal */
+.container-register {
+    width: 100%;
+    max-width: 800px; /* Define a largura máxima para o contêiner */
+    margin: 0 auto; /* Centraliza o contêiner na tela */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 20px;
+}
+
+/* Estilos para o texto do pedido */
+.PedidoTexto {
+    color: #3F7F00;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px; /* Espaçamento inferior */
+}
+
+/* Estilos para a imagem "Ok" */
+.OkIMG img {
+    max-width: 100%; /* Garante que a imagem não ultrapasse o contêiner pai */
+    height: auto;
+    display: block; /* Remove espaços extras em torno da imagem */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+}
+
+/* Estilos para o texto de aguardo */
+.AguardTexto {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 20px; /* Espaçamento inferior */
+}
+
+/* Estilos para a área do botão */
+.ButtonArea {
+    text-align: center; /* Centraliza o conteúdo horizontalmente */
+}
+
+/* Estilos para o contêiner do pedido */
+.Pedido-Container {
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+/* Media query para dispositivos menores */
+@media (max-width: 768px) {
+    .container-register {
+        padding: 10px;
+    }
+    .PedidoTexto {
+        font-size: 20px;
+    }
+    .AguardTexto {
+        font-size: 12px;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+ 	

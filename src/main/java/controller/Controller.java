@@ -10,22 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Dao.DAO;
+import dao.DAO;
 import model.entity.JavaBeans;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Controller.
  */
-@WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select", "/update", "/delete",  })
+@WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select", "/update", "/delete", })
 public class Controller extends HttpServlet {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The dao. */
 	DAO dao = new DAO();
-	
+
 	/** The contato. */
 	JavaBeans contato = new JavaBeans();
 
@@ -39,20 +39,21 @@ public class Controller extends HttpServlet {
 	/**
 	 * Do get.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getServletPath();
-		
-		System.out.println("chegou aqui: "+action);
+
+		System.out.println("chegou aqui: " + action);
 		if (action.equals("/main")) {
 			contatos(request, response);
 		} else if (action.equals("/insert")) {
 			adicionarContato(request, response);
+
 		} else if (action.equals("/select")) {
 			listarContato(request, response);
 		} else if (action.equals("/update")) {
@@ -60,21 +61,19 @@ public class Controller extends HttpServlet {
 		} else if (action.equals("/delete")) {
 			removerContato(request, response);
 		}
-		//} else if (action.equals("/report")) {
-		//	gerarRelatorio(request, response);
-		//} 
-		else {
-			response.sendRedirect("index.html");
-		}
+		// } else if (action.equals("/report")) {
+		// gerarRelatorio(request, response);
+		// }
+	
 	}
 
 	/**
 	 * Contatos.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void contatos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -87,10 +86,10 @@ public class Controller extends HttpServlet {
 	/**
 	 * Adicionar contato.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void adicionarContato(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -104,10 +103,10 @@ public class Controller extends HttpServlet {
 	/**
 	 * Listar contato.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void listarContato(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -124,10 +123,10 @@ public class Controller extends HttpServlet {
 	/**
 	 * Editar contato.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void editarContato(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -142,10 +141,10 @@ public class Controller extends HttpServlet {
 	/**
 	 * Remover contato.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException      Signals that an I/O exception has occurred.
 	 */
 	protected void removerContato(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -157,40 +156,34 @@ public class Controller extends HttpServlet {
 	/**
 	 * Gerar relatorio.
 	 *
-	 * @param request the request
+	 * @param request  the request
 	 * @param response the response
 	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 
-	protected void gerarRelatorio(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Document documento = new Document();
-		try {
-			response.setContentType("apllication/pdf");
-			response.addHeader("Content-Disposition", "inline; filename=" + "contatos.pdf");
-			PdfWriter.getInstance(documento, response.getOutputStream());
-			documento.open();
-			documento.add(new Paragraph("Lista de contatos:"));
-			documento.add(new Paragraph(" "));
-			PdfPTable tabela = new PdfPTable(3);
-			PdfPCell col1 = new PdfPCell(new Paragraph("Nome"));
-			PdfPCell col2 = new PdfPCell(new Paragraph("Fone"));
-			PdfPCell col3 = new PdfPCell(new Paragraph("E-mail"));
-			tabela.addCell(col1);
-			tabela.addCell(col2);
-			tabela.addCell(col3);
-			ArrayList<JavaBeans> lista = dao.listarContatos();
-			for (int i = 0; i < lista.size(); i++) {
-				tabela.addCell(lista.get(i).getNome());
-				tabela.addCell(lista.get(i).getFone());
-				tabela.addCell(lista.get(i).getEmail());
-			}
-			documento.add(tabela);
-			documento.close();
-		} catch (Exception e) {
-			System.out.println(e);
-			documento.close();
-		}
-	}
-	*/
+	 * @throws IOException      Signals that an I/O exception has occurred.
+	 * 
+	 *                          protected void gerarRelatorio(HttpServletRequest
+	 *                          request, HttpServletResponse response) throws
+	 *                          ServletException, IOException { Document documento =
+	 *                          new Document(); try {
+	 *                          response.setContentType("apllication/pdf");
+	 *                          response.addHeader("Content-Disposition", "inline;
+	 *                          filename=" + "contatos.pdf");
+	 *                          PdfWriter.getInstance(documento,
+	 *                          response.getOutputStream()); documento.open();
+	 *                          documento.add(new Paragraph("Lista de contatos:"));
+	 *                          documento.add(new Paragraph(" ")); PdfPTable tabela
+	 *                          = new PdfPTable(3); PdfPCell col1 = new PdfPCell(new
+	 *                          Paragraph("Nome")); PdfPCell col2 = new PdfPCell(new
+	 *                          Paragraph("Fone")); PdfPCell col3 = new PdfPCell(new
+	 *                          Paragraph("E-mail")); tabela.addCell(col1);
+	 *                          tabela.addCell(col2); tabela.addCell(col3);
+	 *                          ArrayList<JavaBeans> lista = dao.listarContatos();
+	 *                          for (int i = 0; i < lista.size(); i++) {
+	 *                          tabela.addCell(lista.get(i).getNome());
+	 *                          tabela.addCell(lista.get(i).getFone());
+	 *                          tabela.addCell(lista.get(i).getEmail()); }
+	 *                          documento.add(tabela); documento.close(); } catch
+	 *                          (Exception e) { System.out.println(e);
+	 *                          documento.close(); } }
+	 */
 }

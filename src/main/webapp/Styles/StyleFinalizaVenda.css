@@ -1,0 +1,149 @@
+@charset "ISO-8859-1";
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+main {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.content-tab{
+ 	background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+button {
+    cursor: pointer;
+}
+
+.styleCards{
+	background-color: #F0F0F0 !important; 
+	width: 100%;
+}
+
+.buttons-options-end{
+    align-items: center;
+    
+    
+}
+.title-crnines {
+    color: #EE603D;
+    font-size: 32px;
+    font-weight: 100
+}
+
+.div-adicionar{
+	display:flex;
+}
+
+/* Estilo personalizado para o radio button */
+.custom-radio {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    width: 20px; /* Tamanho do radio button */
+    height: 20px; /* Tamanho do radio button */
+    margin-right: 10px; /* Espaçamento entre o radio button e o texto */
+}
+
+/* Estilo para o radio button padrão */
+.custom-radio input[type="radio"] {
+    /* Oculta o botão de rádio padrão */
+    display: none;
+}
+
+/* Estilo personalizado para o rótulo do radio button */
+.custom-radio label {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* Cor de fundo transparente */
+    border: 2px solid #EE603D; /* Cor da borda laranja */
+    border-radius: 50%; /* Formato redondo */
+    cursor: pointer; /* Cursor de apontar */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Estilo personalizado para o rótulo do radio button quando está selecionado */
+.custom-radio input[type="radio"]:checked + label {
+    /* Ajusta a cor da borda quando o radio button está selecionado */
+    border-color: #EE603D ; /* Cor da borda laranja */
+    background-color: #EE603D ; /* Cor de fundo laranja */
+}
+
+.Botao1 {
+	text-decoration: none;
+	background-color: #dc3545;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+
+.Botao2 {
+	text-decoration: none;
+	background-color:  #66bbff;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+
+#tabela {
+	
+	border-collapse: collapse;
+}
+
+#tabela th {
+	border: 1px solid #ddd;
+	padding: 10px;
+	text-align: left;
+
+
+}
+
+#tabela td {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.card{
+	border-radius: .55rem !important;
+	background-color: #f0f0f0 !important;
+	
+}
+.txt-total{
+	color: #EE603D !important; 
+	font-weight: 500;
+	
+	
+}
+.tableStyle {
+	background-color: #f0f0f0;
+    border-style: hidden;
+
+}
+.Produtos-Container1{
+	border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+    border-bottom: white;
+}
+

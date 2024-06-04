@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500&display=swap');
+
+.buttons-content{
+	 margin-left: 90%;
+	 margin-top: 1vh;
+}
+.botaoADDNovoCartao{
+	width: 308px;
+	height: 50px;
+	left: 1090px;
+	top: 132px;
+	background: black;
+	color: white; 
+	border-radius: 10px
+}
+
+.buttons-options{
+	align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+.img-fluid-cartao{
+	 width: 100%;
+     height: auto;
+}
+
+.span-nav{text-align: center;padding-left: 100px;font-size: 21px;}
+
+.cartao-container{margin-top: 20px;background-color: white;width: 1420px;height: 250px;border: 1px solid black;padding-left: 20px;}
