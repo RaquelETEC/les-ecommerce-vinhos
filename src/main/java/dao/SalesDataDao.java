@@ -27,7 +27,8 @@ public class SalesDataDao {
 	        String query = "SELECT "
 	                    + "DATE_FORMAT(p.ven_data, '%Y-%m') AS month_year, "
 	                    + "pi.ped_item_prod_desc AS productName, "
-	                    + "SUM(pi.ped_item_prod_quantidade) AS volume "
+	                    + "SUM(pi.ped_item_prod_quantidade) AS volume,"
+	                    + "SUM(pi.ped_item_prod_valor_total) valorTotal "
 	                    + "FROM pedido_venda p "
 	                    + "JOIN pedido_itens pi ON pi.ped_item_ven_id = p.ven_id "
 	                    + "WHERE (? IS NULL OR pi.ped_item_prod_id = ?) "
@@ -37,11 +38,11 @@ public class SalesDataDao {
 	        	
 	        PreparedStatement statement = con.prepareStatement(query);
 	        
-	        // Define o parâmetro productId
+	        // Define o parï¿½metro productId
 	        statement.setString(1, productId);
 	        statement.setString(2, productId);
 	        
-	        // Define os parâmetros de data
+	        // Define os parï¿½metros de data
 	        statement.setString(3, startDate);
 	        statement.setString(4, endDate);
 	        
@@ -50,8 +51,9 @@ public class SalesDataDao {
 	            String monthYear = resultSet.getString("month_year");
 	            int volume = resultSet.getInt("volume");
 	            String productName = resultSet.getString("productName");
+	            Double valor = resultSet.getDouble("valorTotal");
 	            
-	            SalesData data = new SalesData(monthYear, volume, productName);
+	            SalesData data = new SalesData(monthYear, volume, productName, valor);
 	            salesDataList.add(data);
 	        }
 	        con.close();

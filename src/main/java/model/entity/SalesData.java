@@ -6,6 +6,7 @@ public class SalesData {
 	 private String  date;
      private int volume;
      private String productName;
+     private Double valor; 
      
 	public SalesData() {
 		super();
@@ -13,11 +14,12 @@ public class SalesData {
 	}
 
 
-	public SalesData(String date, int volume , String productName) {
+	public SalesData(String date, int volume , String productName, Double valor) {
 		super();
 		this.date = date;
 		this.volume = volume;
 		this.productName = productName;
+		this.valor = valor;
 	}
 
 
@@ -48,6 +50,16 @@ public class SalesData {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+
+	public Double getValor() {
+		return valor;
+	}
+
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
 	

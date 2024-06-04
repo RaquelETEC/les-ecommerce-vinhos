@@ -60,34 +60,39 @@
                                 <option value="all">Todos os Produtos</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="dataDe" class="form-label">Data de:</label>
-                            <input type="date" class="form-control" id="dataDe">
+                            <input type="date" class="form-control" id="dataDe"  value="2023-01-01">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="dataAte" class="form-label">Data até:</label>
-                            <input type="date" class="form-control" id="dataAte">
+                            <input type="date" class="form-control" id="dataAte"  value="2024-06-04">
+                        </div>
+						<div class="col-md-2 d-flex align-items-end justify-content-center">
+                          	<button onClick="filtrar()" id="filtrarBtn" class="btn btn-dark" style="min-width: 15vh;">Filtrar</button>
                         </div>
                     </div>
-                    
-                    <!-- Botão de Filtrar -->
-                    <div class="row mt-4">
-                        <div class="col-md-12 text-center">
-                            <button onClick="filtrar()" id="filtrarBtn" class="btn btn-primary">Filtrar</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Gráficos -->
-                    <div class="row mt-4">
-                        <!-- Gráfico de Linha -->
-                        <div class="col-md-6">
-                            <canvas id="salesChart" style="width: 100%; height: 300px;"></canvas>
-                        </div>
-                        <!-- Gráfico de Pizza -->
-                        <div class="col-md-6">
-                            <canvas id="salesPieChart" style="width: 100%; height: 300px;"></canvas>
-                        </div>
-                    </div>
+					
+                     <!-- Gráficos -->
+					<!-- Gráfico de Linha -->
+					<div class="chat-line mt-4" style="min-width: 100%; max-height: 25vh;">
+					    <canvas id="salesChart" style="min-width: 100%; max-height: 25vh;"></canvas>
+					</div>
+					<div class="row mt-4">
+					    <!-- Gráfico de barras -->
+					    <div class="col-md-6" style="height: 30vh;">
+					        <p>Totais por Produto</p>
+					        <canvas id="salesBarChart"></canvas>
+					    </div>
+					    <!-- Total vendido -->
+					    <div class="col-md-6 text-center" style="height: 30vh;">
+					        <p>Valor Total</p>
+					        <p id="totalSales" style="font-size: 4vh; font-weight: 400; color: #7ac0c0;"></p>
+					        <br>
+					        <p>Quantidade Total</p>
+					        <p id="totalSalesQuant" style="font-size: 4vh; font-weight: 400; color: #7ac0c0;"></p>
+					    </div>
+					</div>
                 </div>
             </main>
         </div>
