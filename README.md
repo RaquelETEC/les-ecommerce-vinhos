@@ -13,3 +13,6 @@
 
 -[Documento de Visão de Projeto - LES Comerce E-Vinhos (1).docx](https://github.com/user-attachments/files/15541008/Documento.de.Visao.de.Projeto.-.LES.Comerce.E-Vinhos.1.docx) : Detalha a visão geral do projeto, incluindo seus objetivos, escopo e requisitos.
 - [Especificação de Caso de Uso](https://github.com/user-attachments/files/15540978/Especificacao.de.Caso.de.Uso.-.CR.WINES.1.pdf): Descreve os casos de uso do sistema, fornecendo cenários e interações entre usuários e o sistema.
+
+
+![image](https://github.com/RaquelETEC/les-ecommerce-vinhos/assets/53949793/31d3d830-8c9c-49dd-a33b-18c6047c2f99)
