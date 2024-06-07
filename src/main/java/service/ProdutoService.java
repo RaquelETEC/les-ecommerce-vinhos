@@ -37,6 +37,10 @@ public class ProdutoService {
 		return daoProdutos.selecionarProduto(produto, precificacao, categoria);
 		
 	}
+
+	public List<Produtos> listarProdutosDisponiveis() {
+		return daoProdutos.fetchAllProducts();
+	}
 	
 
 

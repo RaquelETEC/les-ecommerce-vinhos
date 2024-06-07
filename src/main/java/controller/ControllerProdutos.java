@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,13 +12,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import model.entity.Categoria;
 import model.entity.Precificacao;
 import model.entity.Produtos;
 import service.ProdutoService;
 
 
-@WebServlet(urlPatterns = { "/paginaInical.html", "/areaAdministrador/Produtos.html", "/areaAdministrador/EditarProdutos.html"})
+@WebServlet(urlPatterns = { "/paginaInical.html", 
+		"/areaAdministrador/Produtos.html", 
+		"/areaAdministrador/EditarProdutos.html",
+		"/produtosDisponiveis.html"})
 
 public class ControllerProdutos extends HttpServlet{
 	
@@ -48,9 +55,23 @@ public class ControllerProdutos extends HttpServlet{
 		} 
 		else if (action.equals("/areaAdministrador/EditarProdutos.html")) {
 			TelaEditarProduto(request,response);
-		} 
+		}
+		else if(action.equals("/http://localhost:8080/produtosDisponiveis.html")) {
+			consultaProdutoDisponiveisController(request,response);
+		}
 	}
 	
+	private void consultaProdutoDisponiveisController(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("acesso consulta produto disponivel");
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        
+        List<Produtos> produtos = produtoservice.listarProdutosDisponiveis();
+        PrintWriter out = response.getWriter();
+        new Gson().toJson(produtos, out);
+        out.close();
+	}
+
 	protected void AreaProdutos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		

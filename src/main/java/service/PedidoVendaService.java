@@ -113,7 +113,7 @@ public class PedidoVendaService {
 		    	
 			    Cupons cupomGerado = new Cupons();
 			    cupomGerado.setId(Integer.parseInt(respostaCupom));
-		    	respostaCupom = cupomService.vincularCupomAoCliente(cupomGerado,cliente);
+		    	//respostaCupom = cupomService.vincularCupomAoCliente(cupomGerado,cliente);
 		    	
 		    	resposta = respostaCupom.contains("ERRO") ? respostaCupom : resposta; 
 		    }

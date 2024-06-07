@@ -109,7 +109,7 @@ public class DaoCupons {
 	}
 
 	public String gerarNotificacao(Notificacoes notificacao) {
-		String insert = "INSERT INTO notificacoes (titulo, descricao, data) " +
+		String insert = "INSERT INTO notificacoes (titulo, descricao, data, cliente_id) " +
 		      "VALUES (?, ?, ?)";
 		String resposta = "";
 		
@@ -119,7 +119,10 @@ public class DaoCupons {
 			  pst.setString(1, notificacao.getTitulo());
 			  pst.setString(2, notificacao.getDescricao());
 			  pst.setDate(3, notificacao.getData());
-			 
+			  
+			  if (notificacao.getCliente().getId() != 0) 
+				  pst.setInt(4, notificacao.getCliente().getId());
+			  
 		      int linhasAfetadas  = pst.executeUpdate();
 			  con.close();	
 			 

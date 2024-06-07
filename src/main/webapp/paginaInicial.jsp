@@ -16,11 +16,14 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 <meta charset="utf-8">
 <title>CR WINES</title>
 <link rel="icon" href="imagens/favicon.png">
+
 <link rel="stylesheet" href="Styles/styleIndexv5.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	
 <script src="scripts/PagInicialv1.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 
@@ -193,42 +196,142 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 				%>
 			</div>
 		</div>
-
 		<!-- Chatbot container -->
-		<div id="chatbot-container" class="collapsed">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col">
-						<button id="toggle-chatbot" class="btn btn-primary">Chatbot</button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<!-- Chatbot content -->
-						<div id="chatbot-content" style="display: none;">
-							<div id="chat-messages"
-								style="height: 200px; overflow-y: scroll;">
-								<div id="chat-container"></div>
-								<div class="input-group mt-3">
-									<input type="text" class="form-control" id="user-input"
-										placeholder="Precisa de ajuda?">
-									<button class="btn btn-primary" id="send-button"
-										onclick="sendMessage()">Enviar</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+	<div id="chatbot-container" class="card">
+		<div id="chatbot-header" class="card-header">
+			<button id="toggle-chatbot" class="btn btn-dark btn-block">Precisa de ajuda 🤖👋?  </button>
 		</div>
+		<div id="chatbot-content" class="card-body">
+			<p id="text-assistent">Olá, sou Roberto 🤖 seu assistente virtual, como posso ajudar?</p>
+			<button id="assist-button" class="btn btn-secondary">Ajuda na escolha do vinho/espumante</button>
+			<form id="info-form" style="display:none;" class="mt-3">
+				<div class="form-group">
+					<label for="wine-type">Tipo de vinho preferido:</label>
+					<select id="wine-type" name="wine-type" class="form-control">
+						<option value=""></option>
+						<option value="nao-possuo">Não possuo</option>
+						<option value="tinto">Tinto</option>
+						<option value="branco">Branco</option>
+						<option value="rose">Rosé</option>
+						<option value="espumante">Espumante</option>
+					</select>
+				</div>
+				<div class="form-group">
+				    <label for="grape-variety">Variedade de uva preferida:</label>
+				    <select id="grape-variety" name="grape-variety" class="form-control">
+				        <option value=""></option>
+				        <option value="nao-possuo">Não possuo</option>
+				        <option value="cainho-tinto">Cainho Tinto</option>
+				        <option value="vermentino">Vermentino</option>
+				        <option value="chardonnay">Chardonnay</option>
+				        <option value="malbec">Malbec</option>
+				        <option value="pinot-noir">Pinot Noir</option>
+				        <option value="cabernet-sauvignon">Cabernet Sauvignon</option>
+				        <option value="cabernet-franc">Cabernet Franc</option>
+				        <option value="jaen">Jaen</option>
+				        <option value="mencia">Mencía</option>
+				        <option value="picapoll-tinto">Picapoll Tinto</option>
+				        <option value="grenache">Grenache</option>
+				        <option value="moscato-giallo">Moscato Giallo</option>
+				        <option value="outra">Outra</option>
+				    </select>
+				    <input type="text" id="other-grape-variety" name="other-grape-variety" class="form-control" style="display: none;" placeholder="Especifique outra variedade">
+				</div>
+				<div class="form-group">
+					<label for="region">Região preferida:</label>
+				    <select id="region" name="region" class="form-control">
+				        <option value=""></option>
+				        <option value="nao-possuo">Não possuo</option>
+				        <option value="vinho-verde-portugal">Vinho Verde - Portugal</option>
+				        <option value="toscana-italia">Toscana - Itália</option>
+				        <option value="pinto-bandeira-brasil">Pinto Bandeira - Brasil</option>
+				        <option value="mendoza-maipu-argentina">Mendoza - Maipú - Argentina</option>
+				        <option value="franciacorta-italia">Franciacorta - Itália</option>
+				        <option value="valle-central-chile">Valle Central - Chile</option>
+				        <option value="dao-portugal">Dão - Portugal</option>
+				        <option value="bierzo-espanha">Bierzo - Espanha</option>
+				        <option value="catalunha-espanha">Catalunha - Espanha</option>
+				        <option value="cabardes-languedoc-roussillon-franca">Cabardès - Languedoc-Rousillon - França</option>
+				    </select>
+				</div>
+				<div class="form-group">
+					<label for="price-range">Faixa de preço:</label>
+       				<input type="number" id="budget" name="budget" class="form-control">
+
+				</div>
+				<div class="form-group">
+					<label for="sweetness-level">Nível de doçura desejado:</label>
+					<select id="sweetness-level" name="sweetness-level" class="form-control">
+						<option value=""></option>
+						<option value="nao-possuo">Não possuo</option>
+						<option value="seco">Seco</option>
+						<option value="meio-seco">Meio seco</option>
+						<option value="doce">Doce</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="occasion">Ocasião:</label>
+					<select id="occasion" name="occasion" class="form-control">
+						<option value=""></option>
+						<option value="jantar">Jantar</option>
+						<option value="presente">Presente</option>
+						<option value="celebracao">Celebração especial</option>
+						<option value="consumo-diario">Consumo diário</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="food-pairing">Combinação com alimentos:</label>
+					<select id="food-pairing" name="food-pairing" class="form-control">
+					    <option value=""></option>
+				        <option value="nao-se-aplica">Não se aplica</option>
+				        <option value="carne-vermelha">Carne vermelha</option>
+				        <option value="aves">Aves</option>
+				        <option value="peixes">Peixes</option>
+				        <option value="queijos">Queijos</option>
+				        <option value="sobremesas">Sobremesas</option>
+				        <option value="massas">Massas</option>
+				        <option value="saladas">Saladas</option>
+				        <option value="frutos-do-mar">Frutos do mar</option>
+				        <option value="legumes">Legumes</option>
+				        <option value="aperitivos">Aperitivos</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="experience-level">Nível de experiência:</label>
+					<select id="experience-level" name="experience-level" class="form-control">
+						<option value=""></option>
+						<option value="iniciante">Iniciante</option>
+						<option value="intermediario">Intermediário</option>
+						<option value="conhecedor">Conhecedor</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="body-preference">Preferência por corpo:</label>
+					<select id="body-preference" name="body-preference" class="form-control">
+						<option value=""></option>
+						<option value="nao-possuo">Não possuo</option>
+						<option value="leve">Leve</option>
+						<option value="medio">Médio</option>
+						<option value="encorpado">Encorpado</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="flavor-notes">Notas de sabor preferidas:</label>
+					<input type="text" id="flavor-notes" name="flavor-notes" class="form-control" placeholder="Ex: frutado, floral, herbáceo, etc.">
+				</div>
+				<button type="submit" class="btn btn-dark btn-block">Enviar</button>
+			</form>
+		</div>
+	</div>
 	</main>
-
-
 	<footer class="p-4 text-light text-center footer">
 		Desenvolvido por Caynan e Raquel </footer>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

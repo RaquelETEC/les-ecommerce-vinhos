@@ -11,6 +11,10 @@ import model.entity.Notificacoes;
 public class CupomService {
 	private DaoCupons daoCupom;
 	
+    String tituloNotificao = "";
+	String descricaoNotificacao =""; 
+	int idCupom;
+	
     public CupomService() {
         this.daoCupom = new DaoCupons();
     }
@@ -32,9 +36,7 @@ public class CupomService {
             String img;
             Date validade;
             
-            String tituloNotificao = "";
-        	String descricaoNotificacao =""; 
-        	
+    
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date dataAtual = new Date();
 
@@ -77,14 +79,10 @@ public class CupomService {
 
             // Retornando o resultado
             String retorno = daoCupom.gerarCupom(codigo, descricao, img, tipoCupom, valorCupom, validade, 0);
-
+            
             if(!retorno.contains("erro")) {
-
-
-            	
+            	//idCupom = Integer.parseInt(retorno);
             }
-            
-            
             return retorno;
         
         }
@@ -103,62 +101,21 @@ public class CupomService {
 	        return "Cupom ou cliente não fornecido";
 	    }
 	   else {
-		   
-		   
 		String retorno =  daoCupom.vincularCupomAoCliente(cupom, cliente);
 		
-		
-    	Notificacoes notificacao = new Notificacoes();
-    	
-    /*	notificacao.setData(new Date();); 
-    	notificacao.setTitulo(tituloNotificao);
-    	notificacao.setDescricao(descricaoNotificacao);
-    	notificacao.setCliente(cliente);
-   
-    
-        
-        if(cupom.getTipo().contains(("T") &&  idProduto == 0 ) {
-				codigo = "CANCELADO#" + idPedido;
-				descricao = "Desconto de R$" + valorCupom + ", pelo cancelamento do pedido " + idPedido;
-				img = "trocaCupom.png";
-				validade = adicionarMeses(dataAtual, 12);         
-				
-				tituloNotificao = "PEDIDO "+idPedido+" CENCELADO ❌" ; 
-				descricaoNotificacao = "Seu cupom e desconto no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
-				
-         }else if (tipoCupom.equals("T")) { 
-             codigo = "TROCA#" + idPedido;
-             descricao = "Desconto de R$" + valorCupom + " pela troca do item " + idProduto + " no pedido " + idPedido;
-             img = "trocaCupom.png";
-             validade = adicionarMeses(dataAtual, 12);
-             
-				tituloNotificao = "PEDIDO "+idPedido+" TROCADO 🔄" ; 
-				descricaoNotificacao = "Seu cupom e desconto no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
-				
-       
-         }else if(tipoCupom.equals("SALDO")) {
-     	  codigo = "DESCONTO#" + idPedido;
-           descricao = "Desconto de R$" + valorCupom + " pela saldo restante do pedido" + idPedido;
-           img = "descontoSaldoCupom.png";
-           validade = adicionarMeses(dataAtual, 12);
-           
-			tituloNotificao = "CUPOM DE SALDO GERADO! 💲" ; 
-			descricaoNotificacao = "Seu cupom com o saldo restante do pedido "+idPedido +", no valor de R$"+valorCupom+ ", já esta disponivel para uso. Válido até:"+validade; 
-			tipoCupom = "T";
-         }
-         else { 
-             codigo = "PROMO#"; 
-             descricao = "Cupom promocional de desconto de R$" + valorCupom;
-             img = "trocaCupom.png";
-             validade = adicionarMeses(dataAtual, 6); 
-         }
+		if(retorno.contains("success") && cupom.getId() == idCupom) {
+			
+			//Notificacoes notificacao = new Notificacoes();
+	    //	notificacao.setData(new Date()); 
+	    	//notificacao.setTitulo(tituloNotificao);
+	    //	notificacao.setDescricao(descricaoNotificacao);
+	    //	notificacao.setCliente(cliente);
+	    	
+	    	//NotificacaoService.gerarNotificacao(notificacao);
 
-    	
-    	
-    	
-    	NotificacaoService.gerarNotificacao(notificacao);
-    	
-   */ 	
+		}
+		
+	
     	return retorno;
 	   }
 	}
