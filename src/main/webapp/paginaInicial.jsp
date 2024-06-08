@@ -255,8 +255,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 				    </select>
 				</div>
 				<div class="form-group">
-					<label for="price-range">Faixa de preço:</label>
-       				<input type="number" id="budget" name="budget" class="form-control">
+					<label for="price-range">Faixa de preço: *</label>
+       				<input type="number" id="budget" name="budget" class="form-control" required>
 
 				</div>
 				<div class="form-group">
@@ -270,8 +270,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="occasion">Ocasião:</label>
-					<select id="occasion" name="occasion" class="form-control">
+					<label for="occasion">Ocasião: *</label>
+					<select id="occasion" name="occasion" class="form-control" required>
 						<option value=""></option>
 						<option value="jantar">Jantar</option>
 						<option value="presente">Presente</option>
@@ -297,8 +297,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="experience-level">Nível de experiência:</label>
-					<select id="experience-level" name="experience-level" class="form-control">
+					<label for="experience-level">Nível de experiência: *</label>
+					<select id="experience-level" name="experience-level" class="form-control" required>
 						<option value=""></option>
 						<option value="iniciante">Iniciante</option>
 						<option value="intermediario">Intermediário</option>
@@ -319,8 +319,14 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					<label for="flavor-notes">Notas de sabor preferidas:</label>
 					<input type="text" id="flavor-notes" name="flavor-notes" class="form-control" placeholder="Ex: frutado, floral, herbáceo, etc.">
 				</div>
+				<div class="form-group">
+					<label for="obs-notes">Infomações complementares: </label>
+					<textarea id="obs-notes" name="obs-notes" class="form-control" placeholder="Ex: local ou clima onde será o consumo ou solicitar uma explicação detalhada."></textarea>
+				</div>
 				<button type="submit" class="btn btn-dark btn-block">Enviar</button>
 			</form>
+			<div id="chat-response-container"></div>
+			
 		</div>
 	</div>
 	</main>

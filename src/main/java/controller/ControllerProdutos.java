@@ -23,7 +23,9 @@ import service.ProdutoService;
 @WebServlet(urlPatterns = { "/paginaInical.html", 
 		"/areaAdministrador/Produtos.html", 
 		"/areaAdministrador/EditarProdutos.html",
-		"/produtosDisponiveis.html"})
+		"/produtosDisponiveis.html", 
+		"/buscaProduto.html"
+		})
 
 public class ControllerProdutos extends HttpServlet{
 	
@@ -56,11 +58,30 @@ public class ControllerProdutos extends HttpServlet{
 		else if (action.equals("/areaAdministrador/EditarProdutos.html")) {
 			TelaEditarProduto(request,response);
 		}
-		else if(action.equals("/http://localhost:8080/produtosDisponiveis.html")) {
+		else if(action.equals("/produtosDisponiveis.html")) {
 			consultaProdutoDisponiveisController(request,response);
+		}
+		else if(action.equals("/buscaProduto.html")) {
+			buscaProdutoController(request,response);
 		}
 	}
 	
+	private void buscaProdutoController(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		System.out.println("acesso consulta buscaProdutoController");
+		response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        
+        int id = Integer.parseInt(request.getParameter("id"));
+        Produtos produto = new Produtos();
+        
+        produto = produtoservice.listarProdutoPorID(id);
+        
+        PrintWriter out = response.getWriter();
+        new Gson().toJson(produto, out);
+        out.close();
+	}
+
+
 	private void consultaProdutoDisponiveisController(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("acesso consulta produto disponivel");
 		response.setContentType("application/json");

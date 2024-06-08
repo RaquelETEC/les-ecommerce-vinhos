@@ -190,5 +190,23 @@ public class DAOProdutos {
         return listProdutos;
     }
 
+    public List<Produtos> ProdutosDisponiveis() {
+        List<Produtos> listProdutos = new ArrayList<>();
+        String query = "SELECT pro_id, pro_desc , pro_preco_venda FROM produto";
+
+		try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Produtos produto = new Produtos();
+                produto.setId(rs.getInt("pro_id"));
+                produto.setDesc(rs.getString("pro_desc"));
+                produto.setPro_preco_venda(rs.getDouble("pro_preco_venda"));
+                listProdutos.add(produto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listProdutos;
+    }
 
 }

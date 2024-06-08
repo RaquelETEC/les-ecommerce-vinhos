@@ -39,9 +39,12 @@ public class ProdutoService {
 	}
 
 	public List<Produtos> listarProdutosDisponiveis() {
-		return daoProdutos.fetchAllProducts();
+		return daoProdutos.ProdutosDisponiveis();
 	}
 	
+	public Produtos listarProdutoPorID(int id) {
+		return daoProdutos.buscarProdutoPorId(id);
+	}
 
 
 }
