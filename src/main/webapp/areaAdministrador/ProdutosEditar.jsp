@@ -72,12 +72,12 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 									value=<%=produto.getCodigo_barra()%>>
 							</div>
 							<div class="col-md-3">
-								<label for="descricao" class="form-label">Descriï¿½ï¿½o:</label> <input
+								<label for="descricao" class="form-label">Descrição:</label> <input
 									type="text" class="form-control" id="descricao"
 									value="<%=produto.getDesc()%>" name="descricao">
 							</div>
 							<div class="col-md-3">
-								<label for="preco" class="form-label">Preï¿½o em R$</label> <input
+								<label for="preco" class="form-label">Preço em R$</label> <input
 									type="text" class="form-control" id="preco"
 									value="<%=produto.getPro_preco_venda()%>" name="preco">
 							</div>
@@ -92,7 +92,7 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 									value="<%=produto.getPais()%>">
 							</div>
 							<div class="col-md-3">
-								<label for="regiao" class="form-label">Regiï¿½o:</label> <input
+								<label for="regiao" class="form-label">Região:</label> <input
 									type="text" class="form-control" id="regiao" name="regiao"
 									value="<%=produto.getRegiao()%>">
 							</div>
@@ -134,13 +134,13 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 									name="Profundidade" value="<%=produto.getProfundidade()%>">
 							</div>
 							<div class="col-md-3">
-								<label for="alcool" class="form-label">Teor alcoï¿½lico em
+								<label for="alcool" class="form-label">Teor alcoólico em
 									%</label> <input type="text" class="form-control" id="alcool"
 									name="alcool" value="<%=produto.getAlcool()%>">
 							</div>
 							<div class="col-md-3">
 								<label for="grupoPrecificacao" class="form-label">Grupo
-									de Precificaï¿½ï¿½o:</label> <select class="form-select"
+									de Precificação:</label> <select class="form-select"
 									id="grupoPrecificacao" name="grupoPrecificacao">
 									<option value="Grupo Premium"
 										<%="Grupo Premium".equals(request.getAttribute("PrecificacaoDesc")) ? "selected" : ""%>>Grupo
@@ -179,12 +179,12 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 				<div class="row justify-content-left mt-5"
 					style="margin-left: 125px;">
 					<div class="col-md-8">
-						<h3 class=" mb-3">Adicionar Harmonizaï¿½ï¿½o</h3>
+						<h3 class=" mb-3">Adicionar Harmonização</h3>
 						<table class="table">
 							<thead>
 								<tr>
-									<th>Harmonizaï¿½ï¿½o</th>
-									<th>Opï¿½ï¿½es</th>
+									<th>Harmonização</th>
+									<th>Opções</th>
 								</tr>
 							</thead>
 							<tbody id="tabelaHarmonizacoes">
@@ -192,7 +192,7 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 							</tbody>
 						</table>
 						<button class="btn btn-primary" onclick="adicionarHarmonizacao()">Inserir
-							Harmonizaï¿½ï¿½o</button>
+							Harmonização</button>
 					</div>
 				</div>
 
