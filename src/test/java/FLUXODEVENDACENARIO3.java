@@ -22,7 +22,7 @@ public class FLUXODEVENDACENARIO3 {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		// Navega até a página desejada
-		driver.get("http://localhost:8080/les-ecommerce-vinhos/paginaInical.html");
+		driver.get("/les-ecommerce-vinhos/paginaInical.html");
 
 		Actions builder = new Actions(driver);
 

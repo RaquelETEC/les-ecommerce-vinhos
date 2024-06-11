@@ -27,10 +27,10 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 
 </head>
 
-<body>
+<body style="overflow-x: hidden !important;">
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 	    <div class="container-fluid">
-	        <a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>
+			<a href="/les-ecommerce-vinhos/paginaInical.html">
 	            <img src="imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3">
 	        </a>
 	        <div class="navbar-nav ms-auto">
@@ -323,7 +323,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					<label for="obs-notes">Infomações complementares: </label>
 					<textarea id="obs-notes" name="obs-notes" class="form-control" placeholder="Ex: local ou clima onde será o consumo ou solicitar uma explicação detalhada."></textarea>
 				</div>
-				<button type="submit" class="btn btn-dark btn-block">Enviar</button>
+				<button id="submit-btn" type="submit" class="btn btn-dark btn-block">Enviar</button>
 			</form>
 			<div id="chat-response-container"></div>
 			

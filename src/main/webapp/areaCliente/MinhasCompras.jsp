@@ -47,7 +47,7 @@ String pedidosJson = gson.toJson(listaPedidos);
 		style="background: black;">
 		<div class="container-fluid">
 			<a
-				href="http://localhost:8080/les-ecommerce-vinhos/paginaInical.html"><img
+				href="/les-ecommerce-vinhos/paginaInical.html"><img
 				src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3"></a>
 

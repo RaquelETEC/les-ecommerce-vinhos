@@ -1,7 +1,5 @@
 package model.entity;
 
-public enum StatusCarrinhoItens{
-	ADICIONADO,
-	REMOVIDO,
-	COMPRADO;
+public enum StatusCarrinhoItens {
+	ADICIONADO, REMOVIDO, COMPRADO;
 }

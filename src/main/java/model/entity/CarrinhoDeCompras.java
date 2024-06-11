@@ -3,9 +3,9 @@ package model.entity;
 import java.util.ArrayList;
 
 public class CarrinhoDeCompras {
-    private int id;
-    private Cliente cliente;
-    private int quantItems;
+	private int id;
+	private Cliente cliente;
+	private int quantItems;
 
 	private ArrayList<CarrinhoItens> listaitems = new ArrayList<>();
 
@@ -54,6 +54,4 @@ public class CarrinhoDeCompras {
 		this.listaitems = listaitems;
 	}
 
-	
-    
 }

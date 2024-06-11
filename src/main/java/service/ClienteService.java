@@ -28,8 +28,9 @@ public class ClienteService {
 
 			// Inserir o cliente
 
-			byte[] senhaCriptografada = PasswordUtil.criptografarSenha(cliente.getSenha());  //encriptografa a senha string 			
-			cliente.setSenha(new String(senhaCriptografada)); //converte a senha criptografada para uma string
+			byte[] senhaCriptografada = PasswordUtil.criptografarSenha(cliente.getSenha()); // encriptografa a senha
+																							// string
+			cliente.setSenha(new String(senhaCriptografada)); // converte a senha criptografada para uma string
 
 			int idCliente = daoCliente.inserirCliente(cliente);
 			cliente.setId(idCliente);
@@ -72,36 +73,36 @@ public class ClienteService {
 	}
 
 	public String alterarSenha(Cliente cliente, String senhaAtual, String novaSenha, String repitaSenha) {
-	    try {
-	    	
+		try {
+
 			System.out.println("cheguei no alterar senha SERVICE");
 
-	        // Verificar se a nova senha é forte
-	        String validationString = PasswordUtil.verificarSenhaForte(novaSenha, repitaSenha);
-	        
-	        if (!validationString.isEmpty()) {
-	            return validationString; // Retorna a mensagem de validação se a nova senha não for forte
-	        }
-	        
-	        System.out.println("A SENHA CADASTRADA : " + cliente.getSenha());
-	        
-	        if (!PasswordUtil.verificarSenha(senhaAtual, cliente.getSenha())) {
-	            return "A senha atual digitada está incorreta.";
-	        }
-	        
-	        // Criptografar a nova senha
-	        byte[] novaSenhaCriptografada = PasswordUtil.criptografarSenha(novaSenha);
-	        cliente.setSenha(new String(novaSenhaCriptografada));
+			// Verificar se a nova senha é forte
+			String validationString = PasswordUtil.verificarSenhaForte(novaSenha, repitaSenha);
 
-	        // Alterar a senha no banco de dados
-	        String resultado = daoCliente.AlterarSenha(cliente);
-	        
-	        return resultado;
-	    
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return "Erro ao inesperado ao alterar senha : " + e.getMessage();
-	    }
+			if (!validationString.isEmpty()) {
+				return validationString; // Retorna a mensagem de validação se a nova senha não for forte
+			}
+
+			System.out.println("A SENHA CADASTRADA : " + cliente.getSenha());
+
+			if (!PasswordUtil.verificarSenha(senhaAtual, cliente.getSenha())) {
+				return "A senha atual digitada está incorreta.";
+			}
+
+			// Criptografar a nova senha
+			byte[] novaSenhaCriptografada = PasswordUtil.criptografarSenha(novaSenha);
+			cliente.setSenha(new String(novaSenhaCriptografada));
+
+			// Alterar a senha no banco de dados
+			String resultado = daoCliente.AlterarSenha(cliente);
+
+			return resultado;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Erro ao inesperado ao alterar senha : " + e.getMessage();
+		}
 	}
-	
+
 }

@@ -9,7 +9,7 @@ public class CartaoDeCredito {
 	private BandeiraCartao bandeira;
 	private int codigoSeguranca;
 	private Double valor;
-	private boolean cartaoNoPerfil; 
+	private boolean cartaoNoPerfil;
 
 	public CartaoDeCredito() {
 		super();
@@ -102,5 +102,4 @@ public class CartaoDeCredito {
 		this.cartaoNoPerfil = cartaoNoPerfil;
 	}
 
-	
 }

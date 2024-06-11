@@ -18,13 +18,9 @@ import model.entity.Cliente;
 import model.entity.Cupons;
 import model.entity.PedidoItens;
 
-@WebServlet(urlPatterns = { 
-		"/areaAdministrador/PedidoVenda.html",
-		"/areaAdministrador/EditarPedido",
-		"/areaAdministrador/TrocaPedidos.html",
-		"/areaAdministrador/AlterarStatusTroca.html",
-		"/areaAdministrador/alterarStatusItemPedido.html", 
-		})
+@WebServlet(urlPatterns = { "/areaAdministrador/PedidoVenda.html", "/areaAdministrador/EditarPedido",
+		"/areaAdministrador/TrocaPedidos.html", "/areaAdministrador/AlterarStatusTroca.html",
+		"/areaAdministrador/alterarStatusItemPedido.html", })
 public class ControllerAdministracao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -34,7 +30,6 @@ public class ControllerAdministracao extends HttpServlet {
 	Cliente cliente = new Cliente();
 	PedidoVendaService pedidoService = new PedidoVendaService();
 	CupomService cupomService = new CupomService();
-
 
 	public ControllerAdministracao() {
 		super();
@@ -50,7 +45,7 @@ public class ControllerAdministracao extends HttpServlet {
 			AreaPedidos(request, response);
 		} else if (action.equals("/areaAdministrador/EditarPedido")) {
 			EditarPedido(request, response);
-		}else if (action.equals("/areaAdministrador/TrocaPedidos.html")) {
+		} else if (action.equals("/areaAdministrador/TrocaPedidos.html")) {
 			PagePedidoTrocas(request, response);
 		}
 
@@ -60,10 +55,10 @@ public class ControllerAdministracao extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("Cheguei no area pedidos");
-		
-		ArrayList<PedidoVenda> lista = pedidoService.listarPedidoVenda(new Cliente(), null,0);
+
+		ArrayList<PedidoVenda> lista = pedidoService.listarPedidoVenda(new Cliente(), null, 0);
 		request.setAttribute("listaPedidos", lista);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/AprovacaoPedidos.jsp");
 		rd.forward(request, response);
 
@@ -74,9 +69,9 @@ public class ControllerAdministracao extends HttpServlet {
 
 		int idPedido = Integer.parseInt(request.getParameter("idPedido"));
 		pedidoVenda.setId(idPedido);
-		
+
 		pedidoVenda = pedidoService.selecionarPedido(pedidoVenda);
-		
+
 		request.setAttribute("pedidoVenda", pedidoVenda);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/AprovacaoPedidosEditar.jsp");
@@ -90,7 +85,7 @@ public class ControllerAdministracao extends HttpServlet {
 		pedidoVenda.setId(idPedido);
 
 		pedidoVenda.setStatus(request.getParameter("PedidoStatus"));
-		
+
 		pedidoService.editarPedido(pedidoVenda);
 
 		String resposta = pedidoService.editarPedido(pedidoVenda);
@@ -99,20 +94,18 @@ public class ControllerAdministracao extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(resposta);
 		response.getWriter().flush();
-		
+
 	}
 
 	private void PagePedidoTrocas(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("trocas");
-		
+
 		ArrayList<PedidoVenda> listaTrocas = pedidoService.listarItensTroca();
-				
+
 		request.setAttribute("listaPedidos", listaTrocas);
 		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/TrocaPedidos.jsp");
 		rd.forward(request, response);
 	}
-	
-	
-	
+
 }

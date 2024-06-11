@@ -25,7 +25,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 	<nav class="navbar navbar-expand-sm py-3 sticky-top"
 		style="background: black;">
 		<div class="container-fluid">
-		<a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>	<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
+		<a href='/les-ecommerce-vinhos/paginaInical.html'>	<img src="imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 				<p style="color: white;">
@@ -102,7 +102,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 				<div class="Content">
 					<h2>Sub Total</h2>
 					<br> <span id="totalCarriho" style="font-size: 24px; color: orange;"><strong>R$
-							<%=total%></strong></span> <br> 
+							<%= total %></strong></span> <br> 		 
 					<button 
 						id="btn-finalizar-compra" 
 						class="btn btn-primary" 
@@ -179,7 +179,7 @@ ArrayList<CarrinhoItens> itensRemovidos = (ArrayList<CarrinhoItens>) request.get
 			</div>
 		</div>
 	</div>
-  <footer class="p-4 text-light text-center footer fixed-bottom" style="background: black;">
+  <footer class="p-4 text-light text-center footer" style="background: black;">
 			Desenvolvido por Caynan e Raquel 
 		</footer>
 

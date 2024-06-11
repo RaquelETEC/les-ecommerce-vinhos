@@ -1,26 +1,29 @@
+/**
+ * Configurações da tela principal
+ * 
+ * @author Raquel Gonçalves
+ */
+
+var baseUrl = window.location.origin; 
+
 function incrementarQuant(productId) {
-	debugger
 	let quantidade = parseInt(document.getElementById(`quantity${productId}`).innerText);
 	document.getElementById(`quantity${productId}`).innerText = quantidade + 1;
 }
 
 function decrementarQuant(productId) {
-	debugger
 	let quantidade = parseInt(document.getElementById(`quantity${productId}`).innerText);
 	if (quantidade > 1) { // Limite mínimo de 1
 		document.getElementById(`quantity${productId}`).innerText = quantidade - 1;
 	}
 }
 
-
-
 function AdicionarAoCarrinho(id, idProd, quant) {
-	debugger;
  	var id = id;
     var idProd = idProd;
     var quant = quant;
 
-    var respostaAjax; // Variável para armazenar a resposta da requisição AJAX
+    var respostaAjax; 
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/les-ecommerce-vinhos/AdicionarAoCarrinho?id=" + id + "&idProd=" + idProd + "&quant=" + quant , true);
@@ -28,8 +31,8 @@ function AdicionarAoCarrinho(id, idProd, quant) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-				debugger;
-                respostaAjax = xhr.responseText; // Armazena a resposta da requisição AJAX na variável respostaAjax
+				
+                respostaAjax = xhr.responseText; 
                 alert(respostaAjax)
             } else {
                 alert("Erro ao realizar a requisição.");
@@ -37,11 +40,8 @@ function AdicionarAoCarrinho(id, idProd, quant) {
         }
     };
     xhr.send();
-
-    // A partir daqui, você pode usar a variável respostaAjax conforme necessário
 }
  
-// script.js
 document.addEventListener("DOMContentLoaded", function() {
 	const chatbotContainer = document.getElementById("chatbot-container");
 	const toggleChatbotButton = document.getElementById("toggle-chatbot");
@@ -84,30 +84,36 @@ document.addEventListener("DOMContentLoaded", function() {
 //enviar chat
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("info-form");
+	const submitBtn = document.getElementById("submit-btn");
 
     form.addEventListener("submit", async(event) => {
-        event.preventDefault(); // Impede o envio padrão do formulário
+        event.preventDefault(); 
 
-        // Captura dos valores dos campos do formulário
-        const wineType = document.getElementById("wine-type").value;
-        const grapeVariety = document.getElementById("grape-variety").value;
-        const region = document.getElementById("region").value;
-        const budget = document.getElementById("budget").value;
-        const sweetnessLevel = document.getElementById("sweetness-level").value;
-        const occasion = document.getElementById("occasion").value;
-        const foodPairing = document.getElementById("food-pairing").value;
-        const experienceLevel = document.getElementById("experience-level").value;
-        const bodyPreference = document.getElementById("body-preference").value;
-        const flavorNotes = document.getElementById("flavor-notes").value;
-        const informaçõesComplementares = document.getElementById("obs-notes").value;
-
-        // Formatação dos valores em um texto estruturado
-        const textForm = `Tipo de vinho preferido: ${wineType}, Variedade de uva preferida: ${grapeVariety}, Região preferida: ${region}, Faixa de preço: ${budget}, Nível de doçura desejado: ${sweetnessLevel}, Ocasião: ${occasion}, Combinação com alimentos: ${foodPairing}, Nível de experiência: ${experienceLevel}, Preferência por corpo: ${bodyPreference}, Notas de sabor preferidas: ${flavorNotes}, Observações: ${informaçõesComplementares}`;
+	   // Função auxiliar para retornar "Não tenho" se o valor estiver vazio
+	    const getValueOrDefault = (value) => value.trim() === "" ? "Não tenho" : value;
+	
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Carregando Recomendação...";
+	
+	    const wineType = getValueOrDefault(document.getElementById("wine-type").value);
+	    const grapeVariety = getValueOrDefault(document.getElementById("grape-variety").value);
+	    const region = getValueOrDefault(document.getElementById("region").value);
+	    const budget = getValueOrDefault(document.getElementById("budget").value);
+	    const sweetnessLevel = getValueOrDefault(document.getElementById("sweetness-level").value);
+	    const occasion = getValueOrDefault(document.getElementById("occasion").value);
+	    const foodPairing = getValueOrDefault(document.getElementById("food-pairing").value);
+	    const experienceLevel = getValueOrDefault(document.getElementById("experience-level").value);
+	    const bodyPreference = getValueOrDefault(document.getElementById("body-preference").value);
+	    const flavorNotes = getValueOrDefault(document.getElementById("flavor-notes").value);
+	    const informaçõesComplementares = getValueOrDefault(document.getElementById("obs-notes").value);
+	
+	    // Formatação dos valores em um texto estruturado
+	    const textForm = `Tipo de vinho preferido: ${wineType}, Variedade de uva preferida: ${grapeVariety}, Região preferida: ${region}, Faixa de preço: ${budget}, Nível de doçura desejado: ${sweetnessLevel}, Ocasião: ${occasion}, Combinação com alimentos: ${foodPairing}, Nível de experiência: ${experienceLevel}, Preferência por corpo: ${bodyPreference}, Notas de sabor preferidas: ${flavorNotes}, Observações: ${informaçõesComplementares}`;
 
         let textProdutosDisponiveis = "";
 
         // Fazer a requisição HTTP GET para /ProdutosDisponiveis
-        await fetch("http://localhost:8080/les-ecommerce-vinhos/produtosDisponiveis.html")
+        await fetch("/les-ecommerce-vinhos/produtosDisponiveis.html")
             .then(response => response.json()) // Extrair os dados JSON da resposta
             .then(produtos => {
                 // Manipular os dados dos produtos como desejado
@@ -123,7 +129,9 @@ document.addEventListener("DOMContentLoaded", function() {
         Esta é lista de vinhos que o site possui: ${textProdutosDisponiveis}. 
         Por favor, forneça sua recomendação no seguinte formato:
         ID= <ID do produto>
-        MOTIVO= <Motivo da recomendação>`;
+        MOTIVO= <Motivo da recomendação>
+        Não forneça respostas que não são relacionadas a vinhos/espumantes.
+        Não forneça a recomendação maior a 1 produto.`;
         
        await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
@@ -156,14 +164,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
 async function exibirResposta(respostaIa) {
     const linhas = respostaIa.split('\n');
+    
+    const infoForm = document.getElementById("info-form");
+    infoForm.style.display = "none";
+    
+    if (linhas.length !== 2 || !linhas[0].startsWith('ID=') || !linhas[1].startsWith('MOTIVO=')) {
+        // Se a resposta não estiver no formato esperado, exibir apenas a mensagem da IA e o botão "Voltar"
+        const motivo = linhas.join('\n'); 
+        const textAssistent = document.getElementById("text-assistent");
+        textAssistent.innerText = motivo;
+
+        const chatResponseContainer = document.getElementById('chat-response-container');
+        
+        const voltarButton = document.createElement('button');
+        voltarButton.className = 'btn btn-secondary';
+        voltarButton.innerText = 'Voltar';
+        voltarButton.onclick = () => resetChat();
+        chatResponseContainer.appendChild(voltarButton);
+        return; 
+    }
+
+    // Continuar com o processamento normal da resposta
     const id = linhas[0].split('=')[1].trim();
     const motivo = linhas[1].split('=')[1].trim();
-	const textAssistent = document.getElementById("text-assistent");
-	const infoForm = document.getElementById("info-form");
-	
-	infoForm.style.display = "none";
-	textAssistent.innerText  = 'Aqui esta sua recomendação: '
-	
+    const textAssistent = document.getElementById("text-assistent");
+
+    textAssistent.innerText = 'Aqui está sua recomendação: ';
+
     // Inicializar o produto com valores padrão
     const produto = {
         id: id,
@@ -174,7 +201,7 @@ async function exibirResposta(respostaIa) {
 
     try {
         // Fazer a requisição para buscar o produto pelo ID
-        const response = await fetch(`http://localhost:8080/les-ecommerce-vinhos/buscaProduto.html?id=${id}`);
+        const response = await fetch(`/les-ecommerce-vinhos/buscaProduto.html?id=${id}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -224,16 +251,15 @@ async function exibirResposta(respostaIa) {
         addToCartButton.innerText = 'Adicionar ao carrinho';
         cardBody.appendChild(addToCartButton);
 
-
         card.appendChild(imageContainer);
         card.appendChild(cardBody);
         chatResponseContainer.appendChild(card);
 
-              // Adicionar o motivo abaixo do card com margem à direita
+        // Adicionar o motivo abaixo do card com margem à direita
         const motivoText = document.createElement('p');
         motivoText.innerText = motivo;
-        motivoText.style.marginRight = '40px'; 
-        motivoText.style.textAlign = 'justify'; 
+        motivoText.style.marginRight = '40px';
+        motivoText.style.textAlign = 'justify';
         chatResponseContainer.appendChild(motivoText);
 
         // Adicionar o botão "Voltar"
@@ -242,7 +268,7 @@ async function exibirResposta(respostaIa) {
         voltarButton.innerText = 'Voltar';
         voltarButton.onclick = () => resetChat();
         chatResponseContainer.appendChild(voltarButton);
-        
+
     } catch (error) {
         console.error("Erro ao obter produto:", error);
     }
@@ -256,8 +282,12 @@ function resetChat() {
     textAssistent.innerText = 'Olá, sou Roberto 🤖 seu assistente virtual, como posso ajudar?';
 
     const infoForm = document.getElementById("info-form");
-    infoForm.style.display = "none"; // Esconder o formulário novamente
-
+    infoForm.style.display = "none";
+    
     const assistButton = document.getElementById("assist-button");
     assistButton.style.display = "block"; // Mostrar o botão de assistência
+    
+    const submitBtn = document.getElementById("submit-btn");
+ 	submitBtn.disabled = false;
+ 	submitBtn.textContent = "Enviar";
 }

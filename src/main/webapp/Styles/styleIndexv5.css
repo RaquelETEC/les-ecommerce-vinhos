@@ -2,9 +2,6 @@
 
 @import	url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-
-
-
 .filter{
 	background-color: #F2F2F2;
 	height: 900px;
@@ -106,8 +103,8 @@ body .row .filter.col-2.m-5 {
 }
 
 #chatbot-container.expanded {
-	width: 400px;
-	height: 600px;
+	width: 25%;
+	height: 85%;
 }
 
 #chatbot-content {

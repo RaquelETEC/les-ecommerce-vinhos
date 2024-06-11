@@ -8,43 +8,41 @@ import model.entity.Categoria;
 import model.entity.Precificacao;
 import model.entity.Produtos;
 
-
 public class ProdutoService {
-	
+
 	private DAOProdutos daoProdutos;
 	Produtos produto = new Produtos();
-	
+
 	public ProdutoService() {
-	this.daoProdutos = new DAOProdutos();
-	
+		this.daoProdutos = new DAOProdutos();
+
 	}
-	
+
 	public ArrayList<Produtos> listarProdutos() {
 		return daoProdutos.ListarProdutos();
 	}
-	
+
 	public List<Produtos> listarProdutosDataAnalysis() {
 		return daoProdutos.fetchAllProducts();
 	}
-	
+
 	public ArrayList<Produtos> listarProdutosAreaADM() {
 		return daoProdutos.ListarProdutosAreaADM();
 	}
-	
+
 	public Produtos selecionarProduto(Produtos produto, Precificacao precificacao, Categoria categoria) {
 		System.out.println("Cheguei no selecionarProduto Service");
-		
+
 		return daoProdutos.selecionarProduto(produto, precificacao, categoria);
-		
+
 	}
 
 	public List<Produtos> listarProdutosDisponiveis() {
 		return daoProdutos.ProdutosDisponiveis();
 	}
-	
-	public Produtos listarProdutoPorID(int id) {
-		return daoProdutos.buscarProdutoPorId(id);
-	}
 
+	public Produtos listarProdutoPorID(int id) {
+		return daoProdutos.buscarProdutoPorIdSimples(id);
+	}
 
 }

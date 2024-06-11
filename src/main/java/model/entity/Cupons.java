@@ -3,7 +3,7 @@ package model.entity;
 import java.util.Date;
 
 public class Cupons {
-	
+
 	private Integer id;
 	private Cliente cliente;
 	private String codigo;
@@ -12,12 +12,11 @@ public class Cupons {
 	private String tipo;
 	private Double valor;
 	private Date validade;
-	
+
 	public Cupons() {
 		super();
 	}
 
-	
 	public Cupons(Integer id, Cliente cliente, String codigo, String desc, String img, String tipo, Double valor,
 			Date validade) {
 		super();
@@ -30,7 +29,6 @@ public class Cupons {
 		this.valor = valor;
 		this.validade = validade;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -95,7 +93,5 @@ public class Cupons {
 	public void setValidade(Date validade) {
 		this.validade = validade;
 	}
-	
-	
-	
+
 }

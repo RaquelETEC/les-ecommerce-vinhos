@@ -8,6 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.interactions.Actions;
+
+import util.Config;
+
 import org.openqa.selenium.Dimension;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +39,7 @@ public class FLUXODEVENDATest {
 
 	@Test
 	public void fLUXODEVENDA() {
-		driver.get("http://localhost:8080/les-ecommerce-vinhos/");
+		driver.get(Config.baseUrl + "/les-ecommerce-vinhos/");
 		driver.manage().window().setSize(new Dimension(1936, 1056));
 		try {
 			Thread.sleep(2000);
@@ -125,7 +128,7 @@ public class FLUXODEVENDATest {
 			e.printStackTrace();
 		}
 		driver.findElement(By.cssSelector("#modalCupomT .btn")).click();
-		driver.findElement(By.id	("SalvarCupom")).click();
+		driver.findElement(By.id("SalvarCupom")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -279,7 +282,7 @@ public class FLUXODEVENDATest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/TrocaPedidos.html");
 		try {
 			Thread.sleep(2000);
@@ -289,7 +292,7 @@ public class FLUXODEVENDATest {
 		driver.findElement(By.id("confirmarRecebimentoBtn")).click();
 		driver.findElement(By.cssSelector(".modal-footer > .btn-primary")).click();
 		driver.switchTo().alert().accept();
-		
+
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=20");
 		driver.findElement(By.id("abaDevolucao-tab")).click();
 		try {
@@ -297,7 +300,7 @@ public class FLUXODEVENDATest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MeusCupons.html?id=20");
 		try {
 			Thread.sleep(2000);

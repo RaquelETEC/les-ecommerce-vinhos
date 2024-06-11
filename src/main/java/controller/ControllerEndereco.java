@@ -17,7 +17,7 @@ import service.EnderecoService;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { "/areaCliente/inserirEndereco","/inserirEndereco", "/areaCliente/deleteEndereco",
+@WebServlet(urlPatterns = { "/areaCliente/inserirEndereco", "/inserirEndereco", "/areaCliente/deleteEndereco",
 		"/areaCliente/EditarEndereco", "/areaCliente/MeusEnderecos.html", "/areaCliente/MeusEnderecosEditar.html" })
 public class ControllerEndereco extends HttpServlet {
 
@@ -42,7 +42,7 @@ public class ControllerEndereco extends HttpServlet {
 
 		if (action.equals("/areaCliente/MeusEnderecos.html")) {
 			ExibirEndereco(request, response);
-		} else if (action.equals("/areaCliente/inserirEndereco") || action.equals("/inserirEndereco") ){
+		} else if (action.equals("/areaCliente/inserirEndereco") || action.equals("/inserirEndereco")) {
 			AdicionarEndereco(request, response);
 		} else if (action.equals("/areaCliente/MeusEnderecosEditar.html")) {
 			TelaEditarEndereco(request, response);
@@ -96,22 +96,20 @@ public class ControllerEndereco extends HttpServlet {
 
 			String resposta = enderecoService.adicionarEndereco(cliente, endereco);
 
-			//se não for uma solicitação da tela de venda, redireciona
+			// se não for uma solicitação da tela de venda, redireciona
 			if (request.getParameter("venda") == null) {
 				response.sendRedirect(request.getContextPath() + "/areaCliente/MeusEnderecos.html?id=" + id);
-			}
-			else {
+			} else {
 				response.setContentType("text/plain");
-			    response.setCharacterEncoding("UTF-8");
-			    response.getWriter().write(resposta); 
-			    response.getWriter().flush();
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(resposta);
+				response.getWriter().flush();
 			}
 
+		} catch (Exception e) {
+			System.out.println("erro: " + e);
 		}
-		catch(Exception e){
-			System.out.println("erro: "+e);
-		}
-	
+
 	}
 
 	protected void ExibirEndereco(HttpServletRequest request, HttpServletResponse response)

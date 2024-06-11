@@ -29,7 +29,7 @@ public class FLUXODEVENDACENARIO4 {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		// Navega até a página desejada
-		driver.get("http://localhost:8080/les-ecommerce-vinhos/paginaInical.html");
+		driver.get("/les-ecommerce-vinhos/paginaInical.html");
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -127,24 +127,22 @@ public class FLUXODEVENDACENARIO4 {
 			e.printStackTrace();
 		}
 
-		
-	    driver.findElement(By.id("cupomTselect2")).click();
+		driver.findElement(By.id("cupomTselect2")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	    driver.findElement(By.id("cupomTselect6")).click();
-	    driver.findElement(By.id("cupomTselect7")).click();
+		driver.findElement(By.id("cupomTselect6")).click();
+		driver.findElement(By.id("cupomTselect7")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-	    driver.findElement(By.cssSelector(".card:nth-child(9) #cupomTselect4")).click();
-	    driver.findElement(By.id("SalvarCupom")).click();
-			
-		
+		driver.findElement(By.cssSelector(".card:nth-child(9) #cupomTselect4")).click();
+		driver.findElement(By.id("SalvarCupom")).click();
+
 		driver.findElement(By.id("btn-selecionar-cartao")).click();
 		try {
 			Thread.sleep(2000);
@@ -164,7 +162,7 @@ public class FLUXODEVENDACENARIO4 {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-        driver.findElement(By.id("btn-salvar-cartao")).click();
+		driver.findElement(By.id("btn-salvar-cartao")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {

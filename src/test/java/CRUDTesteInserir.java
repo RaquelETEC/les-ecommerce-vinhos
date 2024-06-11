@@ -7,27 +7,29 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import util.Config;
+
 public class CRUDTesteInserir {
-    private WebDriver driver;
+	private WebDriver driver;
 
-    @Before
-    public void setUp() {
-        // Obtém o caminho para o diretório do WebDriver dentro do seu projeto
-    	String driverPath = "src/main/resources/drivers/msedgedriver.exe";
+	@Before
+	public void setUp() {
+		// Obtém o caminho para o diretório do WebDriver dentro do seu projeto
+		String driverPath = "src/main/resources/drivers/msedgedriver.exe";
 
-        // Configura o caminho para o WebDriver
-        System.setProperty("webdriver.edge.driver", driverPath);
+		// Configura o caminho para o WebDriver
+		System.setProperty("webdriver.edge.driver", driverPath);
 
-        // Inicializa o WebDriver
-    }
-  
+		// Inicializa o WebDriver
+	}
+
 	@Test
 	public void testInsert() {
 		WebDriver browser = new EdgeDriver();
-		
+
 		browser.manage().window().maximize();
-		
-		browser.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/Clientes.html");
+
+		browser.navigate().to(Config.baseUrl + "/les-ecommerce-vinhos/areaAdministrador/Clientes.html");
 
 		WebElement botaoCadastar = browser.findElement(By.id("btnCadastrar"));
 		botaoCadastar.click();
@@ -61,7 +63,7 @@ public class CRUDTesteInserir {
 		WebElement campoGenero = browser.findElement(By.id("typeGenero"));
 		Select genero = new Select(campoGenero);
 		genero.selectByValue("Masculino");
-		
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -94,22 +96,22 @@ public class CRUDTesteInserir {
 
 		WebElement campoCEP = browser.findElement(By.id("typeCep"));
 		campoCEP.sendKeys("08773-600");
-		
+
 		WebElement campoPais = browser.findElement(By.id("typePais"));
 		campoPais.sendKeys("Brasil");
 
 		WebElement campoDest = browser.findElement(By.id("TypeNomeEnd"));
 		campoDest.sendKeys("Fatec");
-		
+
 		WebElement campoObs = browser.findElement(By.id("observacoes"));
 		campoObs.sendKeys("Nenhuma");
-		
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Endere�o Entrega
 		WebElement campoTipoResidenciaE = browser.findElement(By.id("typeTipoResidenciaE"));
 		Select residenciaE = new Select(campoTipoResidenciaE);
@@ -119,7 +121,7 @@ public class CRUDTesteInserir {
 		Select logradouroE = new Select(campoTipoLogradouroE);
 		logradouroE.selectByValue("Estrada");
 
-		WebElement campoLogradouroE= browser.findElement(By.id("typeLogradouroE"));
+		WebElement campoLogradouroE = browser.findElement(By.id("typeLogradouroE"));
 		campoLogradouroE.sendKeys("Rua Carlos Barattino");
 
 		WebElement campoNumeroE = browser.findElement(By.id("typeNumeroE"));
@@ -136,32 +138,32 @@ public class CRUDTesteInserir {
 
 		WebElement campoCEPE = browser.findElement(By.id("typeCepE"));
 		campoCEPE.sendKeys("08773-600");
-		
+
 		WebElement campoPaisE = browser.findElement(By.id("typePaisE"));
 		campoPaisE.sendKeys("Brasil");
 
 		WebElement campoDestE = browser.findElement(By.id("TypeNomeEndE"));
 		campoDestE.sendKeys("Fatec");
-		
+
 		WebElement campoObsE = browser.findElement(By.id("observacoesE"));
 		campoObsE.sendKeys("Nenhuma");
-		
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Endere�o Cobran�a
 		WebElement campoTipoResidenciaC = browser.findElement(By.id("typeTipoResidenciaC"));
-		Select residenciaC= new Select(campoTipoResidenciaC);
+		Select residenciaC = new Select(campoTipoResidenciaC);
 		residenciaC.selectByValue("condominio");
 
 		WebElement campoTipoLogradouroC = browser.findElement(By.id("typeTipoLogradouroC"));
 		Select logradouroC = new Select(campoTipoLogradouroC);
 		logradouroC.selectByValue("Avenida");
 
-		WebElement campoLogradouroC= browser.findElement(By.id("typeLogradouroC"));
+		WebElement campoLogradouroC = browser.findElement(By.id("typeLogradouroC"));
 		campoLogradouroC.sendKeys("Rua Carlos Barattino");
 
 		WebElement campoNumeroC = browser.findElement(By.id("typeNumeroC"));
@@ -178,44 +180,40 @@ public class CRUDTesteInserir {
 
 		WebElement campoCEPC = browser.findElement(By.id("typeCepC"));
 		campoCEPC.sendKeys("08773-600");
-		
+
 		WebElement campoPaisC = browser.findElement(By.id("typePaisC"));
 		campoPaisC.sendKeys("Brasil");
 
 		WebElement campoDestC = browser.findElement(By.id("TypeNomeEndC"));
 		campoDestC.sendKeys("Fatec");
-		
+
 		WebElement campoObsC = browser.findElement(By.id("observacoesC"));
 		campoObsC.sendKeys("Nenhuma");
-		
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Cartao
 
 		WebElement campoCartaoNome = browser.findElement(By.id("CartaoNome"));
 		campoCartaoNome.sendKeys("Rodrigo Rocha");
-		
+
 		WebElement campoCartaoBandeira = browser.findElement(By.id("tipoBandeira"));
 		Select bandeira = new Select(campoCartaoBandeira);
 		bandeira.selectByValue("1");
-		
+
 		WebElement campoCartaoNumero = browser.findElement(By.id("CartaoNumero"));
 		campoCartaoNumero.sendKeys("123");
-		
+
 		WebElement campoCartaoCodigo = browser.findElement(By.id("CartaoCodigo"));
 		campoCartaoCodigo.sendKeys("321");
 
-	    WebElement botaoEnviar = browser.findElement(By.id("BotaoCadastrar"));
+		WebElement botaoEnviar = browser.findElement(By.id("BotaoCadastrar"));
 		botaoEnviar.click();
 
-
-
-		 
 	}
-	
 
 }

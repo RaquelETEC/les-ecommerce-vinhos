@@ -17,6 +17,7 @@ public class FLUXODEVENDACancela {
 	private WebDriver driver;
 	private Map<String, Object> vars;
 	JavascriptExecutor js;
+
 	@Before
 	public void setUp() {
 		String driverPath = "src/main/resources/drivers/msedgedriver.exe";
@@ -35,7 +36,7 @@ public class FLUXODEVENDACancela {
 
 	@Test
 	public void fLUXODEVENDA() {
-		driver.get("http://localhost:8080/les-ecommerce-vinhos/");
+		driver.get("/les-ecommerce-vinhos/");
 		driver.manage().window().setSize(new Dimension(1936, 1056));
 		try {
 			Thread.sleep(2000);
@@ -169,7 +170,7 @@ public class FLUXODEVENDACancela {
 			e.printStackTrace();
 		}
 
-		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=20");
+		driver.navigate().to("/les-ecommerce-vinhos/areaCliente/MinhasCompras.html?id=20");
 
 		try {
 			Thread.sleep(2000);
@@ -177,7 +178,7 @@ public class FLUXODEVENDACancela {
 			e.printStackTrace();
 		}
 
-		driver.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/PedidoVenda.html");
+		driver.navigate().to("/les-ecommerce-vinhos/areaAdministrador/PedidoVenda.html");
 
 		driver.findElement(By.id("statusPedido4")).click();
 		{

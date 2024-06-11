@@ -3,21 +3,22 @@ package model.entity;
 public class PedidoItens {
 
 	private int id;
-	private PedidoVenda pedidoVenda; 
+	private PedidoVenda pedidoVenda;
 	private Produtos produto;
 	private String descricao;
 	private int quantidade;
-	private Double preco; 
-	private Double totalProduto; 
+	private Double preco;
+	private Double totalProduto;
 	private TiposStatusItensPedido tipos;
-	private int quantidadeTrocada; 
-	private int quantidadeSolicitadaTroca; 
+	private int quantidadeTrocada;
+	private int quantidadeSolicitadaTroca;
 	private Troca troca;
-	
+
 	public PedidoItens() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public PedidoItens(int id, PedidoVenda pedidoVenda, Produtos produto, String descricao, int quantidade,
 			Double preco, Double totalProduto, TiposStatusItensPedido tipos, int quantidadeTrocada,
 			int quantidadeSolicitadaTroca, Troca troca) {
@@ -123,7 +124,4 @@ public class PedidoItens {
 		this.troca = troca;
 	}
 
-
-	
-	
 }

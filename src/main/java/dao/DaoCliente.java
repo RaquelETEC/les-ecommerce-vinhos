@@ -173,7 +173,7 @@ public class DaoCliente {
 		}
 		return "Cliente Apagado com sucesso";
 	}
-	
+
 	public String AlterarSenha(Cliente cliente) {
 		System.out.println("cheguei no alterar senha DAO" + cliente.getNome());
 
@@ -185,7 +185,7 @@ public class DaoCliente {
 
 			pst.setString(1, cliente.getSenha());
 			pst.setInt(2, cliente.getId());
-			
+
 			pst.executeUpdate();
 			con.close();
 
@@ -194,25 +194,25 @@ public class DaoCliente {
 		}
 		return "Senha alterada com sucesso!";
 	}
-	
+
 	public Cliente buscarClientePorId(int clienteId) {
-        Cliente cliente = null;
-        String read = "SELECT * FROM cliente WHERE cli_id = ?";
-        try {
-            Connection con = Conexao.conectar();
-            PreparedStatement pst = con.prepareStatement(read);
-            pst.setInt(1, clienteId);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                cliente = new Cliente();
-                cliente.setId(rs.getInt("cli_id"));
-                cliente.setNome(rs.getString("cli_nome"));
-            }
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Erro ao buscar cliente: " + e);
-        }
-        return cliente;
-    }
+		Cliente cliente = null;
+		String read = "SELECT * FROM cliente WHERE cli_id = ?";
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			pst.setInt(1, clienteId);
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				cliente = new Cliente();
+				cliente.setId(rs.getInt("cli_id"));
+				cliente.setNome(rs.getString("cli_nome"));
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println("Erro ao buscar cliente: " + e);
+		}
+		return cliente;
+	}
 
 }

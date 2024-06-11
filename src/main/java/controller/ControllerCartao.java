@@ -17,15 +17,9 @@ import service.CartoesService;
 
 // TODO: Auto-generated Javadoc
 
-@WebServlet(urlPatterns = { 
-		"/areaCliente/inserirCartao", 
-		"/inserirCartao",
-		"/areaCliente/EditarCartao", 
-		"/areaCliente/MeusCartoes.html",
-		"/areaCliente/LoginCartao.html", 
-		"/areaCliente/EditarCartao.html", 
-		"/areaCliente/deleteCartao" 
-		})
+@WebServlet(urlPatterns = { "/areaCliente/inserirCartao", "/inserirCartao", "/areaCliente/EditarCartao",
+		"/areaCliente/MeusCartoes.html", "/areaCliente/LoginCartao.html", "/areaCliente/EditarCartao.html",
+		"/areaCliente/deleteCartao" })
 public class ControllerCartao extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
@@ -35,7 +29,6 @@ public class ControllerCartao extends HttpServlet {
 	CartaoDeCredito cartao = new CartaoDeCredito();
 	BandeiraCartao tipoBandeira = new BandeiraCartao();
 	CartoesService cartaoService = new CartoesService();
-
 
 	public ControllerCartao() {
 		super();
@@ -84,9 +77,9 @@ public class ControllerCartao extends HttpServlet {
 		String codigoSegurancaStr = request.getParameter("CartaoCodigo");
 		int codigoSeguranca = Integer.parseInt(codigoSegurancaStr);
 		String cadPerfil = request.getParameter("CadastrarNoPerfil");
-		
-		boolean cadastrarNoPerfil = cadPerfil.toUpperCase() == "SIM" ? true : false; 
-		
+
+		boolean cadastrarNoPerfil = cadPerfil.toUpperCase() == "SIM" ? true : false;
+
 		tipoBandeira.setId(Codigobandeira);
 
 		cartao.setCliente(cliente);
@@ -98,22 +91,20 @@ public class ControllerCartao extends HttpServlet {
 		cartao.setCartaoNoPerfil(cadastrarNoPerfil);
 
 		String resposta = cartaoService.adicionarCartao(cliente, cartao, tipoBandeira);
-		 
+
 		String solicitacao = request.getParameter("tipoSolicitacao");
-		
-		if(solicitacao != null) {
+
+		if (solicitacao != null) {
 			response.setContentType("text/plain");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(resposta); 
-		    response.getWriter().flush();
-			}
-		else {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(resposta);
+			response.getWriter().flush();
+		} else {
 			request.setAttribute("id", id);
 			response.sendRedirect(request.getContextPath() + "/areaCliente/MeusCartoes.html?id=" + id);
-		
+
 		}
-		
-		
+
 	}
 
 	// fun��o para exibir a tela de adicionar cartao, passando o id do cliente e

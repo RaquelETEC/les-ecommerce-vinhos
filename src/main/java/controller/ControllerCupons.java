@@ -17,11 +17,8 @@ import model.entity.PedidoVenda;
 import model.entity.TiposEndereco;
 import service.CupomService;
 
-@WebServlet(urlPatterns = { 
-		"/areaCliente/MeusCupons.html",
-		"/areaCliente/InserirCupomTroca",
-		"/gerarCupom.html", 
-		"/VincularCupomAoCliente.html"})
+@WebServlet(urlPatterns = { "/areaCliente/MeusCupons.html", "/areaCliente/InserirCupomTroca", "/gerarCupom.html",
+		"/VincularCupomAoCliente.html" })
 public class ControllerCupons extends HttpServlet {
 
 	/**
@@ -33,10 +30,10 @@ public class ControllerCupons extends HttpServlet {
 	Cliente cliente = new Cliente();
 	CupomService cupomService = new CupomService();
 	PedidoVenda pedido = new PedidoVenda();
+
 	public ControllerCupons() {
-		super();	
-		}
-	
+		super();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -45,72 +42,72 @@ public class ControllerCupons extends HttpServlet {
 		System.out.println("chegou aqui: " + action);
 		if (action.equals("/areaCliente/MeusCupons.html")) {
 			areaMeusCupons(request, response);
-		}else if(action.equals("/gerarCupom.html")) {
+		} else if (action.equals("/gerarCupom.html")) {
 			GerarCupom(request, response);
-		}else if(action.equals("/VincularCupomAoCliente.html")) {
+		} else if (action.equals("/VincularCupomAoCliente.html")) {
 			vincularCupomAoCliente(request, response);
 		}
 	}
-	
-	
+
 	protected void GerarCupom(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
+			throws ServletException, IOException {
 
-	    System.out.println("voce conseguiu chegar aqui no InserirCupomTroca:)");
+		System.out.println("voce conseguiu chegar aqui no InserirCupomTroca:)");
 
-	    try {
+		try {
 
-	    	int idPedido = Integer.parseInt(request.getParameter("pedido"));
+			int idPedido = Integer.parseInt(request.getParameter("pedido"));
 			int idProduto = Integer.parseInt(request.getParameter("prodId"));
 			Double ValorCupom = Double.parseDouble(request.getParameter("valorCupom"));
 			String TipoCupom = (request.getParameter("tipoCupom"));
-			
-	        String resposta = String.valueOf(cupomService.GerarCupom(TipoCupom,ValorCupom, idPedido, idProduto));
 
-	        response.setContentType("text/plain");
-	        response.setCharacterEncoding("UTF-8");
-	        response.getWriter().write(resposta);
-	        response.getWriter().flush();
+			String resposta = String.valueOf(cupomService.GerarCupom(TipoCupom, ValorCupom, idPedido, idProduto));
 
-	    } catch (Exception e) {
-	        System.out.println("erro: " + e);
-	        
-	        response.setContentType("text/plain");
-	        response.setCharacterEncoding("UTF-8");
-	        response.getWriter().write(e + "");
-	        response.getWriter().flush();
-	    }
+			response.setContentType("text/plain");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(resposta);
+			response.getWriter().flush();
+
+		} catch (Exception e) {
+			System.out.println("erro: " + e);
+
+			response.setContentType("text/plain");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(e + "");
+			response.getWriter().flush();
+		}
 	}
-	
+
 	private void vincularCupomAoCliente(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			
-			Cliente cliente = new Cliente(); 
-			Cupons cupom = new Cupons(); 
-			
-			cliente.setId(Integer.parseInt(request.getParameter("clienteId")));
-			cupom.setId(Integer.parseInt(request.getParameter("cupomId")));
-			
-			String resposta = cupomService.vincularCupomAoCliente(cupom,cliente);
 
-			 // Enviar resposta para o cliente
-		    response.setContentType("text/plain");
-		    response.setCharacterEncoding("UTF-8");
-		    response.getWriter().write(resposta); 
-		    response.getWriter().flush();
-		}
+		Cliente cliente = new Cliente();
+		Cupons cupom = new Cupons();
 
-	private void areaMeusCupons(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		cliente.setId(Integer.parseInt(request.getParameter("clienteId")));
+		cupom.setId(Integer.parseInt(request.getParameter("cupomId")));
+
+		String resposta = cupomService.vincularCupomAoCliente(cupom, cliente);
+
+		// Enviar resposta para o cliente
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(resposta);
+		response.getWriter().flush();
+	}
+
+	private void areaMeusCupons(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		cliente.setId(id);
- 
+
 		System.out.println("o id que chegou aqui nos cartoes:" + cliente.getId());
- 
+
 		ArrayList<Cupons> lista = cupomService.listarCupom(cliente);
-		
+
 		request.setAttribute("listaCupons", lista);
 		request.setAttribute("id", id);
- 
+
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/PerfilMeusCupons.jsp");
 		rd.forward(request, response);
 	}
