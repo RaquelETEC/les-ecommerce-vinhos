@@ -28,9 +28,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 	<nav class="navbar navbar-expand-sm py-3 sticky-top"
 		style="background: black;">
 		<div class="container-fluid">
-			<a
-				href='/les-ecommerce-vinhos/paginaInical.html'>
-				<img src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
+			<a href='/les-ecommerce-vinhos/paginaInical.html'> <img
+				src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3">
 			</a>
 		</div>
@@ -44,8 +43,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 					<ul class="nav flex-column">
 						<li class="nav-Title">Menu</li>
 						<li class="nav-item"><a class="nav-link active"
-							onClick= "window.location.href='PagInicial.jsp'" > Dashboard
-						</a></li>
+							onClick="window.location.href='PagInicial.jsp'"> Dashboard </a></li>
 						<li class="nav-item"><a class="nav-link"
 							onclick="window.location.href='Clientes.html';"> Clientes </a></li>
 						<li class="nav-item"><a class="nav-link"
@@ -76,7 +74,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 									name="Pesquisar">
 							</div>
 							<div class="col-md-3">
-								<button type="submit" class="btn btn-primary">Buscar</button>
+								<button id="btnBuscar" type="submit" class="btn btn-primary">Buscar</button>
 							</div>
 						</div>
 					</form>
@@ -123,7 +121,9 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 									<td><%=produto.getPro_preco_compra()%></td>
 									<td><%=produto.getPrecificacao().getDesc()%></td>
 									<td><%=produto.getCategoria().getStatus()%></td>
-									<td><a onclick="window.location.href='EditarProdutos.html?idProduto=<%=produto.getId()%>&PrecificacaoDesc=<%=produto.getPrecificacao().getDesc()%>&CategoriaStatus=<%=produto.getCategoria().getStatus()%>';" class="Botao1">Editar</a></td>
+									<td><a
+										onclick="window.location.href='EditarProdutos.html?idProduto=<%=produto.getId()%>&PrecificacaoDesc=<%=produto.getPrecificacao().getDesc()%>&CategoriaStatus=<%=produto.getCategoria().getStatus()%>';"
+										class="Botao1">Editar</a></td>
 								</tr>
 								<%
 								}
@@ -142,5 +142,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="../scripts/filtroTabelaProdutos.js"></script>
+
 </body>
 </html>
