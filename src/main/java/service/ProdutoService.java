@@ -44,5 +44,12 @@ public class ProdutoService {
 	public Produtos listarProdutoPorID(int id) {
 		return daoProdutos.buscarProdutoPorIdSimples(id);
 	}
+	
+	public boolean EditarProduto(Produtos produto, Precificacao precificacao, Categoria categoria) {
+		System.out.println("Cheguei no EditarProduto Service");
+		
+		return daoProdutos.atualizarProdutoEAssociados(produto, precificacao, categoria);
+		
+	}
 
 }

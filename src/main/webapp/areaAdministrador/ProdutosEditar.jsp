@@ -22,9 +22,8 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 	<nav class="navbar navbar-expand-sm py-3 sticky-top"
 		style="background: black;">
 		<div class="container-fluid">
-			<a
-				href='/les-ecommerce-vinhos/paginaInical.html'>
-				<img src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
+			<a href='/les-ecommerce-vinhos/paginaInical.html'> <img
+				src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
 				style="width: 200px;" class="mx-3">
 			</a>
 		</div>
@@ -38,8 +37,7 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 					<ul class="nav flex-column">
 						<li class="nav-Title">Menu</li>
 						<li class="nav-item"><a class="nav-link active"
-							onClick= "window.location.href='PagInicial.jsp'" > Dashboard
-						</a></li>
+							onClick="window.location.href='PagInicial.jsp'"> Dashboard </a></li>
 						<li class="nav-item"><a class="nav-link"
 							onclick="window.location.href='Clientes.html';"> Clientes </a></li>
 						<li class="nav-item"><a class="nav-link"
@@ -62,10 +60,21 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 				<div class="container mt-4">
 					<h2 class="text-center mb-4">Produtos</h2>
 					<!-- FormulÃ¡rio de filtro -->
-					<form class="mb-4">
+					<form class="mb-4" action="EditarProdutos">
 
 						<div class="row">
 							<div class="col-md-3">
+							
+							<input
+									value="<%=request.getAttribute("idProduto")%>" type="text"
+									name="idProduto" id="idProduto" style="display: none" /> 
+							<input
+									value="<%=request.getAttribute("PrecificacaoDesc")%>" type="text"
+									name="PrecificacaoDesc" id="PrecificacaoDesc" style="display: none" /> 
+							<input
+									value="<%=request.getAttribute("CategoriaStatus")%>" type="text"
+									name="CategoriaStatus" id="CategoriaStatus" style="display: none" /> 
+									
 								<label for="codigoBarras" class="form-label">Codigo de
 									Barras:</label> <input type="text" class="form-control"
 									id="codigoBarras" name="codigoBarras"
@@ -147,13 +156,13 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 										Premium</option>
 									<option value="Grupo Intermediï¿½rio"
 										<%="Grupo Intermediï¿½rio".equals(request.getAttribute("PrecificacaoDesc")) ? "selected" : ""%>>Grupo
-										Intermediï¿½rio</option>
+										Intermediario</option>
 									<option value="Grupo Econï¿½mico"
 										<%="Grupo Econï¿½mico".equals(request.getAttribute("PrecificacaoDesc")) ? "selected" : ""%>>Grupo
-										Econï¿½mico</option>
+										Economico</option>
 									<option value="Grupo de Promoï¿½ï¿½o"
 										<%="Grupo de Promoï¿½ï¿½o".equals(request.getAttribute("PrecificacaoDesc")) ? "selected" : ""%>>Grupo
-										de Promoï¿½ï¿½o</option>
+										de Promoção</option>
 									<option value="Grupo Exclusivo para Membros"
 										<%="Grupo Exclusivo para Membros".equals(request.getAttribute("PrecificacaoDesc")) ? "selected" : ""%>>Grupo
 										Exclusivo para Membros</option>
@@ -169,6 +178,12 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 									<option value="INATIVO"
 										<%="INATIVO".equals(request.getAttribute("CategoriaStatus")) ? "selected" : ""%>>INATIVO</option>
 								</select>
+							</div>
+
+							<div class="text-center">
+								<input id="BotaoAlterar" class="btn btn-primary" type="submit"
+									value="Atualizar">
+								<hr class="my-3">
 							</div>
 						</div>
 

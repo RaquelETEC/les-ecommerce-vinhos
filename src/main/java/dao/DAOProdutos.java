@@ -169,30 +169,29 @@ public class DAOProdutos {
 	}
 
 	public Produtos buscarProdutoPorIdSimples(int id) {
-	    Produtos produto = null;
-	    String query = "SELECT `pro_id`, `pro_preco_venda`, `pro_codigo_barra`, `pro_desc`, `pro_img` " +
-	                   "FROM `ecommerce`.`produto` " +
-	                   "WHERE `pro_id` = ?";
+		Produtos produto = null;
+		String query = "SELECT `pro_id`, `pro_preco_venda`, `pro_codigo_barra`, `pro_desc`, `pro_img` "
+				+ "FROM `ecommerce`.`produto` " + "WHERE `pro_id` = ?";
 
-	    try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(query)) {
-	        stmt.setInt(1, id);
-	        try (ResultSet rs = stmt.executeQuery()) {
-	            if (rs.next()) {
-	                produto = new Produtos();
-	                produto.setId(rs.getInt("pro_id"));
-	                produto.setPro_preco_venda(rs.getDouble("pro_preco_venda"));
-	                produto.setCodigo_barra(rs.getString("pro_codigo_barra"));
-	                produto.setDesc(rs.getString("pro_desc"));
-	                produto.setImg(rs.getString("pro_img"));
-	            }
-	        }
-	    } catch (SQLException e) {
-	        System.err.println("Erro ao buscar produto por ID: " + e.getMessage());
-	    }
+		try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(query)) {
+			stmt.setInt(1, id);
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					produto = new Produtos();
+					produto.setId(rs.getInt("pro_id"));
+					produto.setPro_preco_venda(rs.getDouble("pro_preco_venda"));
+					produto.setCodigo_barra(rs.getString("pro_codigo_barra"));
+					produto.setDesc(rs.getString("pro_desc"));
+					produto.setImg(rs.getString("pro_img"));
+				}
+			}
+		} catch (SQLException e) {
+			System.err.println("Erro ao buscar produto por ID: " + e.getMessage());
+		}
 
-	    return produto;
+		return produto;
 	}
-	
+
 	public List<Produtos> fetchAllProducts() {
 		List<Produtos> listProdutos = new ArrayList<>();
 		String query = "SELECT pro_id, pro_desc FROM produto";
@@ -229,5 +228,101 @@ public class DAOProdutos {
 		}
 		return listProdutos;
 	}
+
+	public boolean atualizarProdutoEAssociados(Produtos produto, Precificacao precificacao, Categoria categoria) {
+	    String updateProdutoQuery = "UPDATE produto SET pro_preco_compra = ?, "
+	            + "pro_vinicola = ?, pro_pais = ?, pro_regiao = ?, pro_safra = ?, pro_desc = ?, pro_tipo = ?, "
+	            + "pro_uva = ?, pro_alcool = ?, pro_altura = ?, pro_largura = ?, pro_peso = ?, pro_profundidade = ? WHERE pro_id = ?";
+
+	    String updatePrecificacaoQuery = "UPDATE precificacao SET GRUP_DESC = ? WHERE GRUP_ID = ?";
+	    String updateCategoriaQuery = "UPDATE categoria SET CAT_STATUS = ? WHERE CAT_ID = ?";
+
+	    Connection conn = null;
+	    PreparedStatement produtoStmt = null;
+	    PreparedStatement precificacaoStmt = null;
+	    PreparedStatement categoriaStmt = null;
+
+	    try {
+	        conn = Conexao.conectar(); // Assume que Conexao.conectar() retorna uma conexão válida
+	        conn.setAutoCommit(false); // Configura para não auto commit, para controlar manualmente a transação
+
+	        // Atualiza os dados do produto
+	        produtoStmt = conn.prepareStatement(updateProdutoQuery);
+	        produtoStmt.setDouble(1, produto.getPro_preco_compra());
+	        produtoStmt.setString(2, produto.getVinicola());
+	        produtoStmt.setString(3, produto.getPais());
+	        produtoStmt.setString(4, produto.getRegiao());
+	        produtoStmt.setString(5, produto.getSafra());
+	        produtoStmt.setString(6, produto.getDesc());
+	        produtoStmt.setString(7, produto.getTipo());
+	        produtoStmt.setString(8, produto.getUva());
+	        produtoStmt.setString(9, produto.getAlcool());
+	        produtoStmt.setString(10, produto.getAltura());
+	        produtoStmt.setString(11, produto.getLargura());
+	        produtoStmt.setString(12, produto.getPeso());
+	        produtoStmt.setString(13, produto.getProfundidade());
+	        produtoStmt.setInt(14, produto.getId());
+	        produtoStmt.executeUpdate();
+
+	        // Atualiza os dados de precificação
+	        precificacaoStmt = conn.prepareStatement(updatePrecificacaoQuery);
+	        precificacaoStmt.setString(1, precificacao.getDesc()); // Ajustado para setString, pois estamos atualizando o desc
+	        precificacaoStmt.setInt(2, precificacao.getId());
+	        precificacaoStmt.executeUpdate();
+
+	        // Atualiza os dados de categoria
+	        categoriaStmt = conn.prepareStatement(updateCategoriaQuery);
+	        categoriaStmt.setString(1, categoria.getStatus()); // Ajustado para setString, pois estamos atualizando o status
+	        categoriaStmt.setInt(2, categoria.getId());
+	        categoriaStmt.executeUpdate();
+
+	        conn.commit(); // Confirma a transação
+	        System.out.println("Produto e associações atualizados com sucesso: " + produto.getId());
+	        return true;
+
+	    } catch (SQLException e) {
+	        if (conn != null) {
+	            try {
+	                conn.rollback(); // Reverte a transação em caso de erro
+	            } catch (SQLException ex) {
+	                System.err.println("Erro ao reverter a transação: " + ex.getMessage());
+	            }
+	        }
+	        System.err.println("Erro ao atualizar produto e associados: " + e.getMessage());
+	        return false;
+
+	    } finally {
+	        // Fechamento dos recursos
+	        if (produtoStmt != null) {
+	            try {
+	                produtoStmt.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar statement de produto: " + e.getMessage());
+	            }
+	        }
+	        if (precificacaoStmt != null) {
+	            try {
+	                precificacaoStmt.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar statement de precificação: " + e.getMessage());
+	            }
+	        }
+	        if (categoriaStmt != null) {
+	            try {
+	                categoriaStmt.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar statement de categoria: " + e.getMessage());
+	            }
+	        }
+	        if (conn != null) {
+	            try {
+	                conn.close();
+	            } catch (SQLException e) {
+	                System.err.println("Erro ao fechar conexão: " + e.getMessage());
+	            }
+	        }
+	    }
+	}
+
 
 }
