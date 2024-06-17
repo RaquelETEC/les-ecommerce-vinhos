@@ -15,12 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import model.entity.Categoria;
+import model.entity.Harmonizacao;
 import model.entity.Precificacao;
 import model.entity.Produtos;
 import service.ProdutoService;
 
 @WebServlet(urlPatterns = { "/paginaInical.html", "/areaAdministrador/Produtos.html",
-		"/areaAdministrador/EditarProdutos.html", "/produtosDisponiveis.html", "/buscaProduto.html", "/areaAdministrador/EditarProdutos" })
+		"/areaAdministrador/EditarProdutos.html", "/produtosDisponiveis.html", "/buscaProduto.html",
+		"/areaAdministrador/EditarProdutos", "/areaAdministrador/AreaHarmonizacao" })
 
 public class ControllerProdutos extends HttpServlet {
 
@@ -30,7 +32,7 @@ public class ControllerProdutos extends HttpServlet {
 	Produtos produtos = new Produtos();
 	Precificacao precificacao = new Precificacao();
 	Categoria categoria = new Categoria();
-
+	Harmonizacao harmonizacao = new Harmonizacao();
 	ProdutoService produtoservice = new ProdutoService();
 
 	public ControllerProdutos() {
@@ -55,7 +57,23 @@ public class ControllerProdutos extends HttpServlet {
 			buscaProdutoController(request, response);
 		} else if (action.equals("/areaAdministrador/EditarProdutos")) {
 			EditarProduto(request, response);
+		} else if (action.equals("/areaAdministrador/AreaHarmonizacao")) {
+			AreaHarmonizacao(request, response);
 		}
+	}
+
+	private void AreaHarmonizacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int idProduto = Integer.parseInt(request.getParameter("idProduto"));
+		produtos.setId(idProduto);
+
+		ArrayList<Harmonizacao> lista = produtoservice.getHarmonizacoesByProduto(produtos);
+		
+		request.setAttribute("listaHarmonizacao", lista);
+		request.setAttribute("idProduto", idProduto);
+
+		RequestDispatcher rd = request.getRequestDispatcher("/areaAdministrador/ProdutosEditar.jsp");
+		rd.forward(request, response);
 	}
 
 	private void buscaProdutoController(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -148,7 +166,7 @@ public class ControllerProdutos extends HttpServlet {
 		int idProduto = Integer.parseInt(request.getParameter("idProduto"));
 		String PrecificacaoDesc = request.getParameter("PrecificacaoDesc");
 		String CategoriaStatus = request.getParameter("CategoriaStatus");
-		
+
 		produtos.setId(idProduto);
 		precificacao.setDesc(PrecificacaoDesc);
 		categoria.setStatus(CategoriaStatus);

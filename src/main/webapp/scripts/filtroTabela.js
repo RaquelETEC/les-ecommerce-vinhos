@@ -47,6 +47,7 @@
                 linha.style.display = 'none';
             }
         }
+        
     }
 
     document.getElementById('btnBuscar').addEventListener('click', filtrarTabela);

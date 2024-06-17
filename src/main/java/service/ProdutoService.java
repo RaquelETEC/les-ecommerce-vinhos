@@ -5,6 +5,7 @@ import java.util.List;
 
 import dao.DAOProdutos;
 import model.entity.Categoria;
+import model.entity.Harmonizacao;
 import model.entity.Precificacao;
 import model.entity.Produtos;
 
@@ -51,5 +52,9 @@ public class ProdutoService {
 		return daoProdutos.atualizarProdutoEAssociados(produto, precificacao, categoria);
 		
 	}
+	
+    public ArrayList<Harmonizacao> getHarmonizacoesByProduto(Produtos produto) {
+    	return daoProdutos.getHarmonizacoesByProduto(produto);
+    }
 
 }

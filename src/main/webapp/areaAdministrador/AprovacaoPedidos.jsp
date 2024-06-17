@@ -20,10 +20,12 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
+	<nav class="navbar navbar-expand-sm py-3 sticky-top"
+		style="background: black;">
 		<div class="container-fluid">
-		<a href='/les-ecommerce-vinhos/paginaInical.html'>	<img src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
-				style="width: 200px;" class="mx-3"></a>				
+			<a href='/les-ecommerce-vinhos/paginaInical.html'> <img
+				src="../imagens/logo-vinho.PNG" alt="Logo Vinho"
+				style="width: 200px;" class="mx-3"></a>
 		</div>
 	</nav>
 
@@ -35,8 +37,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 					<ul class="nav flex-column">
 						<li class="nav-Title">Menu</li>
 						<li class="nav-item"><a class="nav-link "
-							 onClick= "window.location.href='PagInicial.jsp'" >
-								Dashboard </a></li>
+							onClick="window.location.href='PagInicial.jsp'"> Dashboard </a></li>
 						<li class="nav-item"><a class="nav-link"
 							onclick="window.location.href='Clientes.html';"> Clientes </a></li>
 						<li class="nav-item"><a class="nav-link bg-white text-dark"
@@ -85,7 +86,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 
 							<div class="row mt-3">
 								<div class="col-md-12">
-									<button type="submit" class="btn btn-primary">Buscar</button>
+									<button id="btnBuscar" type="submit" class="btn btn-primary">Buscar</button>
 								</div>
 							</div>
 						</div>
@@ -103,57 +104,62 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 								<th>Opções</th>
 							</tr>
 						</thead>
-						    <% 
-						    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-						    for (int i = 0; i < lista.size(); i++) {
-						        PedidoVenda pedido = lista.get(i);
-						        String data = dateFormat.format(pedido.getData());
-						        
-						        // Definir as opções disponíveis com base no status atual do pedido e no tipo de usuário
-						        String[] opcoesStatus;
-						        String statusAtual = pedido.getStatus();
-						        switch (statusAtual) {
-						            case "EM PROCESSAMENTO":
-						                opcoesStatus = new String[]{"PAGAMENTO REALIZADO", "PAGAMENTO RECUSADO"};
-						                break;
-						            case "PAGAMENTO REALIZADO":
-						                opcoesStatus = new String[]{"EM TRANSPORTE"};
-						                break;
-						            case "EM TRANSPORTE":
-						                opcoesStatus = new String[]{"ENTREGUE"};
-						                break;
-						            case "EM CANCELAMENTO":
-						                opcoesStatus = new String[]{"RECEBER PRODUTOS"};
-						                break;   
-						              
-						            default:
-						                // Outros casos não definidos
-						                opcoesStatus = new String[]{statusAtual};
-						        }
-						    %>
-						    <tr>
-						        <td><%= pedido.getId() %></td>
-						        <td><%= pedido.getCliente().getId() %></td>
-						        <td><%= pedido.getCliente().getNome() %></td>
-						        <td><%= data %></td>
-						        <td><%= pedido.getTotalPedido() %></td>
-						        <!-- Renderizar o select com base nas opções disponíveis -->
-						        <td>
-						            <select class="form-select" id="statusPedido<%= i %>">
-						            		<option value="<%= pedido.getStatus() %>"><%= pedido.getStatus() %></option>
-						                <% for (String opcao : opcoesStatus) { %>
-						                    <option value="<%= opcao %>"><%= opcao %></option>
-						                <% } %>
-						            </select>
-						        </td>
-						        
-						        <td>
-						            <div class="option-button">
-						                <a class="Botao1" href="javascript: confirmarPedido(<%= pedido.getId() %>, <%= i %>, <%= pedido.getTotalPedido()%>, <%= pedido.getCliente().getId()%>)">Editar</a>
-						            </div>
-						        </td>
-						    </tr>
-						    <% } %>
+						<%
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						for (int i = 0; i < lista.size(); i++) {
+							PedidoVenda pedido = lista.get(i);
+							String data = dateFormat.format(pedido.getData());
+
+							// Definir as opções disponíveis com base no status atual do pedido e no tipo de usuário
+							String[] opcoesStatus;
+							String statusAtual = pedido.getStatus();
+							switch (statusAtual) {
+							case "EM PROCESSAMENTO":
+								opcoesStatus = new String[] { "PAGAMENTO REALIZADO", "PAGAMENTO RECUSADO" };
+								break;
+							case "PAGAMENTO REALIZADO":
+								opcoesStatus = new String[] { "EM TRANSPORTE" };
+								break;
+							case "EM TRANSPORTE":
+								opcoesStatus = new String[] { "ENTREGUE" };
+								break;
+							case "EM CANCELAMENTO":
+								opcoesStatus = new String[] { "RECEBER PRODUTOS" };
+								break;
+
+							default:
+								// Outros casos não definidos
+								opcoesStatus = new String[] { statusAtual };
+							}
+						%>
+						<tr>
+							<td><%=pedido.getId()%></td>
+							<td><%=pedido.getCliente().getId()%></td>
+							<td><%=pedido.getCliente().getNome()%></td>
+							<td><%=data%></td>
+							<td><%=pedido.getTotalPedido()%></td>
+							<!-- Renderizar o select com base nas opções disponíveis -->
+							<td><select class="form-select" id="statusPedido<%=i%>">
+									<option value="<%=pedido.getStatus()%>"><%=pedido.getStatus()%></option>
+									<%
+									for (String opcao : opcoesStatus) {
+									%>
+									<option value="<%=opcao%>"><%=opcao%></option>
+									<%
+									}
+									%>
+							</select></td>
+
+							<td>
+								<div class="option-button">
+									<a class="Botao1"
+										href="javascript: confirmarPedido(<%=pedido.getId()%>, <%=i%>, <%=pedido.getTotalPedido()%>, <%=pedido.getCliente().getId()%>)">Editar</a>
+								</div>
+							</td>
+						</tr>
+						<%
+						}
+						%>
 					</table>
 				</div>
 			</main>
@@ -166,5 +172,7 @@ ArrayList<PedidoVenda> lista = (ArrayList<PedidoVenda>) request.getAttribute("li
 	<script src="../scripts/confirmador.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="../scripts/filtroTabelaAprovacao.js"></script>
+
 </body>
 </html>

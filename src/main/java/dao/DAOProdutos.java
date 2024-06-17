@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.entity.Categoria;
+import model.entity.Harmonizacao;
 import model.entity.Precificacao;
 import model.entity.Produtos;
 
@@ -323,6 +324,43 @@ public class DAOProdutos {
 	        }
 	    }
 	}
+	
+	public ArrayList<Harmonizacao> getHarmonizacoesByProduto(Produtos produto) {
+        String query = "SELECT harmonizacao.* FROM harmonizacao " +
+                       "INNER JOIN rel_harm_produto ON harmonizacao.HAR_ID = rel_harm_produto.REL_HAR_ID " +
+                       "WHERE rel_harm_produto.REL_HAR_PROD = ?";
+        
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Harmonizacao> harmonizacoes = new ArrayList<>();
 
+        try {
+            conn = Conexao.conectar();
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, produto.getId());
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Harmonizacao harmonizacao = new Harmonizacao();
+                harmonizacao.setId(rs.getInt("HAR_ID"));
+                harmonizacao.setDesc(rs.getString("HAR_DESC"));
+                harmonizacao.setTipo(rs.getString("HAR_TIPO_VINHO"));
+                harmonizacoes.add(harmonizacao);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao obter harmonizações para o produto: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+
+        return harmonizacoes;
+    }
 
 }

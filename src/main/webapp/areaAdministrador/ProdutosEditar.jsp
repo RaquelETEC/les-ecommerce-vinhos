@@ -3,9 +3,13 @@
 <%@ page import="model.entity.Produtos"%>
 <%@ page import="model.entity.Categoria"%>
 <%@ page import="model.entity.Precificacao"%>
+<%@ page import="model.entity.Harmonizacao"%>
+<%@ page import="java.util.ArrayList"%>
 
 <%
 Produtos produto = (Produtos) request.getAttribute("produtos");
+
+ArrayList<Harmonizacao> Listaharmonizacao = (ArrayList<Harmonizacao>) request.getAttribute("listaHarmonizacao");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -64,20 +68,18 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 
 						<div class="row">
 							<div class="col-md-3">
-							
-							<input
-									value="<%=request.getAttribute("idProduto")%>" type="text"
-									name="idProduto" id="idProduto" style="display: none" /> 
-							<input
-									value="<%=request.getAttribute("PrecificacaoDesc")%>" type="text"
-									name="PrecificacaoDesc" id="PrecificacaoDesc" style="display: none" /> 
-							<input
-									value="<%=request.getAttribute("CategoriaStatus")%>" type="text"
-									name="CategoriaStatus" id="CategoriaStatus" style="display: none" /> 
-									
-								<label for="codigoBarras" class="form-label">Codigo de
-									Barras:</label> <input type="text" class="form-control"
-									id="codigoBarras" name="codigoBarras"
+
+								<input value="<%=request.getAttribute("idProduto")%>"
+									type="text" name="idProduto" id="idProduto"
+									style="display: none" /> <input
+									value="<%=request.getAttribute("PrecificacaoDesc")%>"
+									type="text" name="PrecificacaoDesc" id="PrecificacaoDesc"
+									style="display: none" /> <input
+									value="<%=request.getAttribute("CategoriaStatus")%>"
+									type="text" name="CategoriaStatus" id="CategoriaStatus"
+									style="display: none" /> <label for="codigoBarras"
+									class="form-label">Codigo de Barras:</label> <input type="text"
+									class="form-control" id="codigoBarras" name="codigoBarras"
 									value=<%=produto.getCodigo_barra()%>>
 							</div>
 							<div class="col-md-3">
@@ -194,6 +196,10 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 				<div class="row justify-content-left mt-5"
 					style="margin-left: 125px;">
 					<div class="col-md-8">
+						<%
+						   //for (int i = 0; i < Listaharmonizacao.size(); i++) {
+							//Harmonizacao harmonizacao = Listaharmonizacao.get(i);
+						%>
 						<h3 class=" mb-3">Adicionar Harmonização</h3>
 						<table class="table">
 							<thead>
@@ -203,14 +209,18 @@ Produtos produto = (Produtos) request.getAttribute("produtos");
 								</tr>
 							</thead>
 							<tbody id="tabelaHarmonizacoes">
-								<!-- Linhas da tabela de harmonizaÃ§Ãµes serÃ£o adicionadas aqui -->
+								<tr>
+									<td><%=produto.getListadeHarmonizacao()%> Aqui fica a lista de harmonizações</td>
+								</tr>
 							</tbody>
 						</table>
 						<button class="btn btn-primary" onclick="adicionarHarmonizacao()">Inserir
 							Harmonização</button>
 					</div>
 				</div>
-
+				<%
+				//}
+				%>
 				<!-- Tabela de resultados -->
 				<div class="text-center mt-4">
 					<table id="tabela" class="mx-auto">

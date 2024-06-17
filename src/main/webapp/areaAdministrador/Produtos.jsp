@@ -121,6 +121,7 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 									<td><%=produto.getPro_preco_compra()%></td>
 									<td><%=produto.getPrecificacao().getDesc()%></td>
 									<td><%=produto.getCategoria().getStatus()%></td>
+
 									<td><a
 										onclick="window.location.href='EditarProdutos.html?idProduto=<%=produto.getId()%>&PrecificacaoDesc=<%=produto.getPrecificacao().getDesc()%>&CategoriaStatus=<%=produto.getCategoria().getStatus()%>';"
 										class="Botao1">Editar</a></td>
