@@ -198,7 +198,20 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 		</div>
 		<!-- Chatbot container -->
 	<div id="chatbot-container" class="card">
-		<div id="chatbot-header" class="card-header">
+	  <div id="chatbot-header" class="card-header">
+	        <button id="toggle-chatbot" class="btn btn-dark btn-block">Precisa de ajuda 🤖👋?</button>
+	    </div>
+	    <div id="chatbot-content" class="card-body">
+	        <div id="chat-response-container"></div>
+	        <div class="chat-bot-options" id="chat-options">
+	            <textarea type="text" id="user-input" class="form-control" placeholder="Digite sua resposta aqui"></textarea>
+	            <button id="send-message" class="btn btn-secondary btn-send-message-chat">Enviar</button>
+	        </div>
+	    </div>
+    </div>
+	
+	
+	<!-- 	<div id="chatbot-header" class="card-header">
 			<button id="toggle-chatbot" class="btn btn-dark btn-block">Precisa de ajuda 🤖👋?  </button>
 		</div>
 		<div id="chatbot-content" class="card-body">
@@ -327,8 +340,8 @@ ArrayList<Produtos> lista = (ArrayList<Produtos>) request.getAttribute("listaPro
 			</form>
 			<div id="chat-response-container"></div>
 			
-		</div>
-	</div>
+		</div> -->
+		
 	</main>
 	<footer class="p-4 text-light text-center footer">
 		Desenvolvido por Caynan e Raquel </footer>

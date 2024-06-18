@@ -41,253 +41,276 @@ function AdicionarAoCarrinho(id, idProd, quant) {
     };
     xhr.send();
 }
- 
-document.addEventListener("DOMContentLoaded", function() {
-	const chatbotContainer = document.getElementById("chatbot-container");
+
+//Chat-bot 
+document.addEventListener("DOMContentLoaded", async function() {
 	const toggleChatbotButton = document.getElementById("toggle-chatbot");
-	const chatbotContent = document.getElementById("chatbot-content");
-	const assistButton = document.getElementById("assist-button");
-	const textAssistent = document.getElementById("text-assistent");
+    const chatbotContent = document.getElementById("chatbot-content");
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const chatResponseContainer = document.getElementById("chat-response-container");
+    const userInput = document.getElementById("user-input");
+    const sendMessageButton = document.getElementById("send-message");
 
-	const infoForm = document.getElementById("info-form");
+    const notificationSound = new Audio('imagens/assets/new-notification-7-210334.mp3'); 
+	
+	let conversaIniciada = false; 
+	let listaProdutos = '';
+    let chatStep = 0;
+    let userResponses = {};
+    let messageHistory = []; // Array para armazenar o histórico de mensagens
 
-	toggleChatbotButton.addEventListener("click", function() {
-		chatbotContainer.classList.toggle("expanded");
-		if (chatbotContainer.classList.contains("expanded")) {
-			chatbotContent.style.display = "block";
-		} else {
-			chatbotContent.style.display = "none";
-		}
-	});
+	if(listaProdutos.length == 0){
+	listaProdutos = await ProdutosDisponiveis();
+	}
 
-	assistButton.addEventListener("click", function() {
-		assistButton.style.display = "none";
-		textAssistent.innerText  = " Vou te ajudar na escolha do vinho ideal! Por favor preencha as informações abaixo:"
-		infoForm.style.display = "block";
-	});
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const grapeVarietySelect = document.getElementById("grape-variety");
-    const otherGrapeVarietyInput = document.getElementById("other-grape-variety");
-
-    grapeVarietySelect.addEventListener("change", function() {
-        if (grapeVarietySelect.value === "outra") {	
-            otherGrapeVarietyInput.style.display = "block";
+	function iniciarConversa() {
+		if (!conversaIniciada) {
+			conversaIniciada = true;
+	        const mensagemInicial = `
+	        INSTRUÇÕES PARA RESPOSTA: 
+	        Voce precisará coletar informações sobre a preferência de vinhos/espumantes do usuario para 
+	        recomendar um produto da lista de produtos. 
+	        NÃO RESPONDA NEM FAÇA PERGUNTAS QUE NÃO ESTÃO RELACIONADAS A VINHOS.
+	        QUANDO VOCÊ POSSUIR INFORMAÇÕES SUFICIENTES SOBRE A PREFERENCIA DO USUARIO PARA UM VINHO OU ESPUMANTE PARA RECOMENDAR O MELHOR PRODUTO POSSIVEL, FORNEÇA A RECEOMENDAÇÃO DE 1 VINHO DA LISTA DE VINHOS NO SEGUINTE FORMATO:
+	        ID= <ID do produto>
+	        MOTIVO= <Motivo da recomendação>
+	        FAÇA NO MÍNIMO 3 PERGUNTAS SOBRE AS PREFERENCIAS DO USUARIO PARA VINHOS OU ESPUMANTES
+	        FAÇA APENAS UMA PERGUNTA POR VEZ AO USUARIO
+	        SE O USUÁRIO NÃO RESPONDER SUA PERGUNTA, ENTENTA A NECESSIDADE DELE, ATE CONSEGUIR RECOMENDAR UM VINHO
+	        NÃO RECOMENDE O MESMO VINHO MAIS DE 1 VEZ PARA O MESMO USUARIO.
+	        Esta é a lista de produtos: ${listaProdutos}
+	        PARA ESTA PRIMEIRA PERGUNTA RESPONDA APENAS: Olá, sou Roberto 🤖, seu assistente virtual! Posso te ajudar a escolher o vinho/espumante ideal?
+			`
+	        enviarMensagemParaIa(mensagemInicial);
+        }
+    }
+    
+    toggleChatbotButton.addEventListener("click", function() {
+        chatbotContainer.classList.toggle("expanded");
+        if (chatbotContainer.classList.contains("expanded")) {
+            chatbotContent.style.display = "block";
+            iniciarConversa();
         } else {
-            otherGrapeVarietyInput.style.display = "none";
+            chatbotContent.style.display = "none";
         }
     });
-});
 
+    sendMessageButton.addEventListener("click", function() {
+        const response = userInput.value.trim();
+        if (response !== "") {
+            capturarResposta(response);
+            userInput.value = "";
+        }
+    });
 
-//enviar chat
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById("info-form");
-	const submitBtn = document.getElementById("submit-btn");
+    userInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            const response = userInput.value.trim();
+            if (response !== "") {
+                capturarResposta(response);
+                userInput.value = "";
+            }
+        }
+    });
 
-    form.addEventListener("submit", async(event) => {
-        event.preventDefault(); 
+    function playNotificationSound() {
+        notificationSound.play();
+    }
+    
+    function scrollToBottom() {
+        chatbotContent.scrollTop = chatbotContent.scrollHeight;
+    }
+    
+   function CreatedisplayAwaittMessage() {
+	    const loadingMessage = document.createElement("div");
+	    loadingMessage.className = "assistant-message bubble ia-bubble";
+	    loadingMessage.id = 'loading-message';
+	    loadingMessage.innerText = 'Carregando...';
+	    chatResponseContainer.appendChild(loadingMessage);
+	    scrollToBottom();
+    }
+   function DeletedisplayAwaittMessage() {
+	   const loadingMessage = document.getElementById("loading-message");
+	    if (loadingMessage) {
+	        loadingMessage.remove();
+	    }
+    }
+    
+    function displayAssistantMessage(message) {
+		DeletedisplayAwaittMessage(); 
+        const messageElement = document.createElement("div");
+        messageElement.className = "assistant-message bubble ia-bubble";
+        messageElement.innerText = message;
+        chatResponseContainer.appendChild(messageElement);
+        playNotificationSound();
+        scrollToBottom();
+        sendMessageButton.disabled = false;
+    }
 
-	   // Função auxiliar para retornar "Não tenho" se o valor estiver vazio
-	    const getValueOrDefault = (value) => value.trim() === "" ? "Não tenho" : value;
+	function displayUserMessage(message) {
+	    const messageContainer = document.createElement("div");
+	    messageContainer.className = "user-message";
 	
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Carregando Recomendação...";
+	    const messageElement = document.createElement("div");
+	    messageElement.className = "bubble user-bubble";
+	    messageElement.innerText = message;
 	
-	    const wineType = getValueOrDefault(document.getElementById("wine-type").value);
-	    const grapeVariety = getValueOrDefault(document.getElementById("grape-variety").value);
-	    const region = getValueOrDefault(document.getElementById("region").value);
-	    const budget = getValueOrDefault(document.getElementById("budget").value);
-	    const sweetnessLevel = getValueOrDefault(document.getElementById("sweetness-level").value);
-	    const occasion = getValueOrDefault(document.getElementById("occasion").value);
-	    const foodPairing = getValueOrDefault(document.getElementById("food-pairing").value);
-	    const experienceLevel = getValueOrDefault(document.getElementById("experience-level").value);
-	    const bodyPreference = getValueOrDefault(document.getElementById("body-preference").value);
-	    const flavorNotes = getValueOrDefault(document.getElementById("flavor-notes").value);
-	    const informaçõesComplementares = getValueOrDefault(document.getElementById("obs-notes").value);
-	
-	    // Formatação dos valores em um texto estruturado
-	    const textForm = `Tipo de vinho preferido: ${wineType}, Variedade de uva preferida: ${grapeVariety}, Região preferida: ${region}, Faixa de preço: ${budget}, Nível de doçura desejado: ${sweetnessLevel}, Ocasião: ${occasion}, Combinação com alimentos: ${foodPairing}, Nível de experiência: ${experienceLevel}, Preferência por corpo: ${bodyPreference}, Notas de sabor preferidas: ${flavorNotes}, Observações: ${informaçõesComplementares}`;
+	    messageContainer.appendChild(messageElement);
+	    chatResponseContainer.appendChild(messageContainer);
+	    scrollToBottom();
+	}
 
-        let textProdutosDisponiveis = "";
+    async function enviarMensagemParaIa(message) {
+		sendMessageButton.disabled = true;
+  		CreatedisplayAwaittMessage();
+  		
+  		messageHistory.push({ role: "user", content: message });
 
-        // Fazer a requisição HTTP GET para /ProdutosDisponiveis
-        await fetch("/les-ecommerce-vinhos/produtosDisponiveis.html")
-            .then(response => response.json()) // Extrair os dados JSON da resposta
-            .then(produtos => {
-                // Manipular os dados dos produtos como desejado
-
-                // Exemplo de como você pode utilizar os dados retornados
-                for (const produto of produtos) {
-                    textProdutosDisponiveis += `ID=${produto.id}, DESC=${produto.desc}, PRECO=${produto.pro_preco_venda}; `;
-                }
-            })
-            .catch(error => console.error("Erro ao obter produtos:", error));
-
-        const textForIa = `Com base na lista de vinhos, recomendo um produto com base nas respostas: ${textForm}. 
-        Esta é lista de vinhos que o site possui: ${textProdutosDisponiveis}. 
-        Por favor, forneça sua recomendação no seguinte formato:
-        ID= <ID do produto>
-        MOTIVO= <Motivo da recomendação>
-        Não forneça respostas que não são relacionadas a vinhos/espumantes.
-        Não forneça a recomendação maior a 1 produto.`;
-        
-       await fetch("https://api.openai.com/v1/chat/completions", {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
-                Accept: "application/json",
                 "Content-Type": "application/json",
                 Authorization: "Bearer " + OPENAI_API_KEY
             },
             body: JSON.stringify({
                 model: "gpt-3.5-turbo",
-                messages: [{ role: "user", content: textForIa }],
-                max_tokens: 2048,
-                temperature: 0.5
-            }),
-        })
-        .then((resposta) => resposta.json())
-        .then((dados) => {
-           exibirResposta(dados.choices[0].message.content)
-        })
-        .catch((erro) => {
-            console.log(erro);
+                messages: messageHistory,
+                max_tokens: 150,
+                temperature: 0.7
+            })
         });
- 
-        // Limpar os campos do formulário após o envio (opcional)
-        form.reset();
-    });
-   
-});
 
-
-async function exibirResposta(respostaIa) {
-    const linhas = respostaIa.split('\n');
-    
-    const infoForm = document.getElementById("info-form");
-    infoForm.style.display = "none";
-    
-    if (linhas.length !== 2 || !linhas[0].startsWith('ID=') || !linhas[1].startsWith('MOTIVO=')) {
-        // Se a resposta não estiver no formato esperado, exibir apenas a mensagem da IA e o botão "Voltar"
-        const motivo = linhas.join('\n'); 
-        const textAssistent = document.getElementById("text-assistent");
-        textAssistent.innerText = motivo;
-
-        const chatResponseContainer = document.getElementById('chat-response-container');
+        const dados = await response.json();
+        const respostaIa = dados.choices[0].message.content;
         
-        const voltarButton = document.createElement('button');
-        voltarButton.className = 'btn btn-secondary';
-        voltarButton.innerText = 'Voltar';
-        voltarButton.onclick = () => resetChat();
-        chatResponseContainer.appendChild(voltarButton);
-        return; 
+		processarResposta(respostaIa)
+       
+        
+        return respostaIa;
     }
 
-    // Continuar com o processamento normal da resposta
-    const id = linhas[0].split('=')[1].trim();
-    const motivo = linhas[1].split('=')[1].trim();
-    const textAssistent = document.getElementById("text-assistent");
+    async function capturarResposta(response) {
+        displayUserMessage(response);
+        const respostaIa = await enviarMensagemParaIa(response);
+    }
 
-    textAssistent.innerText = 'Aqui está sua recomendação: ';
-
-    // Inicializar o produto com valores padrão
-    const produto = {
-        id: id,
-        desc: "",
-        preco: "",
-        imgSrc: ""
-    };
-
-    try {
-        // Fazer a requisição para buscar o produto pelo ID
-        const response = await fetch(`/les-ecommerce-vinhos/buscaProduto.html?id=${id}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    function processarResposta(respostaIa) {
+        if (respostaIa.includes("ID=") && respostaIa.includes("MOTIVO=")) {
+            exibirRecomendacao(respostaIa);
+        } else {
+            
+	        displayAssistantMessage(respostaIa);
+	        messageHistory.push({ role: "assistant", content: respostaIa }); 
+	        
         }
-        const dadosProduto = await response.json();
-
-        // Atualizar o objeto produto com os dados retornados
-        produto.desc = dadosProduto.desc;
-        produto.preco = `R$ ${dadosProduto.pro_preco_venda}`;
-        produto.imgSrc = `imagens/produtos/${dadosProduto.codigo_barra}.png`;
-
-        // Criar os elementos HTML e exibi-los no chat
-        const chatResponseContainer = document.getElementById('chat-response-container');
-        const card = document.createElement('div');
-        card.className = 'card mb-3';
-
-        const imageContainer = document.createElement('div');
-        imageContainer.className = 'image-container';
-        imageContainer.style.backgroundColor = '#f2f2f2';
-
-        const img = document.createElement('img');
-        img.src = produto.imgSrc;
-        img.alt = `Imagem do Produto ${produto.desc}`;
-        img.className = 'card-img-top img-fluid rounded-start';
-        img.style.width = '40%';
-        img.style.display = 'block';
-        img.style.margin = '0 auto';
-        imageContainer.appendChild(img);
-
-        const cardBody = document.createElement('div');
-        cardBody.className = 'card-body';
-
-        const cardTitle = document.createElement('h6');
-        cardTitle.className = 'card-title text-center';
-        cardTitle.style.height = '5vh';
-        cardTitle.innerText = produto.desc;
-        cardBody.appendChild(cardTitle);
-
-        const price = document.createElement('p');
-        price.className = 'price';
-        price.innerHTML = `<span id="price">${produto.preco}</span>`;
-        cardBody.appendChild(price);
-
-        const addToCartButton = document.createElement('button');
-        addToCartButton.type = 'button';
-        addToCartButton.className = 'btn btn-lg add-to-cart-btn text-center add_carrinho';
-        addToCartButton.onclick = () => AdicionarAoCarrinho('20', id, '1');
-        addToCartButton.innerText = 'Adicionar ao carrinho';
-        cardBody.appendChild(addToCartButton);
-
-        card.appendChild(imageContainer);
-        card.appendChild(cardBody);
-        chatResponseContainer.appendChild(card);
-
-        // Adicionar o motivo abaixo do card com margem à direita
-        const motivoText = document.createElement('p');
-        motivoText.innerText = motivo;
-        motivoText.style.marginRight = '40px';
-        motivoText.style.textAlign = 'justify';
-        chatResponseContainer.appendChild(motivoText);
-
-        // Adicionar o botão "Voltar"
-        const voltarButton = document.createElement('button');
-        voltarButton.className = 'btn btn-secondary';
-        voltarButton.innerText = 'Voltar';
-        voltarButton.onclick = () => resetChat();
-        chatResponseContainer.appendChild(voltarButton);
-
-    } catch (error) {
-        console.error("Erro ao obter produto:", error);
     }
-}
 
-function resetChat() {
-    const chatResponseContainer = document.getElementById('chat-response-container');
-    chatResponseContainer.innerHTML = ''; // Limpa o contêiner de respostas
+    async function ProdutosDisponiveis() {
+		const sendMessageButton = document.getElementById("send-message");
+		sendMessageButton.disabled = true;
 
-    const textAssistent = document.getElementById("text-assistent");
-    textAssistent.innerText = 'Olá, sou Roberto 🤖 seu assistente virtual, como posso ajudar?';
+        let textProdutosDisponiveis = "";
+        const baseUrl = window.location.origin;  // Obtém a URL base atual
+   		const response = await fetch(`${baseUrl}/les-ecommerce-vinhos/produtosDisponiveis.html`);  // Constrói a URL completa
+        const produtos = await response.json();
+        produtos.forEach(produto => {
+            textProdutosDisponiveis += `ID=${produto.id}, DESC=${produto.desc}, PRECO=${produto.pro_preco_venda}; `;
+        });
+        sendMessageButton.disabled = false;
 
-    const infoForm = document.getElementById("info-form");
-    infoForm.style.display = "none";
+        return textProdutosDisponiveis;
+    }
+
+    function exibirRecomendacao(respostaIa) {
+		const linhas = respostaIa.split('\n');
+		
+        // Encontra a linha com "ID="
+	    const idLinha = linhas.find(line => line.startsWith("ID="));
+	    const id = idLinha ? idLinha.split('=')[1].trim() : null;
+	
+	    // Encontra a linha com "MOTIVO="
+	    const motivoLinha = linhas.find(line => line.startsWith("MOTIVO="));
+	    const motivo = motivoLinha ? motivoLinha.split('=')[1].trim() : "Motivo não especificado";
+	
+	    // Todas as linhas antes da linha "ID=" serão consideradas como parte da introdução
+	    const iaReposta = linhas.slice(0, linhas.indexOf(idLinha)).join('\n').trim();
+	
+	    if (!id) {
+	        console.error('ID do produto não encontrado na resposta da IA.');
+	        return;
+	    }
+
+        fetch(`/les-ecommerce-vinhos/buscaProduto.html?id=${id}`)
+            .then(response => response.json())
+            .then(produto => {
+				DeletedisplayAwaittMessage(); 
+		        const messageElement = document.createElement("div");
+		        messageElement.className = "assistant-message bubble ia-bubble";
+
+                const card = document.createElement('div');
+                card.className = "card-recomendacao";
+                
+                const txtIaRecomendacao = document.createElement('p');
+				txtIaRecomendacao.innerHTML = iaReposta;
+				
+
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'image-container';
+                imageContainer.style.backgroundColor = '#f2f2f2';
+
+                const img = document.createElement('img');
+                img.src = `imagens/produtos/${produto.codigo_barra}.png`;
+                img.alt = `Imagem do Produto ${produto.desc}`;
+                img.className = 'card-img-top img-fluid rounded-start';
+                img.style.width = '40%';
+                img.style.display = 'block';
+                img.style.margin = '0 auto';
+                imageContainer.appendChild(img);
+
+                const cardBody = document.createElement('div');
+
+                const cardTitle = document.createElement('h6');
+                cardTitle.className = 'text-center';
+                cardTitle.style.height = '2vh';
+                cardTitle.innerText = produto.desc;
+                cardBody.appendChild(cardTitle);
+
+                const price = document.createElement('p');
+                price.className = 'price';
+                price.innerHTML = `<span id="price">R$ ${produto.pro_preco_venda}</span>`;
+                cardBody.appendChild(price);
+
+				const addToCartButton = document.createElement('button');
+		        addToCartButton.type = 'button';
+		        addToCartButton.className = 'btn btn-lg add-to-cart-btn text-center add_carrinho';
+		        addToCartButton.onclick = () => AdicionarAoCarrinho('20', id, '1');
+		        addToCartButton.innerText = 'Adicionar ao carrinho';
+		        cardBody.appendChild(addToCartButton);
+
+                const recommendation = document.createElement('p');
+                recommendation.className = 'motivo';
+                recommendation.innerHTML = `<span>${motivo}</span>`;
+                cardBody.appendChild(recommendation);
+
+				card.appendChild(txtIaRecomendacao);
+                card.appendChild(imageContainer);
+                card.appendChild(cardBody);
+
+                //chatResponseContainer.appendChild(card);
+                
+                messageElement.appendChild(card)
+                
+		        chatResponseContainer.appendChild(messageElement);
+		        
+		        playNotificationSound();
+		        sendMessageButton.disabled = false;
+		        scrollToBottom()
+		        
+            })
+            .catch(error => {
+                console.error('Erro ao buscar o produto:', error);
+            });
+    }
+
     
-    const assistButton = document.getElementById("assist-button");
-    assistButton.style.display = "block"; // Mostrar o botão de assistência
-    
-    const submitBtn = document.getElementById("submit-btn");
- 	submitBtn.disabled = false;
- 	submitBtn.textContent = "Enviar";
-}
+});
