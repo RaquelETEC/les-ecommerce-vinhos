@@ -1,8 +1,10 @@
 /**
  * Confirmar
  * 
- * @author Raquel e caynan
+ * @author Raquel Gonçalves
  */
+
+var baseUrl = window.location.origin; 
 
 function confirmar(idcon) {
 	let resposta = confirm("Confirma a exclusão deste contato?")
@@ -29,7 +31,7 @@ function confirmarExcluirEndereco(idEnd, id) {
 
 
 function confirmarPedido(idPedido, i, ValorCupom, idCliente) {
-	debugger;
+	
     const Status = document.getElementById('statusPedido' + i).value;
     let url = "";
 
@@ -72,7 +74,7 @@ function confirmarPedido(idPedido, i, ValorCupom, idCliente) {
 }
 /*
 function confirmarTroca (idItem ="",pedidoId="",novoStatus="",novoStatusItem=""){
-	debugger;
+	
 	const itens = [idItem];
 
 	var dados = `&itens=${itens.join(',')}&pedido=${pedidoId}&novoStatusPedido=${novoStatus}&tipoSolicitacao=${novoStatusItem}`;
@@ -92,7 +94,7 @@ function confirmarTroca (idItem ="",pedidoId="",novoStatus="",novoStatusItem="")
 }
 	*/
 function confirmarTroca(idItem ="", idTroca="", quantItem ="", quantTocada ="", pedidoId="",novoStatus="",novoStatusItem="") {
- debugger;
+ 
   // Extrair os IDs e quantidades dos itens de troca
   const itensSelecionados = [idItem];
   const quantidades = [quantItem];
@@ -130,7 +132,7 @@ function capturarDadosConfirmarRecebimento(btn) {
 }
 
 function processarConfirmacao(confirmacao) {
-	debugger;
+	
 	let  confirmart = confirmarTroca (itemId,trocaId,quantidadeItem,0, pedidoId, novoStatus,novoStatusItem)
    	let  confirmarC =  gerarCupomTroca(pedidoId,prodId,total,clienteId);
    	
@@ -151,17 +153,16 @@ function movimentarEstoque(itemId, pedidoId, quant){
 }
 	
 async function gerarCupomTroca(pedidoId, prodId,total,clienteId)	{
-	debugger;
+
 	var dados = `&pedido=${pedidoId}&prodId=${prodId}&valorCupom=${total}&tipoCupom=T`;
-   
-	var url = "http://localhost:8080/les-ecommerce-vinhos/gerarCupom.html?" + dados;
+    var url = `${baseUrl}/les-ecommerce-vinhos/gerarCupom.html?${dados}`;
+
 	fazerRequisicaoAjax(url, function(resposta) {
 		if (resposta.includes("erro")) {
 			alert(resposta);
 		}
 		else {
 			vincularCupomAoCliente(resposta, clienteId);
-			
 		}
 	}, function() {
 		alert("Erro ao gerar cupom de troca");
@@ -170,10 +171,10 @@ async function gerarCupomTroca(pedidoId, prodId,total,clienteId)	{
 	
 	
 function vincularCupomAoCliente(cupomId, clienteID){
-	debugger;
+
 	var dados = `&cupomId=${cupomId}&clienteId=${clienteID}`;
-   
-	var url = "http://localhost:8080/les-ecommerce-vinhos/VincularCupomAoCliente.html?" + dados;
+    var url = `${baseUrl}/les-ecommerce-vinhos/VincularCupomAoCliente.html?${dados}`;
+
 	fazerRequisicaoAjax(url, function(resposta) {
 		if (resposta.includes("erro")) {
 			alert(resposta);

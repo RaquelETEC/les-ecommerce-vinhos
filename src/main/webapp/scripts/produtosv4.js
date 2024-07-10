@@ -70,7 +70,7 @@ function incrementarQuantidade(idItem, i) {
     }
 
 function alterarStatusItem(carrinhoId, produtoId, quantidade, motivo , idstatuts, itemCarrinhoId) {
-	debugger
+	
     var url = "/les-ecommerce-vinhos/AlterarStatusItemCarriho?"
     + "carrinhoId=" + carrinhoId 
     + "&produtoId=" + produtoId 
@@ -90,7 +90,7 @@ function alterarStatusItem(carrinhoId, produtoId, quantidade, motivo , idstatuts
 
 
 function finalizarCompra(idCliente){
-	debugger;
+	
     var url = "/les-ecommerce-vinhos/FinalizarCompra?idCliente=" + idCliente;
     fazerRequisicaoAjax(url, function(resposta) {
         alert(resposta);

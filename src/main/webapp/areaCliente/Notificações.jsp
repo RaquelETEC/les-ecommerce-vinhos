@@ -15,7 +15,7 @@
  
 	<nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
 		<div class="container-fluid">
-            <a href="http://localhost:8080/les-ecommerce-vinhos/paginaInical.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a href="/les-ecommerce-vinhos/paginaInical.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
 			<div class="navbar-nav ms-auto">
 			</div>
 		</div>
@@ -43,9 +43,9 @@
 							onclick="window.location.href='Perfil.html?id=<%=request.getAttribute("id")%>';">
 							Perfil</button>
 						<button 
-							onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartões</button>
+							onclick="window.location.href='MeusCartoes.html?id=<%=request.getAttribute("id")%>';">Cartï¿½es</button>
 						<button
-							onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereços</button>
+							onclick="window.location.href='MeusEnderecos.html?id=<%=request.getAttribute("id")%>';">Endereï¿½os</button>
 						<button
 							onclick="window.location.href='/les-ecommerce-vinhos/areaCliente/TrocarSenha.html?id=<%=request.getAttribute("id")%>';">Trocar
 							Senha</button>
@@ -62,7 +62,7 @@
 					<button class="button-dados-perfil">
 						<img src="../imagens/assets/icons-left-perfil-3.png" alt=""
 							class="img-icons-perfil"> <span
-							onclick="window.location.href='Notificações.jsp';">Notificacoes</span>
+							onclick="window.location.href='Notificaï¿½ï¿½es.jsp';">Notificacoes</span>
 					</button>
 
 
@@ -82,7 +82,7 @@
 
                 <div class="box-top-register">
                     <!-- titulo do cabecalho -->
-                    <h1 class="text-perfil">Notificações</h1>
+                    <h1 class="text-perfil">Notificaï¿½ï¿½es</h1>
 
                     <div class="box-input-pesquisa-e-carrinho">
 
@@ -104,24 +104,24 @@
     				<div class="card mt-3" style="background-color: #F0F0F0; width: 50rem;">
 				        <div class="card-body">
 				            <h5 class="card-title">PEDIDO 1</h5>
-				            <p class="card-text">Mensagem da notificação 1.</p>
-				            <p class="card-text">Data da notificação: 10/03/2024</p>
+				            <p class="card-text">Mensagem da notificaï¿½ï¿½o 1.</p>
+				            <p class="card-text">Data da notificaï¿½ï¿½o: 10/03/2024</p>
 				        </div>
 				    </div>
 				
     				<div class="card mt-3" style="background-color: #F0F0F0; width: 50rem;">
 				        <div class="card-body">
 				            <h5 class="card-title">PEDIDO 2</h5>
-				            <p class="card-text">Mensagem da notificação 2.</p>
-				            <p class="card-text">Data da notificação: 11/03/2024</p>
+				            <p class="card-text">Mensagem da notificaï¿½ï¿½o 2.</p>
+				            <p class="card-text">Data da notificaï¿½ï¿½o: 11/03/2024</p>
 				        </div>
 				    </div>
 				
     				<div class="card mt-3" style="background-color: #F0F0F0; width: 50rem;">
 				        <div class="card-body">
 				            <h5 class="card-title">PEDIDO 3</h5>
-				            <p class="card-text">Mensagem da notificação 3.</p>
-				            <p class="card-text">Data da notificação: 12/03/2024</p>
+				            <p class="card-text">Mensagem da notificaï¿½ï¿½o 3.</p>
+				            <p class="card-text">Data da notificaï¿½ï¿½o: 12/03/2024</p>
 				        </div>
 				    </div>
                     <!-- acaba aqui -->

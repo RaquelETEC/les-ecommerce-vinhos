@@ -42,7 +42,7 @@ function cancelarPedido(idPedido) {
 
  //da para transformar em uma so função
  function enviarItems(idItem ="",idTroca = "", quantItem="",quantTocada="", pedidoId="",novoStatus="",novoStatusItem=""){
-	debugger;
+	
  // Extrair os IDs e quantidades dos itens de troca
   const itensSelecionados = [idItem];
   const quantidades = [quantItem];

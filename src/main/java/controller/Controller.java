@@ -64,7 +64,7 @@ public class Controller extends HttpServlet {
 		// } else if (action.equals("/report")) {
 		// gerarRelatorio(request, response);
 		// }
-	
+
 	}
 
 	/**

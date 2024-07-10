@@ -11,7 +11,7 @@ const exibirMinhaConta = () => {
 }
 
 function validarAtualizar(){
-	debugger;
+	
 	document.forms["form-register"].submit();
     return true;
 }

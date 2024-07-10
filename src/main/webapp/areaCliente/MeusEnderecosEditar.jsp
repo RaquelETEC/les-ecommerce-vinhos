@@ -28,7 +28,7 @@
 <body>
     <nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
         <div class="container-fluid">
-            <a href="http://localhost:8080/les-ecommerce-vinhos/paginaInical.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
+            <a href="/les-ecommerce-vinhos/paginaInical.html"><img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3"></a>
             <div class="navbar-nav ms-auto"></div>
         </div>
     </nav>

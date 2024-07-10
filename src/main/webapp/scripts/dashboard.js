@@ -47,8 +47,8 @@ function filtrar() {
 		});
 		
 }
-
-let myChart = null; // Declare a variável para armazenar a referência do gráfico
+let myChart = null;
+let myChartPie = null;
 
 function renderChart(data) {
     // Destruir o gráfico anterior se ele existir
@@ -61,25 +61,34 @@ function renderChart(data) {
     // Obter todas as datas únicas
     const uniqueDates = Array.from(new Set(data.map(item => item.date)));
 
-    // Calcular o volume para cada data
-    const volumes = uniqueDates.map(date => {
-        const volume = data
-            .filter(item => item.date === date)
-            .reduce((total, item) => total + item.volume, 0);
-        return volume;
+    // Obter todos os produtos únicos
+    const uniqueProducts = Array.from(new Set(data.map(item => item.productName)));
+
+	let datasets ;
+
+    datasets = uniqueProducts.map(product => {
+        // Calcular o volume para cada data para o produto atual
+        const volumes = uniqueDates.map(date => {
+            const volume = data
+                .filter(item => item.date === date && item.productName === product)
+                .reduce((total, item) => total + item.volume, 0);
+            return volume;
+        });
+
+        return {
+            label: product,
+            data: volumes,
+            borderColor: getRandomColor(), // Função para gerar uma cor aleatória
+            borderWidth: 1,
+            fill: false
+        };
     });
 
     myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: uniqueDates,
-            datasets: [{
-                label: 'Quantidade de itens vendidos por período',
-                data: volumes,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                fill: false
-            }]
+            datasets: datasets
         },
         options: {
             scales: {
@@ -94,7 +103,23 @@ function renderChart(data) {
     });
 }
 
-let myChartPie = null; // Declare a variável para armazenar a referência do gráfico
+function getRandomColor() {
+    // Cores predefinidas em HSL (Matiz, Saturação, Luminosidade)
+    const colors = [
+        'hsl(0, 100%, 50%)',   // Vermelho
+        'hsl(45, 100%, 50%)',  // Laranja
+        'hsl(90, 100%, 50%)',  // Amarelo
+        'hsl(135, 100%, 50%)', // Verde lima
+        'hsl(180, 100%, 50%)', // Verde
+        'hsl(225, 100%, 50%)', // Ciano
+        'hsl(270, 100%, 50%)', // Azul
+        'hsl(315, 100%, 50%)'  // Magenta
+    ];
+
+    // Escolhe uma cor aleatória do array de cores
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
 
 // Função para renderizar o gráfico de pizza
 function renderPieChart(data) {

@@ -32,9 +32,8 @@ public class ControllerClient extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/** The dao. */
-	
-	//View helper 
-	
+
+	// View helper
 
 	/** The cliente. */
 	Cliente cliente = new Cliente();
@@ -50,19 +49,19 @@ public class ControllerClient extends HttpServlet {
 
 	/* The ServiceCliente */
 	ClienteService clienteService = new ClienteService();
-	
-	/* */ 
+
+	/* */
 
 	public ControllerClient() {
 		super();
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	System.out.println("teste cheguei no do post");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		System.out.println("teste cheguei no do post");
 	}
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getServletPath();
@@ -86,15 +85,14 @@ public class ControllerClient extends HttpServlet {
 
 		} else if (action.equals("/areaAdministrador/deleteClient")) {
 			ExcluirCliente(request, response);
-			
+
 		} else if (action.equals("/areaCliente/TrocarSenha.html")) {
 			TelaEditarSenha(request, response);
-			
+
 		} else if (action.equals("/editarSenha")) {
 			EditarSenha(request, response);
-		} 
-		
-		
+		}
+
 	}
 
 	/**
@@ -115,8 +113,6 @@ public class ControllerClient extends HttpServlet {
 		String nascimento = request.getParameter("typeNascimento");
 		String genero = request.getParameter("typeGenero");
 
-		
-				
 		cliente.setNome(nome);
 		cliente.setEmail(email);
 		cliente.setSenha(senha);
@@ -328,21 +324,20 @@ public class ControllerClient extends HttpServlet {
 		System.out.println("EU CHEGUEI NO TelaEditarSenha");
 
 		int id = Integer.parseInt(request.getParameter("id"));
-		
+
 		cliente.setId(id);
-		
+
 		cliente = clienteService.selecionarCliente(cliente);
-		
-		
+
 		request.setAttribute("id", id);
 		request.setAttribute("cliente", cliente);
-		System.out.println("o cliente:"+ cliente.getNome());
+		System.out.println("o cliente:" + cliente.getNome());
 
 		RequestDispatcher rd = request.getRequestDispatcher("/areaCliente/PerfilTrocarSenha.jsp");
 		rd.forward(request, response);
-		
 
 	}
+
 	protected void EditarSenha(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("EU CHEGUEI NO EditarSenha SERVELET");
@@ -352,23 +347,19 @@ public class ControllerClient extends HttpServlet {
 		String novaSenha = request.getParameter("typeNovaSenha");
 		String repitaSenha = request.getParameter("typeRepitaSenha");
 
-		
 		cliente.setId(id);
 		cliente = clienteService.selecionarCliente(cliente);
 
-		String respostaCli = clienteService.alterarSenha(cliente, senhaAtual, novaSenha, repitaSenha); 
-		
-		 // Escreve a resposta para o HttpServletResponse
-	    response.setContentType("text/plain");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(respostaCli); //respostaCli
+		String respostaCli = clienteService.alterarSenha(cliente, senhaAtual, novaSenha, repitaSenha);
 
-	    // Encerra a resposta
-	    response.getWriter().flush();
-	   
-		
+		// Escreve a resposta para o HttpServletResponse
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(respostaCli); // respostaCli
+
+		// Encerra a resposta
+		response.getWriter().flush();
+
 	}
-	
-	
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PedidoVenda {
-		
+
 	private int id;
 	Cliente cliente;
 	Endereco endereco;
@@ -22,7 +22,7 @@ public class PedidoVenda {
 	public PedidoVenda() {
 		super();
 	}
-	
+
 	public PedidoVenda(int id, Cliente cliente, Endereco endereco, String status, Date data, Double totalPedido,
 			Double totalDesconto, Double totalFrete, Double totalPagamento, Double totalSaldo,
 			ArrayList<model.entity.PedidoItens> pedidoItens, ArrayList<CartaoDeCredito> cartoes,
@@ -114,7 +114,7 @@ public class PedidoVenda {
 	public void setTotalPagamento(Double totalPagamento) {
 		this.totalPagamento = totalPagamento;
 	}
-	
+
 	public Double getTotalSaldo() {
 		return totalSaldo;
 	}
@@ -122,7 +122,7 @@ public class PedidoVenda {
 	public void setTotalSaldo(Double totalSaldo) {
 		this.totalSaldo = totalSaldo;
 	}
-	
+
 	public ArrayList<PedidoItens> getPedidoItens() {
 		return PedidoItens;
 	}
@@ -146,9 +146,5 @@ public class PedidoVenda {
 	public void setCupons(ArrayList<Cupons> cupons) {
 		this.cupons = cupons;
 	}
-	
-	
 
-	
-	
 }

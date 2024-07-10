@@ -2,25 +2,6 @@
 
 @import	url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-#chatbot-container {
-          position: fixed;
-          bottom: 0%;
-          right: 20px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          background-color: #fff;
-          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-          width: 300px;
-          height: 50px;
-          transition: height 0.5s;
-          overflow: hidden;
-      }
-
-      #chatbot-container.expanded {
-          height: 300px;
-      }
-
-
 .filter{
 	background-color: #F2F2F2;
 	height: 900px;
@@ -108,4 +89,98 @@ body .row .filter.col-2.m-5 {
 	background: black;
     bottom: 0;
     width: 100vw;
+}
+
+/* styles chat-bot*/
+#chatbot-container {
+    width: 300px;
+    max-width: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    transition: width 0.3s, height 0.3s;
+    margin-bottom: 0; 
+}
+
+#chatbot-container.expanded {
+    width: 25%;
+    height: 75%;
+}
+
+#chatbot-content {
+    display: none;
+    height: 500px; /* Set a fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-bottom: 100px;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#chatbot-header button {
+    width: 100%;
+}
+
+.chat-bot-options {
+    bottom: 0;
+    display: flex;
+    position: fixed;
+    width: 23%;
+    margin-bottom: 20px;
+}
+
+.btn-send-message-chat {
+    max-height: 40px;
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.bubble {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.assistant-message {
+    position: relative;
+    background-color: #e0e0e0;
+    color: #333;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 85%; /* Define a largura máxima do balão de diálogo */
+    clear: both; /* Limpa o float */
+}
+
+.user-bubble {
+    background-color: #007bff;
+    color: white;
+    text-align: right;
+    display: inline-block;
+    max-width: 85%; /* Define a largura máxima do balão de diálogo */
+    margin-left: auto; /* Alinha o balão à direita */
+    margin-bottom: 10px; /* Define uma margem inferior */
+    padding: 10px; /* Adiciona um padding interno para o conteúdo do balão */
+    border-radius: 10px; /* Adiciona bordas arredondadas */
+    word-wrap: break-word; /* Permite quebra de linha dentro do balão */
+}
+
+.user-message {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ia-bubble {
+    background-color: #f1f1f1;
+    color: black;
+    text-align: left;
 }

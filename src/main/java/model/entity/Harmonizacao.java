@@ -10,15 +10,13 @@ public class Harmonizacao {
 		super();
 
 	}
-	
-	
+
 	public Harmonizacao(int id, String desc, String tipo) {
 		super();
 		this.id = id;
 		this.desc = desc;
 		this.tipo = tipo;
 	}
-
 
 	public int getId() {
 		return id;
@@ -43,8 +41,5 @@ public class Harmonizacao {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	
-	
 
 }

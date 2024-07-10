@@ -7,44 +7,45 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+import util.Config;
+
 public class CRUDTesteEndInserir {
-    private WebDriver driver;
+	private WebDriver driver;
 
-    @Before
-    public void setUp() {
-        // Obtém o caminho para o diretório do WebDriver dentro do seu projeto
-    	String driverPath = "src/main/resources/drivers/msedgedriver.exe";
+	@Before
+	public void setUp() {
+		// Obtém o caminho para o diretório do WebDriver dentro do seu projeto
+		String driverPath = "src/main/resources/drivers/msedgedriver.exe";
 
-        // Configura o caminho para o WebDriver
-        System.setProperty("webdriver.edge.driver", driverPath);
+		// Configura o caminho para o WebDriver
+		System.setProperty("webdriver.edge.driver", driverPath);
 
-    }
+	}
+
 	@Test
 	public void testEndInserir() {
-		
+
 		WebDriver browser = new EdgeDriver();
 		browser.manage().window().maximize();
 
-		browser.navigate().to("http://localhost:8080/les-ecommerce-vinhos/areaAdministrador/Clientes.html");
-		
+		browser.navigate().to(Config.baseUrl + "/les-ecommerce-vinhos/areaAdministrador/Clientes.html");
+
 		WebElement botaoEditar = browser.findElement(By.id("BotaoEditar"));
-		
 
 		JavascriptExecutor executor = (JavascriptExecutor) browser;
 		executor.executeScript("arguments[0].click();", botaoEditar);
-		
-		
+
 		browser.findElement(By.className("button-dados-perfil")).click();
 		browser.findElement(By.className("enderecos")).click();
 		browser.findElement(By.className("botaoADDNovoEndereco")).click();
-		
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		//Endere�o Residencial
+
+		// Endere�o Residencial
 		WebElement campoTipoResidencia = browser.findElement(By.id("typeTipoResidencia"));
 		Select residencia = new Select(campoTipoResidencia);
 		residencia.selectByValue("casa");
@@ -70,35 +71,35 @@ public class CRUDTesteEndInserir {
 
 		WebElement campoCEP = browser.findElement(By.id("typeCep"));
 		campoCEP.sendKeys("08773-600");
-		
+
 		WebElement campoPais = browser.findElement(By.id("typePais"));
 		campoPais.sendKeys("Brasil");
 
 		WebElement campoDest = browser.findElement(By.id("nome"));
 		campoDest.sendKeys("Fatec RESIDENCIAL");
-		
+
 		WebElement campoObs = browser.findElement(By.id("observacoes"));
 		campoObs.sendKeys("Nenhuma");
-		
+
 		WebElement campoTipo = browser.findElement(By.id("RESIDENCIAL"));
 		campoTipo.click();
-		try {
-  			Thread.sleep(2000);
-  		} catch (InterruptedException e) {
-  			e.printStackTrace();
-  		}
-		
-        browser.findElement(By.id("BotaoCadastrar")).click();
-	
-      //Endere�o Cobran�a
-		browser.findElement(By.className("botaoADDNovoEndereco")).click();
-		
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
+		browser.findElement(By.id("BotaoCadastrar")).click();
+
+		// Endere�o Cobran�a
+		browser.findElement(By.className("botaoADDNovoEndereco")).click();
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		WebElement campoTipoResidenciaC = browser.findElement(By.id("typeTipoResidencia"));
 		Select residenciaC = new Select(campoTipoResidenciaC);
 		residenciaC.selectByValue("apartamento");
@@ -124,80 +125,80 @@ public class CRUDTesteEndInserir {
 
 		WebElement campoCEPC = browser.findElement(By.id("typeCep"));
 		campoCEPC.sendKeys("08773-600");
-		
+
 		WebElement campoPaisC = browser.findElement(By.id("typePais"));
 		campoPaisC.sendKeys("Brasil");
 
 		WebElement campoDestC = browser.findElement(By.id("nome"));
 		campoDestC.sendKeys("Fatec Cobran�a");
-		
+
 		WebElement campoObsC = browser.findElement(By.id("observacoes"));
 		campoObsC.sendKeys("Nenhuma");
-		
+
 		WebElement campoTipoC = browser.findElement(By.id("COBRANCA"));
 		campoTipoC.click();
-		
+
 		try {
-  			Thread.sleep(2000);
-  		} catch (InterruptedException e) {
-  			e.printStackTrace();
-  		}
-        browser.findElement(By.id("BotaoCadastrar")).click();
-        
-      //Endere�o Entrega
-      		browser.findElement(By.className("botaoADDNovoEndereco")).click();
-      		
-      		try {
-      			Thread.sleep(2000);
-      		} catch (InterruptedException e) {
-      			e.printStackTrace();
-      		}
-      		
-      		WebElement campoTipoResidenciaE = browser.findElement(By.id("typeTipoResidencia"));
-    		Select residenciaE = new Select(campoTipoResidenciaE);
-    		residenciaE.selectByValue("condominio");
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		browser.findElement(By.id("BotaoCadastrar")).click();
 
-    		WebElement campoTipoLogradouroE = browser.findElement(By.id("typeTipoLogradouro"));
-    		Select logradouroE = new Select(campoTipoLogradouroE);
-    		logradouroE.selectByValue("Avenida");
+		// Endere�o Entrega
+		browser.findElement(By.className("botaoADDNovoEndereco")).click();
 
-    		WebElement campoLogradouroE = browser.findElement(By.id("typeLogradouro"));
-    		campoLogradouroE.sendKeys("Rua Carlos Barattino");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
-    		WebElement campoNumeroE = browser.findElement(By.id("typeNumero"));
-    		campoNumeroE.sendKeys("908");
+		WebElement campoTipoResidenciaE = browser.findElement(By.id("typeTipoResidencia"));
+		Select residenciaE = new Select(campoTipoResidenciaE);
+		residenciaE.selectByValue("condominio");
 
-    		WebElement campoBairroE = browser.findElement(By.id("typeBairro"));
-    		campoBairroE.sendKeys("Vila Nova Mogilar");
+		WebElement campoTipoLogradouroE = browser.findElement(By.id("typeTipoLogradouro"));
+		Select logradouroE = new Select(campoTipoLogradouroE);
+		logradouroE.selectByValue("Avenida");
 
-    		WebElement campoCidadeE = browser.findElement(By.id("typeCidade"));
-    		campoCidadeE.sendKeys("Mogi das Cruzes");
+		WebElement campoLogradouroE = browser.findElement(By.id("typeLogradouro"));
+		campoLogradouroE.sendKeys("Rua Carlos Barattino");
 
-    		WebElement campoEstadoE = browser.findElement(By.id("typeEstado"));
-    		campoEstadoE.sendKeys("Sao Paulo");
+		WebElement campoNumeroE = browser.findElement(By.id("typeNumero"));
+		campoNumeroE.sendKeys("908");
 
-    		WebElement campoCEPE = browser.findElement(By.id("typeCep"));
-    		campoCEPE.sendKeys("08773-600");
-    		
-    		WebElement campoPaisE = browser.findElement(By.id("typePais"));
-    		campoPaisE.sendKeys("Brasil");
+		WebElement campoBairroE = browser.findElement(By.id("typeBairro"));
+		campoBairroE.sendKeys("Vila Nova Mogilar");
 
-    		WebElement campoDestE = browser.findElement(By.id("nome"));
-    		campoDestE.sendKeys("Fatec ENTREGA");
-    		
-    		WebElement campoObsE = browser.findElement(By.id("observacoes"));
-    		campoObsE.sendKeys("Nenhuma");
-    		
-    		WebElement campoTipoE = browser.findElement(By.id("ENTREGA"));
-    		campoTipoE.click();
-    		
-    		try {
-      			Thread.sleep(2000);
-      		} catch (InterruptedException e) {
-      			e.printStackTrace();
-      		}
-    		
-            browser.findElement(By.id("BotaoCadastrar")).click();
+		WebElement campoCidadeE = browser.findElement(By.id("typeCidade"));
+		campoCidadeE.sendKeys("Mogi das Cruzes");
+
+		WebElement campoEstadoE = browser.findElement(By.id("typeEstado"));
+		campoEstadoE.sendKeys("Sao Paulo");
+
+		WebElement campoCEPE = browser.findElement(By.id("typeCep"));
+		campoCEPE.sendKeys("08773-600");
+
+		WebElement campoPaisE = browser.findElement(By.id("typePais"));
+		campoPaisE.sendKeys("Brasil");
+
+		WebElement campoDestE = browser.findElement(By.id("nome"));
+		campoDestE.sendKeys("Fatec ENTREGA");
+
+		WebElement campoObsE = browser.findElement(By.id("observacoes"));
+		campoObsE.sendKeys("Nenhuma");
+
+		WebElement campoTipoE = browser.findElement(By.id("ENTREGA"));
+		campoTipoE.click();
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		browser.findElement(By.id("BotaoCadastrar")).click();
 	}
-	
+
 }

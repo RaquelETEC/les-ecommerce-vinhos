@@ -3,6 +3,7 @@ package service;
 import model.entity.Cliente;
 import model.entity.Endereco;
 import java.util.ArrayList;
+import org.apache.commons.lang3.StringUtils;
 import dao.DaoEndereco;
 
 public class EnderecoService {
@@ -14,21 +15,21 @@ public class EnderecoService {
 	}
 
 	public String adicionarEndereco(Cliente cliente, Endereco endereco) {
-		System.out.println("Cheguei no adicionarEndereco Service");
-		 // Verifique se todos os campos obrigatórios estão preenchidos
-		
-		if (endereco == null || endereco.getNome() == null || endereco.getNome().isEmpty() ||
-	            endereco.getTipoResidencia() == null || endereco.getTipoResidencia().isEmpty() ||
-	            endereco.getTipoLogradouro() == null || endereco.getTipoLogradouro().isEmpty() ||
-	            endereco.getLogradouro() == null || endereco.getLogradouro().isEmpty() ||
-	            endereco.getNumero() == null || endereco.getNumero().isEmpty() ||
-	            endereco.getBairro() == null || endereco.getBairro().isEmpty() ||
-	            endereco.getCep() == null || endereco.getCep().isEmpty() ||
-	            endereco.getCidade() == null || endereco.getCidade().isEmpty() ||
-	            endereco.getEstado() == null || endereco.getEstado().isEmpty() ||
-	            endereco.getPais() == null || endereco.getPais().isEmpty()) {
-	            return "Falha: Todos os campos obrigatórios devem ser preenchidos";
-	        }
+		System.out.println("adicionarEndereco Service");
+
+		if (StringUtils.isAnyBlank(
+			    endereco.getNome(),
+			    endereco.getTipoResidencia(),
+			    endereco.getTipoLogradouro(),
+			    endereco.getLogradouro(),
+			    endereco.getNumero(),
+			    endereco.getBairro(),
+			    endereco.getCep(),
+			    endereco.getCidade(),
+			    endereco.getEstado(),
+			    endereco.getPais())) {
+			    return "Falha: Todos os campos obrigatórios devem ser preenchidos";
+			}
 		// Chamada ao DAO para inserir o endere�o
 		return daoEndereco.inserirEndereco(cliente, endereco);
 	}
@@ -55,5 +56,9 @@ public class EnderecoService {
 
 		// Chamada ao DAO para inserir o endere�o
 		return daoEndereco.ExcluirEndereco(cliente, endereco);
+	}
+
+	public ArrayList<Endereco> listarEnderecosEntrega(Cliente cliente) {
+		return daoEndereco.ListarEnderecosEntrega(cliente);
 	}
 }

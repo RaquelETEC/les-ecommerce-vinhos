@@ -20,8 +20,7 @@ public class FLUXODEVENDACENARIO31 {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		// Navega até a página desejada
-		driver.get("http://localhost:8080/les-ecommerce-vinhos/paginaInical.html");
-
+		driver.get("/les-ecommerce-vinhos/paginaInical.html");
 
 		driver.findElement(By.id("btn-add-carrinho-2")).click();
 		try {
@@ -79,7 +78,7 @@ public class FLUXODEVENDACENARIO31 {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		driver.findElement(By.id("cupomTselect5")).click();
 		try {
 			Thread.sleep(2000);
@@ -113,14 +112,12 @@ public class FLUXODEVENDACENARIO31 {
 			e.printStackTrace();
 		}
 
-		
 		driver.findElement(By.id("cupomTselect4")).click();
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 
 		driver.findElement(By.id("cupomTselect7")).click();
 		try {
@@ -156,8 +153,8 @@ public class FLUXODEVENDACENARIO31 {
 		}
 
 		driver.findElement(By.id("valorCartao")).sendKeys("0");
-        driver.findElement(By.id("btn-salvar-cartao")).click();
-		
+		driver.findElement(By.id("btn-salvar-cartao")).click();
+
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -173,7 +170,5 @@ public class FLUXODEVENDACENARIO31 {
 		// Fecha o navegador
 		driver.quit();
 	}
-
-
 
 }

@@ -12,7 +12,7 @@ function editarSenha() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-				debugger;
+				
                 respostaAjax = xhr.responseText; // Armazena a resposta da requisição AJAX na variável respostaAjax
                 alert(respostaAjax)
             } else {

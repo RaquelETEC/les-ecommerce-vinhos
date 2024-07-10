@@ -13,8 +13,8 @@ public class CarrinhoItens {
 		// TODO Auto-generated constructor stub
 	}
 
-	public CarrinhoItens(int id, CarrinhoDeCompras carrinho, Produtos produto, int quantProd, StatusCarrinhoItens status,
-			String motivoRemocao) {
+	public CarrinhoItens(int id, CarrinhoDeCompras carrinho, Produtos produto, int quantProd,
+			StatusCarrinhoItens status, String motivoRemocao) {
 		super();
 		this.id = id;
 		this.carrinho = carrinho;
@@ -72,5 +72,4 @@ public class CarrinhoItens {
 		this.motivoRemocao = motivoRemocao;
 	}
 
-	
 }

@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar navbar-expand-sm py-3 sticky-top" style="background: black;">
         <div class="container-fluid">
-            <a href='http://localhost:8080/les-ecommerce-vinhos/paginaInical.html'>
+            <a href='/les-ecommerce-vinhos/paginaInical.html'>
                 <img src="../imagens/logo-vinho.PNG" alt="Logo Vinho" style="width: 200px;" class="mx-3">
             </a>            
         </div>
@@ -58,6 +58,7 @@
                             <label for="produto" class="form-label">Produto:</label>
                             <select class="form-select" id="produto">
                                 <option value="all">Todos os Produtos</option>
+                                
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -75,8 +76,8 @@
 					
                      <!-- Gráficos -->
 					<!-- Gráfico de Linha -->
-					<div class="chat-line mt-4" style="min-width: 100%; max-height: 25vh;">
-					    <canvas id="salesChart" style="min-width: 100%; max-height: 25vh;"></canvas>
+					<div class="chat-line mt-5" style="min-width: 100%; max-height: 50vh;">
+					    <canvas id="salesChart" style="min-width: 100%; max-height: 50vh;"></canvas>
 					</div>
 					<div class="row mt-4">
 					    <!-- Gráfico de barras -->
@@ -97,10 +98,6 @@
             </main>
         </div>
     </div>
-
-    <footer class="p-4 text-light text-center" style="background: black;">
-        Desenvolvido por Caynan e Raquel
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

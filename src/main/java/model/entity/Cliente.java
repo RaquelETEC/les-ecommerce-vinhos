@@ -19,7 +19,6 @@ public class Cliente {
 	private ArrayList<Endereco> listadeEnderecos = new ArrayList<>();
 	private ArrayList<CartaoDeCredito> listaDeCartoes = new ArrayList<>();
 	private ArrayList<Cupons> listadeCupons = new ArrayList<>();
-	
 
 	public Cliente() {
 		super();
@@ -149,7 +148,5 @@ public class Cliente {
 	public void setListadeCupons(ArrayList<Cupons> listadeCupons) {
 		this.listadeCupons = listadeCupons;
 	}
-
-	
 
 }

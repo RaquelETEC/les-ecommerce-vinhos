@@ -209,7 +209,7 @@ function verificarEnderecoPagamento() {
 }
 
 function listarOpcoesSelecionadas() {
-	debugger
+	
 	totalDesconto = 0;
     var cuponsSelecionados = document.querySelectorAll('input[name="cupomsSelecionadoT[]"]:checked');
     limparListagemCupons();
@@ -264,7 +264,7 @@ let subtotalDesconto = 0;
 let quantTipoP = 0;
 
 function verificaCupomSelecionado(tipo, cupomId, checked, valor) {
-    debugger;
+    
 
     let subtotalAnterior = subtotalDesconto; // Armazena o subtotal anterior antes de fazer alterações
 
@@ -375,7 +375,7 @@ function addCartaoCard() {
         // Verifica se a soma de todos os cupons é equivalente a 90% do total do pedido
         var percentualCupons = (totalDesconto * 100) / totalPedido;
         
-        debugger;
+        
         var valorCartaoAlteracao = elementoCartaoParaAlteracao ? elementoCartaoParaAlteracao.getAttribute('data-valor-cartao') : 0;
         
         if( valorCartao > parseFloat(totalSaldo) + parseFloat(valorCartaoAlteracao)){
@@ -408,7 +408,7 @@ function abrirCadastroCartao() {
 }
 
 function AdicionarNovoCartao(idCliente) {
-	debugger;
+	
      var percentualCupons = (totalDesconto * 100) / totalPedido;
 
     var formulario = document.forms["frmCartao"];
@@ -508,7 +508,7 @@ function insertCardCartao(idCartao, nomeCartao, numeroCartao, imagemBandeira, co
 
 // Função para adicionar um novo cartão à lista na página
 function adicionarNovoCartaoAoHTML(id, nome, numero, imagemBandeira, codigo) {
-	debugger;
+	
     var modalBody = document.querySelector('.modal-body');
     
     var novoCartaoHTML = `
@@ -548,7 +548,7 @@ function adicionarCartaoLista(id, nome, numero, bandeira, codigo, valor) {
 }
 
 function EditarCartao(elemento) {
-	debugger;
+	
 	elementoCartaoParaAlteracao = elemento;
 	
     var valorCartao = elemento.getAttribute('data-valor-cartao');
@@ -575,7 +575,7 @@ function EditarCartao(elemento) {
 
 function removerCartao(botao) {
 	// Remove o card de forma de pagamento pai do botão clicado
-	debugger;
+	
 	var cardPagamento = botao.closest('.lineCart');
 	var valorRemovido = parseFloat(botao.dataset.valorCartao.replace(/[^0-9.-]/g, ''));
 	var idCartao = botao.dataset.idCartao;
@@ -594,7 +594,7 @@ function removerCartaoLista(id) {
 }
 
 function calcularTotais() {
-	debugger;
+	
 	let TotalProduto = parseFloat(document.getElementById("idTotalProduto").textContent.replace('R$', '').trim());
 	// Somando os valores aos totais
 	//totalCupomPromocional += parseFloat(valorCupomPerc);
@@ -637,7 +637,7 @@ function calcularTotais() {
 }
 
 function validarPedido(idCliente) {
-	debugger	
+		
 	var enderecoInserido = document.getElementById('idEndereco').textContent;
 
     if (!enderecoInserido) {
@@ -653,7 +653,7 @@ function validarPedido(idCliente) {
 
 
 function cadastrarPedidoVenda(idCliente) {
-    debugger;
+    
     totalPedido = parseFloat(document.getElementById("idTotalPedido").textContent.replace('R$', '').trim());
 	var idEndereco = parseFloat(document.getElementById('idEndereco').textContent.replace(/[^0-9.-]/g, ''));
 

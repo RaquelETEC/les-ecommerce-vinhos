@@ -1,4 +1,5 @@
 package dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,19 +85,17 @@ public class DAOProdutos {
 		}
 		return listaDeProdutosADM;
 	}
-	
-	
+
 	public Produtos selecionarProduto(Produtos produto, Precificacao precificacao, Categoria categoria) {
 		String read2 = "select *  from produto where pro_id = ?";
-		
+
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read2);
 			pst.setInt(1, produto.getId());
 			ResultSet rs = pst.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 
-				
 				produto.setId(rs.getInt(1));
 				categoria.setStatus(rs.getString(2));
 				precificacao.setDesc(rs.getString(3));
@@ -118,17 +117,14 @@ public class DAOProdutos {
 				produto.setProfundidade(rs.getString(19));
 			}
 
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("ERRO AO SELECIONAR PRODUTOS" + e);
 
 		}
 		return produto;
 	}
-	
-	
-	
 
-	public Produtos buscarProdutoPorId(int id) {
+	public Produtos buscarProdutoPorIdCompleto(int id) {
 		Produtos produto = null;
 		String query = "SELECT `pro_id`, " + "`pro_categoria_id`, " + "`pro_precificacao_id`, " + "`pro_preco_venda`, "
 				+ "`pro_preco_compra`, " + "`pro_justificativa`, " + "`pro_codigo_barra`, " + "`pro_vinicola`, "
@@ -171,22 +167,67 @@ public class DAOProdutos {
 
 		return produto;
 	}
+
+	public Produtos buscarProdutoPorIdSimples(int id) {
+	    Produtos produto = null;
+	    String query = "SELECT `pro_id`, `pro_preco_venda`, `pro_codigo_barra`, `pro_desc`, `pro_img` " +
+	                   "FROM `ecommerce`.`produto` " +
+	                   "WHERE `pro_id` = ?";
+
+	    try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setInt(1, id);
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                produto = new Produtos();
+	                produto.setId(rs.getInt("pro_id"));
+	                produto.setPro_preco_venda(rs.getDouble("pro_preco_venda"));
+	                produto.setCodigo_barra(rs.getString("pro_codigo_barra"));
+	                produto.setDesc(rs.getString("pro_desc"));
+	                produto.setImg(rs.getString("pro_img"));
+	            }
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("Erro ao buscar produto por ID: " + e.getMessage());
+	    }
+
+	    return produto;
+	}
 	
-    public List<Produtos> fetchAllProducts() {
-        List<Produtos> listProdutos = new ArrayList<>();
-        String query = "SELECT pro_id, pro_desc FROM produto";
+	public List<Produtos> fetchAllProducts() {
+		List<Produtos> listProdutos = new ArrayList<>();
+		String query = "SELECT pro_id, pro_desc FROM produto";
 
 		try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Produtos produto = new Produtos();
-                produto.setId(rs.getInt("pro_id"));
-                produto.setDesc(rs.getString("pro_desc"));
-                listProdutos.add(produto);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listProdutos;
-    }
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Produtos produto = new Produtos();
+				produto.setId(rs.getInt("pro_id"));
+				produto.setDesc(rs.getString("pro_desc"));
+				listProdutos.add(produto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listProdutos;
+	}
+
+	public List<Produtos> ProdutosDisponiveis() {
+		List<Produtos> listProdutos = new ArrayList<>();
+		String query = "SELECT pro_id, pro_desc , pro_preco_venda FROM produto";
+
+		try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(query)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Produtos produto = new Produtos();
+				produto.setId(rs.getInt("pro_id"));
+				produto.setDesc(rs.getString("pro_desc"));
+				produto.setPro_preco_venda(rs.getDouble("pro_preco_venda"));
+				listProdutos.add(produto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listProdutos;
+	}
+
 }

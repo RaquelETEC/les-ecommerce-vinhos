@@ -38,21 +38,21 @@ public class DaoCartoes {
 			pst.setBoolean(7, cartao.isCartaoNoPerfil());
 
 			int rowsAffected = pst.executeUpdate();
-			    if (rowsAffected > 0) {
-			        ResultSet generatedKeys = pst.getGeneratedKeys();
-			        if (generatedKeys.next()) {
-			            int cartaoId = generatedKeys.getInt(1);
-			            System.err.println("ID gerado do cartão: " + cartaoId);
-			            con.close();
-			            return "SUCESS! Cartão cadastrado com sucesso no perfil! ID do cartão=" + cartaoId;
-			        }
-			    }
-		    con.close();
-		    return "Erro ao cadastrar o cartão no perfil.";
+			if (rowsAffected > 0) {
+				ResultSet generatedKeys = pst.getGeneratedKeys();
+				if (generatedKeys.next()) {
+					int cartaoId = generatedKeys.getInt(1);
+					System.err.println("ID gerado do cartão: " + cartaoId);
+					con.close();
+					return "SUCESS! Cartão cadastrado com sucesso no perfil! ID do cartão=" + cartaoId;
+				}
+			}
+			con.close();
+			return "Erro ao cadastrar o cartão no perfil.";
 
 		} catch (Exception e) {
 			System.out.println("erro ao inserir cartao: " + e);
-			return "Erro ao cadastrar: "+e;
+			return "Erro ao cadastrar: " + e;
 		}
 	}
 
@@ -60,7 +60,8 @@ public class DaoCartoes {
 		ArrayList<CartaoDeCredito> listaDeCartoes = new ArrayList<>();
 		String read = "SELECT " + "cart_id, " + "cart_numero, " + "cart_nome, " + "cart_padrao, " + "band_id, "
 				+ "band_desc, " + "band_img, " + "cart_cod_seguranca " + "FROM cartao_de_credito "
-				+ "join bandeiras_cartao on cart_id_bandeira = band_id " + "WHERE cart_id_cli = ? AND cart_in_perfil = 1 ";
+				+ "join bandeiras_cartao on cart_id_bandeira = band_id "
+				+ "WHERE cart_id_cli = ? AND cart_in_perfil = 1 ";
 		try {
 			Connection con = Conexao.conectar();
 			PreparedStatement pst = con.prepareStatement(read);
@@ -156,7 +157,7 @@ public class DaoCartoes {
 			return "sucess";
 		} catch (Exception e) {
 			System.out.println(e);
-			return "error "+e;
+			return "error " + e;
 		}
 	}
 

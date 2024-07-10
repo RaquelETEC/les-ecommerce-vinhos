@@ -1,11 +1,11 @@
 package model.entity;
 
 public class Categoria {
-	
+
 	private int id;
 	private String desc;
 	private String status;
-	
+
 	public Categoria() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -41,6 +41,5 @@ public class Categoria {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+
 }

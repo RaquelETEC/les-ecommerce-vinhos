@@ -22,7 +22,7 @@ public class DaoEndereco {
 		try {
 			Connection con = Conexao.conectar();
 			System.out.println("chegou no try no inserirEndereco" + cliente.getId());
-			PreparedStatement pst = con.prepareStatement(create,Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pst = con.prepareStatement(create, Statement.RETURN_GENERATED_KEYS);
 			pst.setInt(1, cliente.getId());
 			pst.setString(2, endereco.getTipoResidencia());
 			pst.setString(3, endereco.getTipoLogradouro());
@@ -37,23 +37,23 @@ public class DaoEndereco {
 			pst.setString(12, endereco.getObservacao());
 			pst.setString(13, endereco.getNome());
 			pst.setString(14, endereco.getTipos().name());
-			
+
 			int rowsAffected = pst.executeUpdate();
-		    if (rowsAffected > 0) {
-		        ResultSet generatedKeys = pst.getGeneratedKeys();
-		        if (generatedKeys.next()) {
-		            int enderecoId = generatedKeys.getInt(1); 
-		            System.err.println("ID gerado: " + enderecoId);
-		            con.close();
-		            return "Sucesso,ID=: " + enderecoId; 
-		        }
-		    }
-		    con.close();
-		    return "Erro ao inserir o endereço.";
+			if (rowsAffected > 0) {
+				ResultSet generatedKeys = pst.getGeneratedKeys();
+				if (generatedKeys.next()) {
+					int enderecoId = generatedKeys.getInt(1);
+					System.err.println("ID gerado: " + enderecoId);
+					con.close();
+					return "Sucesso,ID=: " + enderecoId;
+				}
+			}
+			con.close();
+			return "Erro ao inserir o endereço.";
 
 		} catch (Exception e) {
 			System.out.println("erro ao inserir Endereco: " + e);
-			return "Erro: "+e;
+			return "Erro: " + e;
 		}
 	}
 
@@ -227,5 +227,51 @@ public class DaoEndereco {
 			return "Erro";
 		}
 	}
+
+	public ArrayList<Endereco> ListarEnderecosEntrega(Cliente cliente) {
+		ArrayList<Endereco> listaDeEnderecos = new ArrayList<>();
+		String read = "SELECT end_id," + "end_cli_id," + "end_tipo_residencia," + "end_tipo_logradouro,"
+				+ "end_logradouro," + "end_numero," + "end_bairro," + "end_cep," + "end_cidade," + "end_estado,"
+				+ "end_pais," + "end_padrao," + "end_observacoes," + "end_nome," + "end_tipo "
+				+ "FROM ecommerce.endereco " + "WHERE end_cli_id = ? and end_tipo='ENTREGA'";
+		try {
+			Connection con = Conexao.conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+
+			pst.setInt(1, cliente.getId());
+
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Endereco endereco = new Endereco();
+
+				endereco.setId(rs.getInt("end_id"));
+				endereco.setCliente(cliente);
+				endereco.setTipoResidencia(rs.getString("end_tipo_residencia"));
+				endereco.setTipoLogradouro(rs.getString("end_tipo_logradouro"));
+				endereco.setLogradouro(rs.getString("end_logradouro"));
+				endereco.setNumero(rs.getString("end_numero"));
+				endereco.setBairro(rs.getString("end_bairro"));
+				endereco.setCep(rs.getString("end_cep"));
+				endereco.setCidade(rs.getString("end_cidade"));
+				endereco.setEstado(rs.getString("end_estado"));
+				endereco.setPais(rs.getString("end_pais"));
+				endereco.setPadrao(rs.getString("end_padrao"));
+				endereco.setObservacao(rs.getString("end_observacoes"));
+				endereco.setNome(rs.getString("end_nome"));
+
+				// Converter a string do tipo de endereço para o enum correspondente
+				String tipoEnderecoString = rs.getString("end_tipo");
+				TiposEndereco tipoEndereco = TiposEndereco.valueOf(tipoEnderecoString);
+				endereco.setTipos(tipoEndereco);
+
+				listaDeEnderecos.add(endereco);
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println("Erro ao listar endereços: " + e);
+		}
+		return listaDeEnderecos;
+	}
+
 
 }
